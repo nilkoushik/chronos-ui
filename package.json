@@ -2,8 +2,13 @@
   "name": "chronos-ui",
   "version": "1.0.0",
   "description": "",
+  "exports": {
+    "./theme.css": "./src/styles/theme.css",
+    "./svelte/*": "./dist/svelte/src/components/*"
+  },
   "main": "index.js",
   "scripts": {
+    "build": "npx mitosis build && node fix-styles.js && node fix-props.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

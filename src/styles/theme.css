@@ -40,3 +40,304 @@
   --chronos-color-text-muted: #94a3b8;
   --chronos-color-border: #334155;
 }
+
+/* Component Styles Extracted Automatically */
+/* Banner.lite.tsx */
+
+        .chronos-banner {
+          position: relative;
+          background-size: cover;
+          background-position: center;
+          border-radius: var(--chronos-border-radius-md);
+          overflow: hidden;
+          min-height: 400px;
+          display: flex;
+          flex-direction: column;
+          font-family: var(--chronos-font-family);
+          color: var(--chronos-color-text-main);
+          background-color: var(--chronos-color-surface);
+          border: var(--chronos-border-width) solid var(--chronos-color-border);
+        }
+        .chronos-banner-overlay {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: var(--chronos-spacing-xl);
+          background: rgba(0, 0, 0, 0.4);
+        }
+        .chronos-banner-content {
+          max-width: 800px;
+          margin: 0 auto;
+        }
+        .chronos-banner-title {
+          font-size: var(--chronos-font-size-title);
+          margin-bottom: var(--chronos-spacing-sm);
+          color: #fff;
+          margin-top: 0;
+        }
+        .chronos-banner-subtitle {
+          font-size: var(--chronos-font-size-subtitle);
+          margin-bottom: var(--chronos-spacing-lg);
+          color: #f1f5f9;
+        }
+        .chronos-banner-cta {
+          display: inline-block;
+          background-color: var(--chronos-color-primary);
+          color: #fff;
+          padding: var(--chronos-spacing-sm) var(--chronos-spacing-lg);
+          border-radius: var(--chronos-border-radius-sm);
+          text-decoration: none;
+          font-weight: 600;
+          transition: filter 0.2s;
+        }
+        .chronos-banner-cta:hover {
+          filter: brightness(1.1);
+        }
+      
+/* GridBanner.lite.tsx */
+
+        .chronos-grid-banner {
+          display: grid;
+          gap: var(--chronos-spacing-md);
+          font-family: var(--chronos-font-family);
+        }
+        @media (max-width: 768px) {
+          .chronos-grid-banner {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .chronos-grid-banner {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        .chronos-grid-item {
+          display: flex;
+          flex-direction: column;
+          text-decoration: none;
+          background: var(--chronos-color-surface);
+          border-radius: var(--chronos-border-radius-sm);
+          overflow: hidden;
+          border: var(--chronos-border-width) solid var(--chronos-color-border);
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .chronos-grid-item:hover {
+          transform: translateY(-4px);
+          box-shadow: var(--chronos-shadow-md);
+        }
+        .chronos-grid-img-wrap {
+          aspect-ratio: 16/9;
+          overflow: hidden;
+        }
+        .chronos-grid-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.3s;
+        }
+        .chronos-grid-item:hover .chronos-grid-img {
+          transform: scale(1.05);
+        }
+        .chronos-grid-title {
+          padding: var(--chronos-spacing-sm);
+          font-weight: 600;
+          color: var(--chronos-color-text-main);
+          text-align: center;
+        }
+      
+/* RowScrollable.lite.tsx */
+
+        .chronos-scrollable-container {
+          font-family: var(--chronos-font-family);
+        }
+        .chronos-scrollable-title {
+          margin-top: 0;
+          margin-bottom: var(--chronos-spacing-md);
+          color: var(--chronos-color-text-main);
+          font-size: var(--chronos-font-size-subtitle);
+        }
+        .chronos-scrollable-row {
+          display: flex;
+          gap: var(--chronos-spacing-md);
+          overflow-x: auto;
+          padding-bottom: var(--chronos-spacing-sm);
+          scroll-snap-type: x mandatory;
+        }
+        /* Custom scrollbar */
+        .chronos-scrollable-row::-webkit-scrollbar {
+          height: 6px;
+        }
+        .chronos-scrollable-row::-webkit-scrollbar-track {
+          background: var(--chronos-color-surface);
+          border-radius: 4px;
+        }
+        .chronos-scrollable-row::-webkit-scrollbar-thumb {
+          background: var(--chronos-color-border);
+          border-radius: 4px;
+        }
+        .chronos-scrollable-card {
+          flex: 0 0 280px;
+          background: var(--chronos-color-surface);
+          border: var(--chronos-border-width) solid var(--chronos-color-border);
+          border-radius: var(--chronos-border-radius-md);
+          overflow: hidden;
+          scroll-snap-align: start;
+        }
+        .chronos-scrollable-img-wrap {
+          height: 160px;
+        }
+        .chronos-scrollable-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .chronos-scrollable-body {
+          padding: var(--chronos-spacing-sm);
+        }
+        .chronos-scrollable-card-title {
+          font-weight: 600;
+          color: var(--chronos-color-text-main);
+          margin-bottom: 0.25rem;
+        }
+        .chronos-scrollable-card-sub {
+          font-size: 0.875rem;
+          color: var(--chronos-color-text-muted);
+        }
+      
+/* TimerWidget.lite.tsx */
+
+        .chronos-timer-widget {
+          background-color: var(--chronos-color-surface);
+          border: var(--chronos-border-width) solid var(--chronos-color-border);
+          border-radius: var(--chronos-border-radius-md);
+          padding: var(--chronos-spacing-lg);
+          font-family: var(--chronos-font-family);
+          color: var(--chronos-color-text-main);
+          text-align: center;
+          box-shadow: var(--chronos-shadow-sm);
+        }
+        .chronos-timer-title {
+          margin-top: 0;
+          margin-bottom: var(--chronos-spacing-md);
+          font-size: var(--chronos-font-size-subtitle);
+        }
+        .chronos-timer-blocks {
+          display: flex;
+          justify-content: center;
+          gap: var(--chronos-spacing-md);
+        }
+        .chronos-timer-block {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background: var(--chronos-color-background);
+          padding: var(--chronos-spacing-sm);
+          border-radius: var(--chronos-border-radius-sm);
+          min-width: 60px;
+          border: var(--chronos-border-width) solid var(--chronos-color-border);
+        }
+        .chronos-timer-value {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--chronos-color-primary);
+        }
+        .chronos-timer-label {
+          font-size: 0.75rem;
+          text-transform: uppercase;
+          color: var(--chronos-color-text-muted);
+          margin-top: 0.25rem;
+        }
+      
+/* WysiwygRenderer.lite.tsx */
+
+        .chronos-wysiwyg-content {
+          font-family: var(--chronos-font-family);
+          color: var(--chronos-color-text-main);
+          line-height: 1.6;
+        }
+        .chronos-wysiwyg-content h1,
+        .chronos-wysiwyg-content h2,
+        .chronos-wysiwyg-content h3,
+        .chronos-wysiwyg-content h4,
+        .chronos-wysiwyg-content h5,
+        .chronos-wysiwyg-content h6 {
+          margin-top: 1.5em;
+          margin-bottom: 0.5em;
+          color: var(--chronos-color-text-main);
+        }
+        .chronos-wysiwyg-content p {
+          margin-bottom: 1em;
+        }
+        .chronos-wysiwyg-content a {
+          color: var(--chronos-color-primary);
+          text-decoration: underline;
+        }
+        .chronos-wysiwyg-content img {
+          max-width: 100%;
+          height: auto;
+          border-radius: var(--chronos-border-radius-sm);
+        }
+        .chronos-wysiwyg-content blockquote {
+          border-left: 4px solid var(--chronos-color-primary);
+          padding-left: 1em;
+          margin-left: 0;
+          color: var(--chronos-color-text-muted);
+          background: var(--chronos-color-surface);
+          padding: 1em;
+          border-radius: 0 var(--chronos-border-radius-sm) var(--chronos-border-radius-sm) 0;
+        }
+        .chronos-wysiwyg-content pre {
+          background: var(--chronos-color-surface);
+          padding: 1em;
+          border-radius: var(--chronos-border-radius-sm);
+          overflow-x: auto;
+          border: var(--chronos-border-width) solid var(--chronos-color-border);
+        }
+      
+/* AnnouncementBar.lite.tsx */
+.chronos-announcement-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--chronos-spacing-sm);
+  font-family: var(--chronos-font-family);
+  font-size: var(--chronos-font-size-base);
+  font-weight: 500;
+  text-align: center;
+}
+.chronos-announcement-link {
+  color: inherit;
+  text-decoration: none;
+}
+.chronos-announcement-link:hover {
+  text-decoration: underline;
+}
+
+/* MediaGrid.lite.tsx */
+.chronos-media-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--chronos-spacing-md);
+  font-family: var(--chronos-font-family);
+  aspect-ratio: 21/9;
+}
+.chronos-media-primary, .chronos-media-secondary-item {
+  display: block;
+  border-radius: var(--chronos-border-radius-md);
+  overflow: hidden;
+  background: var(--chronos-color-surface);
+  height: 100%;
+}
+.chronos-media-asset {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.chronos-media-secondary-col {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: var(--chronos-spacing-md);
+  height: 100%;
+}
