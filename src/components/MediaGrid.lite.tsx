@@ -2,10 +2,10 @@ import { useStore } from '@builder.io/mitosis';
 
 export interface MediaGridItem {
   id: string;
-  mediaUrl: string;
-  type?: 'image' | 'video';
-  link?: string;
+  media?: { type: 'image' | 'video'; url: string };
+  mapLinks?: { url: string }[];
   altText?: string;
+  title?: string;
 }
 
 export interface MediaGridProps {
@@ -18,11 +18,11 @@ export default function MediaGrid(props: MediaGridProps) {
   return (
     <div class={`chronos-media-grid ${props.className || ''}`}>
       {props.primaryMedia && (
-        <a href={props.primaryMedia.link || '#'} class="chronos-media-primary">
-          {props.primaryMedia.type === 'video' ? (
-            <video src={props.primaryMedia.mediaUrl} autoPlay loop muted playsInline class="chronos-media-asset" />
+        <a href={props.primaryMedia.mapLinks?.[0]?.url || '#'} class="chronos-media-primary">
+          {props.primaryMedia.media?.type === 'video' ? (
+            <video src={props.primaryMedia.media?.url} autoPlay loop muted playsInline class="chronos-media-asset" />
           ) : (
-            <img src={props.primaryMedia.mediaUrl} alt={props.primaryMedia.altText || ''} class="chronos-media-asset" />
+            <img src={props.primaryMedia.media?.url} alt={props.primaryMedia.altText || props.primaryMedia.title || ''} class="chronos-media-asset" />
           )}
         </a>
       )}
@@ -30,11 +30,11 @@ export default function MediaGrid(props: MediaGridProps) {
       {props.secondaryMedia && props.secondaryMedia.length > 0 && (
         <div class="chronos-media-secondary-col">
           {props.secondaryMedia.map((item) => (
-            <a href={item.link || '#'} class="chronos-media-secondary-item" key={item.id}>
-              {item.type === 'video' ? (
-                <video src={item.mediaUrl} autoPlay loop muted playsInline class="chronos-media-asset" />
+            <a href={item.mapLinks?.[0]?.url || '#'} class="chronos-media-secondary-item" key={item.id}>
+              {item.media?.type === 'video' ? (
+                <video src={item.media?.url} autoPlay loop muted playsInline class="chronos-media-asset" />
               ) : (
-                <img src={item.mediaUrl} alt={item.altText || ''} class="chronos-media-asset" />
+                <img src={item.media?.url} alt={item.altText || item.title || ''} class="chronos-media-asset" />
               )}
             </a>
           ))}

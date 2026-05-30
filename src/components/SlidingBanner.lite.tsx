@@ -1,0 +1,261 @@
+import { useStore, onMount, onUnMount, useRef, Show } from '@builder.io/mitosis';
+
+export interface BannerMedia {
+  type?: 'image' | 'video' | string;
+  url?: string;
+  settings?: any;
+}
+
+export interface MapLink {
+  label?: string;
+  url?: string;
+}
+
+export interface WidgetItem {
+  id?: string;
+  title?: string;
+  subtitle?: string;
+  ctaText?: string;
+  textAlignment?: 'left' | 'center' | 'right';
+  media?: BannerMedia;
+  mapLinks?: MapLink[];
+}
+
+export interface SliderConfig {
+  autoStart: boolean;
+  rotateAgain: boolean;
+  delayMs: number;
+  showNextPrev: boolean;
+  showDots: boolean;
+  animationEffect?: 'slide' | 'fade' | 'zoom' | 'flip' | 'push-up' | 'push-down' | 'push-left' | 'push-right' | 'wipe-left' | 'wipe-right' | 'cube' | 'door' | 'fall';
+  backgroundEffect?: 'none' | 'particles' | 'waves';
+}
+
+export interface SlidingBannerProps {
+  items: WidgetItem[];
+  config?: SliderConfig;
+  className?: string;
+  isLoading?: boolean;
+}
+
+export default function SlidingBanner(props: SlidingBannerProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  
+  const state = useStore({
+    currentIndex: 0,
+    intervalId: null as any,
+    animationFrameId: null as any,
+    resizeHandler: null as any,
+    
+    get animationClass() {
+      return props.config?.animationEffect || 'slide';
+    },
+    get backgroundClass() {
+      return props.config?.backgroundEffect || 'none';
+    },
+    next() {
+      if (!props.items?.length) return;
+      if (state.currentIndex >= props.items.length - 1) {
+        if (props.config?.rotateAgain !== false) {
+          state.currentIndex = 0;
+        }
+      } else {
+        state.currentIndex++;
+      }
+    },
+    prev() {
+      if (!props.items?.length) return;
+      if (state.currentIndex <= 0) {
+        if (props.config?.rotateAgain !== false) {
+          state.currentIndex = props.items.length - 1;
+        }
+      } else {
+        state.currentIndex--;
+      }
+    },
+    goTo(index: number) {
+      state.currentIndex = index;
+    },
+    startAutoPlay() {
+      if (props.config?.autoStart !== false && props.items?.length > 1) {
+        state.intervalId = setInterval(() => {
+          state.next();
+        }, props.config?.delayMs || 5000);
+      }
+    },
+    stopAutoPlay() {
+      if (state.intervalId) {
+        clearInterval(state.intervalId);
+      }
+    },
+    initCanvasAnimations(canvas: HTMLCanvasElement) {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      
+      const effect = props.config?.backgroundEffect;
+      if (effect !== 'particles' && effect !== 'waves') return;
+
+      const resize = () => {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      };
+      resize();
+      state.resizeHandler = resize;
+      window.addEventListener('resize', state.resizeHandler);
+
+      if (effect === 'particles') {
+        const particles: any[] = [];
+        for(let i=0; i<70; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 3 + 1,
+            speedX: Math.random() * 1 - 0.5,
+            speedY: Math.random() * -1 - 0.2,
+            opacity: Math.random() * 0.5 + 0.1
+          });
+        }
+        
+        const animate = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          for (let i = 0; i < particles.length; i++) {
+            let p = particles[i];
+            ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            p.x += p.speedX;
+            p.y += p.speedY;
+            if (p.y < -10) p.y = canvas.height + 10;
+            if (p.x < -10) p.x = canvas.width + 10;
+            if (p.x > canvas.width + 10) p.x = -10;
+          }
+          state.animationFrameId = requestAnimationFrame(animate);
+        };
+        animate();
+      } else if (effect === 'waves') {
+        let time = 0;
+        const animate = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          
+          // Back wave
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+          ctx.beginPath();
+          ctx.moveTo(0, canvas.height);
+          for(let i=0; i<=canvas.width; i+=20) {
+            ctx.lineTo(i, canvas.height - 80 + Math.sin(i * 0.005 + time) * 30);
+          }
+          ctx.lineTo(canvas.width, canvas.height);
+          ctx.fill();
+          
+          // Front wave
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+          ctx.beginPath();
+          ctx.moveTo(0, canvas.height);
+          for(let i=0; i<=canvas.width; i+=20) {
+            ctx.lineTo(i, canvas.height - 40 + Math.sin(i * 0.008 + time * 1.5) * 20);
+          }
+          ctx.lineTo(canvas.width, canvas.height);
+          ctx.fill();
+
+          time += 0.03;
+          state.animationFrameId = requestAnimationFrame(animate);
+        };
+        animate();
+      }
+    }
+  });
+
+  onMount(() => {
+    state.startAutoPlay();
+    if (canvasRef) {
+      state.initCanvasAnimations(canvasRef);
+    }
+  });
+
+  onUnMount(() => {
+    state.stopAutoPlay();
+    if (state.animationFrameId) {
+      cancelAnimationFrame(state.animationFrameId);
+    }
+    if (state.resizeHandler) {
+      window.removeEventListener('resize', state.resizeHandler);
+    }
+  });
+
+  return (
+    <div 
+      class={`chronos-sliding-banner ${props.className || ''} effect-${state.animationClass} bg-effect-${state.backgroundClass}`}
+      onMouseEnter={() => state.stopAutoPlay()}
+      onMouseLeave={() => state.startAutoPlay()}
+    >
+      {(state.backgroundClass === 'particles' || state.backgroundClass === 'waves') && (
+        <canvas 
+          ref={canvasRef} 
+          class="chronos-sliding-banner-canvas"
+        ></canvas>
+      )}
+      
+      <div 
+        class="chronos-sliding-banner-track"
+        style={{ transform: `translateX(-${state.currentIndex * 100}%)` }}
+      >
+        {props.items?.map((item, index) => (
+          <div class={`chronos-sliding-slide ${index === state.currentIndex ? 'active' : ''}`} key={item.id || index}>
+            <Show when={item.media?.type === 'video'}>
+              <video 
+                src={item.media?.url} 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                class={`chronos-sliding-bg-video ${props.isLoading ? 'chronos-image-shimmer' : ''}`}
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </Show>
+            <Show when={item.media?.type !== 'video'}>
+              <div 
+                class={`chronos-sliding-bg ${props.isLoading ? 'chronos-image-shimmer' : ''}`}
+                style={{ backgroundImage: item.media?.url ? `url(${item.media.url})` : 'none' }}
+              ></div>
+            </Show>
+            <div class="chronos-sliding-overlay"></div>
+            <div class="chronos-sliding-content" style={{ textAlign: item.textAlignment || props.config?.align || 'center' }}>
+              <h2 class="chronos-sliding-title">{item.title}</h2>
+              {item.subtitle && <p class="chronos-sliding-subtitle">{item.subtitle}</p>}
+              {item.ctaText && (
+                <a href={item.mapLinks?.[0]?.url || '#'} class="chronos-sliding-cta">
+                  {item.ctaText}
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {props.config?.showArrows && (
+        <>
+          <button class="chronos-sliding-arrow prev" onClick={() => state.prev()}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button class="chronos-sliding-arrow next" onClick={() => state.next()}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </>
+      )}
+
+      {props.config?.showDots && (
+        <div class="chronos-sliding-dots">
+          {props.items?.map((_, index) => (
+            <button 
+              key={index}
+              class={`chronos-sliding-dot ${index === state.currentIndex ? 'active' : ''}`}
+              onClick={() => state.goTo(index)}
+            ></button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

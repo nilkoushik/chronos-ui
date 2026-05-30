@@ -2,9 +2,10 @@ import { useStore } from '@builder.io/mitosis';
 
 export interface RowScrollableItem {
   id: string;
-  title: string;
+  title?: string;
   subtitle?: string;
-  imageUrl?: string;
+  media?: { type: 'image' | 'video'; url: string };
+  mapLinks?: { url: string }[];
 }
 
 export interface RowScrollableProps {
@@ -19,17 +20,21 @@ export default function RowScrollable(props: RowScrollableProps) {
       {props.title && <h3 class="chronos-scrollable-title">{props.title}</h3>}
       <div class="chronos-scrollable-row">
         {props.items?.map((item) => (
-          <div class="chronos-scrollable-card" key={item.id}>
-            {item.imageUrl && (
+          <a href={item.mapLinks?.[0]?.url || '#'} class="chronos-scrollable-card" key={item.id}>
+            {item.media?.url && (
               <div class="chronos-scrollable-img-wrap">
-                <img src={item.imageUrl} alt={item.title} class="chronos-scrollable-img" />
+                {item.media?.type === 'video' ? (
+                  <video src={item.media?.url} autoPlay loop muted playsInline class="chronos-scrollable-img" />
+                ) : (
+                  <img src={item.media?.url} alt={item.title || ''} class="chronos-scrollable-img" />
+                )}
               </div>
             )}
             <div class="chronos-scrollable-body">
-              <div class="chronos-scrollable-card-title">{item.title}</div>
+              {item.title && <div class="chronos-scrollable-card-title">{item.title}</div>}
               {item.subtitle && <div class="chronos-scrollable-card-sub">{item.subtitle}</div>}
             </div>
-          </div>
+          </a>
         ))}
       </div>
       

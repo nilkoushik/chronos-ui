@@ -2,7 +2,7 @@ import { useStore } from '@builder.io/mitosis';
 
 export interface AnnouncementBarProps {
   message: string;
-  link?: string;
+  mapLinks?: { url: string }[];
   backgroundColor?: string;
   textColor?: string;
   className?: string;
@@ -17,8 +17,8 @@ export default function AnnouncementBar(props: AnnouncementBarProps) {
         color: props.textColor || '#ffffff'
       }}
     >
-      {props.link ? (
-        <a href={props.link} class="chronos-announcement-link">
+      {props.mapLinks && props.mapLinks.length > 0 ? (
+        <a href={props.mapLinks[0].url} class="chronos-announcement-link">
           {props.message}
         </a>
       ) : (
