@@ -40,10 +40,12 @@ export interface SlidingBannerProps {
 
 export default function SlidingBanner(props: SlidingBannerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   
   const state = useStore({
     currentIndex: 0,
     previousIndex: 0,
+    direction: 'next' as 'next' | 'prev',
     intervalId: null as any,
     animationFrameId: null as any,
     resizeHandler: null as any,
@@ -56,6 +58,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     },
     next() {
       if (!props.items?.length) return;
+      state.direction = 'next';
       state.previousIndex = state.currentIndex;
       if (state.currentIndex >= props.items.length - 1) {
         if (props.config?.rotateAgain !== false) {
@@ -67,6 +70,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     },
     prev() {
       if (!props.items?.length) return;
+      state.direction = 'prev';
       state.previousIndex = state.currentIndex;
       if (state.currentIndex <= 0) {
         if (props.config?.rotateAgain !== false) {
@@ -78,6 +82,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     },
     goTo(index: number) {
       if (state.currentIndex !== index) {
+        state.direction = index > state.currentIndex ? 'next' : 'prev';
         state.previousIndex = state.currentIndex;
         state.currentIndex = index;
       }
@@ -103,8 +108,14 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       if (effect !== 'particles' && effect !== 'waves') return;
 
       const resize = () => {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
+        if (canvas) {
+          canvas.width = canvas.offsetWidth;
+          canvas.height = canvas.offsetHeight;
+        }
+        if (rootRef) {
+          // Used for responsive 3D animations (like cube)
+          rootRef.style.setProperty('--slider-half-width', `${rootRef.offsetWidth / 2}px`);
+        }
       };
       resize();
       state.resizeHandler = resize;
@@ -192,6 +203,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
 
   return (
     <div 
+      ref={rootRef}
       class={`chronos-sliding-banner ${props.className || ''} effect-${state.animationClass} bg-effect-${state.backgroundClass}`}
       onMouseEnter={() => state.stopAutoPlay()}
       onMouseLeave={() => state.startAutoPlay()}
@@ -203,7 +215,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
         ></canvas>
       )}
       
-      <div class="chronos-sliding-banner-track">
+      <div class={`chronos-sliding-banner-track dir-${state.direction}`}>
         {props.items?.map((item, index) => (
           <div 
             class={`chronos-sliding-slide ${index === state.currentIndex ? 'active' : ''} ${index === state.previousIndex && index !== state.currentIndex ? 'previous' : ''}`} 
