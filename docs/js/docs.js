@@ -224,26 +224,29 @@ function initJsfiddle() {
     const rawCode = codeEl.innerText;
 
     if (framework === 'react') {
-      // Setup Babel for React
-      htmlCode = `<div id="root"></div>`;
-      
-      // Rewrite bare imports to use esm.sh for browser-native ESM
+      // Setup Babel Standalone in the HTML pane to preserve native ES Modules
       jsCode = rawCode
         .replace(/from\s+['"]@chronos-ui\/core\/(.*?)['"]/g, "from 'https://esm.sh/@chronos-ui/core@latest/$1'")
         .replace(/import\s+['"]@chronos-ui\/core\/(.*?)['"]/g, "import 'https://esm.sh/@chronos-ui/core@latest/$1'");
         
-      // Extract the JSX component usage from the raw code and wrap it in ReactDOM render
       const jsxMatch = jsCode.match(/<([A-Z][a-zA-Z0-9]*)\b[^>]*(\/>|<\/[A-Z][a-zA-Z0-9]*>)/);
       const jsxComponent = jsxMatch ? jsxMatch[0] : '';
       
-      jsCode = `import React from 'https://esm.sh/react@18';
+      htmlCode = `<div id="root"></div>
+
+<!-- Use Babel Standalone to compile JSX natively while preserving ES Modules -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel" data-type="module">
+import React from 'https://esm.sh/react@18';
 import { createRoot } from 'https://esm.sh/react-dom@18/client';
 
 ${jsCode.replace(/<([A-Z][a-zA-Z0-9]*)\b[^>]*(\/>|<\/[A-Z][a-zA-Z0-9]*>)/, '')}
 
 const root = createRoot(document.getElementById('root'));
 root.render(${jsxComponent || '<div />'});
-`;
+</script>`;
+
+      jsCode = ''; // Leave JS pane empty because all logic is in the module script
     } else if (framework === 'svelte') {
       htmlCode = `<!-- Svelte components require a compiler environment. -->\n${rawCode}`;
     } else {
@@ -265,8 +268,8 @@ ${rawCode.replace(/<script type="module"[\s\S]*?<\/script>\n*/, '')}`; // strip 
     const inputs = {
       html: htmlCode,
       js: jsCode,
-      css: 'body { padding: 20px; font-family: sans-serif; background: #000; }',
-      panel_js: framework === 'react' ? 3 : 0 // 3 = Babel for React
+      css: 'body { padding: 20px; font-family: sans-serif; background: #000; color: #fff; }',
+      panel_js: 0 // Always plain JS; Babel is handled in HTML for React
     };
 
     for (const [key, val] of Object.entries(inputs)) {
