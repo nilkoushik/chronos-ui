@@ -248,7 +248,8 @@ root.render(${jsxComponent || '<div />'});
 
       jsCode = ''; // Leave JS pane empty because all logic is in the module script
     } else if (framework === 'svelte') {
-      htmlCode = `<!-- Svelte components require a compiler environment. -->\n${rawCode}`;
+      alert("Svelte components require a compiler/bundler environment (like Vite or Rollup) to run. They cannot be executed natively in JSFiddle.\\n\\nPlease check out the Web Component or React tabs for live JSFiddle demos!");
+      return;
     } else {
       // Web Component
       htmlCode = `<!-- Load Theme -->
@@ -257,7 +258,7 @@ root.render(${jsxComponent || '<div />'});
 <!-- Load Web Component -->
 <script type="module" src="https://unpkg.com/@chronos-ui/core/dist/webcomponent/dist/index.js"></script>
 
-${rawCode.replace(/<script type="module"[\s\S]*?<\/script>\n*/, '')}`; // strip local script tags
+${rawCode.replace(/<link rel="stylesheet" href="node_modules[^>]*>\n?/, '').replace(/<script type="module"[\s\S]*?<\/script>\n*/, '')}`; // strip local script and css tags
     }
 
     const form = document.createElement('form');

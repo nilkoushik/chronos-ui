@@ -1,6 +1,6 @@
 {
   "name": "@chronos-ui/core",
-  "version": "1.0.0-beta.13",
+  "version": "1.0.0-beta.14",
   "description": "A universal, framework-agnostic UI component library built with Mitosis. Write once, compile to React, Svelte, and Web Components.",
   "author": "your-name",
   "license": "MIT",

@@ -11,7 +11,7 @@
     "examples": {
       "react": "import Banner from '@chronos-ui/core/react/Banner';\nimport '@chronos-ui/core/theme.css';\n\n<Banner\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  ctaText=\"Shop Now\"\n  textAlignment=\"center\"\n  media={{ type: 'image', url: '/hero.jpg' }}\n  mapLinks={[{ url: '/shop' }]}\n/>",
       "svelte": "<script lang=\"ts\">\n  import Banner from '@chronos-ui/core/svelte/Banner.svelte';\n  import '@chronos-ui/core/theme.css';\n</script>\n\n<Banner\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  ctaText=\"Shop Now\"\n  textAlignment=\"center\"\n  media={{ type: 'image', url: '/hero.jpg' }}\n  mapLinks={[{ url: '/shop' }]}\n/>",
-      "wc": "<link rel=\"stylesheet\" href=\"node_modules/@chronos-ui/core/theme.css\">\n<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/Banner.js\"></script>\n\n<banner-element\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  cta-text=\"Shop Now\"\n  text-alignment=\"center\"\n></banner-element>"
+      "wc": "<link rel=\"stylesheet\" href=\"node_modules/@chronos-ui/core/theme.css\">\n<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/Banner.js\"></script>\n\n<banner\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  cta-text=\"Shop Now\"\n  text-alignment=\"center\"\n></banner>"
     },
     "notes": [
       { "type": "tip", "text": "<strong>Theming:</strong> Override <code>--chronos-color-primary</code> in your stylesheet to change the CTA button colour." },
@@ -30,7 +30,7 @@
     "examples": {
       "react": "import AnnouncementBar from '@chronos-ui/core/react/AnnouncementBar';\nimport '@chronos-ui/core/theme.css';\n\n<AnnouncementBar\n  message=\"🚀 Free shipping on orders over $75 — Shop the sale\"\n  backgroundColor=\"#7c3aed\"\n  textColor=\"#ffffff\"\n  mapLinks={[{ url: '/sale' }]}\n/>",
       "svelte": "<script lang=\"ts\">\n  import AnnouncementBar from '@chronos-ui/core/svelte/AnnouncementBar.svelte';\n</script>\n\n<AnnouncementBar\n  message=\"🚀 Free shipping on orders over $75\"\n  backgroundColor=\"#7c3aed\"\n  textColor=\"#ffffff\"\n  mapLinks={[{ url: '/sale' }]}\n/>",
-      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/AnnouncementBar.js\"></script>\n\n<announcement-bar-element\n  message=\"Free shipping on orders over $75\"\n  background-color=\"#7c3aed\"\n  text-color=\"#ffffff\"\n></announcement-bar-element>"
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/AnnouncementBar.js\"></script>\n\n<announcement-bar\n  message=\"Free shipping on orders over $75\"\n  background-color=\"#7c3aed\"\n  text-color=\"#ffffff\"\n></announcement-bar>"
     },
     "notes": [
       { "type": "tip", "text": "Place the <code>AnnouncementBar</code> at the very top of your layout, above the site header, for maximum visibility." }
@@ -48,7 +48,7 @@
     "examples": {
       "react": "import GridBanner from '@chronos-ui/core/react/GridBanner';\nimport '@chronos-ui/core/theme.css';\n\nconst items = [\n  { id: '1', title: \"Women's\", media: { type: 'image', url: '/women.jpg' }, mapLinks: [{ url: '/women' }] },\n  { id: '2', title: \"Men's\",   media: { type: 'image', url: '/men.jpg' },   mapLinks: [{ url: '/men' }] },\n  { id: '3', title: 'Footwear', media: { type: 'image', url: '/shoes.jpg' }, mapLinks: [{ url: '/shoes' }] },\n];\n\n<GridBanner items={items} columns={3} />",
       "svelte": "<script lang=\"ts\">\n  import GridBanner from '@chronos-ui/core/svelte/GridBanner.svelte';\n  const items = [\n    { id: '1', title: \"Women's\", media: { type: 'image', url: '/women.jpg' } },\n  ];\n</script>\n\n<GridBanner {items} columns={3} />",
-      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/GridBanner.js\"></script>\n\n<grid-banner-element\n  columns=\"3\"\n  items='[{\"id\":\"1\",\"title\":\"Women&apos;s\",\"media\":{\"type\":\"image\",\"url\":\"/women.jpg\"}}]'\n></grid-banner-element>"
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/GridBanner.js\"></script>\n\n<grid-banner\n  columns=\"3\"\n  items='[{\"id\":\"1\",\"title\":\"Women&apos;s\",\"media\":{\"type\":\"image\",\"url\":\"/women.jpg\"}}]'\n></grid-banner>"
     },
     "notes": []
   },
@@ -64,7 +64,7 @@
     "examples": {
       "react": "import MediaGrid from '@chronos-ui/core/react/MediaGrid';\nimport '@chronos-ui/core/theme.css';\n\n<MediaGrid\n  primaryMedia={{\n    id: 'p1',\n    media: { type: 'image', url: '/primary.jpg' },\n    mapLinks: [{ url: '/feature' }],\n    altText: 'Feature story',\n  }}\n  secondaryMedia={[\n    { id: 's1', media: { type: 'image', url: '/sec1.jpg' }, mapLinks: [{ url: '/story-1' }] },\n    { id: 's2', media: { type: 'image', url: '/sec2.jpg' }, mapLinks: [{ url: '/story-2' }] },\n  ]}\n/>",
       "svelte": "<script lang=\"ts\">\n  import MediaGrid from '@chronos-ui/core/svelte/MediaGrid.svelte';\n</script>\n\n<MediaGrid\n  primaryMedia={{ id: 'p1', media: { type: 'image', url: '/primary.jpg' } }}\n  secondaryMedia={[{ id: 's1', media: { type: 'image', url: '/sec1.jpg' } }]}\n/>",
-      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/MediaGrid.js\"></script>\n\n<media-grid-element\n  primary-media='{\"id\":\"p1\",\"media\":{\"type\":\"image\",\"url\":\"/primary.jpg\"}}'\n  secondary-media='[{\"id\":\"s1\",\"media\":{\"type\":\"image\",\"url\":\"/sec1.jpg\"}}]'\n></media-grid-element>"
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/MediaGrid.js\"></script>\n\n<media-grid\n  primary-media='{\"id\":\"p1\",\"media\":{\"type\":\"image\",\"url\":\"/primary.jpg\"}}'\n  secondary-media='[{\"id\":\"s1\",\"media\":{\"type\":\"image\",\"url\":\"/sec1.jpg\"}}]'\n></media-grid>"
     },
     "notes": [
       { "type": "info", "text": "The secondary column uses <code>grid-template-rows: 1fr 1fr</code> — all secondary items share equal height regardless of count." }
@@ -82,7 +82,7 @@
     "examples": {
       "react": "import RowScrollable from '@chronos-ui/core/react/RowScrollable';\nimport '@chronos-ui/core/theme.css';\n\nconst items = [\n  { id: '1', title: 'Linen Dress',  subtitle: '$89.00', media: { type: 'image', url: '/p1.jpg' }, mapLinks: [{ url: '/p/1' }] },\n  { id: '2', title: 'Oxford Shirt', subtitle: '$55.00', media: { type: 'image', url: '/p2.jpg' }, mapLinks: [{ url: '/p/2' }] },\n];\n\n<RowScrollable title=\"Featured Products\" items={items} />",
       "svelte": "<script lang=\"ts\">\n  import RowScrollable from '@chronos-ui/core/svelte/RowScrollable.svelte';\n  const items = [\n    { id: '1', title: 'Linen Dress', subtitle: '$89', media: { type: 'image', url: '/p1.jpg' } },\n  ];\n</script>\n\n<RowScrollable title=\"Featured\" {items} />",
-      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/RowScrollable.js\"></script>\n\n<row-scrollable-element\n  title=\"Featured Products\"\n  items='[{\"id\":\"1\",\"title\":\"Linen Dress\"}]'\n></row-scrollable-element>"
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/RowScrollable.js\"></script>\n\n<row-scrollable\n  title=\"Featured Products\"\n  items='[{\"id\":\"1\",\"title\":\"Linen Dress\"}]'\n></row-scrollable>"
     },
     "notes": []
   },
@@ -98,7 +98,7 @@
     "examples": {
       "react": "import SlidingBanner from '@chronos-ui/core/react/SlidingBanner';\nimport '@chronos-ui/core/theme.css';\n\nconst items = [\n  { id: '1', title: 'Summer Sale',   subtitle: 'Up to 50% off', ctaText: 'Shop Now', media: { type: 'image', url: '/s1.jpg' }, mapLinks: [{ url: '/sale' }] },\n  { id: '2', title: 'New Arrivals', subtitle: 'Latest collection', ctaText: 'Explore', media: { type: 'image', url: '/s2.jpg' }, mapLinks: [{ url: '/new' }] },\n];\n\n<SlidingBanner\n  items={items}\n  config={{\n    autoStart: true,\n    rotateAgain: true,\n    delayMs: 5000,\n    showNextPrev: true,\n    showDots: true,\n    animationEffect: 'fade',\n    backgroundEffect: 'particles',\n  }}\n/>",
       "svelte": "<script lang=\"ts\">\n  import SlidingBanner from '@chronos-ui/core/svelte/SlidingBanner.svelte';\n</script>\n\n<SlidingBanner\n  {items}\n  config={{ autoStart: true, showDots: true, animationEffect: 'zoom' }}\n/>",
-      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/SlidingBanner.js\"></script>\n\n<sliding-banner-element\n  items='[{\"id\":\"1\",\"title\":\"Sale\"}]'\n  config='{\"autoStart\":true,\"showDots\":true,\"animationEffect\":\"fade\"}'\n></sliding-banner-element>"
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/SlidingBanner.js\"></script>\n\n<sliding-banner\n  items='[{\"id\":\"1\",\"title\":\"Sale\"}]'\n  config='{\"autoStart\":true,\"showDots\":true,\"animationEffect\":\"fade\"}'\n></sliding-banner>"
     },
     "notes": [],
     "extra": "<h2 class=\"section-heading\">Available Effects</h2><div class=\"effect-list\"><span class=\"effect-pill\">slide</span><span class=\"effect-pill\">fade</span><span class=\"effect-pill\">zoom</span><span class=\"effect-pill\">flip</span><span class=\"effect-pill\">push-up</span><span class=\"effect-pill\">push-down</span><span class=\"effect-pill\">push-left</span><span class=\"effect-pill\">push-right</span><span class=\"effect-pill\">wipe-left</span><span class=\"effect-pill\">wipe-right</span><span class=\"effect-pill\">cube</span><span class=\"effect-pill\">door</span><span class=\"effect-pill\">fall</span></div><style>.effect-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}.effect-pill{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;font-family:var(--font-mono);background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);color:#a78bfa}</style>"
@@ -115,7 +115,7 @@
     "examples": {
       "react": "import AlternatingSlider from '@chronos-ui/core/react/AlternatingSlider';\nimport '@chronos-ui/core/theme.css';\n\nconst items = [\n  { id: 'a', title: 'Women',    subtitle: 'New season', ctaText: 'Shop', media: { type: 'image', url: '/w.jpg' } },\n  { id: 'b', title: 'Men',      subtitle: 'Essentials', ctaText: 'Shop', media: { type: 'image', url: '/m.jpg' } },\n  { id: 'c', title: 'Kids',     subtitle: 'Play more',  ctaText: 'Shop', media: { type: 'image', url: '/k1.jpg' } },\n  { id: 'd', title: 'Footwear', subtitle: 'Step up',    ctaText: 'Shop', media: { type: 'image', url: '/k2.jpg' } },\n];\n\n<AlternatingSlider\n  items={items}\n  config={{ columns: 2, autoStart: true, delayMs: 4000, showArrows: true, showDots: true }}\n/>",
       "svelte": "<script lang=\"ts\">\n  import AlternatingSlider from '@chronos-ui/core/svelte/AlternatingSlider.svelte';\n</script>\n\n<AlternatingSlider\n  {items}\n  config={{ columns: 2, autoStart: true, showDots: true }}\n/>",
-      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/AlternatingSlider.js\"></script>\n\n<alternating-slider-element\n  config='{\"columns\":2,\"autoStart\":true,\"showDots\":true}'\n  items='[...]'\n></alternating-slider-element>"
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/AlternatingSlider.js\"></script>\n\n<alternating-slider\n  config='{\"columns\":2,\"autoStart\":true,\"showDots\":true}'\n  items='[...]'\n></alternating-slider>"
     },
     "notes": [
       { "type": "tip", "text": "<strong>Column grouping:</strong> Items are grouped into slide-sets automatically. With <code>columns: 2</code> and 4 items you get 2 slide-sets of 2. Keep <code>items.length</code> a multiple of <code>columns</code> for best results." }
@@ -134,7 +134,7 @@
     "examples": {
       "react": "import TimerWidget from '@chronos-ui/core/react/TimerWidget';\nimport '@chronos-ui/core/theme.css';\n\n<TimerWidget\n  title=\"Sale ends in:\"\n  targetDate=\"2026-12-31T23:59:59Z\"\n/>",
       "svelte": "<script lang=\"ts\">\n  import TimerWidget from '@chronos-ui/core/svelte/TimerWidget.svelte';\n</script>\n\n<TimerWidget\n  title=\"Sale ends in:\"\n  targetDate=\"2026-12-31T23:59:59Z\"\n/>",
-      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/TimerWidget.js\"></script>\n\n<timer-widget-element\n  title=\"Sale ends in:\"\n  target-date=\"2026-12-31T23:59:59Z\"\n></timer-widget-element>"
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/TimerWidget.js\"></script>\n\n<timer-widget\n  title=\"Sale ends in:\"\n  target-date=\"2026-12-31T23:59:59Z\"\n></timer-widget>"
     },
     "notes": [
       { "type": "warn", "text": "<strong>Past dates:</strong> When <code>targetDate</code> is in the past all values show <code>0</code>. Update or remove the component via your CMS when the countdown expires." },
@@ -153,7 +153,7 @@
     "examples": {
       "react": "import WysiwygRenderer from '@chronos-ui/core/react/WysiwygRenderer';\nimport '@chronos-ui/core/theme.css';\n\n// html comes from your CMS API response\nconst html = `<h2>Autumn Collection</h2><p>...</p>`;\n\n<WysiwygRenderer content={html} />",
       "svelte": "<script lang=\"ts\">\n  import WysiwygRenderer from '@chronos-ui/core/svelte/WysiwygRenderer.svelte';\n  const html = '<h2>Hello</h2><p>World</p>';\n</script>\n\n<WysiwygRenderer content={html} />",
-      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/WysiwygRenderer.js\"></script>\n\n<wysiwyg-renderer-element\n  content=\"<h2>Hello</h2><p>World</p>\"\n></wysiwyg-renderer-element>"
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/WysiwygRenderer.js\"></script>\n\n<wysiwyg-renderer\n  content=\"<h2>Hello</h2><p>World</p>\"\n></wysiwyg-renderer>"
     },
     "notes": [
       { "type": "warn", "text": "<strong>Security:</strong> This component renders raw HTML. Always sanitise untrusted CMS content server-side (e.g. with DOMPurify) before passing it to <code>content</code>." }
