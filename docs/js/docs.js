@@ -226,8 +226,8 @@ function initJsfiddle() {
     if (framework === 'react') {
       // Setup Babel Standalone in the HTML pane to preserve native ES Modules
       jsCode = rawCode
-        .replace(/from\s+['"]@chronos-ui\/core\/(.*?)['"]/g, "from 'https://esm.sh/@chronos-ui/core@latest/$1'")
-        .replace(/import\s+['"]@chronos-ui\/core\/(.*?)['"]/g, "import 'https://esm.sh/@chronos-ui/core@latest/$1'");
+        .replace(/from\s+['"]@chronos-ui\/core\/(.*?)['"]/g, "from 'https://esm.sh/@chronos-ui/core@beta/$1'")
+        .replace(/import\s+['"]@chronos-ui\/core\/(.*?)['"]/g, "import 'https://esm.sh/@chronos-ui/core@beta/$1'");
         
       const jsxMatch = jsCode.match(/<([A-Z][a-zA-Z0-9]*)\b[^>]*(\/>|<\/[A-Z][a-zA-Z0-9]*>)/);
       const jsxComponent = jsxMatch ? jsxMatch[0] : '';
@@ -253,10 +253,10 @@ root.render(${jsxComponent || '<div />'});
     } else {
       // Web Component
       htmlCode = `<!-- Load Theme -->
-<link rel="stylesheet" href="https://unpkg.com/@chronos-ui/core/src/styles/theme.css">
+<link rel="stylesheet" href="https://unpkg.com/@chronos-ui/core@beta/src/styles/theme.css">
 
 <!-- Load Web Component -->
-<script type="module" src="https://unpkg.com/@chronos-ui/core/dist/webcomponent/dist/index.js"></script>
+<script type="module" src="https://unpkg.com/@chronos-ui/core@beta/dist/webcomponent/dist/index.js"></script>
 
 ${rawCode.replace(/<link rel="stylesheet" href="node_modules[^>]*>\n?/, '').replace(/<script type="module"[\s\S]*?<\/script>\n*/, '')}`; // strip local script and css tags
     }
