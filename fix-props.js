@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-
-const srcDir = 'c:/projects/cms/chronos-ui/dist/svelte/src/components';
+const srcDir = path.join(__dirname, 'dist', 'svelte', 'src', 'components');
 
 if (fs.existsSync(srcDir)) {
   const files = fs.readdirSync(srcDir).filter(f => f.endsWith('.svelte'));

@@ -1,8 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-
-const srcDir = 'c:/projects/cms/chronos-ui/src/components';
-const themeCssPath = 'c:/projects/cms/chronos-ui/src/styles/theme.css';
+const srcDir = path.join(__dirname, 'src', 'components');
+const themeCssPath = path.join(__dirname, 'src', 'styles', 'theme.css');
 
 const files = fs.readdirSync(srcDir).filter(f => f.endsWith('.lite.tsx'));
 let allCss = '\n/* Component Styles Extracted Automatically */\n';
