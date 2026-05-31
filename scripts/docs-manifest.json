@@ -14,8 +14,52 @@
       "wc": "<link rel=\"stylesheet\" href=\"node_modules/@chronos-ui/core/theme.css\">\n<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/Banner.js\"></script>\n\n<banner\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  cta-text=\"Shop Now\"\n  text-alignment=\"center\"\n></banner>"
     },
     "notes": [
-      { "type": "tip", "text": "<strong>Theming:</strong> Override <code>--chronos-color-primary</code> in your stylesheet to change the CTA button colour." },
-      { "type": "info", "text": "<strong>Video background:</strong> Set <code>media.type = 'video'</code> — the component renders a muted, autoplayed, looped <code>&lt;video&gt;</code> positioned absolutely behind the overlay." }
+      {
+        "type": "tip",
+        "text": "<strong>Theming:</strong> Override <code>--chronos-color-primary</code> in your stylesheet to change the CTA button colour."
+      },
+      {
+        "type": "info",
+        "text": "<strong>Video background:</strong> Set <code>media.type = 'video'</code> — the component renders a muted, autoplayed, looped <code>&lt;video&gt;</code> positioned absolutely behind the overlay."
+      }
+    ],
+    "api": [
+      {
+        "prop": "title",
+        "type": "string",
+        "default": "undefined",
+        "desc": "Main heading text."
+      },
+      {
+        "prop": "subtitle",
+        "type": "string",
+        "default": "undefined",
+        "desc": "Secondary text below the title."
+      },
+      {
+        "prop": "ctaText",
+        "type": "string",
+        "default": "undefined",
+        "desc": "Call to action button text. Omit to hide the button."
+      },
+      {
+        "prop": "textAlignment",
+        "type": "string",
+        "default": "\"center\"",
+        "desc": "Alignment of text content: \"left\", \"center\", or \"right\"."
+      },
+      {
+        "prop": "media",
+        "type": "object",
+        "default": "undefined",
+        "desc": "Background media object. { type: \"image\" | \"video\", url: string }"
+      },
+      {
+        "prop": "mapLinks",
+        "type": "array",
+        "default": "undefined",
+        "desc": "Link for the CTA. { url: string }"
+      }
     ]
   },
   {
@@ -33,7 +77,36 @@
       "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/AnnouncementBar.js\"></script>\n\n<announcement-bar\n  message=\"Free shipping on orders over $75\"\n  background-color=\"#7c3aed\"\n  text-color=\"#ffffff\"\n></announcement-bar>"
     },
     "notes": [
-      { "type": "tip", "text": "Place the <code>AnnouncementBar</code> at the very top of your layout, above the site header, for maximum visibility." }
+      {
+        "type": "tip",
+        "text": "Place the <code>AnnouncementBar</code> at the very top of your layout, above the site header, for maximum visibility."
+      }
+    ],
+    "api": [
+      {
+        "prop": "message",
+        "type": "string",
+        "default": "undefined",
+        "desc": "The announcement message."
+      },
+      {
+        "prop": "backgroundColor",
+        "type": "string",
+        "default": "undefined",
+        "desc": "Background color hex code (e.g. \"#7c3aed\")."
+      },
+      {
+        "prop": "textColor",
+        "type": "string",
+        "default": "undefined",
+        "desc": "Text color hex code."
+      },
+      {
+        "prop": "mapLinks",
+        "type": "array",
+        "default": "undefined",
+        "desc": "Array containing link for the bar. { url: string }"
+      }
     ]
   },
   {
@@ -50,7 +123,21 @@
       "svelte": "<script lang=\"ts\">\n  import GridBanner from '@chronos-ui/core/svelte/GridBanner.svelte';\n  const items = [\n    { id: '1', title: \"Women's\", media: { type: 'image', url: '/women.jpg' } },\n  ];\n</script>\n\n<GridBanner {items} columns={3} />",
       "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/GridBanner.js\"></script>\n\n<grid-banner\n  columns=\"3\"\n  items='[{\"id\":\"1\",\"title\":\"Women&apos;s\",\"media\":{\"type\":\"image\",\"url\":\"/women.jpg\"}}]'\n></grid-banner>"
     },
-    "notes": []
+    "notes": [],
+    "api": [
+      {
+        "prop": "items",
+        "type": "array",
+        "default": "[]",
+        "desc": "Array of items to display. { id, title, media, mapLinks }"
+      },
+      {
+        "prop": "columns",
+        "type": "number | string",
+        "default": "3",
+        "desc": "Number of columns in the grid layout."
+      }
+    ]
   },
   {
     "name": "Media Grid",
@@ -67,7 +154,24 @@
       "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/MediaGrid.js\"></script>\n\n<media-grid\n  primary-media='{\"id\":\"p1\",\"media\":{\"type\":\"image\",\"url\":\"/primary.jpg\"}}'\n  secondary-media='[{\"id\":\"s1\",\"media\":{\"type\":\"image\",\"url\":\"/sec1.jpg\"}}]'\n></media-grid>"
     },
     "notes": [
-      { "type": "info", "text": "The secondary column uses <code>grid-template-rows: 1fr 1fr</code> — all secondary items share equal height regardless of count." }
+      {
+        "type": "info",
+        "text": "The secondary column uses <code>grid-template-rows: 1fr 1fr</code> — all secondary items share equal height regardless of count."
+      }
+    ],
+    "api": [
+      {
+        "prop": "primaryMedia",
+        "type": "object",
+        "default": "undefined",
+        "desc": "Large feature item. { id, media: { type, url }, mapLinks }"
+      },
+      {
+        "prop": "secondaryMedia",
+        "type": "array",
+        "default": "[]",
+        "desc": "Array of smaller stacked items on the right side."
+      }
     ]
   },
   {
@@ -84,7 +188,21 @@
       "svelte": "<script lang=\"ts\">\n  import RowScrollable from '@chronos-ui/core/svelte/RowScrollable.svelte';\n  const items = [\n    { id: '1', title: 'Linen Dress', subtitle: '$89', media: { type: 'image', url: '/p1.jpg' } },\n  ];\n</script>\n\n<RowScrollable title=\"Featured\" {items} />",
       "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/RowScrollable.js\"></script>\n\n<row-scrollable\n  title=\"Featured Products\"\n  items='[{\"id\":\"1\",\"title\":\"Linen Dress\"}]'\n></row-scrollable>"
     },
-    "notes": []
+    "notes": [],
+    "api": [
+      {
+        "prop": "title",
+        "type": "string",
+        "default": "undefined",
+        "desc": "Optional heading for the scrollable row."
+      },
+      {
+        "prop": "items",
+        "type": "array",
+        "default": "[]",
+        "desc": "Array of cards. { id, title, subtitle, media, mapLinks }"
+      }
+    ]
   },
   {
     "name": "Sliding Banner",
@@ -101,7 +219,57 @@
       "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/SlidingBanner.js\"></script>\n\n<sliding-banner\n  items='[{\"id\":\"1\",\"title\":\"Sale\"}]'\n  config='{\"autoStart\":true,\"showDots\":true,\"animationEffect\":\"fade\"}'\n></sliding-banner>"
     },
     "notes": [],
-    "extra": "<h2 class=\"section-heading\">Available Effects</h2><div class=\"effect-list\"><span class=\"effect-pill\">slide</span><span class=\"effect-pill\">fade</span><span class=\"effect-pill\">zoom</span><span class=\"effect-pill\">flip</span><span class=\"effect-pill\">push-up</span><span class=\"effect-pill\">push-down</span><span class=\"effect-pill\">push-left</span><span class=\"effect-pill\">push-right</span><span class=\"effect-pill\">wipe-left</span><span class=\"effect-pill\">wipe-right</span><span class=\"effect-pill\">cube</span><span class=\"effect-pill\">door</span><span class=\"effect-pill\">fall</span></div><style>.effect-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}.effect-pill{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;font-family:var(--font-mono);background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);color:#a78bfa}</style>"
+    "extra": "<h2 class=\"section-heading\">Available Effects</h2><div class=\"effect-list\"><span class=\"effect-pill\">slide</span><span class=\"effect-pill\">fade</span><span class=\"effect-pill\">zoom</span><span class=\"effect-pill\">flip</span><span class=\"effect-pill\">push-up</span><span class=\"effect-pill\">push-down</span><span class=\"effect-pill\">push-left</span><span class=\"effect-pill\">push-right</span><span class=\"effect-pill\">wipe-left</span><span class=\"effect-pill\">wipe-right</span><span class=\"effect-pill\">cube</span><span class=\"effect-pill\">door</span><span class=\"effect-pill\">fall</span></div><style>.effect-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}.effect-pill{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;font-family:var(--font-mono);background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);color:#a78bfa}</style>",
+    "api": [
+      {
+        "prop": "items",
+        "type": "array",
+        "default": "[]",
+        "desc": "Array of slides. { id, title, subtitle, ctaText, media, mapLinks }"
+      },
+      {
+        "prop": "config",
+        "type": "object",
+        "default": "{}",
+        "desc": "Slider configuration options."
+      },
+      {
+        "prop": "config.autoStart",
+        "type": "boolean",
+        "default": "true",
+        "desc": "Whether to auto-play the slides."
+      },
+      {
+        "prop": "config.delayMs",
+        "type": "number",
+        "default": "5000",
+        "desc": "Delay in milliseconds between slides."
+      },
+      {
+        "prop": "config.animationEffect",
+        "type": "string",
+        "default": "\"slide\"",
+        "desc": "Transition effect: \"slide\", \"fade\", \"cube\", \"flip\", \"zoom\", etc."
+      },
+      {
+        "prop": "config.backgroundEffect",
+        "type": "string",
+        "default": "\"none\"",
+        "desc": "Canvas background effect: \"none\", \"particles\", or \"waves\"."
+      },
+      {
+        "prop": "config.showArrows",
+        "type": "boolean",
+        "default": "true",
+        "desc": "Show next/previous arrows."
+      },
+      {
+        "prop": "config.showDots",
+        "type": "boolean",
+        "default": "true",
+        "desc": "Show navigation dots."
+      }
+    ]
   },
   {
     "name": "Alternating Slider",
@@ -118,7 +286,42 @@
       "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/AlternatingSlider.js\"></script>\n\n<alternating-slider\n  config='{\"columns\":2,\"autoStart\":true,\"showDots\":true}'\n  items='[...]'\n></alternating-slider>"
     },
     "notes": [
-      { "type": "tip", "text": "<strong>Column grouping:</strong> Items are grouped into slide-sets automatically. With <code>columns: 2</code> and 4 items you get 2 slide-sets of 2. Keep <code>items.length</code> a multiple of <code>columns</code> for best results." }
+      {
+        "type": "tip",
+        "text": "<strong>Column grouping:</strong> Items are grouped into slide-sets automatically. With <code>columns: 2</code> and 4 items you get 2 slide-sets of 2. Keep <code>items.length</code> a multiple of <code>columns</code> for best results."
+      }
+    ],
+    "api": [
+      {
+        "prop": "items",
+        "type": "array",
+        "default": "[]",
+        "desc": "Array of items to group into sliding columns."
+      },
+      {
+        "prop": "config",
+        "type": "object",
+        "default": "{}",
+        "desc": "Slider configuration options."
+      },
+      {
+        "prop": "config.columns",
+        "type": "number",
+        "default": "2",
+        "desc": "Number of adjacent sliding columns."
+      },
+      {
+        "prop": "config.autoStart",
+        "type": "boolean",
+        "default": "true",
+        "desc": "Whether to auto-play the slider."
+      },
+      {
+        "prop": "config.delayMs",
+        "type": "number",
+        "default": "5000",
+        "desc": "Delay in milliseconds between slides."
+      }
     ]
   },
   {
@@ -137,8 +340,28 @@
       "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/TimerWidget.js\"></script>\n\n<timer-widget\n  title=\"Sale ends in:\"\n  target-date=\"2026-12-31T23:59:59Z\"\n></timer-widget>"
     },
     "notes": [
-      { "type": "warn", "text": "<strong>Past dates:</strong> When <code>targetDate</code> is in the past all values show <code>0</code>. Update or remove the component via your CMS when the countdown expires." },
-      { "type": "tip", "text": "<strong>SSR:</strong> The timer renders <code>0</code> on the server then hydrates on the client, avoiding any hydration mismatch." }
+      {
+        "type": "warn",
+        "text": "<strong>Past dates:</strong> When <code>targetDate</code> is in the past all values show <code>0</code>. Update or remove the component via your CMS when the countdown expires."
+      },
+      {
+        "type": "tip",
+        "text": "<strong>SSR:</strong> The timer renders <code>0</code> on the server then hydrates on the client, avoiding any hydration mismatch."
+      }
+    ],
+    "api": [
+      {
+        "prop": "title",
+        "type": "string",
+        "default": "undefined",
+        "desc": "Heading above the timer blocks."
+      },
+      {
+        "prop": "targetDate",
+        "type": "string",
+        "default": "undefined",
+        "desc": "ISO 8601 UTC date string to count down to (e.g. \"2026-12-31T23:59:59Z\")."
+      }
     ]
   },
   {
@@ -156,7 +379,18 @@
       "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/WysiwygRenderer.js\"></script>\n\n<wysiwyg-renderer\n  content=\"<h2>Hello</h2><p>World</p>\"\n></wysiwyg-renderer>"
     },
     "notes": [
-      { "type": "warn", "text": "<strong>Security:</strong> This component renders raw HTML. Always sanitise untrusted CMS content server-side (e.g. with DOMPurify) before passing it to <code>content</code>." }
+      {
+        "type": "warn",
+        "text": "<strong>Security:</strong> This component renders raw HTML. Always sanitise untrusted CMS content server-side (e.g. with DOMPurify) before passing it to <code>content</code>."
+      }
+    ],
+    "api": [
+      {
+        "prop": "content",
+        "type": "string",
+        "default": "\"\"",
+        "desc": "Raw HTML string to render. Must be sanitized before passing."
+      }
     ]
   }
 ]

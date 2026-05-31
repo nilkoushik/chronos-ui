@@ -35,13 +35,23 @@
   ],
   "SlidingBanner": [
     { "name": "items",     "required": true,  "type": "WidgetItem[]",  "description": "Array of slide items" },
-    { "name": "config",    "required": false, "type": "SliderConfig",  "description": "Slider behaviour configuration — see SliderConfig table" },
+    { "name": "config.autoStart", "required": false, "type": "boolean", "description": "Whether to auto-play the slides (default: true)" },
+    { "name": "config.rotateAgain", "required": false, "type": "boolean", "description": "Whether to loop back to the first slide (default: true)" },
+    { "name": "config.delayMs", "required": false, "type": "number", "description": "Delay in milliseconds between slides (default: 5000)" },
+    { "name": "config.showNextPrev", "required": false, "type": "boolean", "description": "Show next/previous arrows (default: true)" },
+    { "name": "config.showDots", "required": false, "type": "boolean", "description": "Show navigation dots (default: true)" },
+    { "name": "config.animationEffect", "required": false, "type": "'slide' | 'fade' | 'cube' | 'flip' | 'zoom' | ...", "description": "Transition effect between slides (default: 'slide')" },
+    { "name": "config.backgroundEffect", "required": false, "type": "'none' | 'particles' | 'waves'", "description": "Canvas background animation (default: 'none')" },
     { "name": "className", "required": false, "type": "string",         "description": "Additional CSS class names on the root element" },
     { "name": "isLoading", "required": false, "type": "boolean",        "description": "Applies shimmer to all slide backgrounds" }
   ],
   "AlternatingSlider": [
     { "name": "items",     "required": true,  "type": "WidgetItem[]",        "description": "Flat list; grouped into slide-sets by the <code>columns</code> config value" },
-    { "name": "config",    "required": false, "type": "AlternatingConfig",   "description": "Slider configuration — see AlternatingConfig table" },
+    { "name": "config.columns", "required": false, "type": "number", "description": "Number of vertical sliding columns (default: 2)" },
+    { "name": "config.autoStart", "required": false, "type": "boolean", "description": "Whether to auto-play the slider (default: true)" },
+    { "name": "config.delayMs", "required": false, "type": "number", "description": "Delay in milliseconds between slides (default: 5000)" },
+    { "name": "config.showArrows", "required": false, "type": "boolean", "description": "Show next/previous arrows (default: true)" },
+    { "name": "config.showDots", "required": false, "type": "boolean", "description": "Show navigation dots (default: true)" },
     { "name": "className", "required": false, "type": "string",               "description": "Additional CSS class names on the root element" },
     { "name": "isLoading", "required": false, "type": "boolean",              "description": "Applies shimmer animation to all cells" }
   ],
