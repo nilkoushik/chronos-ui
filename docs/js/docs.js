@@ -238,11 +238,10 @@ import Component from 'https://esm.sh/@chronos-ui/core/react/Component';
     } else {
       // Web Component
       htmlCode = `<!-- Load Theme -->
-<link rel="stylesheet" href="https://unpkg.com/@chronos-ui/core/theme.css">
+<link rel="stylesheet" href="https://unpkg.com/@chronos-ui/core/src/styles/theme.css">
 
 <!-- Load Web Component -->
-<!-- When published to npm, this will load the component logic -->
-<script type="module" src="https://unpkg.com/@chronos-ui/core/webcomponents/index.js"></script>
+<script type="module" src="https://unpkg.com/@chronos-ui/core/dist/webcomponent/dist/index.js"></script>
 
 ${rawCode.replace(/<script type="module"[\s\S]*?<\/script>\n*/, '')}`; // strip local script tags
     }
