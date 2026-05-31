@@ -37,6 +37,11 @@ jobs:
           ls -R dist/ || echo "dist/ missing — build may have failed"
 
       - name: Publish to npm
-        run: npm publish --access public --provenance
+        run: |
+          if [[ "${GITHUB_REF}" == *"-beta"* ]]; then
+            npm publish --access public --provenance --tag beta
+          else
+            npm publish --access public --provenance
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
