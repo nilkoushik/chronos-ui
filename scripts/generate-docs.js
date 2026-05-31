@@ -29,6 +29,8 @@ const GITHUB_USER = 'nilkoushik';
 const REPO        = 'chronos-ui';
 const GITHUB_URL  = `https://github.com/${GITHUB_USER}/${REPO}`;
 const PAGES_URL   = `https://${GITHUB_USER}.github.io/${REPO}`;
+const PACKAGE_JSON = require('../package.json');
+const VERSION     = PACKAGE_JSON.version;
 
 // ── Sidebar HTML (shared across every page) ────────────────────────────────
 function buildSidebar(activeSlug) {
@@ -42,7 +44,7 @@ function buildSidebar(activeSlug) {
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.0.0-beta.2</span>
+        <span class="sidebar-version">v${VERSION}</span>
       </a>
       <nav class="sidebar-nav">
         <div class="sidebar-section-label">Getting Started</div>
