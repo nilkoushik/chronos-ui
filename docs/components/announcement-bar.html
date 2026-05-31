@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Announcement Bar — Chronos UI</title>
+  <meta name="description" content="Slim full-width bar for promotions and site-wide announcements. Customisable colours and optional link." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="../css/docs.css" />
+  <style>.demo-ab{display:flex;align-items:center;justify-content:center;padding:.875rem 1.5rem;font-family:'Inter',sans-serif;font-size:.95rem;font-weight:500;text-align:center;background:#7c3aed;color:#fff;border-radius:8px}.demo-ab a{color:inherit;text-decoration:none}.demo-ab a:hover{text-decoration:underline}</style>
+</head>
+<body>
+<div class="docs-shell">
+  
+    <aside class="docs-sidebar">
+      <a href="../index.html" class="sidebar-brand">
+        <div class="sidebar-logo">⏱</div>
+        <span class="sidebar-brand-name">Chronos<span>UI</span></span>
+        <span class="sidebar-version">v1.0.0-beta.1</span>
+      </a>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-label">Getting Started</div>
+        <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> Home</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Components</div>
+        <a href="banner.html" class="sidebar-link"><span class="sidebar-link-icon">🖼</span> Banner</a>
+      <a href="announcement-bar.html" class="sidebar-link active"><span class="sidebar-link-icon">📢</span> Announcement Bar</a>
+      <a href="grid-banner.html" class="sidebar-link"><span class="sidebar-link-icon">⊞</span> Grid Banner</a>
+      <a href="media-grid.html" class="sidebar-link"><span class="sidebar-link-icon">🎞</span> Media Grid</a>
+      <a href="row-scrollable.html" class="sidebar-link"><span class="sidebar-link-icon">↔</span> Row Scrollable</a>
+      <a href="sliding-banner.html" class="sidebar-link"><span class="sidebar-link-icon">▶</span> Sliding Banner</a>
+      <a href="alternating-slider.html" class="sidebar-link"><span class="sidebar-link-icon">⇅</span> Alternating Slider</a>
+      <a href="timer-widget.html" class="sidebar-link"><span class="sidebar-link-icon">⏳</span> Timer Widget</a>
+      <a href="wysiwyg-renderer.html" class="sidebar-link"><span class="sidebar-link-icon">✍</span> WYSIWYG Renderer</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
+        <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
+        <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+      </nav>
+    </aside>
+
+  <main class="docs-main">
+    <div class="docs-topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+      <div class="topbar-breadcrumb">
+        <a href="../index.html">Chronos UI</a><span class="sep">/</span>
+        <span class="current">Announcement Bar</span>
+      </div>
+      <div class="topbar-actions">
+        <a href="https://github.com/nilkoushik/chronos-ui/blob/main/src/components/AnnouncementBar.lite.tsx"
+           target="_blank" rel="noopener" class="btn-github">View Source</a>
+      </div>
+    </div>
+
+    <div class="docs-content">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge">📢 Component</div>
+        <h1 class="page-title">Announcement Bar</h1>
+        <p class="page-description">Slim full-width bar for promotions and site-wide announcements. Customisable colours and optional link.</p>
+      </div>
+
+      <!-- Install -->
+      <div class="install-banner">
+        <code>npm install @chronos-ui/core</code>
+        <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
+      </div>
+
+      
+
+      <!-- Preview -->
+      <h2 class="section-heading">Live Preview</h2>
+      <div class="preview-card">
+        <div class="preview-toolbar">
+          <span class="preview-dot red"></span>
+          <span class="preview-dot amber"></span>
+          <span class="preview-dot green"></span>
+          <span class="preview-url">AnnouncementBar component</span>
+        </div>
+        <div class="preview-body">
+          <div class="demo-ab"><a href="#">🚀 Free shipping on orders over $75 — Shop the sale →</a></div>
+        </div>
+      </div>
+
+      <!-- Code Tabs -->
+      <h2 class="section-heading" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+        Usage
+        <button class="jsfiddle-btn" id="jsfiddle-btn" style="background:var(--chronos-color-primary); color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:600; display:flex; align-items:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Play in JSFiddle
+        </button>
+      </h2>
+      <div class="tab-group">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-tab="react">React</button>
+          <button class="tab-btn" data-tab="svelte">Svelte</button>
+          <button class="tab-btn" data-tab="wc">Web Component</button>
+        </div>
+        <div class="tab-panel active" data-panel="react">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code><span class="kw">import</span> AnnouncementBar <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/AnnouncementBar'</span>;
+<span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+
+&lt;<span class="tag">AnnouncementBar</span>
+  message=<span class="str">"🚀 Free shipping on orders over $75 — Shop the sale"</span>
+  backgroundColor=<span class="str">"#7c3aed"</span>
+  textColor=<span class="str">"#ffffff"</span>
+  mapLinks={[{ url: <span class="str">'/sale'</span> }]}
+/&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="svelte">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
+  <span class="kw">import</span> AnnouncementBar <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/AnnouncementBar.svelte'</span>;
+&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">AnnouncementBar</span>
+  message=<span class="str">"🚀 Free shipping on orders over $75"</span>
+  backgroundColor=<span class="str">"#7c3aed"</span>
+  textColor=<span class="str">"#ffffff"</span>
+  mapLinks={[{ url: <span class="str">'/sale'</span> }]}
+/&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="wc">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">script</span> type=<span class="str">"module"</span>
+  src=<span class="str">"node_modules/@chronos-ui/core/webcomponents/AnnouncementBar.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">announcement-bar-element</span>
+  message=<span class="str">"Free shipping on orders over $75"</span>
+  background-color=<span class="str">"#7c3aed"</span>
+  text-color=<span class="str">"#ffffff"</span>
+&gt;&lt;/<span class="tag">announcement-bar-element</span>&gt;</code></pre>
+    </div>
+        </div>
+      </div>
+
+      <!-- Props Table -->
+      <h2 class="section-heading">Props</h2>
+      
+    <div class="props-table-wrap">
+      <table class="props-table">
+        <thead>
+          <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td><span class="prop-name">message</span> <span class="prop-required">required</span></td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">—</span></td>
+        <td>The announcement text content</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">mapLinks</span> </td>
+        <td><span class="prop-type">{ url: string }[]</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>When provided, wraps message in an anchor using first entry's URL</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">backgroundColor</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>CSS colour for the bar background (default: <code>#8b5cf6</code>)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">textColor</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>CSS colour for the message text (default: <code>#ffffff</code>)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">className</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Additional CSS class names on the root element</td>
+      </tr></tbody>
+      </table>
+    </div>
+
+      <!-- Notes -->
+      <div class="alert alert-tip">Place the <code>AnnouncementBar</code> at the very top of your layout, above the site header, for maximum visibility.</div>
+    </div>
+  </main>
+</div>
+<script src="../js/docs.js"></script>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 import { useStore, onMount, onUnMount } from '@builder.io/mitosis';
 
 export interface TimerWidgetProps {
-  targetDate: string; // ISO String
+  targetDate: string;
   title?: string;
   className?: string;
 }

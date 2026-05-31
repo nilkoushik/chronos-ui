@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alternating Slider — Chronos UI</title>
+  <meta name="description" content="Multi-column slider where adjacent columns scroll in opposite vertical directions for a dramatic reveal effect." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="../css/docs.css" />
+  <style>#alt-slider-demo{position:relative;width:100%;height:260px;overflow:hidden;border-radius:10px;background:#000;font-family:'Inter',sans-serif;display:grid;grid-template-columns:1fr 1fr} .alt-col{height:100%;overflow:hidden} .alt-col-track{height:100%;transition:transform .8s cubic-bezier(0.645, 0.045, 0.355, 1)} .alt-card{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff} .alt-card h3{font-size:1.4rem;font-weight:800;text-shadow:0 2px 8px rgba(0,0,0,.8);margin-bottom:.4rem;text-align:center} .alt-card p{font-size:.85rem;text-shadow:0 1px 4px rgba(0,0,0,.8);opacity:.9} .ds-a1{background:url('../assets/images/new_arrivals.png') center/cover} .ds-a2{background:url('../assets/images/accessories.png') center/cover} .ds-a3{background:url('../assets/images/summer_sale.png') center/cover} .ds-a4{background:linear-gradient(135deg,#1a0533,#3b0764)} .demo-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;border-radius:50%;width:38px;height:38px;color:#fff;font-size:1rem;cursor:pointer;z-index:10;transition:background .2s;display:flex;align-items:center;justify-content:center} .demo-arrow:hover{background:rgba(255,255,255,.3)} .demo-arrow.prev{left:14px} .demo-arrow.next{right:14px} .demo-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10} .demo-dot{width:9px;height:9px;border-radius:50%;border:2px solid #fff;background:transparent;cursor:pointer;transition:all .3s;padding:0} .demo-dot.active{background:#fff;transform:scale(1.3)}</style>
+</head>
+<body>
+<div class="docs-shell">
+  
+    <aside class="docs-sidebar">
+      <a href="../index.html" class="sidebar-brand">
+        <div class="sidebar-logo">⏱</div>
+        <span class="sidebar-brand-name">Chronos<span>UI</span></span>
+        <span class="sidebar-version">v1.0.0-beta.1</span>
+      </a>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-label">Getting Started</div>
+        <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> Home</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Components</div>
+        <a href="banner.html" class="sidebar-link"><span class="sidebar-link-icon">🖼</span> Banner</a>
+      <a href="announcement-bar.html" class="sidebar-link"><span class="sidebar-link-icon">📢</span> Announcement Bar</a>
+      <a href="grid-banner.html" class="sidebar-link"><span class="sidebar-link-icon">⊞</span> Grid Banner</a>
+      <a href="media-grid.html" class="sidebar-link"><span class="sidebar-link-icon">🎞</span> Media Grid</a>
+      <a href="row-scrollable.html" class="sidebar-link"><span class="sidebar-link-icon">↔</span> Row Scrollable</a>
+      <a href="sliding-banner.html" class="sidebar-link"><span class="sidebar-link-icon">▶</span> Sliding Banner</a>
+      <a href="alternating-slider.html" class="sidebar-link active"><span class="sidebar-link-icon">⇅</span> Alternating Slider</a>
+      <a href="timer-widget.html" class="sidebar-link"><span class="sidebar-link-icon">⏳</span> Timer Widget</a>
+      <a href="wysiwyg-renderer.html" class="sidebar-link"><span class="sidebar-link-icon">✍</span> WYSIWYG Renderer</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
+        <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
+        <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+      </nav>
+    </aside>
+
+  <main class="docs-main">
+    <div class="docs-topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+      <div class="topbar-breadcrumb">
+        <a href="../index.html">Chronos UI</a><span class="sep">/</span>
+        <span class="current">Alternating Slider</span>
+      </div>
+      <div class="topbar-actions">
+        <a href="https://github.com/nilkoushik/chronos-ui/blob/main/src/components/AlternatingSlider.lite.tsx"
+           target="_blank" rel="noopener" class="btn-github">View Source</a>
+      </div>
+    </div>
+
+    <div class="docs-content">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge">⇅ Component</div>
+        <h1 class="page-title">Alternating Slider</h1>
+        <p class="page-description">Multi-column slider where adjacent columns scroll in opposite vertical directions for a dramatic reveal effect.</p>
+      </div>
+
+      <!-- Install -->
+      <div class="install-banner">
+        <code>npm install @chronos-ui/core</code>
+        <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
+      </div>
+
+      
+
+      <!-- Preview -->
+      <h2 class="section-heading">Live Preview</h2>
+      <div class="preview-card">
+        <div class="preview-toolbar">
+          <span class="preview-dot red"></span>
+          <span class="preview-dot amber"></span>
+          <span class="preview-dot green"></span>
+          <span class="preview-url">AlternatingSlider — 2 columns · autoplay</span>
+        </div>
+        <div class="preview-body-flush">
+          <div id="alt-slider-demo"><div class="alt-col"><div class="alt-col-track" id="alt-col-1" style="transform:translateY(0)"><div class="alt-card ds-a1"><h3>Women</h3><p>New season</p></div><div class="alt-card ds-a3"><h3>Kids</h3><p>Play more</p></div></div></div><div class="alt-col"><div class="alt-col-track" id="alt-col-2" style="transform:translateY(-100%)"><div class="alt-card ds-a4"><h3>Footwear</h3><p>Step up</p></div><div class="alt-card ds-a2"><h3>Men</h3><p>Essentials</p></div></div></div><button class="demo-arrow prev" id="alt-prev">‹</button><button class="demo-arrow next" id="alt-next">›</button><div class="demo-dots"><button class="demo-dot active" id="alt-dot-0"></button><button class="demo-dot" id="alt-dot-1"></button></div></div>
+        </div>
+      </div>
+
+      <!-- Code Tabs -->
+      <h2 class="section-heading" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+        Usage
+        <button class="jsfiddle-btn" id="jsfiddle-btn" style="background:var(--chronos-color-primary); color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:600; display:flex; align-items:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Play in JSFiddle
+        </button>
+      </h2>
+      <div class="tab-group">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-tab="react">React</button>
+          <button class="tab-btn" data-tab="svelte">Svelte</button>
+          <button class="tab-btn" data-tab="wc">Web Component</button>
+        </div>
+        <div class="tab-panel active" data-panel="react">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code><span class="kw">import</span> AlternatingSlider <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/AlternatingSlider'</span>;
+<span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+
+<span class="kw">const</span> items = [
+  { id: <span class="str">'a'</span>, title: <span class="str">'Women'</span>,    subtitle: <span class="str">'New season'</span>, ctaText: <span class="str">'Shop'</span>, media: { type: <span class="str">'image'</span>, url: <span class="str">'/w.jpg'</span> } },
+  { id: <span class="str">'b'</span>, title: <span class="str">'Men'</span>,      subtitle: <span class="str">'Essentials'</span>, ctaText: <span class="str">'Shop'</span>, media: { type: <span class="str">'image'</span>, url: <span class="str">'/m.jpg'</span> } },
+  { id: <span class="str">'c'</span>, title: <span class="str">'Kids'</span>,     subtitle: <span class="str">'Play more'</span>,  ctaText: <span class="str">'Shop'</span>, media: { type: <span class="str">'image'</span>, url: <span class="str">'/k1.jpg'</span> } },
+  { id: <span class="str">'d'</span>, title: <span class="str">'Footwear'</span>, subtitle: <span class="str">'Step up'</span>,    ctaText: <span class="str">'Shop'</span>, media: { type: <span class="str">'image'</span>, url: <span class="str">'/k2.jpg'</span> } },
+];
+
+&lt;<span class="tag">AlternatingSlider</span>
+  items={items}
+  config={{ columns: 2, autoStart: <span class="kw">true</span>, delayMs: 4000, showArrows: <span class="kw">true</span>, showDots: <span class="kw">true</span> }}
+/&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="svelte">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
+  <span class="kw">import</span> AlternatingSlider <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/AlternatingSlider.svelte'</span>;
+&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">AlternatingSlider</span>
+  {items}
+  config={{ columns: 2, autoStart: <span class="kw">true</span>, showDots: <span class="kw">true</span> }}
+/&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="wc">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">script</span> type=<span class="str">"module"</span>
+  src=<span class="str">"node_modules/@chronos-ui/core/webcomponents/AlternatingSlider.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">alternating-slider-element</span>
+  config=<span class="str">'{"columns":2,"autoStart":<span class="kw">true</span>,"showDots":<span class="kw">true</span>}'</span>
+  items=<span class="str">'[...]'</span>
+&gt;&lt;/<span class="tag">alternating-slider-element</span>&gt;</code></pre>
+    </div>
+        </div>
+      </div>
+
+      <!-- Props Table -->
+      <h2 class="section-heading">Props</h2>
+      
+    <div class="props-table-wrap">
+      <table class="props-table">
+        <thead>
+          <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td><span class="prop-name">items</span> <span class="prop-required">required</span></td>
+        <td><span class="prop-type">WidgetItem[]</span></td>
+        <td><span class="prop-default">—</span></td>
+        <td>Flat list; grouped into slide-sets by the <code>columns</code> config value</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">config</span> </td>
+        <td><span class="prop-type">AlternatingConfig</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Slider configuration — see AlternatingConfig table</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">className</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Additional CSS class names on the root element</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">isLoading</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Applies shimmer animation to all cells</td>
+      </tr></tbody>
+      </table>
+    </div>
+
+      <!-- Notes -->
+      <div class="alert alert-tip"><strong>Column grouping:</strong> Items are grouped into slide-sets automatically. With <code>columns: 2</code> and 4 items you get 2 slide-sets of 2. Keep <code>items.length</code> a multiple of <code>columns</code> for best results.</div>
+    </div>
+  </main>
+</div>
+<script src="../js/docs.js"></script>
+
+</body>
+</html>

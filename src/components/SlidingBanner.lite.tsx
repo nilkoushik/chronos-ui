@@ -43,6 +43,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
   
   const state = useStore({
     currentIndex: 0,
+    previousIndex: 0,
     intervalId: null as any,
     animationFrameId: null as any,
     resizeHandler: null as any,
@@ -55,6 +56,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     },
     next() {
       if (!props.items?.length) return;
+      state.previousIndex = state.currentIndex;
       if (state.currentIndex >= props.items.length - 1) {
         if (props.config?.rotateAgain !== false) {
           state.currentIndex = 0;
@@ -65,6 +67,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     },
     prev() {
       if (!props.items?.length) return;
+      state.previousIndex = state.currentIndex;
       if (state.currentIndex <= 0) {
         if (props.config?.rotateAgain !== false) {
           state.currentIndex = props.items.length - 1;
@@ -74,7 +77,10 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       }
     },
     goTo(index: number) {
-      state.currentIndex = index;
+      if (state.currentIndex !== index) {
+        state.previousIndex = state.currentIndex;
+        state.currentIndex = index;
+      }
     },
     startAutoPlay() {
       if (props.config?.autoStart !== false && props.items?.length > 1) {
@@ -197,12 +203,12 @@ export default function SlidingBanner(props: SlidingBannerProps) {
         ></canvas>
       )}
       
-      <div 
-        class="chronos-sliding-banner-track"
-        style={{ transform: `translateX(-${state.currentIndex * 100}%)` }}
-      >
+      <div class="chronos-sliding-banner-track">
         {props.items?.map((item, index) => (
-          <div class={`chronos-sliding-slide ${index === state.currentIndex ? 'active' : ''}`} key={item.id || index}>
+          <div 
+            class={`chronos-sliding-slide ${index === state.currentIndex ? 'active' : ''} ${index === state.previousIndex && index !== state.currentIndex ? 'previous' : ''}`} 
+            key={item.id || index}
+          >
             <Show when={item.media?.type === 'video'}>
               <video 
                 src={item.media?.url} 

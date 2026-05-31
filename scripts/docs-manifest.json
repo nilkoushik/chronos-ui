@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Banner",
+    "slug": "banner",
+    "icon": "🖼",
+    "cardGradient": "linear-gradient(135deg,#1e1b4b,#312e81)",
+    "cardDesc": "Full-bleed hero banner with image or video background, title, subtitle, CTA button, and loading shimmer.",
+    "previewLabel": "Banner component",
+    "previewCss": ".demo-banner{position:relative;min-height:300px;display:flex;flex-direction:column;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#0f172a,#1e1b4b);font-family:'Inter',sans-serif}.demo-banner-overlay{flex:1;display:flex;flex-direction:column;justify-content:center;padding:3rem;background:rgba(0,0,0,.4)}.demo-banner-title{font-size:2rem;font-weight:800;color:#fff;margin:0 0 .5rem}.demo-banner-sub{font-size:1.1rem;color:#cbd5e1;margin:0 0 1.5rem}.demo-banner-cta{display:inline-block;background:#7c3aed;color:#fff;padding:.75rem 2rem;border-radius:6px;font-weight:600;text-decoration:none;width:fit-content;transition:filter .2s}.demo-banner-cta:hover{filter:brightness(1.15);color:#fff}",
+    "previewHtml": "<div class=\"demo-banner\"><div class=\"demo-banner-overlay\"><h2 class=\"demo-banner-title\">Summer Collection 2026</h2><p class=\"demo-banner-sub\">Discover the new season — up to 50% off on selected items.</p><a href=\"#\" class=\"demo-banner-cta\">Shop Now</a></div></div>",
+    "examples": {
+      "react": "import Banner from '@chronos-ui/core/react/Banner';\nimport '@chronos-ui/core/theme.css';\n\n<Banner\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  ctaText=\"Shop Now\"\n  textAlignment=\"center\"\n  media={{ type: 'image', url: '/hero.jpg' }}\n  mapLinks={[{ url: '/shop' }]}\n/>",
+      "svelte": "<script lang=\"ts\">\n  import Banner from '@chronos-ui/core/svelte/Banner.svelte';\n  import '@chronos-ui/core/theme.css';\n</script>\n\n<Banner\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  ctaText=\"Shop Now\"\n  textAlignment=\"center\"\n  media={{ type: 'image', url: '/hero.jpg' }}\n  mapLinks={[{ url: '/shop' }]}\n/>",
+      "wc": "<link rel=\"stylesheet\" href=\"node_modules/@chronos-ui/core/theme.css\">\n<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/Banner.js\"></script>\n\n<banner-element\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  cta-text=\"Shop Now\"\n  text-alignment=\"center\"\n></banner-element>"
+    },
+    "notes": [
+      { "type": "tip", "text": "<strong>Theming:</strong> Override <code>--chronos-color-primary</code> in your stylesheet to change the CTA button colour." },
+      { "type": "info", "text": "<strong>Video background:</strong> Set <code>media.type = 'video'</code> — the component renders a muted, autoplayed, looped <code>&lt;video&gt;</code> positioned absolutely behind the overlay." }
+    ]
+  },
+  {
+    "name": "Announcement Bar",
+    "slug": "announcement-bar",
+    "icon": "📢",
+    "cardGradient": "linear-gradient(135deg,#1a0533,#3b0764)",
+    "cardDesc": "Slim full-width bar for promotions and site-wide announcements. Customisable colours and optional link.",
+    "previewLabel": "AnnouncementBar component",
+    "previewCss": ".demo-ab{display:flex;align-items:center;justify-content:center;padding:.875rem 1.5rem;font-family:'Inter',sans-serif;font-size:.95rem;font-weight:500;text-align:center;background:#7c3aed;color:#fff;border-radius:8px}.demo-ab a{color:inherit;text-decoration:none}.demo-ab a:hover{text-decoration:underline}",
+    "previewHtml": "<div class=\"demo-ab\"><a href=\"#\">🚀 Free shipping on orders over $75 — Shop the sale →</a></div>",
+    "examples": {
+      "react": "import AnnouncementBar from '@chronos-ui/core/react/AnnouncementBar';\nimport '@chronos-ui/core/theme.css';\n\n<AnnouncementBar\n  message=\"🚀 Free shipping on orders over $75 — Shop the sale\"\n  backgroundColor=\"#7c3aed\"\n  textColor=\"#ffffff\"\n  mapLinks={[{ url: '/sale' }]}\n/>",
+      "svelte": "<script lang=\"ts\">\n  import AnnouncementBar from '@chronos-ui/core/svelte/AnnouncementBar.svelte';\n</script>\n\n<AnnouncementBar\n  message=\"🚀 Free shipping on orders over $75\"\n  backgroundColor=\"#7c3aed\"\n  textColor=\"#ffffff\"\n  mapLinks={[{ url: '/sale' }]}\n/>",
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/AnnouncementBar.js\"></script>\n\n<announcement-bar-element\n  message=\"Free shipping on orders over $75\"\n  background-color=\"#7c3aed\"\n  text-color=\"#ffffff\"\n></announcement-bar-element>"
+    },
+    "notes": [
+      { "type": "tip", "text": "Place the <code>AnnouncementBar</code> at the very top of your layout, above the site header, for maximum visibility." }
+    ]
+  },
+  {
+    "name": "Grid Banner",
+    "slug": "grid-banner",
+    "icon": "⊞",
+    "cardGradient": "linear-gradient(135deg,#0c1a4b,#1e3a8a)",
+    "cardDesc": "Responsive CSS grid of banner cards with configurable column count, hover effects, and media support.",
+    "previewLabel": "GridBanner — 3 columns",
+    "previewCss": ".demo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;font-family:'Inter',sans-serif}.demo-gi{display:flex;flex-direction:column;text-decoration:none;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.08);transition:transform .2s,box-shadow .2s}.demo-gi:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.5)}.demo-gi-img{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:3rem}.demo-gi-title{padding:.75rem;font-weight:600;color:#e2e8f0;text-align:center;font-size:.875rem}.gc1{background:linear-gradient(135deg,#312e81,#4c1d95)}.gc2{background:linear-gradient(135deg,#1e3a5f,#1e40af)}.gc3{background:linear-gradient(135deg,#1a1a0f,#3d3200)}",
+    "previewHtml": "<div class=\"demo-grid\"><a href=\"#\" class=\"demo-gi\"><div class=\"demo-gi-img gc1\">👗</div><div class=\"demo-gi-title\">Women's</div></a><a href=\"#\" class=\"demo-gi\"><div class=\"demo-gi-img gc2\">👔</div><div class=\"demo-gi-title\">Men's</div></a><a href=\"#\" class=\"demo-gi\"><div class=\"demo-gi-img gc3\">👟</div><div class=\"demo-gi-title\">Footwear</div></a></div>",
+    "examples": {
+      "react": "import GridBanner from '@chronos-ui/core/react/GridBanner';\nimport '@chronos-ui/core/theme.css';\n\nconst items = [\n  { id: '1', title: \"Women's\", media: { type: 'image', url: '/women.jpg' }, mapLinks: [{ url: '/women' }] },\n  { id: '2', title: \"Men's\",   media: { type: 'image', url: '/men.jpg' },   mapLinks: [{ url: '/men' }] },\n  { id: '3', title: 'Footwear', media: { type: 'image', url: '/shoes.jpg' }, mapLinks: [{ url: '/shoes' }] },\n];\n\n<GridBanner items={items} columns={3} />",
+      "svelte": "<script lang=\"ts\">\n  import GridBanner from '@chronos-ui/core/svelte/GridBanner.svelte';\n  const items = [\n    { id: '1', title: \"Women's\", media: { type: 'image', url: '/women.jpg' } },\n  ];\n</script>\n\n<GridBanner {items} columns={3} />",
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/GridBanner.js\"></script>\n\n<grid-banner-element\n  columns=\"3\"\n  items='[{\"id\":\"1\",\"title\":\"Women&apos;s\",\"media\":{\"type\":\"image\",\"url\":\"/women.jpg\"}}]'\n></grid-banner-element>"
+    },
+    "notes": []
+  },
+  {
+    "name": "Media Grid",
+    "slug": "media-grid",
+    "icon": "🎞",
+    "cardGradient": "linear-gradient(135deg,#0f2027,#203a43)",
+    "cardDesc": "Editorial 2-column layout with one large primary asset and stacked secondary items at a 21:9 aspect ratio.",
+    "previewLabel": "MediaGrid — 1 primary + 2 secondary",
+    "previewCss": ".demo-mg{display:grid;grid-template-columns:2fr 1fr;gap:1rem;aspect-ratio:21/9;font-family:'Inter',sans-serif}.demo-mp,.demo-ms{display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:3rem;text-decoration:none;height:100%}.demo-mp{background:linear-gradient(135deg,#0f172a,#312e81)}.demo-msc{display:grid;grid-template-rows:1fr 1fr;gap:1rem;height:100%}.demo-ms:nth-child(1){background:linear-gradient(135deg,#1e3a5f,#1e40af)}.demo-ms:nth-child(2){background:linear-gradient(135deg,#1a0533,#3b0764)}",
+    "previewHtml": "<div class=\"demo-mg\"><a href=\"#\" class=\"demo-mp\">🌄</a><div class=\"demo-msc\"><a href=\"#\" class=\"demo-ms\">🏙</a><a href=\"#\" class=\"demo-ms\">🌃</a></div></div>",
+    "examples": {
+      "react": "import MediaGrid from '@chronos-ui/core/react/MediaGrid';\nimport '@chronos-ui/core/theme.css';\n\n<MediaGrid\n  primaryMedia={{\n    id: 'p1',\n    media: { type: 'image', url: '/primary.jpg' },\n    mapLinks: [{ url: '/feature' }],\n    altText: 'Feature story',\n  }}\n  secondaryMedia={[\n    { id: 's1', media: { type: 'image', url: '/sec1.jpg' }, mapLinks: [{ url: '/story-1' }] },\n    { id: 's2', media: { type: 'image', url: '/sec2.jpg' }, mapLinks: [{ url: '/story-2' }] },\n  ]}\n/>",
+      "svelte": "<script lang=\"ts\">\n  import MediaGrid from '@chronos-ui/core/svelte/MediaGrid.svelte';\n</script>\n\n<MediaGrid\n  primaryMedia={{ id: 'p1', media: { type: 'image', url: '/primary.jpg' } }}\n  secondaryMedia={[{ id: 's1', media: { type: 'image', url: '/sec1.jpg' } }]}\n/>",
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/MediaGrid.js\"></script>\n\n<media-grid-element\n  primary-media='{\"id\":\"p1\",\"media\":{\"type\":\"image\",\"url\":\"/primary.jpg\"}}'\n  secondary-media='[{\"id\":\"s1\",\"media\":{\"type\":\"image\",\"url\":\"/sec1.jpg\"}}]'\n></media-grid-element>"
+    },
+    "notes": [
+      { "type": "info", "text": "The secondary column uses <code>grid-template-rows: 1fr 1fr</code> — all secondary items share equal height regardless of count." }
+    ]
+  },
+  {
+    "name": "Row Scrollable",
+    "slug": "row-scrollable",
+    "icon": "↔",
+    "cardGradient": "linear-gradient(135deg,#1a1a0f,#3d3200)",
+    "cardDesc": "Horizontally scrollable card row with snap-scrolling, custom scrollbar, and optional section title.",
+    "previewLabel": "RowScrollable — scroll to see more →",
+    "previewCss": ".demo-rs{font-family:'Inter',sans-serif}.demo-rs-title{color:#e2e8f0;font-size:1rem;font-weight:600;margin-bottom:.75rem}.demo-rs-row{display:flex;gap:1rem;overflow-x:auto;padding-bottom:.5rem;scroll-snap-type:x mandatory}.demo-rs-row::-webkit-scrollbar{height:5px}.demo-rs-row::-webkit-scrollbar-track{background:#1e1b4b;border-radius:4px}.demo-rs-row::-webkit-scrollbar-thumb{background:#4c1d95;border-radius:4px}.demo-card{flex:0 0 200px;background:#1e1b4b;border:1px solid rgba(124,58,237,.2);border-radius:10px;overflow:hidden;scroll-snap-align:start;text-decoration:none}.demo-card-img{height:120px;display:flex;align-items:center;justify-content:center;font-size:2.5rem}.demo-card-body{padding:.75rem}.demo-card-title{font-weight:600;font-size:.875rem;color:#e2e8f0}.demo-card-sub{font-size:.75rem;color:#7c6fcd;margin-top:2px}.rc1{background:linear-gradient(135deg,#312e81,#1e1b4b)}.rc2{background:linear-gradient(135deg,#1a103d,#2e1065)}.rc3{background:linear-gradient(135deg,#0c1a4b,#1e3a8a)}.rc4{background:linear-gradient(135deg,#1a0533,#3b0764)}.rc5{background:linear-gradient(135deg,#1a1400,#3d3000)}",
+    "previewHtml": "<div class=\"demo-rs\"><div class=\"demo-rs-title\">Featured Products</div><div class=\"demo-rs-row\"><a href=\"#\" class=\"demo-card\"><div class=\"demo-card-img rc1\">👗</div><div class=\"demo-card-body\"><div class=\"demo-card-title\">Linen Dress</div><div class=\"demo-card-sub\">$89.00</div></div></a><a href=\"#\" class=\"demo-card\"><div class=\"demo-card-img rc2\">👔</div><div class=\"demo-card-body\"><div class=\"demo-card-title\">Oxford Shirt</div><div class=\"demo-card-sub\">$55.00</div></div></a><a href=\"#\" class=\"demo-card\"><div class=\"demo-card-img rc3\">👟</div><div class=\"demo-card-body\"><div class=\"demo-card-title\">Canvas Shoes</div><div class=\"demo-card-sub\">$120.00</div></div></a><a href=\"#\" class=\"demo-card\"><div class=\"demo-card-img rc4\">👜</div><div class=\"demo-card-body\"><div class=\"demo-card-title\">Tote Bag</div><div class=\"demo-card-sub\">$45.00</div></div></a><a href=\"#\" class=\"demo-card\"><div class=\"demo-card-img rc5\">🧢</div><div class=\"demo-card-body\"><div class=\"demo-card-title\">Baseball Cap</div><div class=\"demo-card-sub\">$30.00</div></div></a></div></div>",
+    "examples": {
+      "react": "import RowScrollable from '@chronos-ui/core/react/RowScrollable';\nimport '@chronos-ui/core/theme.css';\n\nconst items = [\n  { id: '1', title: 'Linen Dress',  subtitle: '$89.00', media: { type: 'image', url: '/p1.jpg' }, mapLinks: [{ url: '/p/1' }] },\n  { id: '2', title: 'Oxford Shirt', subtitle: '$55.00', media: { type: 'image', url: '/p2.jpg' }, mapLinks: [{ url: '/p/2' }] },\n];\n\n<RowScrollable title=\"Featured Products\" items={items} />",
+      "svelte": "<script lang=\"ts\">\n  import RowScrollable from '@chronos-ui/core/svelte/RowScrollable.svelte';\n  const items = [\n    { id: '1', title: 'Linen Dress', subtitle: '$89', media: { type: 'image', url: '/p1.jpg' } },\n  ];\n</script>\n\n<RowScrollable title=\"Featured\" {items} />",
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/RowScrollable.js\"></script>\n\n<row-scrollable-element\n  title=\"Featured Products\"\n  items='[{\"id\":\"1\",\"title\":\"Linen Dress\"}]'\n></row-scrollable-element>"
+    },
+    "notes": []
+  },
+  {
+    "name": "Sliding Banner",
+    "slug": "sliding-banner",
+    "icon": "▶",
+    "cardGradient": "linear-gradient(135deg,#0f0c29,#302b63)",
+    "cardDesc": "Full-featured slider with 13 transition effects, canvas backgrounds (particles/waves), autoplay, arrows & dots.",
+    "previewLabel": "SlidingBanner — fade effect · autoplay",
+    "previewCss": "#slider-demo{position:relative;width:100%;height:280px;overflow:hidden;border-radius:10px;background:#000;font-family:'Inter',sans-serif}.demo-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;opacity:0;transition:opacity .8s ease;pointer-events:none}.demo-slide.active{opacity:1;pointer-events:auto}.demo-slide h3{font-size:1.75rem;font-weight:800;text-shadow:0 2px 8px rgba(0,0,0,.8);margin-bottom:.5rem}.demo-slide p{font-size:.95rem;text-shadow:0 1px 4px rgba(0,0,0,.8);opacity:.9}.ds1{background:url('../assets/images/summer_sale.png') center/cover}.ds2{background:url('../assets/images/new_arrivals.png') center/cover}.ds3{background:url('../assets/images/accessories.png') center/cover}.demo-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;border-radius:50%;width:38px;height:38px;color:#fff;font-size:1rem;cursor:pointer;z-index:10;transition:background .2s;display:flex;align-items:center;justify-content:center}.demo-arrow:hover{background:rgba(255,255,255,.3)}.demo-arrow.prev{left:14px}.demo-arrow.next{right:14px}.demo-dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}.demo-dot{width:9px;height:9px;border-radius:50%;border:2px solid #fff;background:transparent;cursor:pointer;transition:all .3s;padding:0}.demo-dot.active{background:#fff;transform:scale(1.3)}",
+    "previewHtml": "<div id=\"slider-demo\"><div class=\"demo-slide ds1 active\"><h3>Summer Sale</h3><p>Up to 50% off everything</p></div><div class=\"demo-slide ds2\"><h3>New Arrivals</h3><p>Shop the latest collection</p></div><div class=\"demo-slide ds3\"><h3>Free Shipping</h3><p>On all orders over $75</p></div><button class=\"demo-arrow prev\">‹</button><button class=\"demo-arrow next\">›</button><div class=\"demo-dots\"><button class=\"demo-dot active\"></button><button class=\"demo-dot\"></button><button class=\"demo-dot\"></button></div></div>",
+    "examples": {
+      "react": "import SlidingBanner from '@chronos-ui/core/react/SlidingBanner';\nimport '@chronos-ui/core/theme.css';\n\nconst items = [\n  { id: '1', title: 'Summer Sale',   subtitle: 'Up to 50% off', ctaText: 'Shop Now', media: { type: 'image', url: '/s1.jpg' }, mapLinks: [{ url: '/sale' }] },\n  { id: '2', title: 'New Arrivals', subtitle: 'Latest collection', ctaText: 'Explore', media: { type: 'image', url: '/s2.jpg' }, mapLinks: [{ url: '/new' }] },\n];\n\n<SlidingBanner\n  items={items}\n  config={{\n    autoStart: true,\n    rotateAgain: true,\n    delayMs: 5000,\n    showNextPrev: true,\n    showDots: true,\n    animationEffect: 'fade',\n    backgroundEffect: 'particles',\n  }}\n/>",
+      "svelte": "<script lang=\"ts\">\n  import SlidingBanner from '@chronos-ui/core/svelte/SlidingBanner.svelte';\n</script>\n\n<SlidingBanner\n  {items}\n  config={{ autoStart: true, showDots: true, animationEffect: 'zoom' }}\n/>",
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/SlidingBanner.js\"></script>\n\n<sliding-banner-element\n  items='[{\"id\":\"1\",\"title\":\"Sale\"}]'\n  config='{\"autoStart\":true,\"showDots\":true,\"animationEffect\":\"fade\"}'\n></sliding-banner-element>"
+    },
+    "notes": [],
+    "extra": "<h2 class=\"section-heading\">Available Effects</h2><div class=\"effect-list\"><span class=\"effect-pill\">slide</span><span class=\"effect-pill\">fade</span><span class=\"effect-pill\">zoom</span><span class=\"effect-pill\">flip</span><span class=\"effect-pill\">push-up</span><span class=\"effect-pill\">push-down</span><span class=\"effect-pill\">push-left</span><span class=\"effect-pill\">push-right</span><span class=\"effect-pill\">wipe-left</span><span class=\"effect-pill\">wipe-right</span><span class=\"effect-pill\">cube</span><span class=\"effect-pill\">door</span><span class=\"effect-pill\">fall</span></div><style>.effect-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}.effect-pill{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;font-family:var(--font-mono);background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);color:#a78bfa}</style>"
+  },
+  {
+    "name": "Alternating Slider",
+    "slug": "alternating-slider",
+    "icon": "⇅",
+    "cardGradient": "linear-gradient(135deg,#1a0010,#4a0020)",
+    "cardDesc": "Multi-column slider where adjacent columns scroll in opposite vertical directions for a dramatic reveal effect.",
+    "previewLabel": "AlternatingSlider — 2 columns · autoplay",
+    "previewCss": "#alt-slider-demo{position:relative;width:100%;height:260px;overflow:hidden;border-radius:10px;background:#000;font-family:'Inter',sans-serif;display:grid;grid-template-columns:1fr 1fr} .alt-col{height:100%;overflow:hidden} .alt-col-track{height:100%;transition:transform .8s cubic-bezier(0.645, 0.045, 0.355, 1)} .alt-card{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff} .alt-card h3{font-size:1.4rem;font-weight:800;text-shadow:0 2px 8px rgba(0,0,0,.8);margin-bottom:.4rem;text-align:center} .alt-card p{font-size:.85rem;text-shadow:0 1px 4px rgba(0,0,0,.8);opacity:.9} .ds-a1{background:url('../assets/images/new_arrivals.png') center/cover} .ds-a2{background:url('../assets/images/accessories.png') center/cover} .ds-a3{background:url('../assets/images/summer_sale.png') center/cover} .ds-a4{background:linear-gradient(135deg,#1a0533,#3b0764)} .demo-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;border-radius:50%;width:38px;height:38px;color:#fff;font-size:1rem;cursor:pointer;z-index:10;transition:background .2s;display:flex;align-items:center;justify-content:center} .demo-arrow:hover{background:rgba(255,255,255,.3)} .demo-arrow.prev{left:14px} .demo-arrow.next{right:14px} .demo-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10} .demo-dot{width:9px;height:9px;border-radius:50%;border:2px solid #fff;background:transparent;cursor:pointer;transition:all .3s;padding:0} .demo-dot.active{background:#fff;transform:scale(1.3)}",
+    "previewHtml": "<div id=\"alt-slider-demo\"><div class=\"alt-col\"><div class=\"alt-col-track\" id=\"alt-col-1\" style=\"transform:translateY(0)\"><div class=\"alt-card ds-a1\"><h3>Women</h3><p>New season</p></div><div class=\"alt-card ds-a3\"><h3>Kids</h3><p>Play more</p></div></div></div><div class=\"alt-col\"><div class=\"alt-col-track\" id=\"alt-col-2\" style=\"transform:translateY(-100%)\"><div class=\"alt-card ds-a4\"><h3>Footwear</h3><p>Step up</p></div><div class=\"alt-card ds-a2\"><h3>Men</h3><p>Essentials</p></div></div></div><button class=\"demo-arrow prev\" id=\"alt-prev\">‹</button><button class=\"demo-arrow next\" id=\"alt-next\">›</button><div class=\"demo-dots\"><button class=\"demo-dot active\" id=\"alt-dot-0\"></button><button class=\"demo-dot\" id=\"alt-dot-1\"></button></div></div>",
+    "examples": {
+      "react": "import AlternatingSlider from '@chronos-ui/core/react/AlternatingSlider';\nimport '@chronos-ui/core/theme.css';\n\nconst items = [\n  { id: 'a', title: 'Women',    subtitle: 'New season', ctaText: 'Shop', media: { type: 'image', url: '/w.jpg' } },\n  { id: 'b', title: 'Men',      subtitle: 'Essentials', ctaText: 'Shop', media: { type: 'image', url: '/m.jpg' } },\n  { id: 'c', title: 'Kids',     subtitle: 'Play more',  ctaText: 'Shop', media: { type: 'image', url: '/k1.jpg' } },\n  { id: 'd', title: 'Footwear', subtitle: 'Step up',    ctaText: 'Shop', media: { type: 'image', url: '/k2.jpg' } },\n];\n\n<AlternatingSlider\n  items={items}\n  config={{ columns: 2, autoStart: true, delayMs: 4000, showArrows: true, showDots: true }}\n/>",
+      "svelte": "<script lang=\"ts\">\n  import AlternatingSlider from '@chronos-ui/core/svelte/AlternatingSlider.svelte';\n</script>\n\n<AlternatingSlider\n  {items}\n  config={{ columns: 2, autoStart: true, showDots: true }}\n/>",
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/AlternatingSlider.js\"></script>\n\n<alternating-slider-element\n  config='{\"columns\":2,\"autoStart\":true,\"showDots\":true}'\n  items='[...]'\n></alternating-slider-element>"
+    },
+    "notes": [
+      { "type": "tip", "text": "<strong>Column grouping:</strong> Items are grouped into slide-sets automatically. With <code>columns: 2</code> and 4 items you get 2 slide-sets of 2. Keep <code>items.length</code> a multiple of <code>columns</code> for best results." }
+    ]
+  },
+  {
+    "name": "Timer Widget",
+    "slug": "timer-widget",
+    "icon": "⏳",
+    "cardGradient": "linear-gradient(135deg,#001a0e,#003d1f)",
+    "cardDesc": "Live countdown timer updating every second. Shows days, hours, minutes, and seconds to any target date.",
+    "previewLabel": "TimerWidget — live countdown",
+    "previewCss": ".demo-timer{background:#111118;border:1px solid rgba(124,58,237,.2);border-radius:12px;padding:2rem;text-align:center;font-family:'Inter',sans-serif}.demo-timer-title{color:#e2e8f0;font-size:1rem;font-weight:600;margin-bottom:1.25rem}.demo-timer-blocks{display:flex;justify-content:center;gap:1rem}.demo-timer-block{background:#0a0a0f;border:1px solid rgba(124,58,237,.3);border-radius:8px;padding:1rem;min-width:72px;display:flex;flex-direction:column;align-items:center}.demo-timer-value{font-size:2rem;font-weight:800;color:#a78bfa;font-variant-numeric:tabular-nums}.demo-timer-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:#5c5c80;margin-top:4px}.timer-control{margin-bottom:1rem;display:flex;align-items:center;gap:.75rem}.timer-control label{font-size:.85rem;color:var(--text-secondary)}.timer-control input{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);padding:6px 10px;font-family:var(--font-mono);font-size:.8rem}",
+    "previewHtml": "<div class=\"timer-control\"><label for=\"timer-target\">Target date:</label><input type=\"datetime-local\" id=\"timer-target\" /></div><div class=\"demo-timer\"><div class=\"demo-timer-title\">⏳ Sale ends in:</div><div class=\"demo-timer-blocks\" id=\"timer-demo\"><div class=\"demo-timer-block\"><span class=\"demo-timer-value\" data-unit=\"days\">0</span><span class=\"demo-timer-label\">Days</span></div><div class=\"demo-timer-block\"><span class=\"demo-timer-value\" data-unit=\"hours\">0</span><span class=\"demo-timer-label\">Hours</span></div><div class=\"demo-timer-block\"><span class=\"demo-timer-value\" data-unit=\"minutes\">0</span><span class=\"demo-timer-label\">Minutes</span></div><div class=\"demo-timer-block\"><span class=\"demo-timer-value\" data-unit=\"seconds\">0</span><span class=\"demo-timer-label\">Seconds</span></div></div></div>",
+    "previewScript": "const inp=document.getElementById('timer-target');if(inp){const d=new Date(Date.now()+7*86400000);inp.value=d.toISOString().slice(0,16);}",
+    "examples": {
+      "react": "import TimerWidget from '@chronos-ui/core/react/TimerWidget';\nimport '@chronos-ui/core/theme.css';\n\n<TimerWidget\n  title=\"Sale ends in:\"\n  targetDate=\"2026-12-31T23:59:59Z\"\n/>",
+      "svelte": "<script lang=\"ts\">\n  import TimerWidget from '@chronos-ui/core/svelte/TimerWidget.svelte';\n</script>\n\n<TimerWidget\n  title=\"Sale ends in:\"\n  targetDate=\"2026-12-31T23:59:59Z\"\n/>",
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/TimerWidget.js\"></script>\n\n<timer-widget-element\n  title=\"Sale ends in:\"\n  target-date=\"2026-12-31T23:59:59Z\"\n></timer-widget-element>"
+    },
+    "notes": [
+      { "type": "warn", "text": "<strong>Past dates:</strong> When <code>targetDate</code> is in the past all values show <code>0</code>. Update or remove the component via your CMS when the countdown expires." },
+      { "type": "tip", "text": "<strong>SSR:</strong> The timer renders <code>0</code> on the server then hydrates on the client, avoiding any hydration mismatch." }
+    ]
+  },
+  {
+    "name": "WYSIWYG Renderer",
+    "slug": "wysiwyg-renderer",
+    "icon": "✍",
+    "cardGradient": "linear-gradient(135deg,#1a1400,#3d3000)",
+    "cardDesc": "Safely renders rich-text HTML from a CMS with scoped typography styles and dark-mode support.",
+    "previewLabel": "WysiwygRenderer — sample rich-text output",
+    "previewCss": ".demo-wy{font-family:'Inter',sans-serif;color:#e2e8f0;line-height:1.7;font-size:.95rem}.demo-wy h2{font-size:1.4rem;font-weight:700;color:#f0f0ff;margin:0 0 .5rem}.demo-wy p{margin-bottom:.875rem;color:#94a3b8}.demo-wy a{color:#a78bfa;text-decoration:underline}.demo-wy blockquote{border-left:4px solid #7c3aed;padding:.75rem 1rem;margin:0 0 .875rem;color:#94a3b8;background:rgba(124,58,237,.08);border-radius:0 8px 8px 0}.demo-wy code{background:#1e293b;color:#a78bfa;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:.82rem}",
+    "previewHtml": "<div class=\"demo-wy\"><h2>Autumn Collection 2026</h2><p>This season we're embracing <strong>earthy tones</strong> and <em>textured fabrics</em>. Our designers worked with <a href=\"#\">sustainable mills</a> across Europe.</p><blockquote>\"Fashion is not something that exists in dresses only.\"<br>— Coco Chanel</blockquote><p>New pieces are available now. Use code <code>AUTUMN20</code> for 20% off.</p></div>",
+    "examples": {
+      "react": "import WysiwygRenderer from '@chronos-ui/core/react/WysiwygRenderer';\nimport '@chronos-ui/core/theme.css';\n\n// html comes from your CMS API response\nconst html = `<h2>Autumn Collection</h2><p>...</p>`;\n\n<WysiwygRenderer content={html} />",
+      "svelte": "<script lang=\"ts\">\n  import WysiwygRenderer from '@chronos-ui/core/svelte/WysiwygRenderer.svelte';\n  const html = '<h2>Hello</h2><p>World</p>';\n</script>\n\n<WysiwygRenderer content={html} />",
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/WysiwygRenderer.js\"></script>\n\n<wysiwyg-renderer-element\n  content=\"<h2>Hello</h2><p>World</p>\"\n></wysiwyg-renderer-element>"
+    },
+    "notes": [
+      { "type": "warn", "text": "<strong>Security:</strong> This component renders raw HTML. Always sanitise untrusted CMS content server-side (e.g. with DOMPurify) before passing it to <code>content</code>." }
+    ]
+  }
+]

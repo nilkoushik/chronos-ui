@@ -1,154 +1,190 @@
-# Chronos UI Component Library
+# Chronos UI
 
-Chronos UI is a universal, framework-agnostic component library designed to power both the Chronos CMS visual editor and the end-user storefronts. Built with [Mitosis](https://mitosis.builder.io/), this single codebase cross-compiles natively into **React**, **Svelte**, and **Web Components** to ensure 100% feature parity and native SSR support across all our ecosystems.
+<p align="center">
+  <a href="https://www.npmjs.com/package/@chronos-ui/core"><img src="https://img.shields.io/npm/v/@chronos-ui/core?style=flat-square&color=7c3aed&label=npm" alt="npm version" /></a>
+  <a href="https://github.com/nilkoushik/chronos-ui/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT License" /></a>
+  <a href="https://github.com/nilkoushik/chronos-ui/actions/workflows/publish.yml"><img src="https://img.shields.io/github/actions/workflow/status/nilkoushik/chronos-ui/publish.yml?style=flat-square&label=publish" alt="Build status" /></a>
+  <a href="https://nilkoushik.github.io/chronos-ui"><img src="https://img.shields.io/badge/docs-GitHub%20Pages-ec4899?style=flat-square" alt="Docs" /></a>
+</p>
 
----
+<p align="center">
+  A universal, framework-agnostic UI component library built with <a href="https://mitosis.builder.io/">Mitosis</a>.<br>
+  Write once — compile natively to <strong>React</strong>, <strong>Svelte</strong>, and <strong>Web Components</strong>.
+</p>
 
-## 🛠️ Development & Build Guide
-
-### Prerequisites
-- Node.js (v18+)
-- npm or yarn
-
-### Initial Setup
-```bash
-cd chronos-ui
-npm install
-```
-
-### Development Workflow
-All source components are written in a JSX-like syntax (`.lite.tsx`) inside the `src/components/` directory.
-
-1. **Create/Edit a Component**: Add or modify files in `src/components/`. For example, `src/components/Banner.lite.tsx`.
-2. **Update Global Styles**: Modify CSS variables in `src/styles/theme.css` to adjust the design system.
-
-### Compiling the Library
-To compile your Mitosis components into the native frameworks, run:
-```bash
-npx mitosis build
-```
-This command processes the `mitosis.config.js` rules and generates the output files into the `dist/` directory:
-- `dist/react/`
-- `dist/svelte/`
-- `dist/webcomponent/`
+<p align="center">
+  <a href="https://nilkoushik.github.io/chronos-ui">📖 Documentation</a> ·
+  <a href="https://www.npmjs.com/package/@chronos-ui/core">📦 npm Package</a> ·
+  <a href="https://github.com/nilkoushik/chronos-ui/issues">🐛 Bug Reports</a>
+</p>
 
 ---
 
-## 🚀 Publishing the Library
+## ✨ Components
 
-To distribute the component library so that other tenant projects can install it via npm, follow these steps:
+| Component | Description |
+|---|---|
+| **Banner** | Full-bleed hero banner — image/video background, title, CTA |
+| **AnnouncementBar** | Slim promotional bar with customisable colours |
+| **GridBanner** | Responsive CSS grid of banner cards |
+| **MediaGrid** | Editorial 2-column layout at 21:9 aspect ratio |
+| **RowScrollable** | Horizontally scrollable card row with snap-scroll |
+| **SlidingBanner** | Slider with 13 transition effects & canvas backgrounds |
+| **AlternatingSlider** | Multi-column slider with opposing vertical scroll |
+| **TimerWidget** | Live countdown timer (days / hours / minutes / seconds) |
+| **WysiwygRenderer** | Scoped rich-text HTML renderer for CMS content |
 
-### 1. Versioning
-Update the version number in your `package.json` following semantic versioning:
+---
+
+## 🚀 Installation
+
 ```bash
-npm version patch # or minor, major
+npm install @chronos-ui/core
 ```
 
-### 2. Export Configuration
-Ensure your `package.json` correctly points to the output targets so consumers get the right files. Add the following to `package.json`:
-```json
-{
-  "name": "@chronos/ui",
-  "version": "1.0.1",
-  "main": "dist/react/index.js",
-  "exports": {
-    "./react": "./dist/react/src/components",
-    "./svelte": "./dist/svelte/src/components",
-    "./webcomponents": "./dist/webcomponent/src/components",
-    "./theme": "./src/styles/theme.css"
-  }
+---
+
+## 💻 Usage
+
+### Step 1 — Import the theme
+
+In your app's global stylesheet or entry file:
+
+```css
+@import '@chronos-ui/core/theme.css';
+```
+
+Override any CSS variable to customise the design system:
+
+```css
+:root {
+  --chronos-color-primary: #e11d48;   /* your brand colour */
+  --chronos-font-family: 'Poppins', sans-serif;
 }
 ```
 
-### 3. Publish to NPM (or Private Registry)
-Authenticate with your registry and publish:
-```bash
-# If publishing publicly
-npm publish --access public
+### Step 2 — Use in your framework
 
-# If using a private Github/Gitlab package registry
-npm publish
-```
-
----
-
-## 💻 Implementation Guide (Usage)
-
-Once the library is published (or linked locally via `npm link`), you can consume it in your applications. 
-
-### Step 1: Import the Theme
-Regardless of the framework, you must import the core CSS variables.
-In your global CSS or main entry file (e.g., `_app.tsx`, `+layout.svelte`), import the theme:
-```css
-@import '@chronos/ui/theme';
-```
-*You can easily override any variable directly in your app's CSS to customize the look and feel (e.g., redefining `--chronos-color-primary`).*
-
-### Step 2: Framework Integration
-
-#### ⚛️ Using in React (Next.js, Vite, CRA)
-Because Mitosis compiles to native React, these components are fully SSR compatible and hydrate perfectly.
+#### ⚛️ React / Next.js
 
 ```tsx
-// pages/index.tsx
-import { Banner, TimerWidget } from '@chronos/ui/react';
+import Banner from '@chronos-ui/core/react/Banner';
+import TimerWidget from '@chronos-ui/core/react/TimerWidget';
 
-export default function Home() {
+export default function Page() {
   return (
     <main>
-      <Banner 
-        title="Summer Sale" 
-        subtitle="Up to 50% off everything!" 
-        ctaText="Shop Now" 
-        align="center"
+      <Banner
+        title="Summer Sale"
+        subtitle="Up to 50% off"
+        ctaText="Shop Now"
+        media={{ type: 'image', url: '/hero.jpg' }}
+        mapLinks={[{ url: '/sale' }]}
       />
-      
-      <TimerWidget 
-        title="Sale ends in:" 
-        targetDate="2026-12-31T23:59:59Z" 
-      />
+      <TimerWidget title="Ends in:" targetDate="2026-12-31T23:59:59Z" />
     </main>
   );
 }
 ```
 
-#### 🟠 Using in Svelte 5 (SvelteKit)
-Mitosis outputs native `.svelte` files. You import them just like any local component.
+#### 🟠 Svelte / SvelteKit
 
 ```svelte
-<!-- src/routes/+page.svelte -->
 <script lang="ts">
-  import { Banner, TimerWidget } from '@chronos/ui/svelte';
+  import Banner from '@chronos-ui/core/svelte/Banner.svelte';
+  import TimerWidget from '@chronos-ui/core/svelte/TimerWidget.svelte';
 </script>
 
-<main>
-  <Banner 
-    title="Summer Sale" 
-    subtitle="Up to 50% off everything!" 
-    ctaText="Shop Now" 
-    align="center"
-  />
-  
-  <TimerWidget 
-    title="Sale ends in:" 
-    targetDate="2026-12-31T23:59:59Z" 
-  />
-</main>
+<Banner title="Summer Sale" ctaText="Shop Now" />
+<TimerWidget title="Ends in:" targetDate="2026-12-31T23:59:59Z" />
 ```
 
-#### 🌐 Using Web Components (Vanilla HTML / CMS Visual Editor)
-For non-framework environments or inside the raw visual editor renderer, you can use the custom elements directly.
+#### 🌐 Web Components (Vanilla HTML / CMS Renderer)
 
 ```html
-<head>
-  <link rel="stylesheet" href="node_modules/@chronos/ui/theme.css">
-  <script type="module" src="node_modules/@chronos/ui/webcomponents/Banner.js"></script>
-</head>
-<body>
-  <banner-element 
-    title="Summer Sale" 
-    subtitle="Up to 50% off everything!" 
-    cta-text="Shop Now">
-  </banner-element>
-</body>
+<link rel="stylesheet" href="node_modules/@chronos-ui/core/theme.css" />
+<script type="module" src="node_modules/@chronos-ui/core/webcomponents/Banner.js"></script>
+
+<banner-element
+  title="Summer Sale"
+  subtitle="Up to 50% off"
+  cta-text="Shop Now"
+></banner-element>
 ```
+
+---
+
+## 🛠️ Development
+
+```bash
+git clone https://github.com/nilkoushik/chronos-ui.git
+cd chronos-ui
+npm install
+
+# Compile all components to React, Svelte & Web Components
+npm run build
+```
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full workflow.
+
+---
+
+## 📦 Publishing
+
+Bump the version and let GitHub Actions do the rest:
+
+```bash
+npm version patch   # or: minor | major
+# → runs build, creates git tag, pushes, triggers npm publish workflow
+```
+
+Make sure your `NPM_TOKEN` secret is set in GitHub → Settings → Secrets and variables → Actions.
+
+---
+
+## 📖 Documentation
+
+Full interactive docs are hosted on GitHub Pages:
+
+**[nilkoushik.github.io/chronos-ui](https://nilkoushik.github.io/chronos-ui)**
+
+Each component page includes:
+- Live in-browser preview
+- Props reference table
+- Copy-ready code for React, Svelte, and Web Components
+
+---
+
+## 📁 Repository Structure
+
+```
+src/
+  components/       Mitosis source (.lite.tsx) — single source of truth
+  styles/           theme.css — CSS design token variables
+dist/               Compiled output (not committed; built on publish)
+  react/
+  svelte/
+  webcomponent/
+docs/               GitHub Pages documentation site
+  index.html
+  components/       One page per component
+  css/docs.css
+  js/docs.js
+.github/workflows/
+  publish.yml       npm publish on git tag
+  docs.yml          GitHub Pages deploy on main push
+```
+
+---
+
+## 🏗️ Built With
+
+- [Mitosis](https://mitosis.builder.io/) — single-source component compiler
+- [TypeScript](https://www.typescriptlang.org/) — typed component props
+- Vanilla CSS — zero runtime style dependencies
+
+---
+
+## 📄 License
+
+[MIT](./LICENSE) © Chronos UI Contributors

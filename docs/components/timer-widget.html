@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timer Widget — Chronos UI</title>
+  <meta name="description" content="Live countdown timer updating every second. Shows days, hours, minutes, and seconds to any target date." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="../css/docs.css" />
+  <style>.demo-timer{background:#111118;border:1px solid rgba(124,58,237,.2);border-radius:12px;padding:2rem;text-align:center;font-family:'Inter',sans-serif}.demo-timer-title{color:#e2e8f0;font-size:1rem;font-weight:600;margin-bottom:1.25rem}.demo-timer-blocks{display:flex;justify-content:center;gap:1rem}.demo-timer-block{background:#0a0a0f;border:1px solid rgba(124,58,237,.3);border-radius:8px;padding:1rem;min-width:72px;display:flex;flex-direction:column;align-items:center}.demo-timer-value{font-size:2rem;font-weight:800;color:#a78bfa;font-variant-numeric:tabular-nums}.demo-timer-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:#5c5c80;margin-top:4px}.timer-control{margin-bottom:1rem;display:flex;align-items:center;gap:.75rem}.timer-control label{font-size:.85rem;color:var(--text-secondary)}.timer-control input{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);padding:6px 10px;font-family:var(--font-mono);font-size:.8rem}</style>
+</head>
+<body>
+<div class="docs-shell">
+  
+    <aside class="docs-sidebar">
+      <a href="../index.html" class="sidebar-brand">
+        <div class="sidebar-logo">⏱</div>
+        <span class="sidebar-brand-name">Chronos<span>UI</span></span>
+        <span class="sidebar-version">v1.0.0-beta.1</span>
+      </a>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-label">Getting Started</div>
+        <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> Home</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Components</div>
+        <a href="banner.html" class="sidebar-link"><span class="sidebar-link-icon">🖼</span> Banner</a>
+      <a href="announcement-bar.html" class="sidebar-link"><span class="sidebar-link-icon">📢</span> Announcement Bar</a>
+      <a href="grid-banner.html" class="sidebar-link"><span class="sidebar-link-icon">⊞</span> Grid Banner</a>
+      <a href="media-grid.html" class="sidebar-link"><span class="sidebar-link-icon">🎞</span> Media Grid</a>
+      <a href="row-scrollable.html" class="sidebar-link"><span class="sidebar-link-icon">↔</span> Row Scrollable</a>
+      <a href="sliding-banner.html" class="sidebar-link"><span class="sidebar-link-icon">▶</span> Sliding Banner</a>
+      <a href="alternating-slider.html" class="sidebar-link"><span class="sidebar-link-icon">⇅</span> Alternating Slider</a>
+      <a href="timer-widget.html" class="sidebar-link active"><span class="sidebar-link-icon">⏳</span> Timer Widget</a>
+      <a href="wysiwyg-renderer.html" class="sidebar-link"><span class="sidebar-link-icon">✍</span> WYSIWYG Renderer</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
+        <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
+        <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+      </nav>
+    </aside>
+
+  <main class="docs-main">
+    <div class="docs-topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+      <div class="topbar-breadcrumb">
+        <a href="../index.html">Chronos UI</a><span class="sep">/</span>
+        <span class="current">Timer Widget</span>
+      </div>
+      <div class="topbar-actions">
+        <a href="https://github.com/nilkoushik/chronos-ui/blob/main/src/components/TimerWidget.lite.tsx"
+           target="_blank" rel="noopener" class="btn-github">View Source</a>
+      </div>
+    </div>
+
+    <div class="docs-content">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge">⏳ Component</div>
+        <h1 class="page-title">Timer Widget</h1>
+        <p class="page-description">Live countdown timer updating every second. Shows days, hours, minutes, and seconds to any target date.</p>
+      </div>
+
+      <!-- Install -->
+      <div class="install-banner">
+        <code>npm install @chronos-ui/core</code>
+        <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
+      </div>
+
+      
+
+      <!-- Preview -->
+      <h2 class="section-heading">Live Preview</h2>
+      <div class="preview-card">
+        <div class="preview-toolbar">
+          <span class="preview-dot red"></span>
+          <span class="preview-dot amber"></span>
+          <span class="preview-dot green"></span>
+          <span class="preview-url">TimerWidget — live countdown</span>
+        </div>
+        <div class="preview-body">
+          <div class="timer-control"><label for="timer-target">Target date:</label><input type="datetime-local" id="timer-target" /></div><div class="demo-timer"><div class="demo-timer-title">⏳ Sale ends in:</div><div class="demo-timer-blocks" id="timer-demo"><div class="demo-timer-block"><span class="demo-timer-value" data-unit="days">0</span><span class="demo-timer-label">Days</span></div><div class="demo-timer-block"><span class="demo-timer-value" data-unit="hours">0</span><span class="demo-timer-label">Hours</span></div><div class="demo-timer-block"><span class="demo-timer-value" data-unit="minutes">0</span><span class="demo-timer-label">Minutes</span></div><div class="demo-timer-block"><span class="demo-timer-value" data-unit="seconds">0</span><span class="demo-timer-label">Seconds</span></div></div></div>
+        </div>
+      </div>
+
+      <!-- Code Tabs -->
+      <h2 class="section-heading" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+        Usage
+        <button class="jsfiddle-btn" id="jsfiddle-btn" style="background:var(--chronos-color-primary); color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:600; display:flex; align-items:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Play in JSFiddle
+        </button>
+      </h2>
+      <div class="tab-group">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-tab="react">React</button>
+          <button class="tab-btn" data-tab="svelte">Svelte</button>
+          <button class="tab-btn" data-tab="wc">Web Component</button>
+        </div>
+        <div class="tab-panel active" data-panel="react">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code><span class="kw">import</span> TimerWidget <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/TimerWidget'</span>;
+<span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+
+&lt;<span class="tag">TimerWidget</span>
+  title=<span class="str">"Sale ends in:"</span>
+  targetDate=<span class="str">"2026-12-31T23:59:59Z"</span>
+/&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="svelte">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
+  <span class="kw">import</span> TimerWidget <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/TimerWidget.svelte'</span>;
+&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">TimerWidget</span>
+  title=<span class="str">"Sale ends in:"</span>
+  targetDate=<span class="str">"2026-12-31T23:59:59Z"</span>
+/&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="wc">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">script</span> type=<span class="str">"module"</span>
+  src=<span class="str">"node_modules/@chronos-ui/core/webcomponents/TimerWidget.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">timer-widget-element</span>
+  title=<span class="str">"Sale ends in:"</span>
+  target-date=<span class="str">"2026-12-31T23:59:59Z"</span>
+&gt;&lt;/<span class="tag">timer-widget-element</span>&gt;</code></pre>
+    </div>
+        </div>
+      </div>
+
+      <!-- Props Table -->
+      <h2 class="section-heading">Props</h2>
+      
+    <div class="props-table-wrap">
+      <table class="props-table">
+        <thead>
+          <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td><span class="prop-name">targetDate</span> <span class="prop-required">required</span></td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">—</span></td>
+        <td>ISO 8601 date-time string; the countdown ticks towards this date</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">title</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Optional heading displayed above the timer blocks</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">className</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Additional CSS class names on the root element</td>
+      </tr></tbody>
+      </table>
+    </div>
+
+      <!-- Notes -->
+      <div class="alert alert-warn"><strong>Past dates:</strong> When <code>targetDate</code> is in the past all values show <code>0</code>. Update or remove the component via your CMS when the countdown expires.</div>
+<div class="alert alert-tip"><strong>SSR:</strong> The timer renders <code>0</code> on the server then hydrates on the client, avoiding any hydration mismatch.</div>
+    </div>
+  </main>
+</div>
+<script src="../js/docs.js"></script>
+<script>const inp=document.getElementById('timer-target');if(inp){const d=new Date(Date.now()+7*86400000);inp.value=d.toISOString().slice(0,16);}</script>
+</body>
+</html>

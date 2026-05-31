@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Banner — Chronos UI</title>
+  <meta name="description" content="Full-bleed hero banner with image or video background, title, subtitle, CTA button, and loading shimmer." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="../css/docs.css" />
+  <style>.demo-banner{position:relative;min-height:300px;display:flex;flex-direction:column;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#0f172a,#1e1b4b);font-family:'Inter',sans-serif}.demo-banner-overlay{flex:1;display:flex;flex-direction:column;justify-content:center;padding:3rem;background:rgba(0,0,0,.4)}.demo-banner-title{font-size:2rem;font-weight:800;color:#fff;margin:0 0 .5rem}.demo-banner-sub{font-size:1.1rem;color:#cbd5e1;margin:0 0 1.5rem}.demo-banner-cta{display:inline-block;background:#7c3aed;color:#fff;padding:.75rem 2rem;border-radius:6px;font-weight:600;text-decoration:none;width:fit-content;transition:filter .2s}.demo-banner-cta:hover{filter:brightness(1.15);color:#fff}</style>
+</head>
+<body>
+<div class="docs-shell">
+  
+    <aside class="docs-sidebar">
+      <a href="../index.html" class="sidebar-brand">
+        <div class="sidebar-logo">⏱</div>
+        <span class="sidebar-brand-name">Chronos<span>UI</span></span>
+        <span class="sidebar-version">v1.0.0-beta.1</span>
+      </a>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-label">Getting Started</div>
+        <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> Home</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Components</div>
+        <a href="banner.html" class="sidebar-link active"><span class="sidebar-link-icon">🖼</span> Banner</a>
+      <a href="announcement-bar.html" class="sidebar-link"><span class="sidebar-link-icon">📢</span> Announcement Bar</a>
+      <a href="grid-banner.html" class="sidebar-link"><span class="sidebar-link-icon">⊞</span> Grid Banner</a>
+      <a href="media-grid.html" class="sidebar-link"><span class="sidebar-link-icon">🎞</span> Media Grid</a>
+      <a href="row-scrollable.html" class="sidebar-link"><span class="sidebar-link-icon">↔</span> Row Scrollable</a>
+      <a href="sliding-banner.html" class="sidebar-link"><span class="sidebar-link-icon">▶</span> Sliding Banner</a>
+      <a href="alternating-slider.html" class="sidebar-link"><span class="sidebar-link-icon">⇅</span> Alternating Slider</a>
+      <a href="timer-widget.html" class="sidebar-link"><span class="sidebar-link-icon">⏳</span> Timer Widget</a>
+      <a href="wysiwyg-renderer.html" class="sidebar-link"><span class="sidebar-link-icon">✍</span> WYSIWYG Renderer</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
+        <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
+        <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+      </nav>
+    </aside>
+
+  <main class="docs-main">
+    <div class="docs-topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+      <div class="topbar-breadcrumb">
+        <a href="../index.html">Chronos UI</a><span class="sep">/</span>
+        <span class="current">Banner</span>
+      </div>
+      <div class="topbar-actions">
+        <a href="https://github.com/nilkoushik/chronos-ui/blob/main/src/components/Banner.lite.tsx"
+           target="_blank" rel="noopener" class="btn-github">View Source</a>
+      </div>
+    </div>
+
+    <div class="docs-content">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge">🖼 Component</div>
+        <h1 class="page-title">Banner</h1>
+        <p class="page-description">Full-bleed hero banner with image or video background, title, subtitle, CTA button, and loading shimmer.</p>
+      </div>
+
+      <!-- Install -->
+      <div class="install-banner">
+        <code>npm install @chronos-ui/core</code>
+        <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
+      </div>
+
+      
+
+      <!-- Preview -->
+      <h2 class="section-heading">Live Preview</h2>
+      <div class="preview-card">
+        <div class="preview-toolbar">
+          <span class="preview-dot red"></span>
+          <span class="preview-dot amber"></span>
+          <span class="preview-dot green"></span>
+          <span class="preview-url">Banner component</span>
+        </div>
+        <div class="preview-body">
+          <div class="demo-banner"><div class="demo-banner-overlay"><h2 class="demo-banner-title">Summer Collection 2026</h2><p class="demo-banner-sub">Discover the new season — up to 50% off on selected items.</p><a href="#" class="demo-banner-cta">Shop Now</a></div></div>
+        </div>
+      </div>
+
+      <!-- Code Tabs -->
+      <h2 class="section-heading" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+        Usage
+        <button class="jsfiddle-btn" id="jsfiddle-btn" style="background:var(--chronos-color-primary); color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:600; display:flex; align-items:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Play in JSFiddle
+        </button>
+      </h2>
+      <div class="tab-group">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-tab="react">React</button>
+          <button class="tab-btn" data-tab="svelte">Svelte</button>
+          <button class="tab-btn" data-tab="wc">Web Component</button>
+        </div>
+        <div class="tab-panel active" data-panel="react">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code><span class="kw">import</span> Banner <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/Banner'</span>;
+<span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+
+&lt;<span class="tag">Banner</span>
+  title=<span class="str">"Summer Collection 2026"</span>
+  subtitle=<span class="str">"Discover the new season"</span>
+  ctaText=<span class="str">"Shop Now"</span>
+  textAlignment=<span class="str">"center"</span>
+  media={{ type: <span class="str">'image'</span>, url: <span class="str">'/hero.jpg'</span> }}
+  mapLinks={[{ url: <span class="str">'/shop'</span> }]}
+/&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="svelte">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
+  <span class="kw">import</span> Banner <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/Banner.svelte'</span>;
+  <span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">Banner</span>
+  title=<span class="str">"Summer Collection 2026"</span>
+  subtitle=<span class="str">"Discover the new season"</span>
+  ctaText=<span class="str">"Shop Now"</span>
+  textAlignment=<span class="str">"center"</span>
+  media={{ type: <span class="str">'image'</span>, url: <span class="str">'/hero.jpg'</span> }}
+  mapLinks={[{ url: <span class="str">'/shop'</span> }]}
+/&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="wc">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">link</span> rel=<span class="str">"stylesheet"</span> href=<span class="str">"node_modules/@chronos-ui/core/theme.css"</span>&gt;
+&lt;<span class="tag">script</span> type=<span class="str">"module"</span>
+  src=<span class="str">"node_modules/@chronos-ui/core/webcomponents/Banner.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">banner-element</span>
+  title=<span class="str">"Summer Collection 2026"</span>
+  subtitle=<span class="str">"Discover the new season"</span>
+  cta-text=<span class="str">"Shop Now"</span>
+  text-alignment=<span class="str">"center"</span>
+&gt;&lt;/<span class="tag">banner-element</span>&gt;</code></pre>
+    </div>
+        </div>
+      </div>
+
+      <!-- Props Table -->
+      <h2 class="section-heading">Props</h2>
+      
+    <div class="props-table-wrap">
+      <table class="props-table">
+        <thead>
+          <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td><span class="prop-name">id</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Unique identifier passed to the root element</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">title</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Heading text rendered in the banner overlay</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">subtitle</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Sub-heading text displayed below the title</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">ctaText</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Call-to-action button label; renders an anchor when set</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">media</span> </td>
+        <td><span class="prop-type">BannerMedia</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Background media: <code>{ type: 'image'|'video', url: string }</code></td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">mapLinks</span> </td>
+        <td><span class="prop-type">MapLink[]</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Link objects; first entry used as the CTA href</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">textAlignment</span> </td>
+        <td><span class="prop-type">'left' | 'center' | 'right'</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Text alignment for all banner content</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">className</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Additional CSS class names on the root element</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">isLoading</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Applies the <code>chronos-image-shimmer</code> skeleton animation</td>
+      </tr></tbody>
+      </table>
+    </div>
+
+      <!-- Notes -->
+      <div class="alert alert-tip"><strong>Theming:</strong> Override <code>--chronos-color-primary</code> in your stylesheet to change the CTA button colour.</div>
+<div class="alert alert-info"><strong>Video background:</strong> Set <code>media.type = 'video'</code> — the component renders a muted, autoplayed, looped <code>&lt;video&gt;</code> positioned absolutely behind the overlay.</div>
+    </div>
+  </main>
+</div>
+<script src="../js/docs.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+{
+  "Banner": [
+    { "name": "id",            "required": false, "type": "string",                        "description": "Unique identifier passed to the root element" },
+    { "name": "title",         "required": false, "type": "string",                        "description": "Heading text rendered in the banner overlay" },
+    { "name": "subtitle",      "required": false, "type": "string",                        "description": "Sub-heading text displayed below the title" },
+    { "name": "ctaText",       "required": false, "type": "string",                        "description": "Call-to-action button label; renders an anchor when set" },
+    { "name": "media",         "required": false, "type": "BannerMedia",                   "description": "Background media: <code>{ type: 'image'|'video', url: string }</code>" },
+    { "name": "mapLinks",      "required": false, "type": "MapLink[]",                     "description": "Link objects; first entry used as the CTA href" },
+    { "name": "textAlignment", "required": false, "type": "'left' | 'center' | 'right'",  "description": "Text alignment for all banner content" },
+    { "name": "className",     "required": false, "type": "string",                        "description": "Additional CSS class names on the root element" },
+    { "name": "isLoading",     "required": false, "type": "boolean",                       "description": "Applies the <code>chronos-image-shimmer</code> skeleton animation" }
+  ],
+  "AnnouncementBar": [
+    { "name": "message",         "required": true,  "type": "string",              "description": "The announcement text content" },
+    { "name": "mapLinks",        "required": false, "type": "{ url: string }[]",  "description": "When provided, wraps message in an anchor using first entry's URL" },
+    { "name": "backgroundColor", "required": false, "type": "string",              "description": "CSS colour for the bar background (default: <code>#8b5cf6</code>)" },
+    { "name": "textColor",       "required": false, "type": "string",              "description": "CSS colour for the message text (default: <code>#ffffff</code>)" },
+    { "name": "className",       "required": false, "type": "string",              "description": "Additional CSS class names on the root element" }
+  ],
+  "GridBanner": [
+    { "name": "items",     "required": true,  "type": "GridBannerItem[]", "description": "Array of card items to display in the grid" },
+    { "name": "columns",   "required": false, "type": "number",            "description": "Number of grid columns on desktop (default: 3); collapses to 2 at 768 px, 1 at 480 px" },
+    { "name": "className", "required": false, "type": "string",            "description": "Additional CSS class names on the root element" },
+    { "name": "isLoading", "required": false, "type": "boolean",           "description": "Applies shimmer skeleton animation to all cards" }
+  ],
+  "MediaGrid": [
+    { "name": "primaryMedia",   "required": true,  "type": "MediaGridItem",   "description": "The large featured asset occupying 2/3 of the grid width" },
+    { "name": "secondaryMedia", "required": false, "type": "MediaGridItem[]", "description": "Optional stacked secondary assets in the right column" },
+    { "name": "className",      "required": false, "type": "string",           "description": "Additional CSS class names on the root element" }
+  ],
+  "RowScrollable": [
+    { "name": "items",     "required": true,  "type": "RowScrollableItem[]", "description": "Array of card items to render in the scrollable row" },
+    { "name": "title",     "required": false, "type": "string",               "description": "Optional section heading displayed above the row" },
+    { "name": "className", "required": false, "type": "string",               "description": "Additional CSS class names on the root container" }
+  ],
+  "SlidingBanner": [
+    { "name": "items",     "required": true,  "type": "WidgetItem[]",  "description": "Array of slide items" },
+    { "name": "config",    "required": false, "type": "SliderConfig",  "description": "Slider behaviour configuration — see SliderConfig table" },
+    { "name": "className", "required": false, "type": "string",         "description": "Additional CSS class names on the root element" },
+    { "name": "isLoading", "required": false, "type": "boolean",        "description": "Applies shimmer to all slide backgrounds" }
+  ],
+  "AlternatingSlider": [
+    { "name": "items",     "required": true,  "type": "WidgetItem[]",        "description": "Flat list; grouped into slide-sets by the <code>columns</code> config value" },
+    { "name": "config",    "required": false, "type": "AlternatingConfig",   "description": "Slider configuration — see AlternatingConfig table" },
+    { "name": "className", "required": false, "type": "string",               "description": "Additional CSS class names on the root element" },
+    { "name": "isLoading", "required": false, "type": "boolean",              "description": "Applies shimmer animation to all cells" }
+  ],
+  "TimerWidget": [
+    { "name": "targetDate", "required": true,  "type": "string",  "description": "ISO 8601 date-time string; the countdown ticks towards this date" },
+    { "name": "title",      "required": false, "type": "string",  "description": "Optional heading displayed above the timer blocks" },
+    { "name": "className",  "required": false, "type": "string",  "description": "Additional CSS class names on the root element" }
+  ],
+  "WysiwygRenderer": [
+    { "name": "htmlContent", "required": true,  "type": "string", "description": "Raw HTML string from a CMS rich-text field; rendered with <code>innerHTML</code>" },
+    { "name": "className",   "required": false, "type": "string", "description": "Additional CSS class names on the wrapper element" }
+  ]
+}
