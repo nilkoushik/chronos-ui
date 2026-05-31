@@ -225,14 +225,25 @@ function initJsfiddle() {
 
     if (framework === 'react') {
       // Setup Babel for React
-      htmlCode = `<div id="root"></div>\n\n<!-- 
-Note: To run this React code in JSFiddle, 
-ensure @chronos-ui/core is published to npm.
-JSFiddle does not natively support bare module imports 
-without a bundler, so you may need to use esm.sh:
-import Component from 'https://esm.sh/@chronos-ui/core/react/Component';
--->`;
-      jsCode = rawCode;
+      htmlCode = `<div id="root"></div>`;
+      
+      // Rewrite bare imports to use esm.sh for browser-native ESM
+      jsCode = rawCode
+        .replace(/from\s+['"]@chronos-ui\/core\/(.*?)['"]/g, "from 'https://esm.sh/@chronos-ui/core@latest/$1'")
+        .replace(/import\s+['"]@chronos-ui\/core\/(.*?)['"]/g, "import 'https://esm.sh/@chronos-ui/core@latest/$1'");
+        
+      // Extract the JSX component usage from the raw code and wrap it in ReactDOM render
+      const jsxMatch = jsCode.match(/<([A-Z][a-zA-Z0-9]*)\b[^>]*(\/>|<\/[A-Z][a-zA-Z0-9]*>)/);
+      const jsxComponent = jsxMatch ? jsxMatch[0] : '';
+      
+      jsCode = `import React from 'https://esm.sh/react@18';
+import { createRoot } from 'https://esm.sh/react-dom@18/client';
+
+${jsCode.replace(/<([A-Z][a-zA-Z0-9]*)\b[^>]*(\/>|<\/[A-Z][a-zA-Z0-9]*>)/, '')}
+
+const root = createRoot(document.getElementById('root'));
+root.render(${jsxComponent || '<div />'});
+`;
     } else if (framework === 'svelte') {
       htmlCode = `<!-- Svelte components require a compiler environment. -->\n${rawCode}`;
     } else {
