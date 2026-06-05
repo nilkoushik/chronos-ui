@@ -33,6 +33,7 @@
 | **AlternatingSlider** | Multi-column slider with opposing vertical scroll |
 | **TimerWidget** | Live countdown timer (days / hours / minutes / seconds) |
 | **WysiwygRenderer** | Scoped rich-text HTML renderer for CMS content |
+| **RichTextEditor** | Advanced headless WYSIWYG editor with custom inline styles and toolbars |
 
 ---
 

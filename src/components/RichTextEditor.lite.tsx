@@ -150,6 +150,9 @@ export default function RichTextEditor(props: RichTextEditorProps) {
       state.saveSelection();
       
       const insertContent = (url: string) => {
+        if (editorRef) {
+          editorRef.focus();
+        }
         state.restoreSelection();
         if (!url) return;
         
@@ -161,7 +164,21 @@ export default function RichTextEditor(props: RichTextEditorProps) {
         } else if (type === 'audio') {
           html = `<audio src="${url}" controls style="margin: 16px 0;"></audio><p><br></p>`;
         }
-        document.execCommand('insertHTML', false, html);
+        
+        const success = document.execCommand('insertHTML', false, html);
+        if (!success) {
+           // Fallback if execCommand fails (e.g. some browsers when focus is tricky)
+           if (state.savedSelection && state.savedSelection.insertNode) {
+               const template = document.createElement('template');
+               template.innerHTML = html.trim();
+               const frag = template.content;
+               state.savedSelection.deleteContents();
+               state.savedSelection.insertNode(frag);
+               state.savedSelection.collapse(false); // Move caret after inserted node
+           } else {
+               editorRef.innerHTML += html;
+           }
+        }
         state.syncContent();
       };
 
@@ -225,6 +242,9 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     confirmButton() {
       state.showButtonModal = false;
       if (state.btnText) {
+        if (editorRef) {
+          editorRef.focus();
+        }
         state.restoreSelection();
         let styleStr = 'padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; display: inline-block; text-decoration: none; transition: all 0.2s;';
         if (state.btnStyle === 'primary') {
@@ -236,7 +256,19 @@ export default function RichTextEditor(props: RichTextEditorProps) {
         }
         const url = state.btnUrl || '#';
         const html = `<a href="${url}" class="chronos-btn" style="${styleStr}">${state.btnText}</a>&nbsp;`;
-        document.execCommand('insertHTML', false, html);
+        const success = document.execCommand('insertHTML', false, html);
+        if (!success) {
+           if (state.savedSelection && state.savedSelection.insertNode) {
+               const template = document.createElement('template');
+               template.innerHTML = html.trim();
+               const frag = template.content;
+               state.savedSelection.deleteContents();
+               state.savedSelection.insertNode(frag);
+               state.savedSelection.collapse(false);
+           } else {
+               editorRef.innerHTML += html;
+           }
+        }
         state.syncContent();
       }
     },

@@ -54,6 +54,7 @@ function buildSidebar(activeSlug) {
         <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
         <a href="${GITHUB_URL}" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
         <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+        <a href="../dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
       </nav>
     </aside>`;
 }
