@@ -1,3 +1,5 @@
+/* Styles for RowScrollable */
+/* Styles for RowScrollable */\
 /* RowScrollable Styles */
 .chronos-scrollable-container {
           font-family: var(--chronos-font-family);
@@ -55,3 +57,6 @@
           font-size: 0.875rem;
           color: var(--chronos-color-text-muted);
         }
+
+
+

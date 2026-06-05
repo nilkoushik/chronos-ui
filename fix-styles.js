@@ -26,9 +26,7 @@ for (const file of files) {
     // Write individual CSS file
     fs.writeFileSync(cssFilePath, cssContent, 'utf8');
     
-    // Remove from JSX
-    content = content.replace(styleRegex, '');
-    fs.writeFileSync(filePath, content, 'utf8');
+    // Do NOT remove from JSX, so Web Components still get their Shadow DOM styles!
   }
 }
 

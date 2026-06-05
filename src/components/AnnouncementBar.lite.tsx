@@ -1,4 +1,4 @@
-import { useStore } from '@builder.io/mitosis';
+import { useStore, useStyle } from '@builder.io/mitosis';
 
 export interface AnnouncementBarProps {
   message: string;
@@ -9,6 +9,28 @@ export interface AnnouncementBarProps {
 }
 
 export default function AnnouncementBar(props: AnnouncementBarProps) {
+  useStyle(`.chronos-announcement-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--chronos-spacing-sm);
+  font-family: var(--chronos-font-family);
+  font-size: var(--chronos-font-size-base);
+  font-weight: 500;
+  text-align: center;
+}
+.chronos-announcement-link {
+  color: inherit;
+  text-decoration: none;
+}
+.chronos-announcement-link:hover {
+  text-decoration: underline;
+}
+
+
+
+`);
+
   return (
     <div
       class={`chronos-announcement-bar ${props.className || ''}`}

@@ -1,4 +1,4 @@
-import { useStore, onMount, onUnMount } from '@builder.io/mitosis';
+import { useStore, onMount, onUnMount, useStyle } from '@builder.io/mitosis';
 
 export interface BannerMedia {
   type?: string;
@@ -92,6 +92,84 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
   onUnMount(() => {
     state.stopAutoPlay();
   });
+
+  useStyle(`.chronos-alt-slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 600px;
+  background: var(--chronos-color-surface);
+  border-radius: var(--chronos-border-radius-lg);
+  overflow: hidden;
+  position: relative;
+  border: var(--chronos-border-width) solid var(--chronos-color-border);
+}
+.chronos-alt-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.chronos-alt-slide {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+.chronos-alt-slide-reverse {
+  flex-direction: row-reverse;
+}
+.chronos-alt-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem;
+  background: var(--chronos-color-background);
+}
+.chronos-alt-image-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.chronos-alt-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+.chronos-alt-image-container:hover .chronos-alt-image {
+  transform: scale(1.05);
+}
+.chronos-alt-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--chronos-color-text-main);
+}
+.chronos-alt-desc {
+  font-size: 1.125rem;
+  color: var(--chronos-color-text-muted);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+.chronos-alt-cta {
+  align-self: flex-start;
+  padding: 0.75rem 2rem;
+  background: var(--chronos-color-primary);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: var(--chronos-border-radius-sm);
+  transition: background 0.3s;
+}
+.chronos-alt-cta:hover {
+  background: var(--chronos-color-secondary);
+}
+
+
+`);
 
   return (
     <div 
