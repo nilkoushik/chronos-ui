@@ -33,6 +33,11 @@ for (const file of allFiles) {
   });
   
   const outPath = path.join(wcDistDir, file.replace('.ts', '.js'));
-  fs.writeFileSync(outPath, result.outputText);
+  let finalCode = result.outputText;
+  
+  // Fix invalid custom element names that don't have a hyphen (e.g. "banner")
+  finalCode = finalCode.replace(/customElements\.define\("([^"-]+)",/g, 'customElements.define("chronos-$1",');
+  
+  fs.writeFileSync(outPath, finalCode);
 }
 console.log('Successfully compiled Web Components.');
