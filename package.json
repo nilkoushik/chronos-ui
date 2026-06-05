@@ -42,7 +42,7 @@
   "main": "./dist/react/src/components/index.js",
   "types": "./dist/react/src/components/index.d.ts",
   "scripts": {
-    "build": "npx mitosis build && node fix-styles.js && node fix-props.js && node fix-wc-props.js && node build-wc.js",
+    "build": "npx mitosis build && node fix-styles.js && node fix-props.js && node fix-wc-props.js && node build-wc.js && node fix-wc-onmount.js",
     "docs": "node scripts/generate-docs.js",
     "postbuild": "npm run docs",
     "prepublishOnly": "npm run build",

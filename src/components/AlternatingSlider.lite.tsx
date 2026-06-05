@@ -37,62 +37,6 @@ export interface AlternatingSliderProps {
 }
 
 export default function AlternatingSlider(props: AlternatingSliderProps) {
-  const state = useStore({
-    currentIndex: 0,
-    intervalId: null as any,
-    
-    get columns() {
-      return props.config?.columns || 2;
-    },
-    
-    // We group items into sets, each set has length = columns
-    get slideSets() {
-      const sets: WidgetItem[][] = [];
-      const currentItems = props.items || [];
-      const cols = state.columns;
-      for (let i = 0; i < currentItems.length; i += cols) {
-        sets.push(currentItems.slice(i, i + cols));
-      }
-      return sets;
-    },
-    
-    get totalSlides() {
-      return state.slideSets.length;
-    },
-
-    next() {
-      if (state.totalSlides <= 1) return;
-      state.currentIndex = (state.currentIndex + 1) % state.totalSlides;
-    },
-    prev() {
-      if (state.totalSlides <= 1) return;
-      state.currentIndex = (state.currentIndex - 1 + state.totalSlides) % state.totalSlides;
-    },
-    goTo(index: number) {
-      state.currentIndex = index;
-    },
-    startAutoPlay() {
-      if (props.config?.autoStart !== false && state.totalSlides > 1) {
-        state.intervalId = setInterval(() => {
-          state.next();
-        }, props.config?.delayMs || 5000);
-      }
-    },
-    stopAutoPlay() {
-      if (state.intervalId) {
-        clearInterval(state.intervalId);
-      }
-    }
-  });
-
-  onMount(() => {
-    state.startAutoPlay();
-  });
-
-  onUnMount(() => {
-    state.stopAutoPlay();
-  });
-
   useStyle(`.chronos-alt-slider {
   display: flex;
   align-items: center;
@@ -171,6 +115,61 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
 
 `);
 
+  const state = useStore({
+    currentIndex: 0,
+    intervalId: null as any,
+    
+    get columns() {
+      return props.config?.columns || 2;
+    },
+    
+    // We group items into sets, each set has length = columns
+    get slideSets() {
+      const sets: WidgetItem[][] = [];
+      const currentItems = props.items || [];
+      const cols = state.columns;
+      for (let i = 0; i < currentItems.length; i += cols) {
+        sets.push(currentItems.slice(i, i + cols));
+      }
+      return sets;
+    },
+    
+    get totalSlides() {
+      return state.slideSets.length;
+    },
+
+    next() {
+      if (state.totalSlides <= 1) return;
+      state.currentIndex = (state.currentIndex + 1) % state.totalSlides;
+    },
+    prev() {
+      if (state.totalSlides <= 1) return;
+      state.currentIndex = (state.currentIndex - 1 + state.totalSlides) % state.totalSlides;
+    },
+    goTo(index: number) {
+      state.currentIndex = index;
+    },
+    startAutoPlay() {
+      if (props.config?.autoStart !== false && state.totalSlides > 1) {
+        state.intervalId = setInterval(() => {
+          state.next();
+        }, props.config?.delayMs || 5000);
+      }
+    },
+    stopAutoPlay() {
+      if (state.intervalId) {
+        clearInterval(state.intervalId);
+      }
+    }
+  });
+
+  onMount(() => {
+    state.startAutoPlay();
+  });
+
+  onUnMount(() => {
+    state.stopAutoPlay();
+  });
   return (
     <div 
       class={`chronos-alt-slider ${props.className || ''}`}

@@ -29,13 +29,6 @@ export interface GridBannerProps {
 }
 
 export default function GridBanner(props: GridBannerProps) {
-  const state = useStore({
-    get gridTemplateColumns() {
-      const cols = props.columns || 3;
-      return `repeat(${cols}, 1fr)`;
-    }
-  });
-
   useStyle(`.chronos-grid-banner {
           display: grid;
           gap: var(--chronos-spacing-md);
@@ -89,6 +82,12 @@ export default function GridBanner(props: GridBannerProps) {
 
 `);
 
+  const state = useStore({
+    get gridTemplateColumns() {
+      const cols = props.columns || 3;
+      return `repeat(${cols}, 1fr)`;
+    }
+  });
   return (
     <div 
       class={`chronos-grid-banner ${props.className || ''}`}

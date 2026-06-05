@@ -39,192 +39,6 @@ export interface SlidingBannerProps {
 }
 
 export default function SlidingBanner(props: SlidingBannerProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const rootRef = useRef<HTMLDivElement>(null);
-  
-  const state = useStore({
-    currentIndex: 0,
-    previousIndex: 0,
-    direction: 'next' as 'next' | 'prev',
-    intervalId: null as any,
-    animationFrameId: null as any,
-    resizeHandler: null as any,
-    dimResizeHandler: null as any,
-    
-    get animationClass() {
-      return props.config?.animationEffect || 'slide';
-    },
-    get backgroundClass() {
-      return props.config?.backgroundEffect || 'none';
-    },
-    next() {
-      if (!props.items?.length) return;
-      state.direction = 'next';
-      state.previousIndex = state.currentIndex;
-      if (state.currentIndex >= props.items.length - 1) {
-        if (props.config?.rotateAgain !== false) {
-          state.currentIndex = 0;
-        }
-      } else {
-        state.currentIndex++;
-      }
-    },
-    prev() {
-      if (!props.items?.length) return;
-      state.direction = 'prev';
-      state.previousIndex = state.currentIndex;
-      if (state.currentIndex <= 0) {
-        if (props.config?.rotateAgain !== false) {
-          state.currentIndex = props.items.length - 1;
-        }
-      } else {
-        state.currentIndex--;
-      }
-    },
-    goTo(index: number) {
-      if (state.currentIndex !== index) {
-        state.direction = index > state.currentIndex ? 'next' : 'prev';
-        state.previousIndex = state.currentIndex;
-        state.currentIndex = index;
-      }
-    },
-    startAutoPlay() {
-      if (props.config?.autoStart !== false && props.items?.length > 1) {
-        state.intervalId = setInterval(() => {
-          state.next();
-        }, props.config?.delayMs || 5000);
-      }
-    },
-    stopAutoPlay() {
-      if (state.intervalId) {
-        clearInterval(state.intervalId);
-      }
-    },
-    setupDimensions() {
-      if (rootRef) {
-        rootRef.style.setProperty('--slider-half-width', `${rootRef.offsetWidth / 2}px`);
-      }
-    },
-    initCanvasAnimations(canvas: HTMLCanvasElement) {
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      
-      const effect = props.config?.backgroundEffect;
-      if (effect !== 'particles' && effect !== 'waves') return;
-
-      const resize = () => {
-        if (canvas) {
-          canvas.width = canvas.offsetWidth;
-          canvas.height = canvas.offsetHeight;
-        }
-      };
-      resize();
-      state.resizeHandler = resize;
-      window.addEventListener('resize', state.resizeHandler);
-
-      if (effect === 'particles') {
-        const particles: any[] = [];
-        for(let i=0; i<70; i++) {
-          particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            size: Math.random() * 3 + 1,
-            speedX: Math.random() * 1 - 0.5,
-            speedY: Math.random() * -1 - 0.2,
-            opacity: Math.random() * 0.5 + 0.1
-          });
-        }
-        
-        const animate = () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          for (let i = 0; i < particles.length; i++) {
-            let p = particles[i];
-            ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fill();
-            p.x += p.speedX;
-            p.y += p.speedY;
-            if (p.y < -10) p.y = canvas.height + 10;
-            if (p.x < -10) p.x = canvas.width + 10;
-            if (p.x > canvas.width + 10) p.x = -10;
-          }
-          state.animationFrameId = requestAnimationFrame(animate);
-        };
-        animate();
-      } else if (effect === 'waves') {
-        let time = 0;
-        const animate = () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          
-          // Back wave
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-          ctx.beginPath();
-          ctx.moveTo(0, canvas.height);
-          for(let i=0; i<=canvas.width; i+=20) {
-            ctx.lineTo(i, canvas.height - 80 + Math.sin(i * 0.005 + time) * 30);
-          }
-          ctx.lineTo(canvas.width, canvas.height);
-          ctx.fill();
-          
-          // Front wave
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-          ctx.beginPath();
-          ctx.moveTo(0, canvas.height);
-          for(let i=0; i<=canvas.width; i+=20) {
-            ctx.lineTo(i, canvas.height - 40 + Math.sin(i * 0.008 + time * 1.5) * 20);
-          }
-          ctx.lineTo(canvas.width, canvas.height);
-          ctx.fill();
-
-          time += 0.03;
-          state.animationFrameId = requestAnimationFrame(animate);
-        };
-        animate();
-      }
-    }
-  });
-
-  onMount(() => {
-    state.startAutoPlay();
-    state.setupDimensions();
-    state.dimResizeHandler = () => state.setupDimensions();
-    window.addEventListener('resize', state.dimResizeHandler);
-    if (canvasRef) {
-      state.initCanvasAnimations(canvasRef);
-    }
-  });
-
-  onUpdate(() => {
-    // Cancel the old canvas loop
-    if (state.animationFrameId) {
-      cancelAnimationFrame(state.animationFrameId);
-      state.animationFrameId = null;
-    }
-    if (state.resizeHandler) {
-      window.removeEventListener('resize', state.resizeHandler);
-      state.resizeHandler = null;
-    }
-    // Start a fresh loop on the canvas
-    if (canvasRef) {
-      state.initCanvasAnimations(canvasRef);
-    }
-  }, [props.config?.backgroundEffect, canvasRef]);
-
-  onUnMount(() => {
-    state.stopAutoPlay();
-    if (state.animationFrameId) {
-      cancelAnimationFrame(state.animationFrameId);
-    }
-    if (state.resizeHandler) {
-      window.removeEventListener('resize', state.resizeHandler);
-    }
-    if (state.dimResizeHandler) {
-      window.removeEventListener('resize', state.dimResizeHandler);
-    }
-  });
-
   useStyle(`.chronos-sliding-banner {
   position: relative;
   width: 100%;
@@ -448,6 +262,191 @@ export default function SlidingBanner(props: SlidingBannerProps) {
 
 `);
 
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  
+  const state = useStore({
+    currentIndex: 0,
+    previousIndex: 0,
+    direction: 'next' as 'next' | 'prev',
+    intervalId: null as any,
+    animationFrameId: null as any,
+    resizeHandler: null as any,
+    dimResizeHandler: null as any,
+    
+    get animationClass() {
+      return props.config?.animationEffect || 'slide';
+    },
+    get backgroundClass() {
+      return props.config?.backgroundEffect || 'none';
+    },
+    next() {
+      if (!props.items?.length) return;
+      state.direction = 'next';
+      state.previousIndex = state.currentIndex;
+      if (state.currentIndex >= props.items.length - 1) {
+        if (props.config?.rotateAgain !== false) {
+          state.currentIndex = 0;
+        }
+      } else {
+        state.currentIndex++;
+      }
+    },
+    prev() {
+      if (!props.items?.length) return;
+      state.direction = 'prev';
+      state.previousIndex = state.currentIndex;
+      if (state.currentIndex <= 0) {
+        if (props.config?.rotateAgain !== false) {
+          state.currentIndex = props.items.length - 1;
+        }
+      } else {
+        state.currentIndex--;
+      }
+    },
+    goTo(index: number) {
+      if (state.currentIndex !== index) {
+        state.direction = index > state.currentIndex ? 'next' : 'prev';
+        state.previousIndex = state.currentIndex;
+        state.currentIndex = index;
+      }
+    },
+    startAutoPlay() {
+      if (props.config?.autoStart !== false && props.items?.length > 1) {
+        state.intervalId = setInterval(() => {
+          state.next();
+        }, props.config?.delayMs || 5000);
+      }
+    },
+    stopAutoPlay() {
+      if (state.intervalId) {
+        clearInterval(state.intervalId);
+      }
+    },
+    setupDimensions() {
+      if (rootRef) {
+        rootRef.style.setProperty('--slider-half-width', `${rootRef.offsetWidth / 2}px`);
+      }
+    },
+    initCanvasAnimations(canvas: HTMLCanvasElement) {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      
+      const effect = props.config?.backgroundEffect;
+      if (effect !== 'particles' && effect !== 'waves') return;
+
+      const resize = () => {
+        if (canvas) {
+          canvas.width = canvas.offsetWidth;
+          canvas.height = canvas.offsetHeight;
+        }
+      };
+      resize();
+      state.resizeHandler = resize;
+      window.addEventListener('resize', state.resizeHandler);
+
+      if (effect === 'particles') {
+        const particles: any[] = [];
+        for(let i=0; i<70; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 3 + 1,
+            speedX: Math.random() * 1 - 0.5,
+            speedY: Math.random() * -1 - 0.2,
+            opacity: Math.random() * 0.5 + 0.1
+          });
+        }
+        
+        const animate = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          for (let i = 0; i < particles.length; i++) {
+            let p = particles[i];
+            ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            p.x += p.speedX;
+            p.y += p.speedY;
+            if (p.y < -10) p.y = canvas.height + 10;
+            if (p.x < -10) p.x = canvas.width + 10;
+            if (p.x > canvas.width + 10) p.x = -10;
+          }
+          state.animationFrameId = requestAnimationFrame(animate);
+        };
+        animate();
+      } else if (effect === 'waves') {
+        let time = 0;
+        const animate = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          
+          // Back wave
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+          ctx.beginPath();
+          ctx.moveTo(0, canvas.height);
+          for(let i=0; i<=canvas.width; i+=20) {
+            ctx.lineTo(i, canvas.height - 80 + Math.sin(i * 0.005 + time) * 30);
+          }
+          ctx.lineTo(canvas.width, canvas.height);
+          ctx.fill();
+          
+          // Front wave
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+          ctx.beginPath();
+          ctx.moveTo(0, canvas.height);
+          for(let i=0; i<=canvas.width; i+=20) {
+            ctx.lineTo(i, canvas.height - 40 + Math.sin(i * 0.008 + time * 1.5) * 20);
+          }
+          ctx.lineTo(canvas.width, canvas.height);
+          ctx.fill();
+
+          time += 0.03;
+          state.animationFrameId = requestAnimationFrame(animate);
+        };
+        animate();
+      }
+    }
+  });
+
+  onMount(() => {
+    state.startAutoPlay();
+    state.setupDimensions();
+    state.dimResizeHandler = () => state.setupDimensions();
+    window.addEventListener('resize', state.dimResizeHandler);
+    if (canvasRef) {
+      state.initCanvasAnimations(canvasRef);
+    }
+  });
+
+  onUpdate(() => {
+    // Cancel the old canvas loop
+    if (state.animationFrameId) {
+      cancelAnimationFrame(state.animationFrameId);
+      state.animationFrameId = null;
+    }
+    if (state.resizeHandler) {
+      window.removeEventListener('resize', state.resizeHandler);
+      state.resizeHandler = null;
+    }
+    // Start a fresh loop on the canvas
+    if (canvasRef) {
+      state.initCanvasAnimations(canvasRef);
+    }
+  }, [props.config?.backgroundEffect, canvasRef]);
+
+  onUnMount(() => {
+    state.stopAutoPlay();
+    if (state.animationFrameId) {
+      cancelAnimationFrame(state.animationFrameId);
+    }
+    if (state.resizeHandler) {
+      window.removeEventListener('resize', state.resizeHandler);
+    }
+    if (state.dimResizeHandler) {
+      window.removeEventListener('resize', state.dimResizeHandler);
+    }
+  });
   return (
     <div 
       ref={rootRef}

@@ -7,35 +7,6 @@ export interface TimerWidgetProps {
 }
 
 export default function TimerWidget(props: TimerWidgetProps) {
-  const state = useStore({
-    timeLeft: { days: 0, hours: 0, minutes: 0, seconds: 0 },
-    timerId: null as any,
-    calculateTimeLeft() {
-      const difference = new Date(props.targetDate).getTime() - new Date().getTime();
-      if (difference > 0) {
-        state.timeLeft = {
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60)
-        };
-      } else {
-        state.timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
-      }
-    }
-  });
-
-  onMount(() => {
-    state.calculateTimeLeft();
-    state.timerId = setInterval(() => {
-      state.calculateTimeLeft();
-    }, 1000);
-  });
-
-  onUnMount(() => {
-    if (state.timerId) clearInterval(state.timerId);
-  });
-
   useStyle(`.chronos-timer-widget {
           background-color: var(--chronos-color-surface);
           border: var(--chronos-border-width) solid var(--chronos-color-border);
@@ -82,6 +53,34 @@ export default function TimerWidget(props: TimerWidgetProps) {
 
 `);
 
+  const state = useStore({
+    timeLeft: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+    timerId: null as any,
+    calculateTimeLeft() {
+      const difference = new Date(props.targetDate).getTime() - new Date().getTime();
+      if (difference > 0) {
+        state.timeLeft = {
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60)
+        };
+      } else {
+        state.timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+      }
+    }
+  });
+
+  onMount(() => {
+    state.calculateTimeLeft();
+    state.timerId = setInterval(() => {
+      state.calculateTimeLeft();
+    }, 1000);
+  });
+
+  onUnMount(() => {
+    if (state.timerId) clearInterval(state.timerId);
+  });
   return (
     <div class={`chronos-timer-widget ${props.className || ''}`}>
       {props.title && <h3 class="chronos-timer-title">{props.title}</h3>}
