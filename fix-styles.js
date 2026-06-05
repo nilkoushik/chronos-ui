@@ -1,10 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 const srcDir = path.join(__dirname, 'src', 'components');
-const themeCssPath = path.join(__dirname, 'src', 'styles', 'theme.css');
+const stylesComponentsDir = path.join(__dirname, 'src', 'styles', 'components');
+
+// Create the components style directory if it doesn't exist
+if (!fs.existsSync(stylesComponentsDir)) {
+  fs.mkdirSync(stylesComponentsDir, { recursive: true });
+}
 
 const files = fs.readdirSync(srcDir).filter(f => f.endsWith('.lite.tsx'));
-let allCss = '\n/* Component Styles Extracted Automatically */\n';
 
 for (const file of files) {
   const filePath = path.join(srcDir, file);
@@ -15,11 +19,17 @@ for (const file of files) {
   const match = content.match(styleRegex);
   
   if (match) {
-    allCss += `/* ${file} */\n${match[1]}\n`;
+    const componentName = file.replace('.lite.tsx', '');
+    const cssFilePath = path.join(stylesComponentsDir, `${componentName}.css`);
+    const cssContent = `/* Styles for ${componentName} */\n${match[1]}\n`;
+    
+    // Write individual CSS file
+    fs.writeFileSync(cssFilePath, cssContent, 'utf8');
+    
+    // Remove from JSX
     content = content.replace(styleRegex, '');
     fs.writeFileSync(filePath, content, 'utf8');
   }
 }
 
-fs.appendFileSync(themeCssPath, allCss, 'utf8');
-console.log('Styles extracted and components updated.');
+console.log('Styles extracted to individual CSS files and components updated.');

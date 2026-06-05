@@ -34,6 +34,7 @@
   "exports": {
     ".": "./dist/react/src/components/index.js",
     "./theme.css": "./src/styles/theme.css",
+    "./styles/*": "./src/styles/*",
     "./react/*": "./dist/react/src/components/*",
     "./svelte/*": "./dist/svelte/src/components/*",
     "./webcomponent/*": "./dist/webcomponent/dist/*"
