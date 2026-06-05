@@ -357,7 +357,7 @@
   top: 0; left: 0;
   width: 100%; height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: 3;
 }
 
 .chronos-sliding-banner-track {
@@ -492,7 +492,10 @@
 .effect-wipe-right .chronos-sliding-banner-track,
 .effect-cube .chronos-sliding-banner-track,
 .effect-door .chronos-sliding-banner-track,
-.effect-fall .chronos-sliding-banner-track {
+.effect-fall .chronos-sliding-banner-track,
+.effect-crush .chronos-sliding-banner-track,
+.effect-peel-off .chronos-sliding-banner-track,
+.effect-curtain .chronos-sliding-banner-track {
   transform: none !important;
 }
 
@@ -507,7 +510,10 @@
 .effect-wipe-right .chronos-sliding-slide,
 .effect-cube .chronos-sliding-slide,
 .effect-door .chronos-sliding-slide,
-.effect-fall .chronos-sliding-slide {
+.effect-fall .chronos-sliding-slide,
+.effect-crush .chronos-sliding-slide,
+.effect-peel-off .chronos-sliding-slide,
+.effect-curtain .chronos-sliding-slide {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
   opacity: 0; pointer-events: none;
@@ -532,35 +538,283 @@
 .effect-zoom .chronos-sliding-slide { transform: scale(1.08); }
 .effect-zoom .chronos-sliding-slide.active { transform: scale(1); }
 
-.effect-flip .chronos-sliding-banner-track { perspective: 1200px; }
-.effect-flip .chronos-sliding-slide { transform: rotateY(-90deg); backface-visibility: hidden; }
-.effect-flip .chronos-sliding-slide.active { transform: rotateY(0deg); }
+.effect-flip {
+  perspective: 1500px;
+}
+.effect-flip .chronos-sliding-banner-track {
+  transform-style: preserve-3d !important;
+}
+.effect-flip .chronos-sliding-slide {
+  backface-visibility: hidden;
+  opacity: 0;
+  z-index: 1;
+  transition: none !important;
+}
+.effect-flip .chronos-sliding-slide.active,
+.effect-flip .chronos-sliding-slide.previous {
+  opacity: 1;
+}
+.effect-flip .dir-next .chronos-sliding-slide.previous {
+  z-index: 2;
+  animation: chronos-flip-out-next 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.effect-flip .dir-next .chronos-sliding-slide.active {
+  z-index: 1;
+  animation: chronos-flip-in-next 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.effect-flip .dir-prev .chronos-sliding-slide.previous {
+  z-index: 2;
+  animation: chronos-flip-out-prev 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.effect-flip .dir-prev .chronos-sliding-slide.active {
+  z-index: 1;
+  animation: chronos-flip-in-prev 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
 
-.effect-push-up .chronos-sliding-slide { transform: translateY(100%); opacity: 1; z-index: 1; }
-.effect-push-up .chronos-sliding-slide.active { transform: translateY(0); z-index: 2; }
-.effect-push-down .chronos-sliding-slide { transform: translateY(-100%); opacity: 1; z-index: 1; }
-.effect-push-down .chronos-sliding-slide.active { transform: translateY(0); z-index: 2; }
-.effect-push-left .chronos-sliding-slide { transform: translateX(100%); opacity: 1; z-index: 1; }
-.effect-push-left .chronos-sliding-slide.active { transform: translateX(0); z-index: 2; }
-.effect-push-right .chronos-sliding-slide { transform: translateX(-100%); opacity: 1; z-index: 1; }
-.effect-push-right .chronos-sliding-slide.active { transform: translateX(0); z-index: 2; }
+@keyframes chronos-flip-out-next {
+  0% { transform: rotateY(0deg) translateZ(0); opacity: 1; }
+  49% { transform: rotateY(-89deg) translateZ(-150px) scale(0.95); opacity: 1; }
+  50% { transform: rotateY(-90deg) translateZ(-150px) scale(0.95); opacity: 0; }
+  100% { transform: rotateY(-180deg) translateZ(0); opacity: 0; }
+}
+@keyframes chronos-flip-in-next {
+  0% { transform: rotateY(180deg) translateZ(0); opacity: 0; }
+  50% { transform: rotateY(90deg) translateZ(-150px) scale(0.95); opacity: 0; }
+  51% { transform: rotateY(89deg) translateZ(-150px) scale(0.95); opacity: 1; }
+  100% { transform: rotateY(0deg) translateZ(0); opacity: 1; }
+}
+@keyframes chronos-flip-out-prev {
+  0% { transform: rotateY(0deg) translateZ(0); opacity: 1; }
+  49% { transform: rotateY(89deg) translateZ(-150px) scale(0.95); opacity: 1; }
+  50% { transform: rotateY(90deg) translateZ(-150px) scale(0.95); opacity: 0; }
+  100% { transform: rotateY(180deg) translateZ(0); opacity: 0; }
+}
+@keyframes chronos-flip-in-prev {
+  0% { transform: rotateY(-180deg) translateZ(0); opacity: 0; }
+  50% { transform: rotateY(-90deg) translateZ(-150px) scale(0.95); opacity: 0; }
+  51% { transform: rotateY(-89deg) translateZ(-150px) scale(0.95); opacity: 1; }
+  100% { transform: rotateY(0deg) translateZ(0); opacity: 1; }
+}
 
-.effect-wipe-left .chronos-sliding-slide { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); opacity: 1; z-index: 1; }
-.effect-wipe-left .chronos-sliding-slide.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); z-index: 2; }
-.effect-wipe-right .chronos-sliding-slide { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); opacity: 1; z-index: 1; }
-.effect-wipe-right .chronos-sliding-slide.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); z-index: 2; }
+.effect-push-up .chronos-sliding-slide { transform: translateY(100%); }
+.effect-push-up .chronos-sliding-slide.active { transform: translateY(0); opacity: 1; z-index: 2; }
+.effect-push-up .chronos-sliding-slide.previous { transform: translateY(-100%); opacity: 1; z-index: 1; }
 
+.effect-push-down .chronos-sliding-slide { transform: translateY(-100%); }
+.effect-push-down .chronos-sliding-slide.active { transform: translateY(0); opacity: 1; z-index: 2; }
+.effect-push-down .chronos-sliding-slide.previous { transform: translateY(100%); opacity: 1; z-index: 1; }
+
+.effect-push-left .chronos-sliding-slide { transform: translateX(100%); }
+.effect-push-left .chronos-sliding-slide.active { transform: translateX(0); opacity: 1; z-index: 2; }
+.effect-push-left .chronos-sliding-slide.previous { transform: translateX(-100%); opacity: 1; z-index: 1; }
+
+.effect-push-right .chronos-sliding-slide { transform: translateX(-100%); }
+.effect-push-right .chronos-sliding-slide.active { transform: translateX(0); opacity: 1; z-index: 2; }
+.effect-push-right .chronos-sliding-slide.previous { transform: translateX(100%); opacity: 1; z-index: 1; }
+
+/* Wipe Left (reveal from right to left with feathered edge) */
+.effect-wipe-left .chronos-sliding-slide {
+  opacity: 1 !important;
+  pointer-events: none;
+  z-index: 1;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 50%, black 65%, black 100%);
+  -webkit-mask-size: 200% 100%;
+  -webkit-mask-position: 0% 0;
+  mask-image: linear-gradient(to right, transparent 0%, transparent 50%, black 65%, black 100%);
+  mask-size: 200% 100%;
+  mask-position: 0% 0;
+  transition: mask-position 0.8s cubic-bezier(0.4, 0, 0.2, 1), -webkit-mask-position 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  clip-path: none !important;
+}
+.effect-wipe-left .chronos-sliding-slide.active {
+  pointer-events: auto;
+  z-index: 2;
+  -webkit-mask-position: 100% 0;
+  mask-position: 100% 0;
+}
+.effect-wipe-left .chronos-sliding-slide.previous {
+  pointer-events: none;
+  z-index: 1;
+  -webkit-mask-position: 100% 0;
+  mask-position: 100% 0;
+}
+
+/* Wipe Right (reveal from left to right with feathered edge) */
+.effect-wipe-right .chronos-sliding-slide {
+  opacity: 1 !important;
+  pointer-events: none;
+  z-index: 1;
+  -webkit-mask-image: linear-gradient(to right, black 0%, black 35%, transparent 50%, transparent 100%);
+  -webkit-mask-size: 200% 100%;
+  -webkit-mask-position: 100% 0;
+  mask-image: linear-gradient(to right, black 0%, black 35%, transparent 50%, transparent 100%);
+  mask-size: 200% 100%;
+  mask-position: 100% 0;
+  transition: mask-position 0.8s cubic-bezier(0.4, 0, 0.2, 1), -webkit-mask-position 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  clip-path: none !important;
+}
+.effect-wipe-right .chronos-sliding-slide.active {
+  pointer-events: auto;
+  z-index: 2;
+  -webkit-mask-position: 0% 0;
+  mask-position: 0% 0;
+}
+.effect-wipe-right .chronos-sliding-slide.previous {
+  pointer-events: none;
+  z-index: 1;
+  -webkit-mask-position: 0% 0;
+  mask-position: 0% 0;
+}
+
+/* Curtain Effect (center-split open) */
+.effect-curtain .chronos-sliding-slide {
+  opacity: 1 !important;
+  pointer-events: none;
+  z-index: 1;
+  clip-path: polygon(50% 0, 50% 0, 50% 100%, 50% 100%);
+  transition: clip-path 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.effect-curtain .chronos-sliding-slide.active {
+  pointer-events: auto;
+  z-index: 2;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.effect-curtain .chronos-sliding-slide.previous {
+  pointer-events: none;
+  z-index: 1;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Peel Off Effect (diagonal corner curl and peel away) */
+.effect-peel-off {
+  perspective: 1500px;
+}
+.effect-peel-off .chronos-sliding-slide {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  opacity: 0;
+  z-index: 1;
+  transition: none !important;
+  pointer-events: none;
+}
+.effect-peel-off .chronos-sliding-slide.active {
+  opacity: 1;
+  z-index: 1;
+  pointer-events: auto;
+}
+.effect-peel-off .chronos-sliding-slide.previous {
+  opacity: 1;
+  z-index: 2;
+}
+.effect-peel-off .dir-next .chronos-sliding-slide.previous {
+  animation: chronos-peel-off-next 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.effect-peel-off .dir-prev .chronos-sliding-slide.previous {
+  animation: chronos-peel-off-prev 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes chronos-peel-off-next {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg) rotateX(0deg) rotateY(0deg);
+    transform-origin: top left;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  30% {
+    transform: translateX(-15%) translateY(-15%) rotate(-10deg) rotateX(15deg) rotateY(-15deg);
+    transform-origin: top left;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%);
+  }
+  100% {
+    transform: translateX(-120%) translateY(-120%) rotate(-35deg) rotateX(45deg) rotateY(-45deg);
+    transform-origin: top left;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 100%, 0 100%);
+    opacity: 0;
+  }
+}
+
+@keyframes chronos-peel-off-prev {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg) rotateX(0deg) rotateY(0deg);
+    transform-origin: top right;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  30% {
+    transform: translateX(15%) translateY(-15%) rotate(10deg) rotateX(15deg) rotateY(15deg);
+    transform-origin: top right;
+    clip-path: polygon(0 0, 100% 0, 30% 100%, 0 70%, 0 100%);
+  }
+  100% {
+    transform: translateX(120%) translateY(-120%) rotate(35deg) rotateX(45deg) rotateY(45deg);
+    transform-origin: top right;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 100% 0, 0 0);
+    opacity: 0;
+  }
+}
+
+/* Crush Effect (crumple like a paper ball and fall down) */
+.effect-crush {
+  perspective: 1500px;
+}
+.effect-crush .chronos-sliding-slide {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  opacity: 0;
+  z-index: 1;
+  transition: none !important;
+  pointer-events: none;
+}
+.effect-crush .chronos-sliding-slide.active {
+  opacity: 1;
+  z-index: 1;
+  pointer-events: auto;
+}
+.effect-crush .chronos-sliding-slide.previous {
+  opacity: 1;
+  z-index: 2;
+  animation: chronos-crush-anim 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes chronos-crush-anim {
+  0% {
+    transform: scale(1) rotate(0deg) translate3d(0, 0, 0);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    filter: contrast(1) brightness(1);
+  }
+  30% {
+    transform: scale(0.8) rotate(-4deg) translate3d(0, 0, -100px);
+    clip-path: polygon(5% 10%, 95% 5%, 90% 90%, 10% 95%);
+    filter: contrast(1.2) brightness(0.95);
+  }
+  60% {
+    transform: scale(0.4) rotate(12deg) translate3d(0, -50px, -300px);
+    clip-path: polygon(25% 30%, 75% 25%, 70% 75%, 30% 70%);
+    filter: contrast(1.5) brightness(0.7);
+  }
+  100% {
+    transform: scale(0.1) rotate(45deg) translate3d(0, 800px, -600px);
+    clip-path: polygon(45% 45%, 55% 45%, 55% 55%, 45% 55%);
+    filter: contrast(2) brightness(0.3);
+    opacity: 0;
+  }
+}
+
+.effect-cube {
+  perspective: 1500px;
+}
 .effect-cube .chronos-sliding-banner-track { 
-  perspective: 2000px; 
+  transform-style: preserve-3d !important;
   transform: translateZ(calc(-1 * var(--slider-half-width, 400px))) !important;
 }
 .effect-cube .chronos-sliding-slide { 
   transform-style: preserve-3d;
   backface-visibility: hidden;
-  transform: rotateY(-90deg) translateZ(var(--slider-half-width, 400px)); 
   opacity: 0; 
   z-index: 1; 
   transition: none; 
+}
+.effect-cube .chronos-sliding-slide.active,
+.effect-cube .chronos-sliding-slide.previous {
+  opacity: 1;
 }
 
 /* direction: next */
@@ -806,6 +1060,92 @@
 /* Component Styles Extracted Automatically */
 
 /* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+
+/* Component Styles Extracted Automatically */
+/* RichTextEditor.lite.tsx */
+
+        .wysiwyg-content blockquote {
+          border-left: 4px solid #8b5cf6 !important;
+          background: linear-gradient(90deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.02) 100%) !important;
+          padding: 20px 24px !important;
+          margin: 24px 0 !important;
+          border-radius: 0 16px 16px 0 !important;
+          font-style: italic !important;
+          color: #e2e8f0 !important;
+          font-size: 1.1em !important;
+          line-height: 1.8 !important;
+          position: relative;
+          box-shadow: inset 2px 0 0px rgba(255,255,255,0.1);
+        }
+        .wysiwyg-content pre {
+          background: #0f172a !important;
+          border: 1px solid rgba(255,255,255,0.1) !important;
+          border-radius: 12px !important;
+          padding: 20px !important;
+          color: #38bdf8 !important;
+          font-family: 'Fira Code', monospace !important;
+          overflow-x: auto !important;
+          box-shadow: inset 0 2px 10px rgba(0,0,0,0.5) !important;
+        }
+      
 
 /* Component Styles Extracted Automatically */
 

@@ -177,10 +177,11 @@ function initAltSliderDemo(id) {
 
   function goTo(i) {
     currentSet = i;
-    // When set is 0: col1 shows item 1 (Y: 0), col2 shows item 2 (Y: -100%)
-    // When set is 1: col1 shows item 3 (Y: -100%), col2 shows item 4 (Y: 0)
-    if (col1) col1.style.transform = `translateY(-${currentSet * 100}%)`;
-    if (col2) col2.style.transform = `translateY(-${(1 - currentSet) * 100}%)`;
+    // Track is 200% tall; each card is 50% of track (= 1 viewport height).
+    // Set 0: col1 shows card 1 (Y: 0),   col2 shows card 2 (Y: -50%)
+    // Set 1: col1 shows card 2 (Y: -50%), col2 shows card 1 (Y: 0)
+    if (col1) col1.style.transform = `translateY(-${currentSet * 50}%)`;
+    if (col2) col2.style.transform = `translateY(-${(1 - currentSet) * 50}%)`;
 
     dots.forEach((d, idx) => {
       d.classList.toggle('active', idx === currentSet);

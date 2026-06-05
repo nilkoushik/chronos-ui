@@ -63,5 +63,12 @@
   "WysiwygRenderer": [
     { "name": "htmlContent", "required": true,  "type": "string", "description": "Raw HTML string from a CMS rich-text field; rendered with <code>innerHTML</code>" },
     { "name": "className",   "required": false, "type": "string", "description": "Additional CSS class names on the wrapper element" }
+  ],
+  "RichTextEditor": [
+    { "name": "content",          "required": false, "type": "string", "description": "Initial HTML content for the editor." },
+    { "name": "onChange",         "required": false, "type": "(content: string) => void", "description": "Callback triggered when content changes." },
+    { "name": "onMediaRequest",   "required": false, "type": "(type: 'image' | 'video' | 'audio') => Promise<string>", "description": "Callback to open an external media library modal." },
+    { "name": "availableClasses", "required": false, "type": "string[]", "description": "Array of custom class names available for the user to apply." },
+    { "name": "className",        "required": false, "type": "string", "description": "Additional CSS class names for the wrapper element." }
   ]
 }

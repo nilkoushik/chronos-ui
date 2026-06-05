@@ -392,5 +392,27 @@
         "desc": "Raw HTML string to render. Must be sanitized before passing."
       }
     ]
+  },
+  {
+    "name": "Rich Text Editor",
+    "slug": "rich-text-editor",
+    "icon": "📝",
+    "cardGradient": "linear-gradient(135deg,#0f172a,#1e293b)",
+    "cardDesc": "Advanced headless WYSIWYG editor with custom inline styles, table builder, media embedding, and dark premium aesthetics.",
+    "previewLabel": "RichTextEditor component",
+    "previewCss": ".demo-rte{max-width:800px;margin:0 auto;border-radius:12px;border:1px solid rgba(255,255,255,.1);overflow:hidden;background:#0f172a}",
+    "previewHtml": "<div class=\"demo-rte\"><div style=\"padding:1rem;border-bottom:1px solid rgba(255,255,255,.1);display:flex;gap:1rem;background:rgba(15,23,42,.85)\"><div style=\"width:24px;height:24px;background:#334155;border-radius:6px\"></div><div style=\"width:24px;height:24px;background:#334155;border-radius:6px\"></div><div style=\"width:24px;height:24px;background:#334155;border-radius:6px\"></div></div><div style=\"padding:2rem;color:#f1f5f9;min-height:200px\">Start typing here...</div></div>",
+    "examples": {
+      "react": "import RichTextEditor from '@chronos-ui/core/react/RichTextEditor';\nimport '@chronos-ui/core/theme.css';\n\n<RichTextEditor \n  content=\"<p>Hello World!</p>\"\n  availableClasses={['text-pink-500', 'font-bold']}\n  onChange={(html) => console.log(html)}\n/>",
+      "svelte": "<script lang=\"ts\">\n  import RichTextEditor from '@chronos-ui/core/svelte/RichTextEditor.svelte';\n</script>\n\n<RichTextEditor \n  content=\"<p>Hello World!</p>\"\n/>",
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/RichTextEditor.js\"></script>\n\n<rich-text-editor \n  content=\"<p>Hello World!</p>\"\n></rich-text-editor>"
+    },
+    "notes": [
+      {
+        "type": "tip",
+        "text": "The editor natively supports adding inline styles or classes dynamically to selected ranges."
+      }
+    ],
+    "api": []
   }
 ]
