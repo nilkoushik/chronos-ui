@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chronos UI Web Components Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../src/styles/theme.css" />
+    <link rel="stylesheet" href="../../src/styles/components/Banner.css" />
+    <link rel="stylesheet" href="../../src/styles/components/AnnouncementBar.css" />
+    <link rel="stylesheet" href="../../src/styles/components/GridBanner.css" />
+    <link rel="stylesheet" href="../../src/styles/components/MediaGrid.css" />
+    <link rel="stylesheet" href="../../src/styles/components/RowScrollable.css" />
+    <link rel="stylesheet" href="../../src/styles/components/TimerWidget.css" />
+    <link rel="stylesheet" href="../../src/styles/components/WysiwygRenderer.css" />
+    <link rel="stylesheet" href="../../src/styles/components/RichTextEditor.css" />
+    <link rel="stylesheet" href="../../src/styles/components/SlidingBanner.css" />
+    <link rel="stylesheet" href="../../src/styles/components/AlternatingSlider.css" />
+    <style>
+      body {
+        margin: 0;
+        background: #020617;
+        color: #f1f5f9;
+        font-family: system-ui, sans-serif;
+      }
+      .demo-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      h1 {
+        text-align: center;
+        color: #a78bfa;
+        margin-bottom: 3rem;
+      }
+      section {
+        margin-bottom: 4rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+      h2 {
+        color: #38bdf8;
+        margin-bottom: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo-container">
+      <h1>Chronos UI Web Components</h1>
+      
+      <section>
+        <h2>Announcement Bar</h2>
+        <announcement-bar message="Special Offer! Use code WC20" background-color="#8b5cf6" text-color="#ffffff" map-links='[{"url":"#"}]'></announcement-bar>
+      </section>
+
+      <section>
+        <h2>Timer Widget</h2>
+        <timer-widget title="Ends in:" target-date="2027-12-31T23:59:59Z"></timer-widget>
+      </section>
+
+      <section>
+        <h2>Banner</h2>
+        <chronos-banner title="Welcome Banner" subtitle="This is a simple banner component" cta-text="Shop Now" text-alignment="center"></chronos-banner>
+      </section>
+
+      <section>
+        <h2>Grid Banner</h2>
+        <grid-banner 
+          columns="4"
+          items='[{"id":"1","title":"Grid 1","media":{"type":"image","url":"https://placehold.co/400x400"}},{"id":"2","title":"Grid 2","media":{"type":"image","url":"https://placehold.co/400x400"}},{"id":"3","title":"Grid 3","media":{"type":"image","url":"https://placehold.co/400x400"}},{"id":"4","title":"Grid 4","media":{"type":"image","url":"https://placehold.co/400x400"}}]'
+        ></grid-banner>
+      </section>
+      
+      <section>
+        <h2>Media Grid</h2>
+        <media-grid 
+          primary-media='{"id":"p1","media":{"type":"image","url":"https://placehold.co/600x600"}}'
+          secondary-media='[{"id":"s1","media":{"type":"image","url":"https://placehold.co/300x300"}},{"id":"s2","media":{"type":"image","url":"https://placehold.co/300x300"}}]'
+        ></media-grid>
+      </section>
+      
+      <section>
+        <h2>Row Scrollable</h2>
+        <row-scrollable 
+          title="Scrollable Row" 
+          items='[{"id":"1","title":"Item 1","media":{"type":"image","url":"https://placehold.co/200x200"}},{"id":"2","title":"Item 2","media":{"type":"image","url":"https://placehold.co/200x200"}},{"id":"3","title":"Item 3","media":{"type":"image","url":"https://placehold.co/200x200"}}]'
+        ></row-scrollable>
+      </section>
+      
+      <section>
+        <h2>Sliding Banner</h2>
+        <sliding-banner 
+          config='{"autoStart":true,"showDots":true,"animationEffect":"fade"}'
+          items='[{"id":"1","title":"Slide 1","subtitle":"First slide description","media":{"type":"image","url":"https://placehold.co/800x400"}},{"id":"2","title":"Slide 2","subtitle":"Second slide description","media":{"type":"image","url":"https://placehold.co/800x400"}}]'
+        ></sliding-banner>
+      </section>
+      
+      <section>
+        <h2>Alternating Slider</h2>
+        <alternating-slider 
+          config='{"columns": 2, "autoStart": true, "delayMs": 4000, "showDots": true, "showArrows": true}'
+          items='[{"id":"1","title":"Category 1","subtitle":"Explore","media":{"type":"image","url":"https://images.unsplash.com/photo-1434389678369-183428d00c4c?auto=format&fit=crop&w=800&q=80"}},{"id":"2","title":"Category 2","subtitle":"Discover","media":{"type":"image","url":"https://images.unsplash.com/photo-1558769132-cb1fac084092?auto=format&fit=crop&w=800&q=80"}},{"id":"3","title":"Category 3","subtitle":"Shop","media":{"type":"image","url":"https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=800&q=80"}},{"id":"4","title":"Category 4","subtitle":"Trends","media":{"type":"image","url":"https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=800&q=80"}}]'
+        ></alternating-slider>
+      </section>
+      
+      <section>
+        <h2>Rich Text Editor</h2>
+        <div style="border: 1px solid #334155; border-radius: 8px; overflow: hidden;">
+          <rich-text-editor initial-content="<p>Hello World from Web Components!</p>"></rich-text-editor>
+        </div>
+      </section>
+
+      <section>
+        <h3 style="margin-top: 1rem;">WYSIWYG Renderer (Output)</h3>
+        <div style="padding: 1rem; background: #0f172a; border-radius: 8px;">
+          <wysiwyg-renderer content="<p>Hello World from Web Components!</p>"></wysiwyg-renderer>
+        </div>
+      </section>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

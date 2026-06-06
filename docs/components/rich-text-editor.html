@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rich Text Editor — Chronos UI</title>
+  <meta name="description" content="Advanced headless WYSIWYG editor with custom inline styles, table builder, media embedding, and dark premium aesthetics." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="../css/docs.css" />
+  <style>.demo-rte{max-width:800px;margin:0 auto;border-radius:12px;border:1px solid rgba(255,255,255,.1);overflow:hidden;background:#0f172a;box-shadow:0 10px 30px rgba(0,0,0,0.5)}.rte-toolbar{display:flex;flex-wrap:wrap;gap:8px;padding:12px 20px;background:rgba(15,23,42,0.9);border-bottom:1px solid rgba(255,255,255,.1);align-items:center}.rte-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:6px;background:transparent;border:none;color:#94a3b8;cursor:pointer;font-weight:600;font-size:14px}.rte-btn:hover{background:rgba(255,255,255,0.05);color:#f8fafc}.rte-btn.active{background:rgba(139,92,246,0.15);color:#a78bfa}.rte-sep{width:1px;height:20px;background:rgba(255,255,255,0.1);margin:0 4px}.rte-select{background:#1e293b;border:1px solid rgba(255,255,255,0.1);color:#f1f5f9;border-radius:6px;padding:4px 8px;font-size:12px;cursor:pointer}.rte-color{width:24px;height:24px;padding:0;border:none;border-radius:4px;cursor:pointer;background:transparent}.rte-content{padding:24px 32px;color:#f1f5f9;min-height:240px;font-family:system-ui, sans-serif;font-size:15px;line-height:1.6}</style>
+</head>
+<body>
+<div class="docs-shell">
+  
+    <aside class="docs-sidebar">
+      <a href="../index.html" class="sidebar-brand">
+        <div class="sidebar-logo">⏱</div>
+        <span class="sidebar-brand-name">Chronos<span>UI</span></span>
+        <span class="sidebar-version">v1.0.2</span>
+      </a>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-label">Getting Started</div>
+        <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> Home</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Components</div>
+        <a href="banner.html" class="sidebar-link"><span class="sidebar-link-icon">🖼</span> Banner</a>
+      <a href="announcement-bar.html" class="sidebar-link"><span class="sidebar-link-icon">📢</span> Announcement Bar</a>
+      <a href="grid-banner.html" class="sidebar-link"><span class="sidebar-link-icon">⊞</span> Grid Banner</a>
+      <a href="media-grid.html" class="sidebar-link"><span class="sidebar-link-icon">🎞</span> Media Grid</a>
+      <a href="row-scrollable.html" class="sidebar-link"><span class="sidebar-link-icon">↔</span> Row Scrollable</a>
+      <a href="sliding-banner.html" class="sidebar-link"><span class="sidebar-link-icon">▶</span> Sliding Banner</a>
+      <a href="alternating-slider.html" class="sidebar-link"><span class="sidebar-link-icon">⇅</span> Alternating Slider</a>
+      <a href="timer-widget.html" class="sidebar-link"><span class="sidebar-link-icon">⏳</span> Timer Widget</a>
+      <a href="wysiwyg-renderer.html" class="sidebar-link"><span class="sidebar-link-icon">✍</span> WYSIWYG Renderer</a>
+      <a href="rich-text-editor.html" class="sidebar-link active"><span class="sidebar-link-icon">📝</span> Rich Text Editor</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
+        <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
+        <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+        <a href="../dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
+      </nav>
+    </aside>
+
+  <main class="docs-main">
+    <div class="docs-topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+      <div class="topbar-breadcrumb">
+        <a href="../index.html">Chronos UI</a><span class="sep">/</span>
+        <span class="current">Rich Text Editor</span>
+      </div>
+      <div class="topbar-actions">
+        <a href="https://github.com/nilkoushik/chronos-ui/blob/main/src/components/RichTextEditor.lite.tsx"
+           target="_blank" rel="noopener" class="btn-github">View Source</a>
+      </div>
+    </div>
+
+    <div class="docs-content">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge">📝 Component</div>
+        <h1 class="page-title">Rich Text Editor</h1>
+        <p class="page-description">Advanced headless WYSIWYG editor with custom inline styles, table builder, media embedding, and dark premium aesthetics.</p>
+      </div>
+
+      <!-- Install -->
+      <div class="install-banner">
+        <code>npm install @chronos-ui/core</code>
+        <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
+      </div>
+
+      
+
+      <!-- Preview -->
+      <h2 class="section-heading">Live Preview</h2>
+      <div class="preview-card">
+        <div class="preview-toolbar">
+          <span class="preview-dot red"></span>
+          <span class="preview-dot amber"></span>
+          <span class="preview-dot green"></span>
+          <span class="preview-url">RichTextEditor component</span>
+        </div>
+        <div class="preview-body">
+          <div class="demo-rte"><div class="rte-toolbar"><button class="rte-btn" style="width:auto;padding:0 10px;font-size:12px;color:#a78bfa;background:rgba(139,92,246,0.1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:6px"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>Full Screen</button><button class="rte-btn" style="width:auto;padding:0 10px;font-size:12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:6px"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>Source Code</button><div class="rte-sep"></div><button class="rte-btn active">B</button><button class="rte-btn">I</button><button class="rte-btn" style="text-decoration:underline">U</button><button class="rte-btn" style="text-decoration:line-through">S</button><div class="rte-sep"></div><select class="rte-select"><option>Paragraph</option><option>Heading 1</option><option>Heading 2</option><option>Heading 3</option></select><div class="rte-sep"></div><input type="color" class="rte-color" value="#f1f5f9" title="Text Color"><input type="color" class="rte-color" value="#0f172a" title="Background Color"><div class="rte-sep"></div><button class="rte-btn">≡</button><button class="rte-btn">≡</button><button class="rte-btn">≡</button><div class="rte-sep"></div><button class="rte-btn">•</button><button class="rte-btn">1.</button><button class="rte-btn">"</button><button class="rte-btn">&lt;/&gt;</button><div class="rte-sep"></div><button class="rte-btn">🔗</button><button class="rte-btn">🖼</button><button class="rte-btn">🎥</button><button class="rte-btn">⊞</button><div class="rte-sep"></div><button class="rte-btn" style="width:auto;padding:0 8px;font-size:12px">+ Widget</button><button class="rte-btn" style="width:auto;padding:0 8px;font-size:12px">+ Social</button><button class="rte-btn" style="width:auto;padding:0 8px;font-size:12px">+ Button</button><div class="rte-sep"></div><button class="rte-btn" style="width:auto;padding:0 8px;font-size:12px">Clear</button></div><div class="rte-content"><h1>Welcome to Chronos UI Editor</h1><p>This is a high-fidelity mockup of the Rich Text Editor. Start typing here...</p><ul><li>Headless and framework-agnostic</li><li>Built-in media management</li><li>Advanced table support</li></ul></div></div>
+        </div>
+      </div>
+
+      <!-- Code Tabs -->
+      <h2 class="section-heading" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+        Usage
+        <button class="jsfiddle-btn" id="jsfiddle-btn" style="background:var(--chronos-color-primary); color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:600; display:flex; align-items:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Play in JSFiddle
+        </button>
+      </h2>
+      <div class="tab-group">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-tab="react">React</button>
+          <button class="tab-btn" data-tab="svelte">Svelte</button>
+          <button class="tab-btn" data-tab="wc">Web Component</button>
+        </div>
+        <div class="tab-panel active" data-panel="react">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code><span class="kw">import</span> RichTextEditor <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/RichTextEditor'</span>;
+<span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+
+&lt;<span class="tag">RichTextEditor</span> 
+  content=<span class="str">"&lt;<span class="tag">p</span>&gt;Hello World!&lt;/<span class="tag">p</span>&gt;"</span>
+  availableClasses={[<span class="str">'text-pink-500'</span>, <span class="str">'font-bold'</span>]}
+  onChange={(html) =&gt; console.log(html)}
+/&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="svelte">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
+  <span class="kw">import</span> RichTextEditor <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/RichTextEditor.svelte'</span>;
+&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">RichTextEditor</span> 
+  content=<span class="str">"&lt;<span class="tag">p</span>&gt;Hello World!&lt;/<span class="tag">p</span>&gt;"</span>
+/&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="wc">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">script</span> type=<span class="str">"module"</span>
+  src=<span class="str">"node_modules/@chronos-ui/core/webcomponents/RichTextEditor.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">rich-text-editor</span> 
+  content=<span class="str">"&lt;<span class="tag">p</span>&gt;Hello World!&lt;/<span class="tag">p</span>&gt;"</span>
+&gt;&lt;/<span class="tag">rich-text-editor</span>&gt;</code></pre>
+    </div>
+        </div>
+      </div>
+
+      <!-- Props Table -->
+      <h2 class="section-heading">Props</h2>
+      
+    <div class="props-table-wrap">
+      <table class="props-table">
+        <thead>
+          <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td><span class="prop-name">content</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Initial HTML content for the editor.</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">onChange</span> </td>
+        <td><span class="prop-type">(content: string) =&gt; void</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Callback triggered when content changes.</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">onMediaRequest</span> </td>
+        <td><span class="prop-type">(type: 'image' | 'video' | 'audio') =&gt; Promise&lt;string&gt;</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Callback to open an external media library modal.</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">availableClasses</span> </td>
+        <td><span class="prop-type">string[]</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Array of custom class names available for the user to apply.</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">className</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Additional CSS class names for the wrapper element.</td>
+      </tr></tbody>
+      </table>
+    </div>
+
+      <!-- Notes -->
+      <div class="alert alert-tip">The editor natively supports adding inline styles or classes dynamically to selected ranges.</div>
+    </div>
+  </main>
+</div>
+<script src="../js/docs.js"></script>
+
+</body>
+</html>

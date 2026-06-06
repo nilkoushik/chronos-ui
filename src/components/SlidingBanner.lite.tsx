@@ -1,4 +1,4 @@
-import { useStore, onMount, onUnMount, useRef, Show } from '@builder.io/mitosis';
+import { useStore, onMount, onUnMount, useRef, Show, onUpdate } from '@builder.io/mitosis';
 
 export interface BannerMedia {
   type?: 'image' | 'video' | string;
@@ -27,7 +27,7 @@ export interface SliderConfig {
   delayMs: number;
   showNextPrev: boolean;
   showDots: boolean;
-  animationEffect?: 'slide' | 'fade' | 'zoom' | 'flip' | 'push-up' | 'push-down' | 'push-left' | 'push-right' | 'wipe-left' | 'wipe-right' | 'cube' | 'door' | 'fall';
+  animationEffect?: 'slide' | 'fade' | 'zoom' | 'flip' | 'push-up' | 'push-down' | 'push-left' | 'push-right' | 'wipe-left' | 'wipe-right' | 'cube' | 'door' | 'fall' | 'crush' | 'peel-off' | 'curtain';
   backgroundEffect?: 'none' | 'particles' | 'waves';
 }
 
@@ -39,14 +39,19 @@ export interface SlidingBannerProps {
 }
 
 export default function SlidingBanner(props: SlidingBannerProps) {
+  
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   
   const state = useStore({
     currentIndex: 0,
     previousIndex: 0,
+    direction: 'next' as 'next' | 'prev',
     intervalId: null as any,
     animationFrameId: null as any,
     resizeHandler: null as any,
+    dimResizeHandler: null as any,
     
     get animationClass() {
       return props.config?.animationEffect || 'slide';
@@ -56,6 +61,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     },
     next() {
       if (!props.items?.length) return;
+      state.direction = 'next';
       state.previousIndex = state.currentIndex;
       if (state.currentIndex >= props.items.length - 1) {
         if (props.config?.rotateAgain !== false) {
@@ -67,6 +73,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     },
     prev() {
       if (!props.items?.length) return;
+      state.direction = 'prev';
       state.previousIndex = state.currentIndex;
       if (state.currentIndex <= 0) {
         if (props.config?.rotateAgain !== false) {
@@ -78,6 +85,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     },
     goTo(index: number) {
       if (state.currentIndex !== index) {
+        state.direction = index > state.currentIndex ? 'next' : 'prev';
         state.previousIndex = state.currentIndex;
         state.currentIndex = index;
       }
@@ -94,6 +102,11 @@ export default function SlidingBanner(props: SlidingBannerProps) {
         clearInterval(state.intervalId);
       }
     },
+    setupDimensions() {
+      if (rootRef) {
+        rootRef.style.setProperty('--slider-half-width', `${rootRef.offsetWidth / 2}px`);
+      }
+    },
     initCanvasAnimations(canvas: HTMLCanvasElement) {
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -103,8 +116,10 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       if (effect !== 'particles' && effect !== 'waves') return;
 
       const resize = () => {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
+        if (canvas) {
+          canvas.width = canvas.offsetWidth;
+          canvas.height = canvas.offsetHeight;
+        }
       };
       resize();
       state.resizeHandler = resize;
@@ -175,10 +190,29 @@ export default function SlidingBanner(props: SlidingBannerProps) {
 
   onMount(() => {
     state.startAutoPlay();
+    state.setupDimensions();
+    state.dimResizeHandler = () => state.setupDimensions();
+    window.addEventListener('resize', state.dimResizeHandler);
     if (canvasRef) {
       state.initCanvasAnimations(canvasRef);
     }
   });
+
+  onUpdate(() => {
+    // Cancel the old canvas loop
+    if (state.animationFrameId) {
+      cancelAnimationFrame(state.animationFrameId);
+      state.animationFrameId = null;
+    }
+    if (state.resizeHandler) {
+      window.removeEventListener('resize', state.resizeHandler);
+      state.resizeHandler = null;
+    }
+    // Start a fresh loop on the canvas
+    if (canvasRef) {
+      state.initCanvasAnimations(canvasRef);
+    }
+  }, [props.config?.backgroundEffect, canvasRef]);
 
   onUnMount(() => {
     state.stopAutoPlay();
@@ -188,10 +222,13 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     if (state.resizeHandler) {
       window.removeEventListener('resize', state.resizeHandler);
     }
+    if (state.dimResizeHandler) {
+      window.removeEventListener('resize', state.dimResizeHandler);
+    }
   });
-
   return (
     <div 
+      ref={rootRef}
       class={`chronos-sliding-banner ${props.className || ''} effect-${state.animationClass} bg-effect-${state.backgroundClass}`}
       onMouseEnter={() => state.stopAutoPlay()}
       onMouseLeave={() => state.startAutoPlay()}
@@ -203,7 +240,10 @@ export default function SlidingBanner(props: SlidingBannerProps) {
         ></canvas>
       )}
       
-      <div class="chronos-sliding-banner-track">
+      <div 
+        class={`chronos-sliding-banner-track dir-${state.direction}`}
+        style={{ transform: `translateX(-${state.currentIndex * 100}%)` }}
+      >
         {props.items?.map((item, index) => (
           <div 
             class={`chronos-sliding-slide ${index === state.currentIndex ? 'active' : ''} ${index === state.previousIndex && index !== state.currentIndex ? 'previous' : ''}`} 

@@ -37,6 +37,8 @@ export interface AlternatingSliderProps {
 }
 
 export default function AlternatingSlider(props: AlternatingSliderProps) {
+  
+
   const state = useStore({
     currentIndex: 0,
     intervalId: null as any,
@@ -92,7 +94,6 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
   onUnMount(() => {
     state.stopAutoPlay();
   });
-
   return (
     <div 
       class={`chronos-alt-slider ${props.className || ''}`}

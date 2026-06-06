@@ -15,6 +15,8 @@ export interface MediaGridProps {
 }
 
 export default function MediaGrid(props: MediaGridProps) {
+  
+
   return (
     <div class={`chronos-media-grid ${props.className || ''}`}>
       {props.primaryMedia && (

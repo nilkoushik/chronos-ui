@@ -7,6 +7,8 @@ export interface TimerWidgetProps {
 }
 
 export default function TimerWidget(props: TimerWidgetProps) {
+  
+
   const state = useStore({
     timeLeft: { days: 0, hours: 0, minutes: 0, seconds: 0 },
     timerId: null as any,
@@ -35,7 +37,6 @@ export default function TimerWidget(props: TimerWidgetProps) {
   onUnMount(() => {
     if (state.timerId) clearInterval(state.timerId);
   });
-
   return (
     <div class={`chronos-timer-widget ${props.className || ''}`}>
       {props.title && <h3 class="chronos-timer-title">{props.title}</h3>}

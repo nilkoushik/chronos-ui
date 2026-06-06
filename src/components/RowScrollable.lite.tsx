@@ -15,6 +15,8 @@ export interface RowScrollableProps {
 }
 
 export default function RowScrollable(props: RowScrollableProps) {
+  
+
   return (
     <div class={`chronos-scrollable-container ${props.className || ''}`}>
       {props.title && <h3 class="chronos-scrollable-title">{props.title}</h3>}

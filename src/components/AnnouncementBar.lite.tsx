@@ -9,6 +9,8 @@ export interface AnnouncementBarProps {
 }
 
 export default function AnnouncementBar(props: AnnouncementBarProps) {
+  
+
   return (
     <div
       class={`chronos-announcement-bar ${props.className || ''}`}

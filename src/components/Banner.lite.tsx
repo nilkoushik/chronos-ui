@@ -24,12 +24,13 @@ export interface BannerProps {
 }
 
 export default function Banner(props: BannerProps) {
+  
+
   const state = useStore({
     get alignment() {
       return props.textAlignment || 'center';
     }
   });
-
   return (
     <div
       class={`chronos-banner ${props.className || ''} ${props.isLoading ? 'chronos-image-shimmer' : ''}`}
