@@ -74,8 +74,16 @@ for (const file of allFiles) {
     }
     
     if (endIdx !== -1) {
-      const innerContent = finalCode.substring(searchStart, endIdx - 3);
+      let innerContent = finalCode.substring(searchStart, endIdx - 3);
       
+      // Remove local declarations of scope variables to avoid duplicate declaration and TDZ ReferenceErrors.
+      // Mitosis sometimes puts el.key = ... before declaring the scope variable used in it.
+      const scopeVars = ['colIndex', 'slideIndex', 'slideRow', 'index', 'rowIndex', 'mediaIndex', 'item', 'cls'];
+      for (const name of scopeVars) {
+        const declRegex = new RegExp(`(?:const|let|var)\\s+${name}\\s*=\\s*this\\.getScope\\(el,\\s*["']${name}["']\\);?\\s*`, 'g');
+        innerContent = innerContent.replace(declRegex, '');
+      }
+
       const varsToInject = [];
       if (!/const\s+colIndex\b|let\s+colIndex\b|var\s+colIndex\b/.test(innerContent)) {
         varsToInject.push('let colIndex = this.getScope ? this.getScope(el, "colIndex") : 0;');
@@ -94,6 +102,12 @@ for (const file of allFiles) {
       }
       if (!/const\s+mediaIndex\b|let\s+mediaIndex\b|var\s+mediaIndex\b/.test(innerContent)) {
         varsToInject.push('let mediaIndex = this.getScope ? this.getScope(el, "mediaIndex") : 0;');
+      }
+      if (!/const\s+item\b|let\s+item\b|var\s+item\b/.test(innerContent)) {
+        varsToInject.push('let item = this.getScope ? this.getScope(el, "item") : null;');
+      }
+      if (!/const\s+cls\b|let\s+cls\b|var\s+cls\b/.test(innerContent)) {
+        varsToInject.push('let cls = this.getScope ? this.getScope(el, "cls") : null;');
       }
       
       const injectedVars = varsToInject.join(' ');
