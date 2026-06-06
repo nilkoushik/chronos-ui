@@ -48,7 +48,62 @@ for (const file of allFiles) {
   
   // Fix ReferenceError: colIndex is not defined in AlternatingSlider.js
   // Wrap in try-catch because Mitosis querySelectorAll matches un-stamped <template> tags
-  finalCode = finalCode.replace(/this\._root\s*\.querySelectorAll\("\[data-el='(.*?)'\]"\)\s*\.forEach\(\(el\) => \{([\s\S]*?)\}\);/g, 'this._root.querySelectorAll("[data-el=\'$1\']").forEach((el) => { try { let colIndex = this.getScope ? this.getScope(el, "colIndex") : 0; let slideIndex = this.getScope ? this.getScope(el, "slideIndex") : 0; let slideRow = this.getScope ? this.getScope(el, "slideRow") : null; let index = this.getScope ? this.getScope(el, "index") : 0; let rowIndex = this.getScope ? this.getScope(el, "rowIndex") : 0; let mediaIndex = this.getScope ? this.getScope(el, "mediaIndex") : 0; $2 } catch(e) {} });');
+  // Using a robust brace-matching parser to avoid breaking nested object/function braces (e.g. Object.assign)
+  const queryRegex = /this\._root\s*\.querySelectorAll\("\[data-el='(.*?)'\]"\)\s*\.forEach\(\(el\)\s*=>\s*\{/g;
+  let match;
+  while ((match = queryRegex.exec(finalCode)) !== null) {
+    const startIdx = match.index;
+    const matchStr = match[0];
+    const dataElValue = match[1];
+    
+    const searchStart = startIdx + matchStr.length;
+    let braceCount = 1;
+    let endIdx = -1;
+    for (let i = searchStart; i < finalCode.length; i++) {
+      if (finalCode[i] === '{') {
+        braceCount++;
+      } else if (finalCode[i] === '}') {
+        braceCount--;
+        if (braceCount === 0) {
+          if (finalCode.substring(i, i + 3) === '});') {
+            endIdx = i + 3;
+            break;
+          }
+        }
+      }
+    }
+    
+    if (endIdx !== -1) {
+      const innerContent = finalCode.substring(searchStart, endIdx - 3);
+      
+      const varsToInject = [];
+      if (!/const\s+colIndex\b|let\s+colIndex\b|var\s+colIndex\b/.test(innerContent)) {
+        varsToInject.push('let colIndex = this.getScope ? this.getScope(el, "colIndex") : 0;');
+      }
+      if (!/const\s+slideIndex\b|let\s+slideIndex\b|var\s+slideIndex\b/.test(innerContent)) {
+        varsToInject.push('let slideIndex = this.getScope ? this.getScope(el, "slideIndex") : 0;');
+      }
+      if (!/const\s+slideRow\b|let\s+slideRow\b|var\s+slideRow\b/.test(innerContent)) {
+        varsToInject.push('let slideRow = this.getScope ? this.getScope(el, "slideRow") : null;');
+      }
+      if (!/const\s+index\b|let\s+index\b|var\s+index\b/.test(innerContent)) {
+        varsToInject.push('let index = this.getScope ? this.getScope(el, "index") : 0;');
+      }
+      if (!/const\s+rowIndex\b|let\s+rowIndex\b|var\s+rowIndex\b/.test(innerContent)) {
+        varsToInject.push('let rowIndex = this.getScope ? this.getScope(el, "rowIndex") : 0;');
+      }
+      if (!/const\s+mediaIndex\b|let\s+mediaIndex\b|var\s+mediaIndex\b/.test(innerContent)) {
+        varsToInject.push('let mediaIndex = this.getScope ? this.getScope(el, "mediaIndex") : 0;');
+      }
+      
+      const injectedVars = varsToInject.join(' ');
+      const newInnerContent = ` try { ${injectedVars} ${innerContent} } catch(e) {} `;
+      const replacement = `this._root.querySelectorAll("[data-el='${dataElValue}']").forEach((el) => {${newInnerContent}});`;
+      
+      finalCode = finalCode.substring(0, startIdx) + replacement + finalCode.substring(endIdx);
+      queryRegex.lastIndex = startIdx + replacement.length;
+    }
+  }
 
   fs.writeFileSync(outPath, finalCode);
 }
