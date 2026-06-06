@@ -12,6 +12,6 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
-    "@chronos-ui/core": "git+https://github.com/nilkoushik/chronos-ui.git"
+    "@chronos-ui/core": "github:nilkoushik/chronos-ui"
   }
 }
