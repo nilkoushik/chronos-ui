@@ -114,7 +114,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                   style={{ top: `${colIndex % 2 === 0 ? slideIndex * 100 : -slideIndex * 100}%` }}
                 >
                   <Show when={slideRow[colIndex]}>
-                    {slideRow[colIndex].mapLinks?.[0]?.url ? (
+                    <Show when={slideRow[colIndex].mapLinks?.[0]?.url}>
                       <a class="chronos-alt-content-wrap" href={slideRow[colIndex].mapLinks[0].url} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
                         <Show when={slideRow[colIndex].media?.type === 'video'}>
                           <video 
@@ -146,7 +146,8 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                           </Show>
                         </div>
                       </a>
-                    ) : (
+                    </Show>
+                    <Show when={!slideRow[colIndex].mapLinks?.[0]?.url}>
                       <div class="chronos-alt-content-wrap">
                         <Show when={slideRow[colIndex].media?.type === 'video'}>
                           <video 
@@ -178,7 +179,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                           </Show>
                         </div>
                       </div>
-                    )}
+                    </Show>
                   </Show>
                 </div>
               ))}
