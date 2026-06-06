@@ -1,5 +1,5 @@
 /* Styles for TimerWidget */
-/* Styles for TimerWidget */\
+/* Styles for TimerWidget */
 /* TimerWidget Styles */
 .chronos-timer-widget {
           background-color: var(--chronos-color-surface);
@@ -42,6 +42,7 @@
           color: var(--chronos-color-text-muted);
           margin-top: 0.25rem;
         }
+
 
 
 

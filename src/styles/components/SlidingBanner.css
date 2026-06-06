@@ -1,5 +1,5 @@
 /* Styles for SlidingBanner */
-/* Styles for SlidingBanner */\
+/* Styles for SlidingBanner */
 .chronos-sliding-banner {
   position: relative;
   width: 100%;
@@ -219,5 +219,6 @@
 .effect-fall .chronos-sliding-banner-track { perspective: 1200px; }
 .effect-fall .chronos-sliding-slide { transform: rotateX(90deg); transform-origin: bottom; opacity: 0; }
 .effect-fall .chronos-sliding-slide.active { transform: rotateX(0deg); opacity: 1; }
+
 
 

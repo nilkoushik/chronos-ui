@@ -1,5 +1,5 @@
 /* Styles for Banner */
-/* Styles for Banner */\
+/* Styles for Banner */
 /* Banner Styles */
 .chronos-banner {
           position: relative;
@@ -51,6 +51,7 @@
         .chronos-banner-cta:hover {
           filter: brightness(1.1);
         }
+
 
 
 

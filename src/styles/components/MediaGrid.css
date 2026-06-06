@@ -1,5 +1,5 @@
 /* Styles for MediaGrid */
-/* Styles for MediaGrid */\
+/* Styles for MediaGrid */
 /* MediaGrid Styles */
 .chronos-media-grid {
   display: grid;
@@ -27,5 +27,6 @@
   gap: var(--chronos-spacing-md);
   height: 100%;
 }
+
 
 

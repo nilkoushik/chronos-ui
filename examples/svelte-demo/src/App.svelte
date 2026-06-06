@@ -1,5 +1,15 @@
 <script lang="ts">
   import '@chronos-ui/core/theme.css';
+  import '@chronos-ui/core/styles/components/Banner.css';
+  import '@chronos-ui/core/styles/components/AnnouncementBar.css';
+  import '@chronos-ui/core/styles/components/GridBanner.css';
+  import '@chronos-ui/core/styles/components/MediaGrid.css';
+  import '@chronos-ui/core/styles/components/RowScrollable.css';
+  import '@chronos-ui/core/styles/components/TimerWidget.css';
+  import '@chronos-ui/core/styles/components/WysiwygRenderer.css';
+  import '@chronos-ui/core/styles/components/RichTextEditor.css';
+  import '@chronos-ui/core/styles/components/SlidingBanner.css';
+  import '@chronos-ui/core/styles/components/AlternatingSlider.css';
   
   import Banner from '@chronos-ui/core/svelte/Banner.svelte';
   import AnnouncementBar from '@chronos-ui/core/svelte/AnnouncementBar.svelte';
@@ -86,9 +96,12 @@
     <h2>Alternating Slider</h2>
     <AlternatingSlider 
       items={[
-        { id: '1', title: 'Alternating 1', subtitle: 'Description 1', media: { type: 'image', url: 'https://placehold.co/500x500' } },
-        { id: '2', title: 'Alternating 2', subtitle: 'Description 2', media: { type: 'image', url: 'https://placehold.co/500x500' } }
+        { id: '1', title: 'Category 1', subtitle: 'Explore', media: { type: 'image', url: 'https://images.unsplash.com/photo-1434389678369-183428d00c4c?auto=format&fit=crop&w=800&q=80' } },
+        { id: '2', title: 'Category 2', subtitle: 'Discover', media: { type: 'image', url: 'https://images.unsplash.com/photo-1558769132-cb1fac084092?auto=format&fit=crop&w=800&q=80' } },
+        { id: '3', title: 'Category 3', subtitle: 'Shop', media: { type: 'image', url: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=800&q=80' } },
+        { id: '4', title: 'Category 4', subtitle: 'Trends', media: { type: 'image', url: 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=800&q=80' } }
       ]}
+      config={{ columns: 2, autoStart: true, delayMs: 4000, showDots: true, showArrows: true }}
     />
   </section>
 

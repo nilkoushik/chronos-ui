@@ -21,12 +21,12 @@ for (const file of files) {
   if (match) {
     const componentName = file.replace('.lite.tsx', '');
     const cssFilePath = path.join(stylesComponentsDir, `${componentName}.css`);
-    const cssContent = `/* Styles for ${componentName} */\n${match[1]}\n`;
+    let rawCss = match[1];
+    if (rawCss.startsWith('\\')) rawCss = rawCss.substring(1);
+    const cssContent = `/* Styles for ${componentName} */\n${rawCss}\n`;
     
     // Write individual CSS file
     fs.writeFileSync(cssFilePath, cssContent, 'utf8');
-    
-    // Do NOT remove from JSX, so Web Components still get their Shadow DOM styles!
   }
 }
 

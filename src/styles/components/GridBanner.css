@@ -1,5 +1,5 @@
 /* Styles for GridBanner */
-/* Styles for GridBanner */\
+/* Styles for GridBanner */
 /* GridBanner Styles */
 .chronos-grid-banner {
           display: grid;
@@ -49,6 +49,7 @@
           color: var(--chronos-color-text-main);
           text-align: center;
         }
+
 
 
 

@@ -1,5 +1,5 @@
 /* Styles for WysiwygRenderer */
-/* Styles for WysiwygRenderer */\
+/* Styles for WysiwygRenderer */
 /* WysiwygRenderer Styles */
 .chronos-wysiwyg-content {
           font-family: var(--chronos-font-family);
@@ -44,6 +44,7 @@
           overflow-x: auto;
           border: var(--chronos-border-width) solid var(--chronos-color-border);
         }
+
 
 
 

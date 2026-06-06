@@ -1,6 +1,6 @@
 {
   "name": "@chronos-ui/core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A universal, framework-agnostic UI component library built with Mitosis. Write once, compile to React, Svelte, and Web Components.",
   "author": "your-name",
   "license": "MIT",
@@ -42,7 +42,7 @@
   "main": "./dist/react/src/components/index.js",
   "types": "./dist/react/src/components/index.d.ts",
   "scripts": {
-    "build": "npx mitosis build && node fix-styles.js && node fix-props.js && node fix-wc-props.js && node build-wc.js && node fix-wc-onmount.js",
+    "build": "npx mitosis build && node fix-styles.js && node fix-props.js && node fix-react.js && node fix-wc-props.js && node build-wc.js && node fix-wc-onmount.js",
     "docs": "node scripts/generate-docs.js",
     "postbuild": "npm run docs",
     "prepublishOnly": "npm run build",

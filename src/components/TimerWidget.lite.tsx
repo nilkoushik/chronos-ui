@@ -1,4 +1,4 @@
-import { useStore, onMount, onUnMount, useStyle } from '@builder.io/mitosis';
+import { useStore, onMount, onUnMount } from '@builder.io/mitosis';
 
 export interface TimerWidgetProps {
   targetDate: string;
@@ -7,51 +7,7 @@ export interface TimerWidgetProps {
 }
 
 export default function TimerWidget(props: TimerWidgetProps) {
-  useStyle(`.chronos-timer-widget {
-          background-color: var(--chronos-color-surface);
-          border: var(--chronos-border-width) solid var(--chronos-color-border);
-          border-radius: var(--chronos-border-radius-md);
-          padding: var(--chronos-spacing-lg);
-          font-family: var(--chronos-font-family);
-          color: var(--chronos-color-text-main);
-          text-align: center;
-          box-shadow: var(--chronos-shadow-sm);
-        }
-        .chronos-timer-title {
-          margin-top: 0;
-          margin-bottom: var(--chronos-spacing-md);
-          font-size: var(--chronos-font-size-subtitle);
-        }
-        .chronos-timer-blocks {
-          display: flex;
-          justify-content: center;
-          gap: var(--chronos-spacing-md);
-        }
-        .chronos-timer-block {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          background: var(--chronos-color-background);
-          padding: var(--chronos-spacing-sm);
-          border-radius: var(--chronos-border-radius-sm);
-          min-width: 60px;
-          border: var(--chronos-border-width) solid var(--chronos-color-border);
-        }
-        .chronos-timer-value {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: var(--chronos-color-primary);
-        }
-        .chronos-timer-label {
-          font-size: 0.75rem;
-          text-transform: uppercase;
-          color: var(--chronos-color-text-muted);
-          margin-top: 0.25rem;
-        }
-
-
-
-`);
+  
 
   const state = useStore({
     timeLeft: { days: 0, hours: 0, minutes: 0, seconds: 0 },

@@ -1,4 +1,4 @@
-import { useStore, useStyle } from '@builder.io/mitosis';
+import { useStore } from '@builder.io/mitosis';
 
 export interface MediaGridItem {
   id: string;
@@ -15,35 +15,7 @@ export interface MediaGridProps {
 }
 
 export default function MediaGrid(props: MediaGridProps) {
-  useStyle(`.chronos-media-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: var(--chronos-spacing-md);
-  font-family: var(--chronos-font-family);
-  aspect-ratio: 21/9;
-}
-.chronos-media-primary, .chronos-media-secondary-item {
-  display: block;
-  border-radius: var(--chronos-border-radius-md);
-  overflow: hidden;
-  background: var(--chronos-color-surface);
-  height: 100%;
-}
-.chronos-media-asset {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.chronos-media-secondary-col {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  gap: var(--chronos-spacing-md);
-  height: 100%;
-}
-
-
-`);
+  
 
   return (
     <div class={`chronos-media-grid ${props.className || ''}`}>

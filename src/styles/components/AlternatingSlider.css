@@ -1,78 +1,134 @@
 /* Styles for AlternatingSlider */
-/* Styles for AlternatingSlider */\
 .chronos-alt-slider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   width: 100%;
   height: 600px;
-  background: var(--chronos-color-surface);
-  border-radius: var(--chronos-border-radius-lg);
   overflow: hidden;
-  position: relative;
-  border: var(--chronos-border-width) solid var(--chronos-color-border);
+  background: #000;
+  border-radius: var(--chronos-border-radius-md, 8px);
 }
-.chronos-alt-track {
-  display: flex;
+.chronos-alt-cols-container {
+  display: grid;
   width: 100%;
   height: 100%;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 0;
 }
-.chronos-alt-slide {
-  flex: 0 0 100%;
-  display: flex;
-  flex-direction: row;
+.chronos-alt-col {
+  position: relative;
+  overflow: hidden;
   height: 100%;
 }
-.chronos-alt-slide-reverse {
-  flex-direction: row-reverse;
+.chronos-alt-track {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.chronos-alt-cell {
+  position: absolute;
+  width: 100%; height: 100%;
+  left: 0;
+}
+.chronos-alt-content-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.chronos-alt-bg, .chronos-alt-bg-video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
+}
+.chronos-alt-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  transition: background 0.3s;
+}
+.chronos-alt-content-wrap:hover .chronos-alt-overlay {
+  background: rgba(0,0,0,0.2);
 }
 .chronos-alt-content {
-  flex: 1;
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 4rem;
-  background: var(--chronos-color-background);
-}
-.chronos-alt-image-container {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-}
-.chronos-alt-image {
-  width: 100%;
+  align-items: center;
   height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s;
-}
-.chronos-alt-image-container:hover .chronos-alt-image {
-  transform: scale(1.05);
+  padding: 2rem;
+  color: white;
 }
 .chronos-alt-title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 1rem;
-  color: var(--chronos-color-text-main);
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
-.chronos-alt-desc {
-  font-size: 1.125rem;
-  color: var(--chronos-color-text-muted);
-  margin-bottom: 2rem;
-  line-height: 1.6;
+.chronos-alt-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 .chronos-alt-cta {
-  align-self: flex-start;
-  padding: 0.75rem 2rem;
-  background: var(--chronos-color-primary);
+  background: var(--chronos-color-primary, #7c3aed);
   color: white;
-  text-decoration: none;
-  font-weight: 600;
-  border-radius: var(--chronos-border-radius-sm);
-  transition: background 0.3s;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: all 0.3s;
+  display: inline-block;
 }
 .chronos-alt-cta:hover {
-  background: var(--chronos-color-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
 }
+.chronos-alt-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.2);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  z-index: 10;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+.chronos-alt-arrow:hover { background: rgba(255,255,255,0.4); }
+.chronos-alt-arrow.prev { left: 20px; }
+.chronos-alt-arrow.next { right: 20px; }
 
-
+.chronos-alt-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+.chronos-alt-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+.chronos-alt-dot.active {
+  background: white;
+  transform: scale(1.2);
+}
