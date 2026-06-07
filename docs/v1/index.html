@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chronos UI — Universal Component Library</title>
+  <meta name="description" content="A universal, framework-agnostic UI component library. Write once in Mitosis and compile to React, Svelte, and Web Components." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="css/docs.css" />
+  <style>
+    .gradient-mesh {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .gradient-mesh span {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.12;
+    }
+    .g1 { width: 600px; height: 600px; background: #7c3aed; top: -200px; left: -100px; }
+    .g2 { width: 500px; height: 500px; background: #ec4899; top: 100px; right: -100px; }
+    .g3 { width: 400px; height: 400px; background: #3b82f6; bottom: 0; left: 40%; }
+    .docs-main { position: relative; z-index: 1; }
+  </style>
+</head>
+<body>
+  <div class="gradient-mesh" aria-hidden="true">
+    <span class="g1"></span>
+    <span class="g2"></span>
+    <span class="g3"></span>
+  </div>
+
+  <div class="docs-shell">
+    
+    <aside class="docs-sidebar">
+      <a href="index.html" class="sidebar-brand">
+        <div class="sidebar-logo">⏱</div>
+        <span class="sidebar-brand-name">Chronos<span>UI</span></span>
+        <span class="sidebar-version">v1.0.6</span>
+      </a>
+      <div class="sidebar-version-picker" style="padding: 0.5rem 1.25rem; border-bottom: 1px solid var(--border);">
+        <select class="control-select version-select" style="width: 100%; font-size: 0.8rem; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-secondary); padding: 6px 10px; border-radius: var(--radius-sm); outline: none; cursor: pointer;" onchange="window.location.href = this.value">
+          <option value="index.html" selected>v1.x.x (Latest)</option>
+        </select>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-label">Getting Started</div>
+        <a href="index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> Home</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Components</div>
+        <a href="components/banner.html" class="sidebar-link"><span class="sidebar-link-icon">🖼</span> Banner</a>
+      <a href="components/announcement-bar.html" class="sidebar-link"><span class="sidebar-link-icon">📢</span> Announcement Bar</a>
+      <a href="components/grid-banner.html" class="sidebar-link"><span class="sidebar-link-icon">⊞</span> Grid Banner</a>
+      <a href="components/media-grid.html" class="sidebar-link"><span class="sidebar-link-icon">🎞</span> Media Grid</a>
+      <a href="components/row-scrollable.html" class="sidebar-link"><span class="sidebar-link-icon">↔</span> Row Scrollable</a>
+      <a href="components/sliding-banner.html" class="sidebar-link"><span class="sidebar-link-icon">▶</span> Sliding Banner</a>
+      <a href="components/alternating-slider.html" class="sidebar-link"><span class="sidebar-link-icon">⇅</span> Alternating Slider</a>
+      <a href="components/timer-widget.html" class="sidebar-link"><span class="sidebar-link-icon">⏳</span> Timer Widget</a>
+      <a href="components/wysiwyg-renderer.html" class="sidebar-link"><span class="sidebar-link-icon">✍</span> WYSIWYG Renderer</a>
+      <a href="components/rich-text-editor.html" class="sidebar-link"><span class="sidebar-link-icon">📝</span> Rich Text Editor</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
+        <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
+        <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+        <a href="dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
+      </nav>
+    </aside>
+
+    <main class="docs-main">
+      <div class="docs-topbar">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">☰</button>
+        <div class="topbar-breadcrumb">
+          <span class="current">Home</span>
+        </div>
+        <div class="topbar-actions">
+          <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="btn-github">
+            Star on GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero -->
+      <section class="landing-hero">
+        <div class="hero-eyebrow">
+          <span>⚡</span> Open Source · MIT License
+        </div>
+        <h1 class="hero-title">
+          The UI library that<br>
+          <span class="hero-gradient">compiles everywhere</span>
+        </h1>
+        <p class="hero-subtitle">
+          Write your components once in Mitosis JSX. Deploy natively to
+          React, Svelte, and Web Components — with zero runtime overhead.
+        </p>
+        <div class="hero-actions">
+          <a href="components/banner.html" class="btn-primary">
+            Browse Components →
+          </a>
+          <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="btn-secondary">
+            View on GitHub
+          </a>
+        </div>
+        <div class="feature-pills">
+          <span class="feature-pill"><span class="dot dot-react"></span> React / Next.js</span>
+          <span class="feature-pill"><span class="dot dot-svelte"></span> Svelte / SvelteKit</span>
+          <span class="feature-pill"><span class="dot dot-wc"></span> Web Components</span>
+          <span class="feature-pill"><span class="dot dot-ts"></span> TypeScript</span>
+          <span class="feature-pill"><span class="dot dot-css"></span> CSS Variables</span>
+        </div>
+
+        <!-- Install -->
+        <div class="install-banner" style="text-align:left;max-width:480px;margin:0 auto 3rem;">
+          <code>npm install @chronos-ui/core</code>
+          <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-value">10</div>
+          <div class="stat-label">Components</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">3</div>
+          <div class="stat-label">Frameworks</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">13</div>
+          <div class="stat-label">Slide Effects</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">0</div>
+          <div class="stat-label">Runtime Deps</div>
+        </div>
+      </div>
+
+      <!-- Component Grid -->
+      <h2 style="text-align:center;font-size:1.5rem;font-weight:700;letter-spacing:-0.03em;margin-bottom:2rem;color:var(--text-secondary)">
+        All Components
+      </h2>
+      <div class="component-grid">
+        
+        <a href="components/banner.html" class="component-card">
+          <div class="card-preview" style="background:linear-gradient(135deg,#1e1b4b,#312e81)">
+            <div class="card-preview-icon">🖼</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Banner</div>
+            <p class="card-desc">Full-bleed hero banner with image or video background, title, subtitle, CTA button, and loading shimmer.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-tag tag-react">React</span>
+            <span class="card-tag tag-svelte">Svelte</span>
+            <span class="card-tag tag-wc">WC</span>
+          </div>
+        </a>
+
+        <a href="components/announcement-bar.html" class="component-card">
+          <div class="card-preview" style="background:linear-gradient(135deg,#1a0533,#3b0764)">
+            <div class="card-preview-icon">📢</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Announcement Bar</div>
+            <p class="card-desc">Slim full-width bar for promotions and site-wide announcements. Customisable colours and optional link.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-tag tag-react">React</span>
+            <span class="card-tag tag-svelte">Svelte</span>
+            <span class="card-tag tag-wc">WC</span>
+          </div>
+        </a>
+
+        <a href="components/grid-banner.html" class="component-card">
+          <div class="card-preview" style="background:linear-gradient(135deg,#0c1a4b,#1e3a8a)">
+            <div class="card-preview-icon">⊞</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Grid Banner</div>
+            <p class="card-desc">Responsive CSS grid of banner cards with configurable column count, hover effects, and media support.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-tag tag-react">React</span>
+            <span class="card-tag tag-svelte">Svelte</span>
+            <span class="card-tag tag-wc">WC</span>
+          </div>
+        </a>
+
+        <a href="components/media-grid.html" class="component-card">
+          <div class="card-preview" style="background:linear-gradient(135deg,#0f2027,#203a43)">
+            <div class="card-preview-icon">🎞</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Media Grid</div>
+            <p class="card-desc">Editorial 2-column layout with one large primary asset and stacked secondary items at a 21:9 aspect ratio.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-tag tag-react">React</span>
+            <span class="card-tag tag-svelte">Svelte</span>
+            <span class="card-tag tag-wc">WC</span>
+          </div>
+        </a>
+
+        <a href="components/row-scrollable.html" class="component-card">
+          <div class="card-preview" style="background:linear-gradient(135deg,#1a1a0f,#3d3200)">
+            <div class="card-preview-icon">↔</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Row Scrollable</div>
+            <p class="card-desc">Horizontally scrollable card row with snap-scrolling, custom scrollbar, and optional section title.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-tag tag-react">React</span>
+            <span class="card-tag tag-svelte">Svelte</span>
+            <span class="card-tag tag-wc">WC</span>
+          </div>
+        </a>
+
+        <a href="components/sliding-banner.html" class="component-card">
+          <div class="card-preview" style="background:linear-gradient(135deg,#0f0c29,#302b63)">
+            <div class="card-preview-icon">▶</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Sliding Banner</div>
+            <p class="card-desc">Full-featured slider with 13 transition effects, canvas backgrounds (particles/waves), autoplay, arrows & dots.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-tag tag-react">React</span>
+            <span class="card-tag tag-svelte">Svelte</span>
+            <span class="card-tag tag-wc">WC</span>
+          </div>
+        </a>
+
+        <a href="components/alternating-slider.html" class="component-card">
+          <div class="card-preview" style="background:linear-gradient(135deg,#1a0010,#4a0020)">
+            <div class="card-preview-icon">⇅</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Alternating Slider</div>
+            <p class="card-desc">Multi-column slider where adjacent columns scroll in opposite vertical directions for a dramatic reveal effect.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-tag tag-react">React</span>
+            <span class="card-tag tag-svelte">Svelte</span>
+            <span class="card-tag tag-wc">WC</span>
+          </div>
+        </a>
+
+        <a href="components/timer-widget.html" class="component-card">
+          <div class="card-preview" style="background:linear-gradient(135deg,#001a0e,#003d1f)">
+            <div class="card-preview-icon">⏳</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Timer Widget</div>
+            <p class="card-desc">Live countdown timer updating every second. Shows days, hours, minutes, and seconds to any target date.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-tag tag-react">React</span>
+            <span class="card-tag tag-svelte">Svelte</span>
+            <span class="card-tag tag-wc">WC</span>
+          </div>
+        </a>
+
+        <a href="components/wysiwyg-renderer.html" class="component-card">
+          <div class="card-preview" style="background:linear-gradient(135deg,#1a1400,#3d3000)">
+            <div class="card-preview-icon">✍</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">WYSIWYG Renderer</div>
+            <p class="card-desc">Safely renders rich-text HTML from a CMS with scoped typography styles and dark-mode support.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-tag tag-react">React</span>
+            <span class="card-tag tag-svelte">Svelte</span>
+            <span class="card-tag tag-wc">WC</span>
+          </div>
+        </a>
+
+        <a href="components/rich-text-editor.html" class="component-card">
+          <div class="card-preview" style="background:linear-gradient(135deg,#0f172a,#1e293b)">
+            <div class="card-preview-icon">📝</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">Rich Text Editor</div>
+            <p class="card-desc">Advanced headless WYSIWYG editor with custom inline styles, table builder, media embedding, and dark premium aesthetics.</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-tag tag-react">React</span>
+            <span class="card-tag tag-svelte">Svelte</span>
+            <span class="card-tag tag-wc">WC</span>
+          </div>
+        </a>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/docs.js"></script>
+</body>
+</html>

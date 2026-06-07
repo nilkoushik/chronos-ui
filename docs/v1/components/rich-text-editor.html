@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rich Text Editor — Chronos UI</title>
+  <meta name="description" content="Advanced headless WYSIWYG editor with custom inline styles, table builder, media embedding, and dark premium aesthetics." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="../css/docs.css" />
+  <link rel="stylesheet" href="../styles/theme.css" />
+  <link rel="stylesheet" href="../styles/components/RichTextEditor.css" />
+  <style>.demo-rte{max-width:800px;margin:0 auto;border-radius:12px;border:1px solid rgba(255,255,255,.1);overflow:hidden;background:#0f172a;box-shadow:0 10px 30px rgba(0,0,0,0.5)}.rte-toolbar{display:flex;flex-wrap:wrap;gap:8px;padding:12px 20px;background:rgba(15,23,42,0.9);border-bottom:1px solid rgba(255,255,255,.1);align-items:center}.rte-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:6px;background:transparent;border:none;color:#94a3b8;cursor:pointer;font-weight:600;font-size:14px}.rte-btn:hover{background:rgba(255,255,255,0.05);color:#f8fafc}.rte-btn.active{background:rgba(139,92,246,0.15);color:#a78bfa}.rte-sep{width:1px;height:20px;background:rgba(255,255,255,0.1);margin:0 4px}.rte-select{background:#1e293b;border:1px solid rgba(255,255,255,0.1);color:#f1f5f9;border-radius:6px;padding:4px 8px;font-size:12px;cursor:pointer}.rte-color{width:24px;height:24px;padding:0;border:none;border-radius:4px;cursor:pointer;background:transparent}.rte-content{padding:24px 32px;color:#f1f5f9;min-height:240px;font-family:system-ui, sans-serif;font-size:15px;line-height:1.6}</style>
+</head>
+<body>
+<div class="docs-shell">
+  
+    <aside class="docs-sidebar">
+      <a href="../index.html" class="sidebar-brand">
+        <div class="sidebar-logo">⏱</div>
+        <span class="sidebar-brand-name">Chronos<span>UI</span></span>
+        <span class="sidebar-version">v1.0.6</span>
+      </a>
+      <div class="sidebar-version-picker" style="padding: 0.5rem 1.25rem; border-bottom: 1px solid var(--border);">
+        <select class="control-select version-select" style="width: 100%; font-size: 0.8rem; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-secondary); padding: 6px 10px; border-radius: var(--radius-sm); outline: none; cursor: pointer;" onchange="window.location.href = this.value">
+          <option value="../index.html" selected>v1.x.x (Latest)</option>
+        </select>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-label">Getting Started</div>
+        <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> Home</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Components</div>
+        <a href="banner.html" class="sidebar-link"><span class="sidebar-link-icon">🖼</span> Banner</a>
+      <a href="announcement-bar.html" class="sidebar-link"><span class="sidebar-link-icon">📢</span> Announcement Bar</a>
+      <a href="grid-banner.html" class="sidebar-link"><span class="sidebar-link-icon">⊞</span> Grid Banner</a>
+      <a href="media-grid.html" class="sidebar-link"><span class="sidebar-link-icon">🎞</span> Media Grid</a>
+      <a href="row-scrollable.html" class="sidebar-link"><span class="sidebar-link-icon">↔</span> Row Scrollable</a>
+      <a href="sliding-banner.html" class="sidebar-link"><span class="sidebar-link-icon">▶</span> Sliding Banner</a>
+      <a href="alternating-slider.html" class="sidebar-link"><span class="sidebar-link-icon">⇅</span> Alternating Slider</a>
+      <a href="timer-widget.html" class="sidebar-link"><span class="sidebar-link-icon">⏳</span> Timer Widget</a>
+      <a href="wysiwyg-renderer.html" class="sidebar-link"><span class="sidebar-link-icon">✍</span> WYSIWYG Renderer</a>
+      <a href="rich-text-editor.html" class="sidebar-link active"><span class="sidebar-link-icon">📝</span> Rich Text Editor</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
+        <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
+        <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+        <a href="../dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
+      </nav>
+    </aside>
+
+  <main class="docs-main">
+    <div class="docs-topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+      <div class="topbar-breadcrumb">
+        <a href="../index.html">Chronos UI</a><span class="sep">/</span>
+        <span class="current">Rich Text Editor</span>
+      </div>
+      <div class="topbar-actions">
+        <a href="https://github.com/nilkoushik/chronos-ui/blob/main/src/components/RichTextEditor.lite.tsx"
+           target="_blank" rel="noopener" class="btn-github">View Source</a>
+      </div>
+    </div>
+
+    <div class="docs-content">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge">📝 Component</div>
+        <h1 class="page-title">Rich Text Editor</h1>
+        <p class="page-description">Advanced headless WYSIWYG editor with custom inline styles, table builder, media embedding, and dark premium aesthetics.</p>
+      </div>
+
+      <!-- Install -->
+      <div class="install-banner">
+        <code>npm install @chronos-ui/core</code>
+        <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
+      </div>
+
+      
+
+      <!-- Interactive Playground -->
+      <h2 class="section-heading">Interactive Demo Playground</h2>
+      <div class="playground-container">
+        <div class="preview-column">
+          <div class="preview-card">
+            <div class="preview-toolbar">
+              <span class="preview-dot red"></span>
+              <span class="preview-dot amber"></span>
+              <span class="preview-dot green"></span>
+              <span class="preview-url">&lt;rich-text-editor&gt; Playground</span>
+            </div>
+            <div class="preview-body" id="preview-container">
+              <rich-text-editor id="interactive-preview" initial-content="<p>Welcome to <strong>Chronos Editor Playground</strong>! Configure the toolbar options on the right in real-time to customize my controls.</p>" config='{"toolbar":["bold","italic","underline","link"]}'></rich-text-editor>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls-column">
+          <div class="controls-card">
+            <div class="controls-header">
+              <span class="controls-icon">⚙️</span>
+              <span class="controls-title">Configure Properties</span>
+            </div>
+            <div class="controls-body">
+              <form id="playground-form" onsubmit="event.preventDefault();">
+                
+        <div class="control-group">
+          <label class="control-label">Initial HTML Content</label>
+          <textarea name="initialContent" class="control-input" style="height:80px;"><p>Welcome to <strong>Chronos Editor Playground</strong>! Configure the toolbar options on the right in real-time to customize my controls.</p></textarea>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Available Classes (JSON Array)</label>
+          <textarea name="availableClasses" class="control-input json-textarea" style="height:60px;">["text-pink-500", "font-bold", "tracking-wider"]</textarea>
+          <span class="json-error-msg">❌ Invalid JSON Array</span>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Toolbar Config (JSON Object)</label>
+          <textarea name="config" class="control-input json-textarea" style="height:120px;">{"toolbar":["bold","italic","underline","link"]}</textarea>
+          <span class="json-error-msg">❌ Invalid JSON Object</span>
+        </div>
+      
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Code Tabs -->
+      <h2 class="section-heading" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+        Usage Code Generator
+        <button class="jsfiddle-btn" id="jsfiddle-btn" style="background:var(--accent); color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:600; display:flex; align-items:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Play in JSFiddle
+        </button>
+      </h2>
+      <div class="tab-group">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-tab="react">React</button>
+          <button class="tab-btn" data-tab="svelte">Svelte</button>
+          <button class="tab-btn" data-tab="wc">Web Component</button>
+        </div>
+        <div class="tab-panel active" data-panel="react">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code><span class="kw">import</span> RichTextEditor <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/RichTextEditor'</span>;
+<span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+
+&lt;<span class="tag">RichTextEditor</span> 
+  content=<span class="str">"&lt;<span class="tag">p</span>&gt;Hello World!&lt;/<span class="tag">p</span>&gt;"</span>
+  availableClasses={[<span class="str">'text-pink-500'</span>, <span class="str">'font-bold'</span>]}
+  onChange={(html) =&gt; console.log(html)}
+/&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="svelte">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
+  <span class="kw">import</span> RichTextEditor <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/RichTextEditor.svelte'</span>;
+&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">RichTextEditor</span> 
+  content=<span class="str">"&lt;<span class="tag">p</span>&gt;Hello World!&lt;/<span class="tag">p</span>&gt;"</span>
+/&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="wc">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">script</span> type=<span class="str">"module"</span>
+  src=<span class="str">"node_modules/@chronos-ui/core/webcomponents/RichTextEditor.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">rich-text-editor</span> 
+  content=<span class="str">"&lt;<span class="tag">p</span>&gt;Hello World!&lt;/<span class="tag">p</span>&gt;"</span>
+&gt;&lt;/<span class="tag">rich-text-editor</span>&gt;</code></pre>
+    </div>
+        </div>
+      </div>
+
+      <!-- Props Table -->
+      <h2 class="section-heading">Props API Reference</h2>
+      
+    <div class="props-table-wrap">
+      <table class="props-table">
+        <thead>
+          <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td><span class="prop-name">content</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Initial HTML content for the editor.</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">onChange</span> </td>
+        <td><span class="prop-type">(content: string) =&gt; void</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Callback triggered when content changes.</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">onMediaRequest</span> </td>
+        <td><span class="prop-type">(type: 'image' | 'video' | 'audio') =&gt; Promise&lt;string&gt;</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Callback to open an external media library modal.</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">availableClasses</span> </td>
+        <td><span class="prop-type">string[]</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Array of custom class names available for the user to apply.</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">className</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Additional CSS class names for the wrapper element.</td>
+      </tr></tbody>
+      </table>
+    </div>
+
+      <!-- Notes -->
+      <div class="alert alert-tip">The editor natively supports adding inline styles or classes dynamically to selected ranges.</div>
+    </div>
+  </main>
+</div>
+<script src="../js/docs.js"></script>
+<script type="module" src="../dist/webcomponent/dist/index.js"></script>
+
+<script>
+// ── Syntax Highlighter (Client-side mirror of server highlight) ────────────
+function clientHighlight(code, lang) {
+  let s = code
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  s = s.replace(/(`[^`]*`|'[^'\']*(?:\.[^'\']*)*'|"[^"\"]*(?:\.[^"\"]*)*")/g, '\x00STR\x00$1\x00/STR\x00');
+  s = s.replace(/(\x2f\x2f[^\n]*)/g, '\x00CM\x00$1\x00/CM\x00');
+  s = s.replace(/\b(import|from|export|default|const|let|var|return|function|async|await|true|false|null|undefined)\b/g, '\x00KW\x00$1\x00/KW\x00');
+  s = s.replace(/(&lt;\/?)([\w-]+)/g, '$1\x00TAG\x00$2\x00/TAG\x00');
+
+  s = s
+    .replace(/\x00STR\x00([\s\S]*?)\x00\/STR\x00/g, '<span class="str">$1</span>')
+    .replace(/\x00CM\x00([\s\S]*?)\x00\/CM\x00/g,   '<span class="cm">$1</span>')
+    .replace(/\x00KW\x00([\s\S]*?)\x00\/KW\x00/g,   '<span class="kw">$1</span>')
+    .replace(/\x00TAG\x00([\s\S]*?)\x00\/TAG\x00/g, '<span class="tag">$1</span>');
+
+  return s;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const preview = document.getElementById('interactive-preview');
+  const form = document.getElementById('playground-form');
+  if (!preview || !form) return;
+
+  const inputs = form.querySelectorAll('input, select, textarea');
+
+  // Slider val displays
+  inputs.forEach(input => {
+    if (input.type === 'range') {
+      const valLabel = input.nextElementSibling;
+      input.addEventListener('input', () => {
+        valLabel.textContent = input.value;
+      });
+    }
+  });
+
+  // Color picker sync
+  inputs.forEach(input => {
+    if (input.classList.contains('control-color-picker')) {
+      const textSync = input.nextElementSibling;
+      input.addEventListener('input', () => {
+        textSync.value = input.value;
+        updatePreview();
+      });
+      textSync.addEventListener('input', () => {
+        if (/^#[0-9A-F]{6}$/i.test(textSync.value)) {
+          input.value = textSync.value;
+          updatePreview();
+        }
+      });
+    }
+  });
+
+  function updatePreview() {
+    let configObj = {};
+    let hasConfig = false;
+
+    // First collect all config.*
+    inputs.forEach(input => {
+      const name = input.name;
+      if (name.startsWith('config.')) {
+        hasConfig = true;
+        const key = name.split('.')[1];
+        let val;
+        if (input.type === 'checkbox') {
+          val = input.checked;
+        } else if (input.type === 'range') {
+          val = Number(input.value);
+        } else {
+          val = input.value;
+        }
+        configObj[key] = val;
+      }
+    });
+
+    if (hasConfig) {
+      preview.setAttribute('config', JSON.stringify(configObj));
+    }
+
+    // Now update other attributes
+    inputs.forEach(input => {
+      const name = input.name;
+      if (name.startsWith('config.')) return;
+
+      if (input.type === 'checkbox') {
+        if (input.checked) {
+          preview.setAttribute(name, 'true');
+        } else {
+          preview.removeAttribute(name);
+        }
+      } else if (input.tagName === 'TEXTAREA' && input.classList.contains('json-textarea')) {
+        try {
+          const raw = input.value.trim();
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            input.classList.remove('invalid');
+            // Assign as property and setAttribute
+            preview[camelCase(name)] = parsed;
+            preview.setAttribute(name, raw);
+          } else {
+            preview.removeAttribute(name);
+          }
+        } catch (e) {
+          input.classList.add('invalid');
+        }
+      } else {
+        preview.setAttribute(name, input.value);
+      }
+    });
+
+    // Update code blocks
+    updateCodeBlocks();
+  }
+
+  function camelCase(str) {
+    return str.replace(/-([a-z])/g, g => g[1].toUpperCase());
+  }
+
+  function kebabCase(str) {
+    return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+  }
+
+  function updateCodeBlocks() {
+    // Collect attributes
+    const attrs = [];
+    for (let i = 0; i < preview.attributes.length; i++) {
+      const a = preview.attributes[i];
+      if (['id', 'class', 'style'].includes(a.name)) continue;
+      attrs.push({ name: a.name, value: a.value });
+    }
+
+    // React prop string generator
+    const reactProps = attrs.map(a => {
+      const camelName = camelCase(a.name);
+      const isJson = a.value.trim().startsWith('{') || a.value.trim().startsWith('[');
+      const isBoolean = a.value === 'true';
+      if (isBoolean) return camelName;
+      if (isJson) return `${camelName}={${a.value}}`;
+      return `${camelName}="${a.value.replace(/"/g, '\\"')}"`;
+    });
+
+    const pascalName = "RichTextEditor";
+    const wcTagName = "rich-text-editor";
+
+    const reactCode = `import ${pascalName} from '@chronos-ui/core/react/${pascalName}';
+import '@chronos-ui/core/theme.css';
+
+<${pascalName}
+  ${reactProps.join('\n  ')}
+/>`;
+
+    const svelteProps = attrs.map(a => {
+      const camelName = camelCase(a.name);
+      const isJson = a.value.trim().startsWith('{') || a.value.trim().startsWith('[');
+      const isBoolean = a.value === 'true';
+      if (isBoolean) return camelName;
+      if (isJson) return `${camelName}={${a.value}}`;
+      return `${camelName}="${a.value.replace(/"/g, '\\"')}"`;
+    });
+
+    const svelteCode = `<script lang="ts">
+  import ${pascalName} from '@chronos-ui/core/svelte/${pascalName}.svelte';
+<\/script>
+
+<${pascalName}
+  ${svelteProps.join('\n  ')}
+/>`;
+
+    const wcAttrs = attrs.map(a => {
+      const isJson = a.value.trim().startsWith('{') || a.value.trim().startsWith('[');
+      if (isJson) {
+        return `${a.name}='${a.value}'`;
+      }
+      return `${a.name}="${a.value.replace(/"/g, '\\"')}"`;
+    });
+
+    const wcCode = `<` + `script type="module" src="node_modules/@chronos-ui/core/webcomponents/${pascalName}.js"></` + `script>
+
+<${wcTagName}
+  ${wcAttrs.join('\n  ')}
+></${wcTagName}>`;
+
+    // Highlight and set
+    const reactPanel = document.querySelector('[data-panel="react"] pre code');
+    if (reactPanel) reactPanel.innerHTML = clientHighlight(reactCode, 'tsx');
+
+    const sveltePanel = document.querySelector('[data-panel="svelte"] pre code');
+    if (sveltePanel) sveltePanel.innerHTML = clientHighlight(svelteCode, 'svelte');
+
+    const wcPanel = document.querySelector('[data-panel="wc"] pre code');
+    if (wcPanel) wcPanel.innerHTML = clientHighlight(wcCode, 'html');
+  }
+
+  form.addEventListener('input', updatePreview);
+  form.addEventListener('change', updatePreview);
+
+  // Initial update
+  setTimeout(updatePreview, 100);
+});
+</script>
+
+</body>
+</html>

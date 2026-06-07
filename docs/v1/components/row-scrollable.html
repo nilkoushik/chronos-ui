@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Row Scrollable — Chronos UI</title>
+  <meta name="description" content="Horizontally scrollable card row with snap-scrolling, custom scrollbar, and optional section title." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="../css/docs.css" />
+  <link rel="stylesheet" href="../styles/theme.css" />
+  <link rel="stylesheet" href="../styles/components/RowScrollable.css" />
+  <style>.demo-rs{font-family:'Inter',sans-serif}.demo-rs-title{color:#e2e8f0;font-size:1rem;font-weight:600;margin-bottom:.75rem}.demo-rs-row{display:flex;gap:1rem;overflow-x:auto;padding-bottom:.5rem;scroll-snap-type:x mandatory}.demo-rs-row::-webkit-scrollbar{height:5px}.demo-rs-row::-webkit-scrollbar-track{background:#1e1b4b;border-radius:4px}.demo-rs-row::-webkit-scrollbar-thumb{background:#4c1d95;border-radius:4px}.demo-card{flex:0 0 200px;background:#1e1b4b;border:1px solid rgba(124,58,237,.2);border-radius:10px;overflow:hidden;scroll-snap-align:start;text-decoration:none}.demo-card-img{height:120px;display:flex;align-items:center;justify-content:center;font-size:2.5rem}.demo-card-body{padding:.75rem}.demo-card-title{font-weight:600;font-size:.875rem;color:#e2e8f0}.demo-card-sub{font-size:.75rem;color:#7c6fcd;margin-top:2px}.rc1{background:linear-gradient(135deg,#312e81,#1e1b4b)}.rc2{background:linear-gradient(135deg,#1a103d,#2e1065)}.rc3{background:linear-gradient(135deg,#0c1a4b,#1e3a8a)}.rc4{background:linear-gradient(135deg,#1a0533,#3b0764)}.rc5{background:linear-gradient(135deg,#1a1400,#3d3000)}</style>
+</head>
+<body>
+<div class="docs-shell">
+  
+    <aside class="docs-sidebar">
+      <a href="../index.html" class="sidebar-brand">
+        <div class="sidebar-logo">⏱</div>
+        <span class="sidebar-brand-name">Chronos<span>UI</span></span>
+        <span class="sidebar-version">v1.0.6</span>
+      </a>
+      <div class="sidebar-version-picker" style="padding: 0.5rem 1.25rem; border-bottom: 1px solid var(--border);">
+        <select class="control-select version-select" style="width: 100%; font-size: 0.8rem; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-secondary); padding: 6px 10px; border-radius: var(--radius-sm); outline: none; cursor: pointer;" onchange="window.location.href = this.value">
+          <option value="../index.html" selected>v1.x.x (Latest)</option>
+        </select>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-label">Getting Started</div>
+        <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> Home</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Components</div>
+        <a href="banner.html" class="sidebar-link"><span class="sidebar-link-icon">🖼</span> Banner</a>
+      <a href="announcement-bar.html" class="sidebar-link"><span class="sidebar-link-icon">📢</span> Announcement Bar</a>
+      <a href="grid-banner.html" class="sidebar-link"><span class="sidebar-link-icon">⊞</span> Grid Banner</a>
+      <a href="media-grid.html" class="sidebar-link"><span class="sidebar-link-icon">🎞</span> Media Grid</a>
+      <a href="row-scrollable.html" class="sidebar-link active"><span class="sidebar-link-icon">↔</span> Row Scrollable</a>
+      <a href="sliding-banner.html" class="sidebar-link"><span class="sidebar-link-icon">▶</span> Sliding Banner</a>
+      <a href="alternating-slider.html" class="sidebar-link"><span class="sidebar-link-icon">⇅</span> Alternating Slider</a>
+      <a href="timer-widget.html" class="sidebar-link"><span class="sidebar-link-icon">⏳</span> Timer Widget</a>
+      <a href="wysiwyg-renderer.html" class="sidebar-link"><span class="sidebar-link-icon">✍</span> WYSIWYG Renderer</a>
+      <a href="rich-text-editor.html" class="sidebar-link"><span class="sidebar-link-icon">📝</span> Rich Text Editor</a>
+        <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
+        <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
+        <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+        <a href="../dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
+      </nav>
+    </aside>
+
+  <main class="docs-main">
+    <div class="docs-topbar">
+      <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+      <div class="topbar-breadcrumb">
+        <a href="../index.html">Chronos UI</a><span class="sep">/</span>
+        <span class="current">Row Scrollable</span>
+      </div>
+      <div class="topbar-actions">
+        <a href="https://github.com/nilkoushik/chronos-ui/blob/main/src/components/RowScrollable.lite.tsx"
+           target="_blank" rel="noopener" class="btn-github">View Source</a>
+      </div>
+    </div>
+
+    <div class="docs-content">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge">↔ Component</div>
+        <h1 class="page-title">Row Scrollable</h1>
+        <p class="page-description">Horizontally scrollable card row with snap-scrolling, custom scrollbar, and optional section title.</p>
+      </div>
+
+      <!-- Install -->
+      <div class="install-banner">
+        <code>npm install @chronos-ui/core</code>
+        <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
+      </div>
+
+      
+
+      <!-- Interactive Playground -->
+      <h2 class="section-heading">Interactive Demo Playground</h2>
+      <div class="playground-container">
+        <div class="preview-column">
+          <div class="preview-card">
+            <div class="preview-toolbar">
+              <span class="preview-dot red"></span>
+              <span class="preview-dot amber"></span>
+              <span class="preview-dot green"></span>
+              <span class="preview-url">&lt;row-scrollable&gt; Playground</span>
+            </div>
+            <div class="preview-body" id="preview-container">
+              <row-scrollable id="interactive-preview" title="Vibrant Modern Accents" items='[{"id":"1","title":"Neon Abstract","subtitle":"Vibrant Colors","media":{"type":"image","url":"https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&amp;fit=crop&amp;w=400&amp;q=80"}},{"id":"2","title":"Cyberpunk Glow","subtitle":"Tech Vibes","media":{"type":"image","url":"https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&amp;fit=crop&amp;w=400&amp;q=80"}},{"id":"3","title":"Pastel Gradient","subtitle":"Soft Warmth","media":{"type":"image","url":"https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&amp;fit=crop&amp;w=400&amp;q=80"}},{"id":"4","title":"Ocean Waves","subtitle":"Cool Tones","media":{"type":"image","url":"https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&amp;fit=crop&amp;w=400&amp;q=80"}}]'></row-scrollable>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls-column">
+          <div class="controls-card">
+            <div class="controls-header">
+              <span class="controls-icon">⚙️</span>
+              <span class="controls-title">Configure Properties</span>
+            </div>
+            <div class="controls-body">
+              <form id="playground-form" onsubmit="event.preventDefault();">
+                
+      <div class="control-group">
+        <label class="control-label">title <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="title" value="" class="control-input">
+      
+        <div class="control-desc">Optional heading for the scrollable row.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">items <span class="control-type-badge">array</span></label>
+        
+        <textarea name="items" class="control-input json-textarea">[
+  {"id":"1","title":"Neon Abstract","subtitle":"Vibrant Colors","media":{"type":"image","url":"https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=400&q=80"}},
+  {"id":"2","title":"Cyberpunk Glow","subtitle":"Tech Vibes","media":{"type":"image","url":"https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=400&q=80"}},
+  {"id":"3","title":"Pastel Gradient","subtitle":"Soft Warmth","media":{"type":"image","url":"https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=400&q=80"}},
+  {"id":"4","title":"Ocean Waves","subtitle":"Cool Tones","media":{"type":"image","url":"https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=400&q=80"}}
+]</textarea>
+        <span class="json-error-msg">❌ Invalid JSON Formatting</span>
+      
+        <div class="control-desc">Array of cards. { id, title, subtitle, media, mapLinks }</div>
+      </div>
+    
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Code Tabs -->
+      <h2 class="section-heading" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+        Usage Code Generator
+        <button class="jsfiddle-btn" id="jsfiddle-btn" style="background:var(--accent); color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:600; display:flex; align-items:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Play in JSFiddle
+        </button>
+      </h2>
+      <div class="tab-group">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-tab="react">React</button>
+          <button class="tab-btn" data-tab="svelte">Svelte</button>
+          <button class="tab-btn" data-tab="wc">Web Component</button>
+        </div>
+        <div class="tab-panel active" data-panel="react">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code><span class="kw">import</span> RowScrollable <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/RowScrollable'</span>;
+<span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+
+<span class="kw">const</span> items = [
+  { id: <span class="str">'1'</span>, title: <span class="str">'Linen Dress'</span>,  subtitle: <span class="str">'$89.00'</span>, media: { type: <span class="str">'image'</span>, url: <span class="str">'/p1.jpg'</span> }, mapLinks: [{ url: <span class="str">'/p/1'</span> }] },
+  { id: <span class="str">'2'</span>, title: <span class="str">'Oxford Shirt'</span>, subtitle: <span class="str">'$55.00'</span>, media: { type: <span class="str">'image'</span>, url: <span class="str">'/p2.jpg'</span> }, mapLinks: [{ url: <span class="str">'/p/2'</span> }] },
+];
+
+&lt;<span class="tag">RowScrollable</span> title=<span class="str">"Featured Products"</span> items={items} /&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="svelte">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
+  <span class="kw">import</span> RowScrollable <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/RowScrollable.svelte'</span>;
+  <span class="kw">const</span> items = [
+    { id: <span class="str">'1'</span>, title: <span class="str">'Linen Dress'</span>, subtitle: <span class="str">'$89'</span>, media: { type: <span class="str">'image'</span>, url: <span class="str">'/p1.jpg'</span> } },
+  ];
+&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">RowScrollable</span> title=<span class="str">"Featured"</span> {items} /&gt;</code></pre>
+    </div>
+        </div>
+        <div class="tab-panel" data-panel="wc">
+          
+    <div class="code-block">
+      <button class="copy-btn">Copy</button>
+      <pre><code>&lt;<span class="tag">script</span> type=<span class="str">"module"</span>
+  src=<span class="str">"node_modules/@chronos-ui/core/webcomponents/RowScrollable.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+
+&lt;<span class="tag">row-scrollable</span>
+  title=<span class="str">"Featured Products"</span>
+  items=<span class="str">'[{"id":"1","title":"Linen Dress"}]'</span>
+&gt;&lt;/<span class="tag">row-scrollable</span>&gt;</code></pre>
+    </div>
+        </div>
+      </div>
+
+      <!-- Props Table -->
+      <h2 class="section-heading">Props API Reference</h2>
+      
+    <div class="props-table-wrap">
+      <table class="props-table">
+        <thead>
+          <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td><span class="prop-name">items</span> <span class="prop-required">required</span></td>
+        <td><span class="prop-type">RowScrollableItem[]</span></td>
+        <td><span class="prop-default">—</span></td>
+        <td>Array of card items to render in the scrollable row</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">title</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Optional section heading displayed above the row</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">className</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Additional CSS class names on the root container</td>
+      </tr></tbody>
+      </table>
+    </div>
+
+      <!-- Notes -->
+      
+    </div>
+  </main>
+</div>
+<script src="../js/docs.js"></script>
+<script type="module" src="../dist/webcomponent/dist/index.js"></script>
+
+<script>
+// ── Syntax Highlighter (Client-side mirror of server highlight) ────────────
+function clientHighlight(code, lang) {
+  let s = code
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  s = s.replace(/(`[^`]*`|'[^'\']*(?:\.[^'\']*)*'|"[^"\"]*(?:\.[^"\"]*)*")/g, '\x00STR\x00$1\x00/STR\x00');
+  s = s.replace(/(\x2f\x2f[^\n]*)/g, '\x00CM\x00$1\x00/CM\x00');
+  s = s.replace(/\b(import|from|export|default|const|let|var|return|function|async|await|true|false|null|undefined)\b/g, '\x00KW\x00$1\x00/KW\x00');
+  s = s.replace(/(&lt;\/?)([\w-]+)/g, '$1\x00TAG\x00$2\x00/TAG\x00');
+
+  s = s
+    .replace(/\x00STR\x00([\s\S]*?)\x00\/STR\x00/g, '<span class="str">$1</span>')
+    .replace(/\x00CM\x00([\s\S]*?)\x00\/CM\x00/g,   '<span class="cm">$1</span>')
+    .replace(/\x00KW\x00([\s\S]*?)\x00\/KW\x00/g,   '<span class="kw">$1</span>')
+    .replace(/\x00TAG\x00([\s\S]*?)\x00\/TAG\x00/g, '<span class="tag">$1</span>');
+
+  return s;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const preview = document.getElementById('interactive-preview');
+  const form = document.getElementById('playground-form');
+  if (!preview || !form) return;
+
+  const inputs = form.querySelectorAll('input, select, textarea');
+
+  // Slider val displays
+  inputs.forEach(input => {
+    if (input.type === 'range') {
+      const valLabel = input.nextElementSibling;
+      input.addEventListener('input', () => {
+        valLabel.textContent = input.value;
+      });
+    }
+  });
+
+  // Color picker sync
+  inputs.forEach(input => {
+    if (input.classList.contains('control-color-picker')) {
+      const textSync = input.nextElementSibling;
+      input.addEventListener('input', () => {
+        textSync.value = input.value;
+        updatePreview();
+      });
+      textSync.addEventListener('input', () => {
+        if (/^#[0-9A-F]{6}$/i.test(textSync.value)) {
+          input.value = textSync.value;
+          updatePreview();
+        }
+      });
+    }
+  });
+
+  function updatePreview() {
+    let configObj = {};
+    let hasConfig = false;
+
+    // First collect all config.*
+    inputs.forEach(input => {
+      const name = input.name;
+      if (name.startsWith('config.')) {
+        hasConfig = true;
+        const key = name.split('.')[1];
+        let val;
+        if (input.type === 'checkbox') {
+          val = input.checked;
+        } else if (input.type === 'range') {
+          val = Number(input.value);
+        } else {
+          val = input.value;
+        }
+        configObj[key] = val;
+      }
+    });
+
+    if (hasConfig) {
+      preview.setAttribute('config', JSON.stringify(configObj));
+    }
+
+    // Now update other attributes
+    inputs.forEach(input => {
+      const name = input.name;
+      if (name.startsWith('config.')) return;
+
+      if (input.type === 'checkbox') {
+        if (input.checked) {
+          preview.setAttribute(name, 'true');
+        } else {
+          preview.removeAttribute(name);
+        }
+      } else if (input.tagName === 'TEXTAREA' && input.classList.contains('json-textarea')) {
+        try {
+          const raw = input.value.trim();
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            input.classList.remove('invalid');
+            // Assign as property and setAttribute
+            preview[camelCase(name)] = parsed;
+            preview.setAttribute(name, raw);
+          } else {
+            preview.removeAttribute(name);
+          }
+        } catch (e) {
+          input.classList.add('invalid');
+        }
+      } else {
+        preview.setAttribute(name, input.value);
+      }
+    });
+
+    // Update code blocks
+    updateCodeBlocks();
+  }
+
+  function camelCase(str) {
+    return str.replace(/-([a-z])/g, g => g[1].toUpperCase());
+  }
+
+  function kebabCase(str) {
+    return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+  }
+
+  function updateCodeBlocks() {
+    // Collect attributes
+    const attrs = [];
+    for (let i = 0; i < preview.attributes.length; i++) {
+      const a = preview.attributes[i];
+      if (['id', 'class', 'style'].includes(a.name)) continue;
+      attrs.push({ name: a.name, value: a.value });
+    }
+
+    // React prop string generator
+    const reactProps = attrs.map(a => {
+      const camelName = camelCase(a.name);
+      const isJson = a.value.trim().startsWith('{') || a.value.trim().startsWith('[');
+      const isBoolean = a.value === 'true';
+      if (isBoolean) return camelName;
+      if (isJson) return `${camelName}={${a.value}}`;
+      return `${camelName}="${a.value.replace(/"/g, '\\"')}"`;
+    });
+
+    const pascalName = "RowScrollable";
+    const wcTagName = "row-scrollable";
+
+    const reactCode = `import ${pascalName} from '@chronos-ui/core/react/${pascalName}';
+import '@chronos-ui/core/theme.css';
+
+<${pascalName}
+  ${reactProps.join('\n  ')}
+/>`;
+
+    const svelteProps = attrs.map(a => {
+      const camelName = camelCase(a.name);
+      const isJson = a.value.trim().startsWith('{') || a.value.trim().startsWith('[');
+      const isBoolean = a.value === 'true';
+      if (isBoolean) return camelName;
+      if (isJson) return `${camelName}={${a.value}}`;
+      return `${camelName}="${a.value.replace(/"/g, '\\"')}"`;
+    });
+
+    const svelteCode = `<script lang="ts">
+  import ${pascalName} from '@chronos-ui/core/svelte/${pascalName}.svelte';
+<\/script>
+
+<${pascalName}
+  ${svelteProps.join('\n  ')}
+/>`;
+
+    const wcAttrs = attrs.map(a => {
+      const isJson = a.value.trim().startsWith('{') || a.value.trim().startsWith('[');
+      if (isJson) {
+        return `${a.name}='${a.value}'`;
+      }
+      return `${a.name}="${a.value.replace(/"/g, '\\"')}"`;
+    });
+
+    const wcCode = `<` + `script type="module" src="node_modules/@chronos-ui/core/webcomponents/${pascalName}.js"></` + `script>
+
+<${wcTagName}
+  ${wcAttrs.join('\n  ')}
+></${wcTagName}>`;
+
+    // Highlight and set
+    const reactPanel = document.querySelector('[data-panel="react"] pre code');
+    if (reactPanel) reactPanel.innerHTML = clientHighlight(reactCode, 'tsx');
+
+    const sveltePanel = document.querySelector('[data-panel="svelte"] pre code');
+    if (sveltePanel) sveltePanel.innerHTML = clientHighlight(svelteCode, 'svelte');
+
+    const wcPanel = document.querySelector('[data-panel="wc"] pre code');
+    if (wcPanel) wcPanel.innerHTML = clientHighlight(wcCode, 'html');
+  }
+
+  form.addEventListener('input', updatePreview);
+  form.addEventListener('change', updatePreview);
+
+  // Initial update
+  setTimeout(updatePreview, 100);
+});
+</script>
+
+</body>
+</html>

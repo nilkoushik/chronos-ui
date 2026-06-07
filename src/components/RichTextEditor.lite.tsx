@@ -1,11 +1,17 @@
 import { useStore, useRef, onMount, Show } from '@builder.io/mitosis';
 
+export interface RichTextEditorConfig {
+  toolbar?: string[];
+}
+
 export interface RichTextEditorProps {
   content?: string;
+  initialContent?: string;
   onChange?: (content: string) => void;
   onMediaRequest?: (type: 'image' | 'video' | 'audio') => Promise<string>;
   availableClasses?: string[];
   className?: string;
+  config?: RichTextEditorConfig;
 }
 
 export default function RichTextEditor(props: RichTextEditorProps) {
@@ -17,7 +23,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
   const state = useStore({
     mode: 'visual',
     isFullscreen: false,
-    internalContent: props.content || '',
+    internalContent: props.content || props.initialContent || '',
     
     // Modal states
     showTableModal: false,
@@ -498,9 +504,42 @@ export default function RichTextEditor(props: RichTextEditorProps) {
         }
       }
     },
+    showToolbarOption(option: string) {
+      if (!props.config || !props.config.toolbar) {
+        return true;
+      }
+      let name = option;
+      if (option === 'alignLeft') name = 'justifyLeft';
+      if (option === 'alignCenter') name = 'justifyCenter';
+      if (option === 'alignRight') name = 'justifyRight';
+      return props.config.toolbar.includes(option) || props.config.toolbar.includes(name);
+    },
+    showSeparator(index: number) {
+      const groups = [
+        ['fullscreen', 'source', 'bold', 'italic', 'underline', 'strikeThrough'],
+        ['code', 'quote', 'clear'],
+        ['headings'],
+        ['foreColor', 'backColor'],
+        ['alignLeft', 'justifyLeft', 'alignCenter', 'justifyCenter', 'alignRight', 'justifyRight'],
+        ['image', 'link', 'table', 'unorderedList', 'orderedList', 'horizontalRule', 'video', 'social'],
+        ['insertButton', 'addWidget'],
+        ['save'],
+        ['classInput']
+      ];
+      const hasVisibleBefore = groups.slice(0, index + 1).some(group => 
+        group.some(item => state.showToolbarOption(item))
+      );
+      const isNextGroupVisible = groups[index + 1] && groups[index + 1].some(item => 
+        state.showToolbarOption(item)
+      );
+      return hasVisibleBefore && isNextGroupVisible;
+    },
   });
 
   onMount(() => {
+    if (!state.internalContent) {
+      state.internalContent = props.content || props.initialContent || '';
+    }
     if (editorRef) {
       editorRef.innerHTML = state.internalContent;
     }
@@ -543,172 +582,252 @@ export default function RichTextEditor(props: RichTextEditorProps) {
              padding: '16px 24px'
            }}>
         
-        <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold text-xs transition-all duration-200" 
-                style={{ background: 'rgba(139, 92, 246, 0.15)', color: '#c4b5fd', border: 'none' }} 
-                onClick={() => state.toggleFullscreen()} title="Full Screen">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-          {state.isFullscreen ? 'Exit Full Screen' : 'Full Screen'}
-        </button>
-
-        <button type="button" class={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200 ${state.mode === 'source' ? 'bg-indigo-500/20 text-indigo-300' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'}`} onClick={() => state.toggleMode()} title="Source Code">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          Source Code
-        </button>
-
-        <div class="flex items-center gap-2 text-slate-300">
-          <button type="button" class={`font-bold text-sm w-9 h-9 flex items-center justify-center rounded transition-colors ${state.activeFormats.bold ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('bold')} title="Bold">B</button>
-          <button type="button" class={`italic text-sm w-9 h-9 flex items-center justify-center rounded transition-colors font-serif ${state.activeFormats.italic ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('italic')} title="Italic">I</button>
-          <button type="button" class={`underline text-sm w-9 h-9 flex items-center justify-center rounded transition-colors ${state.activeFormats.underline ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('underline')} title="Underline">U</button>
-          <button type="button" class={`line-through text-sm w-9 h-9 flex items-center justify-center rounded transition-colors ${state.activeFormats.strikeThrough ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('strikeThrough')} title="Strikethrough">T</button>
-        </div>
-
-        <div class="w-px h-6 bg-white/10"></div>
-
-        <div class="flex items-center gap-2 text-slate-300">
-          <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.code ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.toggleBlock('PRE')} title="Code Block">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <Show when={state.showToolbarOption('fullscreen')}>
+          <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold text-xs transition-all duration-200" 
+                  style={{ background: 'rgba(139, 92, 246, 0.15)', color: '#c4b5fd', border: 'none' }} 
+                  onClick={() => state.toggleFullscreen()} title="Full Screen">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            {state.isFullscreen ? 'Exit Full Screen' : 'Full Screen'}
           </button>
-          <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.quote ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.toggleBlock('BLOCKQUOTE')} title="Blockquote">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
-          </button>
-          <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.clearAllFormatting()} title="Clear Formatting">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h8"/><path d="M4 18V6a2 2 0 0 1 2-2h4"/><path d="M15 9l5 5"/><path d="M20 9l-5 5"/></svg>
-          </button>
-        </div>
+        </Show>
 
-        <div class="w-px h-6 bg-white/10"></div>
-
-        <select class="bg-black/20 border border-white/10 text-slate-300 font-semibold text-sm rounded-lg px-3 py-1.5 outline-none focus:border-violet-500 transition-colors cursor-pointer" value={state.headingFormat} onMouseDown={(e) => { state.saveSelection(); }} onChange={(e) => { state.restoreSelection(); state.formatHeading(e.target.value); editorRef.focus(); }}>
-          <option value="P" class="bg-slate-800" style={{ fontSize: '14px', fontWeight: 'normal' }}>Paragraph</option>
-          <option value="H1" class="bg-slate-800" style={{ fontSize: '24px', fontWeight: 'bold' }}>Heading 1</option>
-          <option value="H2" class="bg-slate-800" style={{ fontSize: '20px', fontWeight: 'bold' }}>Heading 2</option>
-          <option value="H3" class="bg-slate-800" style={{ fontSize: '18px', fontWeight: 'bold' }}>Heading 3</option>
-        </select>
-
-        <div class="w-px h-6 bg-white/10"></div>
-
-        <div class="flex items-center gap-1 text-slate-300">
-          <label class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors cursor-pointer relative" title="Text Color">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="m6 16 6-12 6 12"/><path d="M8 12h8"/></svg>
-            <input type="color" class="opacity-0 absolute inset-0 w-full h-full cursor-pointer" onMouseDown={() => state.saveSelection()} onChange={(e) => { state.restoreSelection(); document.execCommand('foreColor', false, (e.target as HTMLInputElement).value); state.syncContent(); }} />
-          </label>
-          <label class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors cursor-pointer relative" title="Highlight Color">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
-            <input type="color" class="opacity-0 absolute inset-0 w-full h-full cursor-pointer" onMouseDown={() => state.saveSelection()} onChange={(e) => { state.restoreSelection(); document.execCommand('hiliteColor', false, (e.target as HTMLInputElement).value); document.execCommand('backColor', false, (e.target as HTMLInputElement).value); state.syncContent(); }} />
-          </label>
-        </div>
-
-        <div class="w-px h-6 bg-white/10"></div>
-
-        <div class="flex items-center gap-2 text-slate-300">
-          <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.justifyLeft ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('justifyLeft')} title="Align Left">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="6" x2="3" y2="6"/><line x1="15" y1="12" x2="3" y2="12"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
+        <Show when={state.showToolbarOption('source')}>
+          <button type="button" class={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200 ${state.mode === 'source' ? 'bg-indigo-500/20 text-indigo-300' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'}`} onClick={() => state.toggleMode()} title="Source Code">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            Source Code
           </button>
-          <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.justifyCenter ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('justifyCenter')} title="Align Center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="6" x2="3" y2="6"/><line x1="17" y1="12" x2="7" y2="12"/><line x1="19" y1="18" x2="5" y2="18"/></svg>
-          </button>
-          <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.justifyRight ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('justifyRight')} title="Align Right">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="12" x2="9" y2="12"/><line x1="21" y1="18" x2="7" y2="18"/></svg>
-          </button>
-        </div>
+        </Show>
 
-        <div class="w-px h-6 bg-white/10"></div>
+        <Show when={state.showToolbarOption('bold') || state.showToolbarOption('italic') || state.showToolbarOption('underline') || state.showToolbarOption('strikeThrough')}>
+          <div class="flex items-center gap-2 text-slate-300">
+            <Show when={state.showToolbarOption('bold')}>
+              <button type="button" class={`font-bold text-sm w-9 h-9 flex items-center justify-center rounded transition-colors ${state.activeFormats.bold ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('bold')} title="Bold">B</button>
+            </Show>
+            <Show when={state.showToolbarOption('italic')}>
+              <button type="button" class={`italic text-sm w-9 h-9 flex items-center justify-center rounded transition-colors font-serif ${state.activeFormats.italic ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('italic')} title="Italic">I</button>
+            </Show>
+            <Show when={state.showToolbarOption('underline')}>
+              <button type="button" class={`underline text-sm w-9 h-9 flex items-center justify-center rounded transition-colors ${state.activeFormats.underline ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('underline')} title="Underline">U</button>
+            </Show>
+            <Show when={state.showToolbarOption('strikeThrough')}>
+              <button type="button" class={`line-through text-sm w-9 h-9 flex items-center justify-center rounded transition-colors ${state.activeFormats.strikeThrough ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('strikeThrough')} title="Strikethrough">T</button>
+            </Show>
+          </div>
+        </Show>
 
-        <div class="flex items-center gap-2 text-slate-300">
-          <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.insertMedia('image')} title="Image">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          </button>
-          <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.openLinkModal()} title="Link">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-          </button>
-          <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.openTableModal()} title="Table">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
-          </button>
-          
-          <Show when={state.activeFormats.inTable}>
-            <div class="flex items-center bg-violet-500/20 rounded-lg p-0.5 border border-violet-500/30 ml-1 mr-1 shadow-inner">
-              <button type="button" class="w-7 h-7 flex items-center justify-center rounded hover:bg-violet-500/40 text-violet-300 transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.modifyTable('addRow')} title="Add Row Below">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-                <span class="text-[10px] font-bold ml-0.5">R</span>
+        <Show when={state.showSeparator(0)}>
+          <div class="w-px h-6 bg-white/10"></div>
+        </Show>
+
+        <Show when={state.showToolbarOption('code') || state.showToolbarOption('quote') || state.showToolbarOption('clear')}>
+          <div class="flex items-center gap-2 text-slate-300">
+            <Show when={state.showToolbarOption('code')}>
+              <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.code ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.toggleBlock('PRE')} title="Code Block">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
               </button>
-              <button type="button" class="w-7 h-7 flex items-center justify-center rounded hover:bg-rose-500/40 text-rose-300 transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.modifyTable('removeRow')} title="Delete Row">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
-                <span class="text-[10px] font-bold ml-0.5">R</span>
+            </Show>
+            <Show when={state.showToolbarOption('quote')}>
+              <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.quote ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.toggleBlock('BLOCKQUOTE')} title="Blockquote">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
               </button>
-              <div class="w-px h-4 bg-violet-500/30 mx-0.5"></div>
-              <button type="button" class="w-7 h-7 flex items-center justify-center rounded hover:bg-violet-500/40 text-violet-300 transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.modifyTable('addCol')} title="Add Column Right">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-                <span class="text-[10px] font-bold ml-0.5">C</span>
+            </Show>
+            <Show when={state.showToolbarOption('clear')}>
+              <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.clearAllFormatting()} title="Clear Formatting">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h8"/><path d="M4 18V6a2 2 0 0 1 2-2h4"/><path d="M15 9l5 5"/><path d="M20 9l-5 5"/></svg>
               </button>
-              <button type="button" class="w-7 h-7 flex items-center justify-center rounded hover:bg-rose-500/40 text-rose-300 transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.modifyTable('removeCol')} title="Delete Column">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
-                <span class="text-[10px] font-bold ml-0.5">C</span>
+            </Show>
+          </div>
+        </Show>
+
+        <Show when={state.showSeparator(1)}>
+          <div class="w-px h-6 bg-white/10"></div>
+        </Show>
+
+        <Show when={state.showToolbarOption('headings')}>
+          <select class="bg-black/20 border border-white/10 text-slate-300 font-semibold text-sm rounded-lg px-3 py-1.5 outline-none focus:border-violet-500 transition-colors cursor-pointer" value={state.headingFormat} onMouseDown={(e) => { state.saveSelection(); }} onChange={(e) => { state.restoreSelection(); state.formatHeading(e.target.value); editorRef.focus(); }}>
+            <option value="P" class="bg-slate-800" style={{ fontSize: '14px', fontWeight: 'normal' }}>Paragraph</option>
+            <option value="H1" class="bg-slate-800" style={{ fontSize: '24px', fontWeight: 'bold' }}>Heading 1</option>
+            <option value="H2" class="bg-slate-800" style={{ fontSize: '20px', fontWeight: 'bold' }}>Heading 2</option>
+            <option value="H3" class="bg-slate-800" style={{ fontSize: '18px', fontWeight: 'bold' }}>Heading 3</option>
+          </select>
+        </Show>
+
+        <Show when={state.showSeparator(2)}>
+          <div class="w-px h-6 bg-white/10"></div>
+        </Show>
+
+        <Show when={state.showToolbarOption('foreColor') || state.showToolbarOption('backColor')}>
+          <div class="flex items-center gap-1 text-slate-300">
+            <Show when={state.showToolbarOption('foreColor')}>
+              <label class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors cursor-pointer relative" title="Text Color">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="m6 16 6-12 6 12"/><path d="M8 12h8"/></svg>
+                <input type="color" class="opacity-0 absolute inset-0 w-full h-full cursor-pointer" onMouseDown={() => state.saveSelection()} onChange={(e) => { state.restoreSelection(); document.execCommand('foreColor', false, (e.target as HTMLInputElement).value); state.syncContent(); }} />
+              </label>
+            </Show>
+            <Show when={state.showToolbarOption('backColor')}>
+              <label class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors cursor-pointer relative" title="Highlight Color">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+                <input type="color" class="opacity-0 absolute inset-0 w-full h-full cursor-pointer" onMouseDown={() => state.saveSelection()} onChange={(e) => { state.restoreSelection(); document.execCommand('hiliteColor', false, (e.target as HTMLInputElement).value); document.execCommand('backColor', false, (e.target as HTMLInputElement).value); state.syncContent(); }} />
+              </label>
+            </Show>
+          </div>
+        </Show>
+
+        <Show when={state.showSeparator(3)}>
+          <div class="w-px h-6 bg-white/10"></div>
+        </Show>
+
+        <Show when={state.showToolbarOption('justifyLeft') || state.showToolbarOption('justifyCenter') || state.showToolbarOption('justifyRight')}>
+          <div class="flex items-center gap-2 text-slate-300">
+            <Show when={state.showToolbarOption('justifyLeft')}>
+              <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.justifyLeft ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('justifyLeft')} title="Align Left">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="6" x2="3" y2="6"/><line x1="15" y1="12" x2="3" y2="12"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
               </button>
-            </div>
-          </Show>
-          <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.unorderedList ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('insertUnorderedList')} title="Bullet List">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          </button>
-          <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.orderedList ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('insertOrderedList')} title="Numbered List">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
-          </button>
-          <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('insertHorizontalRule')} title="Horizontal Line">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
-          <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.insertMedia('video')} title="Video">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
-          </button>
-          <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.openSocialModal()} title="Social Media Embed">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-          </button>
-        </div>
+            </Show>
+            <Show when={state.showToolbarOption('justifyCenter')}>
+              <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.justifyCenter ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('justifyCenter')} title="Align Center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="6" x2="3" y2="6"/><line x1="17" y1="12" x2="7" y2="12"/><line x1="19" y1="18" x2="5" y2="18"/></svg>
+              </button>
+            </Show>
+            <Show when={state.showToolbarOption('justifyRight')}>
+              <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.justifyRight ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('justifyRight')} title="Align Right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="12" x2="9" y2="12"/><line x1="21" y1="18" x2="7" y2="18"/></svg>
+              </button>
+            </Show>
+          </div>
+        </Show>
 
-        <div class="w-px h-6 bg-white/10"></div>
+        <Show when={state.showSeparator(4)}>
+          <div class="w-px h-6 bg-white/10"></div>
+        </Show>
 
-        <div class="flex items-center gap-2">
-          <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold text-xs transition-all duration-200 border-none text-slate-300 hover:bg-white/10 hover:text-white" onMouseDown={(e) => e.preventDefault()} onClick={() => state.openButtonModal()}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-            Insert Button
-          </button>
-          
-          <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold text-xs transition-all duration-200 bg-pink-500/10 text-pink-400 border-none hover:bg-pink-500/20" onMouseDown={(e) => e.preventDefault()} onClick={() => state.openWidgetModal()}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-            Add Widget
-          </button>
-        </div>
-        
-        <div class="w-px h-6 bg-white/10"></div>
+        <Show when={state.showToolbarOption('image') || state.showToolbarOption('link') || state.showToolbarOption('table') || state.showToolbarOption('unorderedList') || state.showToolbarOption('orderedList') || state.showToolbarOption('horizontalRule') || state.showToolbarOption('video') || state.showToolbarOption('social')}>
+          <div class="flex items-center gap-2 text-slate-300">
+            <Show when={state.showToolbarOption('image')}>
+              <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.insertMedia('image')} title="Image">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              </button>
+            </Show>
+            <Show when={state.showToolbarOption('link')}>
+              <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.openLinkModal()} title="Link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              </button>
+            </Show>
+            <Show when={state.showToolbarOption('table')}>
+              <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.openTableModal()} title="Table">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+              </button>
+            </Show>
+            
+            <Show when={state.activeFormats.inTable && state.showToolbarOption('table')}>
+              <div class="flex items-center bg-violet-500/20 rounded-lg p-0.5 border border-violet-500/30 ml-1 mr-1 shadow-inner">
+                <button type="button" class="w-7 h-7 flex items-center justify-center rounded hover:bg-violet-500/40 text-violet-300 transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.modifyTable('addRow')} title="Add Row Below">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                  <span class="text-[10px] font-bold ml-0.5">R</span>
+                </button>
+                <button type="button" class="w-7 h-7 flex items-center justify-center rounded hover:bg-rose-500/40 text-rose-300 transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.modifyTable('removeRow')} title="Delete Row">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
+                  <span class="text-[10px] font-bold ml-0.5">R</span>
+                </button>
+                <div class="w-px h-4 bg-violet-500/30 mx-0.5"></div>
+                <button type="button" class="w-7 h-7 flex items-center justify-center rounded hover:bg-violet-500/40 text-violet-300 transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.modifyTable('addCol')} title="Add Column Right">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                  <span class="text-[10px] font-bold ml-0.5">C</span>
+                </button>
+                <button type="button" class="w-7 h-7 flex items-center justify-center rounded hover:bg-rose-500/40 text-rose-300 transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.modifyTable('removeCol')} title="Delete Column">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
+                  <span class="text-[10px] font-bold ml-0.5">C</span>
+                </button>
+              </div>
+            </Show>
 
-        <div class="flex items-center gap-1 text-slate-400">
-          <button type="button" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.syncContent()} title="Save">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1-2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-          </button>
-        </div>
+            <Show when={state.showToolbarOption('unorderedList')}>
+              <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.unorderedList ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('insertUnorderedList')} title="Bullet List">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              </button>
+            </Show>
+            <Show when={state.showToolbarOption('orderedList')}>
+              <button type="button" class={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${state.activeFormats.orderedList ? 'bg-white/20 text-white shadow-inner' : 'hover:bg-white/10 hover:text-white'}`} onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('insertOrderedList')} title="Numbered List">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+              </button>
+            </Show>
+            <Show when={state.showToolbarOption('horizontalRule')}>
+              <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.format('insertHorizontalRule')} title="Horizontal Line">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </Show>
+            <Show when={state.showToolbarOption('video')}>
+              <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.insertMedia('video')} title="Video">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+              </button>
+            </Show>
+            <Show when={state.showToolbarOption('social')}>
+              <button type="button" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.openSocialModal()} title="Social Media Embed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </button>
+            </Show>
+          </div>
+        </Show>
 
-        {/* Dynamic Class Input */}
-        <div class="ml-auto flex items-center bg-black/20 border border-white/10 rounded-lg px-3 py-1.5 shadow-inner focus-within:border-violet-500 focus-within:ring-1 focus-within:ring-violet-500 transition-all">
-          <span class="text-[10px] font-bold text-slate-500 tracking-wider mr-2">CLASS</span>
-          <input 
-            type="text" 
-            list="editor-class-list"
-            placeholder="e.g. text-pink-500" 
-            class="text-xs outline-none w-32 text-slate-200 placeholder-slate-600 bg-transparent"
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault();
-                state.applyClass((e.target as HTMLInputElement).value);
-                (e.target as HTMLInputElement).value = '';
-              }
-            }}
-          />
-          <Show when={props.availableClasses && props.availableClasses.length > 0}>
-            <datalist id="editor-class-list">
-              {props.availableClasses?.map((cls) => (
-                <option value={cls}>{cls}</option>
-              ))}
-            </datalist>
-          </Show>
-        </div>
+        <Show when={state.showSeparator(5)}>
+          <div class="w-px h-6 bg-white/10"></div>
+        </Show>
+
+        <Show when={state.showToolbarOption('insertButton') || state.showToolbarOption('addWidget')}>
+          <div class="flex items-center gap-2">
+            <Show when={state.showToolbarOption('insertButton')}>
+              <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold text-xs transition-all duration-200 border-none text-slate-300 hover:bg-white/10 hover:text-white" onMouseDown={(e) => e.preventDefault()} onClick={() => state.openButtonModal()}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                Insert Button
+              </button>
+            </Show>
+            <Show when={state.showToolbarOption('addWidget')}>
+              <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold text-xs transition-all duration-200 bg-pink-500/10 text-pink-400 border-none hover:bg-pink-500/20" onMouseDown={(e) => e.preventDefault()} onClick={() => state.openWidgetModal()}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Add Widget
+              </button>
+            </Show>
+          </div>
+        </Show>
+
+        <Show when={state.showSeparator(6)}>
+          <div class="w-px h-6 bg-white/10"></div>
+        </Show>
+
+        <Show when={state.showToolbarOption('save')}>
+          <div class="flex items-center gap-1 text-slate-400">
+            <button type="button" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 hover:text-white transition-colors" onMouseDown={(e) => e.preventDefault()} onClick={() => state.syncContent()} title="Save">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1-2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            </button>
+          </div>
+        </Show>
+
+        <Show when={state.showToolbarOption('classInput')}>
+          {/* Dynamic Class Input */}
+          <div class="ml-auto flex items-center bg-black/20 border border-white/10 rounded-lg px-3 py-1.5 shadow-inner focus-within:border-violet-500 focus-within:ring-1 focus-within:ring-violet-500 transition-all">
+            <span class="text-[10px] font-bold text-slate-500 tracking-wider mr-2">CLASS</span>
+            <input 
+              type="text" 
+              list="editor-class-list"
+              placeholder="e.g. text-pink-500" 
+              class="text-xs outline-none w-32 text-slate-200 placeholder-slate-600 bg-transparent"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  state.applyClass((e.target as HTMLInputElement).value);
+                  (e.target as HTMLInputElement).value = '';
+                }
+              }}
+            />
+            <Show when={props.availableClasses && props.availableClasses.length > 0}>
+              <datalist id="editor-class-list">
+                {props.availableClasses?.map((cls) => (
+                  <option value={cls}>{cls}</option>
+                ))}
+              </datalist>
+            </Show>
+          </div>
+        </Show>
 
       </div>
 

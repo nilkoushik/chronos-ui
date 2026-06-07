@@ -1,0 +1,134 @@
+/* Styles for AlternatingSlider */
+.chronos-alt-slider {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  background: #000;
+  border-radius: var(--chronos-border-radius-md, 8px);
+}
+.chronos-alt-cols-container {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  gap: 0;
+}
+.chronos-alt-col {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+.chronos-alt-track {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.chronos-alt-cell {
+  position: absolute;
+  width: 100%; height: 100%;
+  left: 0;
+}
+.chronos-alt-content-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.chronos-alt-bg, .chronos-alt-bg-video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
+}
+.chronos-alt-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  transition: background 0.3s;
+}
+.chronos-alt-content-wrap:hover .chronos-alt-overlay {
+  background: rgba(0,0,0,0.2);
+}
+.chronos-alt-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 2rem;
+  color: white;
+}
+.chronos-alt-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.chronos-alt-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+.chronos-alt-cta {
+  background: var(--chronos-color-primary, #7c3aed);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: all 0.3s;
+  display: inline-block;
+}
+.chronos-alt-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+}
+.chronos-alt-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.2);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  z-index: 10;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+.chronos-alt-arrow:hover { background: rgba(255,255,255,0.4); }
+.chronos-alt-arrow.prev { left: 20px; }
+.chronos-alt-arrow.next { right: 20px; }
+
+.chronos-alt-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+.chronos-alt-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+.chronos-alt-dot.active {
+  background: white;
+  transform: scale(1.2);
+}

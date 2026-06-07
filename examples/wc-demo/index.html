@@ -93,9 +93,19 @@
       </section>
       
       <section>
-        <h2>Rich Text Editor</h2>
+        <h2>Rich Text Editor (Default)</h2>
         <div style="border: 1px solid #334155; border-radius: 8px; overflow: hidden;">
-          <rich-text-editor initial-content="<p>Hello World from Web Components!</p>"></rich-text-editor>
+          <rich-text-editor initial-content="<p>Hello World from Web Components (Default)!</p>"></rich-text-editor>
+        </div>
+      </section>
+
+      <section>
+        <h2>Rich Text Editor (Customized Toolbar: Bold, Italic, Underline, Link)</h2>
+        <div style="border: 1px solid #334155; border-radius: 8px; overflow: hidden;">
+          <rich-text-editor 
+            config='{"toolbar": ["bold", "italic", "underline", "link"]}' 
+            initial-content="<p>This editor only has <strong>bold</strong>, <em>italic</em>, <u>underline</u>, and link options!</p>"
+          ></rich-text-editor>
         </div>
       </section>
 

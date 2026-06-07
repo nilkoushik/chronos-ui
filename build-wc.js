@@ -38,9 +38,12 @@ for (const file of allFiles) {
   // Fix invalid custom element names that don't have a hyphen (e.g. "banner")
   finalCode = finalCode.replace(/customElements\.define\("([^"-]+)",/g, 'customElements.define("chronos-$1",');
   
-  // Fix strict mode TypeError: Cannot set property which has only a getter.
+  // Fix strict mode TypeError: Cannot set property which has only a getter by adding a companion setter.
   // Mitosis generates both `get _fooRef()` and `this._fooRef = el` in updateBindings.
-  finalCode = finalCode.replace(/get _[a-zA-Z0-9_]+Ref\(\) \{\s*return this\._root\.querySelector\("\[data-ref='[^']+'\]"\);\s*\}/g, '');
+  finalCode = finalCode.replace(/get _([a-zA-Z0-9_]+Ref)\(\) \{\s*return this\._root\.querySelector\("\[data-ref='([^']+)'\]"\);\s*\}/g, (match, refName, refId) => {
+    return `get _${refName}() { return this.__${refName} || this._root.querySelector("[data-ref='${refId}']"); }
+    set _${refName}(val) { this.__${refName} = val; }`;
+  });
   
   // Fix TypeError: Cannot read properties of undefined (reading 'content')
   // Move `this.props = {}` initialization BEFORE `this.state = {}` in the constructor.
@@ -116,6 +119,166 @@ for (const file of allFiles) {
       
       finalCode = finalCode.substring(0, startIdx) + replacement + finalCode.substring(endIdx);
       queryRegex.lastIndex = startIdx + replacement.length;
+    }
+  }
+
+  // Rewrite destroyAnyNodes to preserve elements marked with __persistent
+  const destroyRegex = /destroyAnyNodes\(\)\s*\{[\s\S]*?this\.nodesToDestroy\s*=\s*\[\];\s*\}/g;
+  finalCode = finalCode.replace(destroyRegex, `destroyAnyNodes() {
+        this.nodesToDestroy.forEach((el) => {
+            if (!el.__persistent) {
+                el.remove();
+            }
+        });
+        this.nodesToDestroy = this.nodesToDestroy.filter(el => el.__persistent);
+    }`);
+
+  // Rewrite showContent to support toggle/conditional updates in-place
+  const showContentRegex = /showContent\(el\)\s*\{[\s\S]*?el\.after\(elementFragment\);\s*\}/g;
+  finalCode = finalCode.replace(showContentRegex, `showContent(el, condition) {
+        if (condition) {
+            if (el.__renderedNodes) {
+                return;
+            }
+            const elementFragment = el.content.cloneNode(true);
+            const children = Array.from(elementFragment.childNodes);
+            el.__renderedNodes = children;
+            children.forEach((child) => {
+                if (el?.scope) {
+                    child.scope = el.scope;
+                }
+                if (el?.context) {
+                    child.context = el.context;
+                }
+                child.__persistent = true;
+                this.nodesToDestroy.push(child);
+            });
+            el.after(elementFragment);
+        } else {
+            if (el.__renderedNodes) {
+                el.__renderedNodes.forEach((child) => {
+                    child.remove();
+                    const idx = this.nodesToDestroy.indexOf(child);
+                    if (idx !== -1) {
+                        this.nodesToDestroy.splice(idx, 1);
+                    }
+                });
+                el.__renderedNodes = null;
+            }
+        }
+    }`);
+
+  // Rewrite renderLoop to cache previously rendered array values and preserve rendered nodes in-place
+  const renderLoopRegex = /renderLoop\(template,\s*array,\s*itemName,\s*itemIndex,\s*collectionName\)\s*\{[\s\S]*?collection\.forEach\(\(child\)\s*=>\s*template\.after\(child\)\);\s*\}/g;
+  finalCode = finalCode.replace(renderLoopRegex, `renderLoop(template, array, itemName, itemIndex, collectionName) {
+        if (!array) array = [];
+        const isSameArray = template.__renderedArray && 
+                            template.__renderedArray.length === array.length && 
+                            array.every((val, i) => template.__renderedArray[i] === val);
+        console.log('[WC Debug] renderLoop template:', template.getAttribute('data-el'), 'isSameArray:', isSameArray);
+        if (isSameArray) {
+            return;
+        }
+        console.log('[WC Debug] renderLoop recreating nodes for template:', template.getAttribute('data-el'));
+        if (template.__renderedNodes) {
+            template.__renderedNodes.forEach((child) => {
+                child.remove();
+                const idx = this.nodesToDestroy.indexOf(child);
+                if (idx !== -1) {
+                    this.nodesToDestroy.splice(idx, 1);
+                }
+            });
+        }
+        const collection = [];
+        const renderedNodes = [];
+        for (let [index, value] of array.entries()) {
+            const elementFragment = template.content.cloneNode(true);
+            const children = Array.from(elementFragment.childNodes);
+            const localScope = {};
+            let scope = localScope;
+            if (template?.scope) {
+                const getParent = {
+                    get(target, prop, receiver) {
+                        if (prop in target) {
+                            return target[prop];
+                        }
+                        if (prop in template.scope) {
+                            return template.scope[prop];
+                        }
+                        return target[prop];
+                    },
+                };
+                scope = new Proxy(localScope, getParent);
+            }
+            children.forEach((child) => {
+                if (itemName !== undefined) {
+                    scope[itemName] = value;
+                }
+                if (itemIndex !== undefined) {
+                    scope[itemIndex] = index;
+                }
+                if (collectionName !== undefined) {
+                    scope[collectionName] = array;
+                }
+                child.scope = scope;
+                if (template.context) {
+                    child.context = template.context;
+                }
+                child.__persistent = true;
+                this.nodesToDestroy.push(child);
+                collection.unshift(child);
+                renderedNodes.push(child);
+            });
+        }
+        collection.forEach((child) => template.after(child));
+        template.__renderedArray = [...array];
+        template.__renderedNodes = renderedNodes;
+    }`);
+
+  // Rewrite conditional elements calls: if (whenCondition) { this.showContent(el); }
+  finalCode = finalCode.replace(/if\s*\(whenCondition\)\s*\{\s*this\.showContent\(el\);\s*\}/g, 'this.showContent(el, !!whenCondition);');
+
+  // Inject observedAttributes and attributeChangedCallback for reactivity
+  const propNamesMatch = finalCode.match(/this\.componentProps\s*=\s*(\[[\s\S]*?\]);/);
+  if (propNamesMatch) {
+    try {
+      const matches = propNamesMatch[1].match(/"([^"]+)"|'([^']+)'/g);
+      const propsArray = matches ? matches.map(s => s.slice(1, -1)) : [];
+      const kebabProps = propsArray.map(p => p.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase());
+      
+      const className = file.replace('.ts', '');
+      const classDef = `class ${className} extends HTMLElement {`;
+      const observedCode = `class ${className} extends HTMLElement {
+    static get observedAttributes() {
+        return ${JSON.stringify(kebabProps)};
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        const jsVar = name.replace(/-/g, "");
+        const regexp = new RegExp(jsVar, "i");
+        if (this.componentProps) {
+            this.componentProps.forEach((prop) => {
+                if (regexp.test(prop)) {
+                    let attrValue = newValue;
+                    try {
+                        if (attrValue && (attrValue.trim().startsWith('{') || attrValue.trim().startsWith('['))) {
+                            attrValue = JSON.parse(attrValue);
+                        }
+                    } catch(e) {}
+                    this.props[prop] = attrValue;
+                }
+            });
+            this.update();
+        }
+    }
+    forceUpdate(propsObj) {
+        if (propsObj && typeof propsObj === 'object') {
+            Object.assign(this.props, propsObj);
+        }
+        if (typeof this.update === 'function') this.update();
+    }`;
+      finalCode = finalCode.replace(classDef, observedCode);
+    } catch (e) {
+      console.warn('Failed to inject observedAttributes for', file, e);
     }
   }
 
