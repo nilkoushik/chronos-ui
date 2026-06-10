@@ -211,7 +211,14 @@ function buildControlsForm(component) {
     }
   }
 
-  return api.map(item => {
+  const filteredApi = api.filter(item => {
+    if (item.prop === 'config') {
+      return !api.some(x => x.prop.startsWith('config.'));
+    }
+    return true;
+  });
+
+  return filteredApi.map(item => {
     const propName = item.prop;
     const type = item.type;
     const defaultValue = item.default;
