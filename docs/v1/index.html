@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chronos UI — Universal Component Library</title>
+  <script>
+    if (window.location.pathname.endsWith('/' + 'v1')) {
+      window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+    }
+  </script>
   <meta name="description" content="A universal, framework-agnostic UI component library. Write once in Mitosis and compile to React, Svelte, and Web Components." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="css/docs.css" />

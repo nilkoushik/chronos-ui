@@ -282,6 +282,15 @@ for (const file of allFiles) {
     }
   }
 
+  // Fix ReferenceError: self is not defined in class methods
+  finalCode = finalCode.replace(/^[ ]{4}(?!constructor\b)([a-zA-Z0-9_]+)\((.*?)\)[ ]*\{/gm, (match, methodName, args) => {
+    return `    ${methodName}(${args}) {
+        const self = this;`;
+  });
+
+  // Remove any duplicate const self = this; declarations
+  finalCode = finalCode.replace(/const self\s*=\s*this;(\s*const self\s*=\s*this;)+/g, 'const self = this;');
+
   fs.writeFileSync(outPath, finalCode);
 }
 console.log('Successfully compiled Web Components.');

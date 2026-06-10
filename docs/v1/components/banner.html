@@ -364,6 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updatePreview() {
     let configObj = {};
     let hasConfig = false;
+    const directProps = {};
 
     // First collect all config.*
     inputs.forEach(input => {
@@ -384,7 +385,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (hasConfig) {
-      preview.setAttribute('config', JSON.stringify(configObj));
+      const configJson = JSON.stringify(configObj);
+      // Always set props.config directly to bypass oldValue===newValue guard
+      if (preview.props) {
+        preview.props.config = configObj;
+      }
+      preview.setAttribute('config', configJson);
+      directProps.config = configObj;
     }
 
     // Now update other attributes
@@ -395,8 +402,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (input.type === 'checkbox') {
         if (input.checked) {
           preview.setAttribute(name, 'true');
+          directProps[camelCase(name)] = true;
         } else {
           preview.removeAttribute(name);
+          directProps[camelCase(name)] = false;
         }
       } else if (input.tagName === 'TEXTAREA' && input.classList.contains('json-textarea')) {
         try {
