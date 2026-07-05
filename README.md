@@ -115,33 +115,7 @@ export default function Page() {
 
 ---
 
-## 🛠️ Development
 
-```bash
-git clone https://github.com/nilkoushik/chronos-ui.git
-cd chronos-ui
-npm install
-
-# Compile all components to React, Svelte & Web Components
-npm run build
-```
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full workflow.
-
----
-
-## 📦 Publishing
-
-Bump the version and let GitHub Actions do the rest:
-
-```bash
-npm version patch   # or: minor | major
-# → runs build, creates git tag, pushes, triggers npm publish workflow
-```
-
-Make sure your `NPM_TOKEN` secret is set in GitHub → Settings → Secrets and variables → Actions.
-
----
 
 ## 📖 Documentation
 
