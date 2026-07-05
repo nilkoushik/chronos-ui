@@ -27,6 +27,7 @@ export interface AlternatingConfig {
   delayMs: number;
   showArrows: boolean;
   showDots: boolean;
+  hideArrowsIfNoScroll?: boolean;
 }
 
 export interface AlternatingSliderProps {
@@ -136,13 +137,29 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                           />
                         </Show>
                         <div class="chronos-alt-overlay" />
-                        <div class="chronos-alt-content" style={{ textAlign: slideRow[colIndex].textAlignment || 'left' }}>
-                          <h2 class="chronos-alt-title">{slideRow[colIndex].title}</h2>
-                          <Show when={slideRow[colIndex].subtitle}>
-                            <p class="chronos-alt-subtitle">{slideRow[colIndex].subtitle}</p>
+                        <div 
+                          class="chronos-alt-content" 
+                          style={{ 
+                            textAlign: slideRow[colIndex].textAlignment || 'left',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: (slideRow[colIndex].textAlignment || 'left') === 'center' ? 'center' : (slideRow[colIndex].textAlignment || 'left') === 'right' ? 'flex-end' : 'flex-start'
+                          }}
+                        >
+                          <Show when={props.isLoading}>
+                            <div class="chronos-skeleton-title chronos-image-shimmer" style={{ width: '60%', height: '24px', marginBottom: '12px' }} />
+                            <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '80%', height: '14px', marginBottom: '8px' }} />
+                            <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '50%', height: '14px', marginBottom: '16px' }} />
+                            <div class="chronos-skeleton-button chronos-image-shimmer" style={{ width: '110px', height: '36px' }} />
                           </Show>
-                          <Show when={slideRow[colIndex].ctaText}>
-                            <span class="chronos-alt-cta">{slideRow[colIndex].ctaText}</span>
+                          <Show when={!props.isLoading}>
+                            <h2 class="chronos-alt-title">{slideRow[colIndex].title}</h2>
+                            <Show when={slideRow[colIndex].subtitle}>
+                              <p class="chronos-alt-subtitle">{slideRow[colIndex].subtitle}</p>
+                            </Show>
+                            <Show when={slideRow[colIndex].ctaText}>
+                              <span class="chronos-alt-cta">{slideRow[colIndex].ctaText}</span>
+                            </Show>
                           </Show>
                         </div>
                       </a>
@@ -169,13 +186,29 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                           />
                         </Show>
                         <div class="chronos-alt-overlay" />
-                        <div class="chronos-alt-content" style={{ textAlign: slideRow[colIndex].textAlignment || 'left' }}>
-                          <h2 class="chronos-alt-title">{slideRow[colIndex].title}</h2>
-                          <Show when={slideRow[colIndex].subtitle}>
-                            <p class="chronos-alt-subtitle">{slideRow[colIndex].subtitle}</p>
+                        <div 
+                          class="chronos-alt-content" 
+                          style={{ 
+                            textAlign: slideRow[colIndex].textAlignment || 'left',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: (slideRow[colIndex].textAlignment || 'left') === 'center' ? 'center' : (slideRow[colIndex].textAlignment || 'left') === 'right' ? 'flex-end' : 'flex-start'
+                          }}
+                        >
+                          <Show when={props.isLoading}>
+                            <div class="chronos-skeleton-title chronos-image-shimmer" style={{ width: '60%', height: '24px', marginBottom: '12px' }} />
+                            <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '80%', height: '14px', marginBottom: '8px' }} />
+                            <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '50%', height: '14px', marginBottom: '16px' }} />
+                            <div class="chronos-skeleton-button chronos-image-shimmer" style={{ width: '110px', height: '36px' }} />
                           </Show>
-                          <Show when={slideRow[colIndex].ctaText}>
-                            <span class="chronos-alt-cta">{slideRow[colIndex].ctaText}</span>
+                          <Show when={!props.isLoading}>
+                            <h2 class="chronos-alt-title">{slideRow[colIndex].title}</h2>
+                            <Show when={slideRow[colIndex].subtitle}>
+                              <p class="chronos-alt-subtitle">{slideRow[colIndex].subtitle}</p>
+                            </Show>
+                            <Show when={slideRow[colIndex].ctaText}>
+                              <span class="chronos-alt-cta">{slideRow[colIndex].ctaText}</span>
+                            </Show>
                           </Show>
                         </div>
                       </div>
@@ -188,7 +221,8 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
         ))}
       </div>
 
-      {props.config?.showArrows && (
+      {(props.config?.showArrows && 
+        (!props.config?.hideArrowsIfNoScroll || state.slideSets.length > 1)) && (
         <>
           <button class="chronos-alt-arrow prev" onClick={() => state.prev()}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>

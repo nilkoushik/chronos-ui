@@ -1,43 +1,52 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-full bg-slate-950 text-slate-100 selection:bg-indigo-500/30 selection:text-indigo-200">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React Demo</title>
+    <title>Chronos UI - Interactive Component Playground</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
     <style>
       body {
         margin: 0;
+        min-height: 100vh;
+      }
+      /* Custom scrollbar styling for premium look */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
         background: #020617;
-        color: #f1f5f9;
-        font-family: system-ui, sans-serif;
       }
-      .demo-container {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 2rem;
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
       }
-      h1 {
-        text-align: center;
-        background: -webkit-linear-gradient(45deg, #3b82f6, #8b5cf6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-size: 3rem;
-        margin-bottom: 2rem;
-      }
-      .demo-section {
-        margin-bottom: 4rem;
-      }
-      .demo-section h2 {
-        border-bottom: 1px solid #334155;
-        padding-bottom: 0.5rem;
-        margin-bottom: 1.5rem;
-        color: #94a3b8;
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
       }
     </style>
   </head>
-  <body>
-    <div id="root"></div>
+  <body class="h-full font-sans antialiased bg-slate-950 text-slate-100">
+    <div id="root" class="h-full"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

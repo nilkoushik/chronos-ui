@@ -43,8 +43,8 @@ export default function GridBanner(props: GridBannerProps) {
       style={{ gridTemplateColumns: state.gridTemplateColumns }}
     >
       {props.items?.map((item, index) => (
-        <a href={item.mapLinks?.[0]?.url || '#'} class={`chronos-grid-item ${props.isLoading ? 'chronos-image-shimmer' : ''}`} key={item.id || index}>
-          <div class="chronos-grid-img-wrap">
+        <a href={item.mapLinks?.[0]?.url || '#'} class="chronos-grid-item" key={item.id || index}>
+          <div class={`chronos-grid-img-wrap ${props.isLoading ? 'chronos-image-shimmer' : ''}`}>
             <Show when={!props.isLoading}>
               <Show when={item.media?.type === 'video'}>
                 <video 
@@ -62,7 +62,15 @@ export default function GridBanner(props: GridBannerProps) {
               </Show>
             </Show>
           </div>
-          <div class="chronos-grid-title" style={{ textAlign: item.textAlignment || 'center' }}>{item.title}</div>
+          <Show when={props.isLoading}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: item.textAlignment || 'center', width: '100%', marginTop: '12px' }}>
+              <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '70%', height: '14px', margin: '0 0 6px 0' }} />
+              <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '40%', height: '10px', margin: 0 }} />
+            </div>
+          </Show>
+          <Show when={!props.isLoading}>
+            <div class="chronos-grid-title" style={{ textAlign: item.textAlignment || 'center' }}>{item.title}</div>
+          </Show>
         </a>
       ))}
       

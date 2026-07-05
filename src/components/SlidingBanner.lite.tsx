@@ -26,9 +26,11 @@ export interface SliderConfig {
   rotateAgain: boolean;
   delayMs: number;
   showNextPrev: boolean;
+  showArrows?: boolean;
   showDots: boolean;
   animationEffect?: 'slide' | 'fade' | 'zoom' | 'flip' | 'push-up' | 'push-down' | 'push-left' | 'push-right' | 'wipe-left' | 'wipe-right' | 'cube' | 'door' | 'fall' | 'crush' | 'peel-off' | 'curtain';
   backgroundEffect?: 'none' | 'particles' | 'waves';
+  hideArrowsIfNoScroll?: boolean;
 }
 
 export interface SlidingBannerProps {
@@ -43,15 +45,17 @@ export default function SlidingBanner(props: SlidingBannerProps) {
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const animContext = useRef({
+    intervalId: null as any,
+    animationFrameId: null as any,
+    resizeHandler: null as any,
+    dimResizeHandler: null as any
+  });
   
   const state = useStore({
     currentIndex: 0,
     previousIndex: 0,
     direction: 'next' as 'next' | 'prev',
-    intervalId: null as any,
-    animationFrameId: null as any,
-    resizeHandler: null as any,
-    dimResizeHandler: null as any,
     
     get animationClass() {
       return props.config?.animationEffect || 'slide';
@@ -92,14 +96,14 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     },
     startAutoPlay() {
       if (props.config?.autoStart !== false && props.items?.length > 1) {
-        state.intervalId = setInterval(() => {
+        animContext.intervalId = setInterval(() => {
           state.next();
         }, props.config?.delayMs || 5000);
       }
     },
     stopAutoPlay() {
-      if (state.intervalId) {
-        clearInterval(state.intervalId);
+      if (animContext.intervalId) {
+        clearInterval(animContext.intervalId);
       }
     },
     setupDimensions() {
@@ -122,8 +126,8 @@ export default function SlidingBanner(props: SlidingBannerProps) {
         }
       };
       resize();
-      state.resizeHandler = resize;
-      window.addEventListener('resize', state.resizeHandler);
+      animContext.resizeHandler = resize;
+      window.addEventListener('resize', animContext.resizeHandler);
 
       if (effect === 'particles') {
         const particles: any[] = [];
@@ -152,7 +156,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
             if (p.x < -10) p.x = canvas.width + 10;
             if (p.x > canvas.width + 10) p.x = -10;
           }
-          state.animationFrameId = requestAnimationFrame(animate);
+          animContext.animationFrameId = requestAnimationFrame(animate);
         };
         animate();
       } else if (effect === 'waves') {
@@ -181,7 +185,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
           ctx.fill();
 
           time += 0.03;
-          state.animationFrameId = requestAnimationFrame(animate);
+          animContext.animationFrameId = requestAnimationFrame(animate);
         };
         animate();
       }
@@ -191,8 +195,8 @@ export default function SlidingBanner(props: SlidingBannerProps) {
   onMount(() => {
     state.startAutoPlay();
     state.setupDimensions();
-    state.dimResizeHandler = () => state.setupDimensions();
-    window.addEventListener('resize', state.dimResizeHandler);
+    animContext.dimResizeHandler = () => state.setupDimensions();
+    window.addEventListener('resize', animContext.dimResizeHandler);
     if (canvasRef) {
       state.initCanvasAnimations(canvasRef);
     }
@@ -200,13 +204,13 @@ export default function SlidingBanner(props: SlidingBannerProps) {
 
   onUpdate(() => {
     // Cancel the old canvas loop
-    if (state.animationFrameId) {
-      cancelAnimationFrame(state.animationFrameId);
-      state.animationFrameId = null;
+    if (animContext.animationFrameId) {
+      cancelAnimationFrame(animContext.animationFrameId);
+      animContext.animationFrameId = null;
     }
-    if (state.resizeHandler) {
-      window.removeEventListener('resize', state.resizeHandler);
-      state.resizeHandler = null;
+    if (animContext.resizeHandler) {
+      window.removeEventListener('resize', animContext.resizeHandler);
+      animContext.resizeHandler = null;
     }
     // Start a fresh loop on the canvas
     if (canvasRef) {
@@ -216,14 +220,14 @@ export default function SlidingBanner(props: SlidingBannerProps) {
 
   onUnMount(() => {
     state.stopAutoPlay();
-    if (state.animationFrameId) {
-      cancelAnimationFrame(state.animationFrameId);
+    if (animContext.animationFrameId) {
+      cancelAnimationFrame(animContext.animationFrameId);
     }
-    if (state.resizeHandler) {
-      window.removeEventListener('resize', state.resizeHandler);
+    if (animContext.resizeHandler) {
+      window.removeEventListener('resize', animContext.resizeHandler);
     }
-    if (state.dimResizeHandler) {
-      window.removeEventListener('resize', state.dimResizeHandler);
+    if (animContext.dimResizeHandler) {
+      window.removeEventListener('resize', animContext.dimResizeHandler);
     }
   });
   return (
@@ -267,20 +271,37 @@ export default function SlidingBanner(props: SlidingBannerProps) {
               ></div>
             </Show>
             <div class="chronos-sliding-overlay"></div>
-            <div class="chronos-sliding-content" style={{ textAlign: item.textAlignment || props.config?.align || 'center' }}>
-              <h2 class="chronos-sliding-title">{item.title}</h2>
-              {item.subtitle && <p class="chronos-sliding-subtitle">{item.subtitle}</p>}
-              {item.ctaText && (
-                <a href={item.mapLinks?.[0]?.url || '#'} class="chronos-sliding-cta">
-                  {item.ctaText}
-                </a>
-              )}
+            <div 
+              class="chronos-sliding-content" 
+              style={{ 
+                textAlign: item.textAlignment || props.config?.align || 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: (item.textAlignment || props.config?.align || 'center') === 'center' ? 'center' : (item.textAlignment || props.config?.align || 'center') === 'right' ? 'flex-end' : 'flex-start'
+              }}
+            >
+              <Show when={props.isLoading}>
+                <div class="chronos-skeleton-title chronos-image-shimmer" style={{ width: '50%', height: '32px', marginBottom: '16px' }} />
+                <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '70%', height: '16px', marginBottom: '10px' }} />
+                <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '40%', height: '16px', marginBottom: '24px' }} />
+                <div class="chronos-skeleton-button chronos-image-shimmer" style={{ width: '130px', height: '40px' }} />
+              </Show>
+              <Show when={!props.isLoading}>
+                <h2 class="chronos-sliding-title">{item.title}</h2>
+                {item.subtitle && <p class="chronos-sliding-subtitle">{item.subtitle}</p>}
+                {item.ctaText && (
+                  <a href={item.mapLinks?.[0]?.url || '#'} class="chronos-sliding-cta">
+                    {item.ctaText}
+                  </a>
+                )}
+              </Show>
             </div>
           </div>
         ))}
       </div>
 
-      {props.config?.showArrows && (
+      {((props.config?.showArrows || props.config?.showNextPrev) && 
+        (!props.config?.hideArrowsIfNoScroll || (props.items && props.items.length > 1))) && (
         <>
           <button class="chronos-sliding-arrow prev" onClick={() => state.prev()}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>

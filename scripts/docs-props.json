@@ -26,12 +26,17 @@
   "MediaGrid": [
     { "name": "primaryMedia",   "required": true,  "type": "MediaGridItem",   "description": "The large featured asset occupying 2/3 of the grid width" },
     { "name": "secondaryMedia", "required": false, "type": "MediaGridItem[]", "description": "Optional stacked secondary assets in the right column" },
-    { "name": "className",      "required": false, "type": "string",           "description": "Additional CSS class names on the root element" }
+    { "name": "className",      "required": false, "type": "string",           "description": "Additional CSS class names on the root element" },
+    { "name": "isLoading",      "required": false, "type": "boolean",          "description": "Applies shimmer skeleton loading animation to the grid" }
   ],
   "RowScrollable": [
     { "name": "items",     "required": true,  "type": "RowScrollableItem[]", "description": "Array of card items to render in the scrollable row" },
     { "name": "title",     "required": false, "type": "string",               "description": "Optional section heading displayed above the row" },
-    { "name": "className", "required": false, "type": "string",               "description": "Additional CSS class names on the root container" }
+    { "name": "className", "required": false, "type": "string",               "description": "Additional CSS class names on the root container" },
+    { "name": "config.showArrows",           "required": false, "type": "boolean", "description": "Show next/previous arrows (default: true)" },
+    { "name": "config.hideArrowsIfNoScroll", "required": false, "type": "boolean", "description": "Hide navigation arrows if content doesn't overflow container width" },
+    { "name": "config.hideScrollbar",        "required": false, "type": "boolean", "description": "Hide the browser scrollbar while keeping swipe/scroll functionality" },
+    { "name": "isLoading",                   "required": false, "type": "boolean", "description": "Applies shimmer skeleton loading animation to all items" }
   ],
   "SlidingBanner": [
     { "name": "items",     "required": true,  "type": "WidgetItem[]",  "description": "Array of slide items" },
@@ -39,9 +44,11 @@
     { "name": "config.rotateAgain", "required": false, "type": "boolean", "description": "Whether to loop back to the first slide (default: true)" },
     { "name": "config.delayMs", "required": false, "type": "number", "description": "Delay in milliseconds between slides (default: 5000)" },
     { "name": "config.showNextPrev", "required": false, "type": "boolean", "description": "Show next/previous arrows (default: true)" },
+    { "name": "config.showArrows",           "required": false, "type": "boolean", "description": "Show next/previous arrows (default: true)" },
     { "name": "config.showDots", "required": false, "type": "boolean", "description": "Show navigation dots (default: true)" },
     { "name": "config.animationEffect", "required": false, "type": "'slide' | 'fade' | 'cube' | 'flip' | 'zoom' | ...", "description": "Transition effect between slides (default: 'slide')" },
     { "name": "config.backgroundEffect", "required": false, "type": "'none' | 'particles' | 'waves'", "description": "Canvas background animation (default: 'none')" },
+    { "name": "config.hideArrowsIfNoScroll", "required": false, "type": "boolean", "description": "Hide arrows if there is only one slide (default: true)" },
     { "name": "className", "required": false, "type": "string",         "description": "Additional CSS class names on the root element" },
     { "name": "isLoading", "required": false, "type": "boolean",        "description": "Applies shimmer to all slide backgrounds" }
   ],
@@ -52,6 +59,7 @@
     { "name": "config.delayMs", "required": false, "type": "number", "description": "Delay in milliseconds between slides (default: 5000)" },
     { "name": "config.showArrows", "required": false, "type": "boolean", "description": "Show next/previous arrows (default: true)" },
     { "name": "config.showDots", "required": false, "type": "boolean", "description": "Show navigation dots (default: true)" },
+    { "name": "config.hideArrowsIfNoScroll", "required": false, "type": "boolean", "description": "Hide arrows if there is only one slide set (default: true)" },
     { "name": "className", "required": false, "type": "string",               "description": "Additional CSS class names on the root element" },
     { "name": "isLoading", "required": false, "type": "boolean",              "description": "Applies shimmer animation to all cells" }
   ],
@@ -62,13 +70,16 @@
   ],
   "WysiwygRenderer": [
     { "name": "htmlContent", "required": true,  "type": "string", "description": "Raw HTML string from a CMS rich-text field; rendered with <code>innerHTML</code>" },
-    { "name": "className",   "required": false, "type": "string", "description": "Additional CSS class names on the wrapper element" }
+    { "name": "className",   "required": false, "type": "string", "description": "Additional CSS class names on the wrapper element" },
+    { "name": "widgetData",  "required": false, "type": "any",     "description": "Optional data object for embedded widgets" }
   ],
   "RichTextEditor": [
     { "name": "content",          "required": false, "type": "string", "description": "Initial HTML content for the editor." },
+    { "name": "initialContent",   "required": false, "type": "string", "description": "Initial HTML content for the editor if content is not controlled." },
     { "name": "onChange",         "required": false, "type": "(content: string) => void", "description": "Callback triggered when content changes." },
     { "name": "onMediaRequest",   "required": false, "type": "(type: 'image' | 'video' | 'audio') => Promise<string>", "description": "Callback to open an external media library modal." },
     { "name": "availableClasses", "required": false, "type": "string[]", "description": "Array of custom class names available for the user to apply." },
-    { "name": "className",        "required": false, "type": "string", "description": "Additional CSS class names for the wrapper element." }
+    { "name": "className",        "required": false, "type": "string", "description": "Additional CSS class names for the wrapper element." },
+    { "name": "config.toolbar",   "required": false, "type": "string[]", "description": "List of toolbar buttons to display (e.g. <code>['bold', 'italic', 'underline', 'link']</code>)." }
   ]
 }

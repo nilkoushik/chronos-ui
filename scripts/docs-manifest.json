@@ -59,6 +59,12 @@
         "type": "array",
         "default": "undefined",
         "desc": "Link for the CTA. { url: string }"
+      },
+      {
+        "prop": "isLoading",
+        "type": "boolean",
+        "default": "false",
+        "desc": "Applies shimmer loading skeleton."
       }
     ]
   },
@@ -136,6 +142,12 @@
         "type": "number | string",
         "default": "3",
         "desc": "Number of columns in the grid layout."
+      },
+      {
+        "prop": "isLoading",
+        "type": "boolean",
+        "default": "false",
+        "desc": "Applies shimmer loading skeleton."
       }
     ]
   },
@@ -171,6 +183,12 @@
         "type": "array",
         "default": "[]",
         "desc": "Array of smaller stacked items on the right side."
+      },
+      {
+        "prop": "isLoading",
+        "type": "boolean",
+        "default": "false",
+        "desc": "Applies shimmer loading skeleton."
       }
     ]
   },
@@ -201,6 +219,30 @@
         "type": "array",
         "default": "[]",
         "desc": "Array of cards. { id, title, subtitle, media, mapLinks }"
+      },
+      {
+        "prop": "isLoading",
+        "type": "boolean",
+        "default": "false",
+        "desc": "Applies shimmer loading skeleton."
+      },
+      {
+        "prop": "config.showArrows",
+        "type": "boolean",
+        "default": "true",
+        "desc": "Show next/prev navigation buttons."
+      },
+      {
+        "prop": "config.hideArrowsIfNoScroll",
+        "type": "boolean",
+        "default": "true",
+        "desc": "Hide navigation buttons if row content fits container width."
+      },
+      {
+        "prop": "config.hideScrollbar",
+        "type": "boolean",
+        "default": "false",
+        "desc": "Hide browser scrollbars."
       }
     ]
   },
@@ -268,6 +310,24 @@
         "type": "boolean",
         "default": "true",
         "desc": "Show navigation dots."
+      },
+      {
+        "prop": "config.rotateAgain",
+        "type": "boolean",
+        "default": "true",
+        "desc": "Loop back to first slide when reaching the end."
+      },
+      {
+        "prop": "config.hideArrowsIfNoScroll",
+        "type": "boolean",
+        "default": "true",
+        "desc": "Hide arrows if there is only one slide."
+      },
+      {
+        "prop": "isLoading",
+        "type": "boolean",
+        "default": "false",
+        "desc": "Applies shimmer loading skeleton."
       }
     ]
   },
@@ -321,6 +381,30 @@
         "type": "number",
         "default": "5000",
         "desc": "Delay in milliseconds between slides."
+      },
+      {
+        "prop": "config.showArrows",
+        "type": "boolean",
+        "default": "true",
+        "desc": "Show vertical slider navigation arrows."
+      },
+      {
+        "prop": "config.showDots",
+        "type": "boolean",
+        "default": "true",
+        "desc": "Show pagination dots."
+      },
+      {
+        "prop": "config.hideArrowsIfNoScroll",
+        "type": "boolean",
+        "default": "true",
+        "desc": "Hide navigation arrows if there is only one column group."
+      },
+      {
+        "prop": "isLoading",
+        "type": "boolean",
+        "default": "false",
+        "desc": "Applies shimmer loading skeleton."
       }
     ]
   },

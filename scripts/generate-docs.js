@@ -768,12 +768,12 @@ function buildLandingPage() {
           <span>⚡</span> Open Source · MIT License
         </div>
         <h1 class="hero-title">
-          The UI library that<br>
-          <span class="hero-gradient">compiles everywhere</span>
+          A modern UI kit library to<br>
+          <span class="hero-gradient">create beautiful pages</span>
         </h1>
         <p class="hero-subtitle">
-          Write your components once in Mitosis JSX. Deploy natively to
-          React, Svelte, and Web Components — with zero runtime overhead.
+          A universal, premium component library to build stunning web experiences
+          natively in React, Svelte, and Web Components.
         </p>
         <div class="hero-actions">
           <a href="components/banner.html" class="btn-primary">

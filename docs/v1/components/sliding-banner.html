@@ -192,6 +192,42 @@
         <div class="control-desc">Show navigation dots.</div>
       </div>
     
+      <div class="control-group">
+        <label class="control-label">config.rotateAgain <span class="control-type-badge">boolean</span></label>
+        
+        <label class="control-checkbox-label">
+          <input type="checkbox" name="config.rotateAgain" checked>
+          <span class="control-checkbox-custom"></span>
+          Enable rotateAgain
+        </label>
+      
+        <div class="control-desc">Loop back to first slide when reaching the end.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">config.hideArrowsIfNoScroll <span class="control-type-badge">boolean</span></label>
+        
+        <label class="control-checkbox-label">
+          <input type="checkbox" name="config.hideArrowsIfNoScroll" checked>
+          <span class="control-checkbox-custom"></span>
+          Enable hideArrowsIfNoScroll
+        </label>
+      
+        <div class="control-desc">Hide arrows if there is only one slide.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">isLoading <span class="control-type-badge">boolean</span></label>
+        
+        <label class="control-checkbox-label">
+          <input type="checkbox" name="isLoading" >
+          <span class="control-checkbox-custom"></span>
+          Enable isLoading
+        </label>
+      
+        <div class="control-desc">Applies shimmer loading skeleton.</div>
+      </div>
+    
               </form>
             </div>
           </div>
@@ -308,6 +344,12 @@
         <td>Show next/previous arrows (default: true)</td>
       </tr>
       <tr>
+        <td><span class="prop-name">config.showArrows</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Show next/previous arrows (default: true)</td>
+      </tr>
+      <tr>
         <td><span class="prop-name">config.showDots</span> </td>
         <td><span class="prop-type">boolean</span></td>
         <td><span class="prop-default">undefined</span></td>
@@ -324,6 +366,12 @@
         <td><span class="prop-type">'none' | 'particles' | 'waves'</span></td>
         <td><span class="prop-default">undefined</span></td>
         <td>Canvas background animation (default: 'none')</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">config.hideArrowsIfNoScroll</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Hide arrows if there is only one slide (default: true)</td>
       </tr>
       <tr>
         <td><span class="prop-name">className</span> </td>

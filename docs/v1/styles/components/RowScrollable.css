@@ -57,6 +57,77 @@
           font-size: 0.875rem;
           color: var(--chronos-color-text-muted);
         }
+        
+        /* Scroll Navigation Arrows styling */
+        .chronos-scrollable-wrapper {
+          position: relative;
+          width: 100%;
+        }
+        .chronos-scrollable-arrow {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          background: rgba(15, 23, 42, 0.75);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 10;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          outline: none;
+          padding: 0;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .chronos-scrollable-arrow:hover {
+          background: var(--chronos-color-primary, #8b5cf6);
+          border-color: transparent;
+          color: #ffffff;
+          transform: translateY(-50%) scale(1.1);
+          box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3);
+        }
+        .chronos-scrollable-arrow.prev {
+          left: -20px;
+        }
+        .chronos-scrollable-arrow.next {
+          right: -20px;
+        }
+        .chronos-scrollable-arrow svg {
+          width: 22px;
+          height: 22px;
+        }
+        
+        @media (max-width: 768px) {
+          .chronos-scrollable-arrow {
+            width: 36px;
+            height: 36px;
+          }
+          .chronos-scrollable-arrow.prev {
+            left: -10px;
+          }
+          .chronos-scrollable-arrow.next {
+            right: -10px;
+          }
+        }
+
+        /* Scrollbar Hiding & Card Shimmer Heights */
+        .chronos-scrollable-row.chronos-scrollable-hide-scrollbar {
+          scrollbar-width: none !important;
+          -ms-overflow-style: none !important;
+        }
+        .chronos-scrollable-row.chronos-scrollable-hide-scrollbar::-webkit-scrollbar {
+          display: none !important;
+        }
+        
+        .chronos-scrollable-card.chronos-image-shimmer {
+          min-height: 236px;
+        }
 
 
 
