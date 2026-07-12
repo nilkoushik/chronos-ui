@@ -16,7 +16,7 @@
         .chronos-rich-text-editor .items-center { align-items: center; }
         .chronos-rich-text-editor .justify-center { justify-content: center; }
         .chronos-rich-text-editor .gap-1 { gap: 0.25rem; }
-        .chronos-rich-text-editor .gap-1\\\\.5 { gap: 0.375rem; }
+        .chronos-rich-text-editor .gap-1\.5 { gap: 0.375rem; }
         .chronos-rich-text-editor .gap-2 { gap: 0.5rem; }
         .chronos-rich-text-editor .gap-x-4 { column-gap: 1rem; }
         .chronos-rich-text-editor .gap-y-3 { row-gap: 0.75rem; }
@@ -28,9 +28,9 @@
         .chronos-rich-text-editor .w-9 { width: 2.25rem; }
         .chronos-rich-text-editor .h-9 { height: 2.25rem; }
         .chronos-rich-text-editor button { border: none; background: transparent; cursor: pointer; color: inherit; font-family: inherit; padding: 0; margin: 0; }
-        .chronos-rich-text-editor .hover\\\\:bg-white\\\\/10:hover { background-color: rgba(255,255,255,0.1); }
-        .chronos-rich-text-editor .hover\\\\:text-white:hover { color: white; }
-        .chronos-rich-text-editor .bg-white\\\\/20 { background-color: rgba(255,255,255,0.2); }
+        .chronos-rich-text-editor .hover\:bg-white\/10:hover { background-color: rgba(255,255,255,0.1); }
+        .chronos-rich-text-editor .hover\:text-white:hover { color: white; }
+        .chronos-rich-text-editor .bg-white\/20 { background-color: rgba(255,255,255,0.2); }
         .chronos-rich-text-editor .text-white { color: white; }
         .chronos-rich-text-editor .text-slate-300 { color: #cbd5e1; }
         .chronos-rich-text-editor .text-slate-400 { color: #94a3b8; }
@@ -41,11 +41,7 @@
         /* Fixed Modals */
         .fixed { position: fixed !important; }
         .inset-0 { top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important; }
-        .z-\\\\[100\\\\] { z-index: 100 !important; }
+        .z-\[100\] { z-index: 100 !important; }
         .backdrop-blur-md { backdrop-filter: blur(12px) !important; }
-
-/* Component Styles Extracted Automatically */
-
-
 
 
