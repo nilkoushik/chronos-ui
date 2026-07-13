@@ -17,6 +17,9 @@ export interface BannerConfig {
   padding?: 'sm' | 'md' | 'lg' | 'xl' | string;
   bgGradient?: string;
   autoplay?: boolean;
+  height?: string;
+  minHeight?: string;
+  bgPosition?: string;
 }
 
 export interface BannerProps {
@@ -66,14 +69,24 @@ export default function Banner(props: BannerProps) {
       if (p === 'lg') return 'var(--chronos-spacing-lg)';
       if (p === 'xl') return 'var(--chronos-spacing-xl)';
       return p || '';
+    },
+    get backgroundPosition() {
+      return props.config?.bgPosition || '';
+    },
+    get minHeightValue() {
+      if (props.config?.height === 'auto') return 'auto';
+      return props.config?.minHeight || props.config?.height || '';
     }
   });
   return (
     <div
       class={`chronos-banner ${props.className || ''}`}
       style={{
-        backgroundImage: !props.isLoading && !state.hasVideo && state.imageUrl ? `url(${state.imageUrl})` : 'none',
-        textAlign: state.alignment
+        backgroundImage: !props.isLoading && !state.hasVideo && state.imageUrl && props.config?.height !== 'auto' ? `url(${state.imageUrl})` : 'none',
+        textAlign: state.alignment,
+        backgroundPosition: state.backgroundPosition || 'center',
+        minHeight: state.minHeightValue || '',
+        height: props.config?.height || ''
       }}
     >
       <Show when={!props.isLoading && state.hasVideo}>
@@ -86,11 +99,22 @@ export default function Banner(props: BannerProps) {
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
         />
       </Show>
+      <Show when={!props.isLoading && !state.hasVideo && state.imageUrl && props.config?.height === 'auto'}>
+        <img 
+          src={state.imageUrl} 
+          alt="" 
+          style={{ width: '100%', height: 'auto', display: 'block', zIndex: 0, objectFit: 'cover', objectPosition: state.backgroundPosition || 'center' }} 
+        />
+      </Show>
       <div 
         class="chronos-banner-overlay" 
         style={{ 
           zIndex: 1, 
-          position: 'relative',
+          position: props.config?.height === 'auto' ? 'absolute' : 'relative',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
           background: state.gradientOverlay || 'rgba(0, 0, 0, 0.4)',
           padding: state.paddingValue || 'var(--chronos-spacing-xl)'
         }}

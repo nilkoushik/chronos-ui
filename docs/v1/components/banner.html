@@ -197,7 +197,7 @@
         <textarea name="config" class="control-input json-textarea">{}</textarea>
         <span class="json-error-msg">❌ Invalid JSON Formatting</span>
       
-        <div class="control-desc">Design and behavior settings. Supported keys: align, bgGradient, padding, autoplay.</div>
+        <div class="control-desc">Design and behavior settings. Supported keys: align, bgGradient, padding, autoplay, height, bgPosition.</div>
       </div>
     
               </form>
@@ -237,7 +237,9 @@
   config={{
     align: <span class="str">'center'</span>,
     padding: <span class="str">'lg'</span>,
-    bgGradient: <span class="str">'linear-gradient(to right, black, transparent)'</span>
+    bgGradient: <span class="str">'linear-gradient(to right, black, transparent)'</span>,
+    height: <span class="str">'auto'</span>,
+    bgPosition: <span class="str">'center'</span>
   }}
 /&gt;</code></pre>
     </div>
@@ -260,7 +262,9 @@
   config={{
     align: <span class="str">'center'</span>,
     padding: <span class="str">'lg'</span>,
-    bgGradient: <span class="str">'linear-gradient(to right, black, transparent)'</span>
+    bgGradient: <span class="str">'linear-gradient(to right, black, transparent)'</span>,
+    height: <span class="str">'auto'</span>,
+    bgPosition: <span class="str">'center'</span>
   }}
 /&gt;</code></pre>
     </div>
@@ -279,7 +283,7 @@
   cta-text=<span class="str">"Shop Now"</span>
   background-image-url=<span class="str">"/hero.jpg"</span>
   cta-link=<span class="str">"/shop"</span>
-  config=<span class="str">'{"align":"center","padding":"lg"}'</span>
+  config=<span class="str">'{"align":"center","padding":"lg","height":"auto","bgPosition":"center"}'</span>
 &gt;&lt;/<span class="tag">banner</span>&gt;</code></pre>
     </div>
         </div>
