@@ -40,7 +40,18 @@
 
   <section>
     <h2>Banner</h2>
-    <Banner title="Welcome Banner" subtitle="This is a simple banner component" backgroundColor="#1e293b" />
+    <Banner 
+      title="Welcome Banner" 
+      subtitle="This is a simple banner component" 
+      backgroundImageUrl="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=1200&q=80" 
+      ctaText="Explore Now"
+      ctaLink="#explore"
+      config={{
+        align: 'center',
+        padding: 'lg',
+        bgGradient: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6))'
+      }}
+    />
   </section>
   
   <section>

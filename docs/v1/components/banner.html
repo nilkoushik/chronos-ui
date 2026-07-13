@@ -167,6 +167,39 @@
         <div class="control-desc">Applies shimmer loading skeleton.</div>
       </div>
     
+      <div class="control-group">
+        <label class="control-label">align <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="align" value="" class="control-input">
+      
+        <div class="control-desc">Alternative/direct text alignment configuration: "left", "center", or "right".</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">backgroundImageUrl <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="background-image-url" value="" class="control-input">
+      
+        <div class="control-desc">Alternative/direct background image or video source link.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">ctaLink <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="cta-link" value="" class="control-input">
+      
+        <div class="control-desc">Alternative/direct destination URL for the CTA button.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">config <span class="control-type-badge">object</span></label>
+        
+        <textarea name="config" class="control-input json-textarea">{}</textarea>
+        <span class="json-error-msg">❌ Invalid JSON Formatting</span>
+      
+        <div class="control-desc">Design and behavior settings. Supported keys: align, bgGradient, padding, autoplay.</div>
+      </div>
+    
               </form>
             </div>
           </div>
@@ -199,9 +232,13 @@
   title=<span class="str">"Summer Collection 2026"</span>
   subtitle=<span class="str">"Discover the new season"</span>
   ctaText=<span class="str">"Shop Now"</span>
-  textAlignment=<span class="str">"center"</span>
-  media={{ type: <span class="str">'image'</span>, url: <span class="str">'/hero.jpg'</span> }}
-  mapLinks={[{ url: <span class="str">'/shop'</span> }]}
+  backgroundImageUrl=<span class="str">"/hero.jpg"</span>
+  ctaLink=<span class="str">"/shop"</span>
+  config={{
+    align: <span class="str">'center'</span>,
+    padding: <span class="str">'lg'</span>,
+    bgGradient: <span class="str">'linear-gradient(to right, black, transparent)'</span>
+  }}
 /&gt;</code></pre>
     </div>
         </div>
@@ -218,9 +255,13 @@
   title=<span class="str">"Summer Collection 2026"</span>
   subtitle=<span class="str">"Discover the new season"</span>
   ctaText=<span class="str">"Shop Now"</span>
-  textAlignment=<span class="str">"center"</span>
-  media={{ type: <span class="str">'image'</span>, url: <span class="str">'/hero.jpg'</span> }}
-  mapLinks={[{ url: <span class="str">'/shop'</span> }]}
+  backgroundImageUrl=<span class="str">"/hero.jpg"</span>
+  ctaLink=<span class="str">"/shop"</span>
+  config={{
+    align: <span class="str">'center'</span>,
+    padding: <span class="str">'lg'</span>,
+    bgGradient: <span class="str">'linear-gradient(to right, black, transparent)'</span>
+  }}
 /&gt;</code></pre>
     </div>
         </div>
@@ -236,7 +277,9 @@
   title=<span class="str">"Summer Collection 2026"</span>
   subtitle=<span class="str">"Discover the new season"</span>
   cta-text=<span class="str">"Shop Now"</span>
-  text-alignment=<span class="str">"center"</span>
+  background-image-url=<span class="str">"/hero.jpg"</span>
+  cta-link=<span class="str">"/shop"</span>
+  config=<span class="str">'{"align":"center","padding":"lg"}'</span>
 &gt;&lt;/<span class="tag">banner</span>&gt;</code></pre>
     </div>
         </div>

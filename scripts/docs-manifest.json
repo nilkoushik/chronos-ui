@@ -9,9 +9,9 @@
     "previewCss": ".demo-banner{position:relative;min-height:300px;display:flex;flex-direction:column;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#0f172a,#1e1b4b);font-family:'Inter',sans-serif}.demo-banner-overlay{flex:1;display:flex;flex-direction:column;justify-content:center;padding:3rem;background:rgba(0,0,0,.4)}.demo-banner-title{font-size:2rem;font-weight:800;color:#fff;margin:0 0 .5rem}.demo-banner-sub{font-size:1.1rem;color:#cbd5e1;margin:0 0 1.5rem}.demo-banner-cta{display:inline-block;background:#7c3aed;color:#fff;padding:.75rem 2rem;border-radius:6px;font-weight:600;text-decoration:none;width:fit-content;transition:filter .2s}.demo-banner-cta:hover{filter:brightness(1.15);color:#fff}",
     "previewHtml": "<div class=\"demo-banner\"><div class=\"demo-banner-overlay\"><h2 class=\"demo-banner-title\">Summer Collection 2026</h2><p class=\"demo-banner-sub\">Discover the new season — up to 50% off on selected items.</p><a href=\"#\" class=\"demo-banner-cta\">Shop Now</a></div></div>",
     "examples": {
-      "react": "import Banner from '@chronos-ui/core/react/Banner';\nimport '@chronos-ui/core/theme.css';\n\n<Banner\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  ctaText=\"Shop Now\"\n  textAlignment=\"center\"\n  media={{ type: 'image', url: '/hero.jpg' }}\n  mapLinks={[{ url: '/shop' }]}\n/>",
-      "svelte": "<script lang=\"ts\">\n  import Banner from '@chronos-ui/core/svelte/Banner.svelte';\n  import '@chronos-ui/core/theme.css';\n</script>\n\n<Banner\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  ctaText=\"Shop Now\"\n  textAlignment=\"center\"\n  media={{ type: 'image', url: '/hero.jpg' }}\n  mapLinks={[{ url: '/shop' }]}\n/>",
-      "wc": "<link rel=\"stylesheet\" href=\"node_modules/@chronos-ui/core/theme.css\">\n<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/Banner.js\"></script>\n\n<banner\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  cta-text=\"Shop Now\"\n  text-alignment=\"center\"\n></banner>"
+      "react": "import Banner from '@chronos-ui/core/react/Banner';\nimport '@chronos-ui/core/theme.css';\n\n<Banner\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  ctaText=\"Shop Now\"\n  backgroundImageUrl=\"/hero.jpg\"\n  ctaLink=\"/shop\"\n  config={{\n    align: 'center',\n    padding: 'lg',\n    bgGradient: 'linear-gradient(to right, black, transparent)'\n  }}\n/>",
+      "svelte": "<script lang=\"ts\">\n  import Banner from '@chronos-ui/core/svelte/Banner.svelte';\n  import '@chronos-ui/core/theme.css';\n</script>\n\n<Banner\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  ctaText=\"Shop Now\"\n  backgroundImageUrl=\"/hero.jpg\"\n  ctaLink=\"/shop\"\n  config={{\n    align: 'center',\n    padding: 'lg',\n    bgGradient: 'linear-gradient(to right, black, transparent)'\n  }}\n/>",
+      "wc": "<link rel=\"stylesheet\" href=\"node_modules/@chronos-ui/core/theme.css\">\n<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/Banner.js\"></script>\n\n<banner\n  title=\"Summer Collection 2026\"\n  subtitle=\"Discover the new season\"\n  cta-text=\"Shop Now\"\n  background-image-url=\"/hero.jpg\"\n  cta-link=\"/shop\"\n  config='{\"align\":\"center\",\"padding\":\"lg\"}'\n></banner>"
     },
     "notes": [
       {
@@ -65,6 +65,30 @@
         "type": "boolean",
         "default": "false",
         "desc": "Applies shimmer loading skeleton."
+      },
+      {
+        "prop": "align",
+        "type": "string",
+        "default": "undefined",
+        "desc": "Alternative/direct text alignment configuration: \"left\", \"center\", or \"right\"."
+      },
+      {
+        "prop": "backgroundImageUrl",
+        "type": "string",
+        "default": "undefined",
+        "desc": "Alternative/direct background image or video source link."
+      },
+      {
+        "prop": "ctaLink",
+        "type": "string",
+        "default": "undefined",
+        "desc": "Alternative/direct destination URL for the CTA button."
+      },
+      {
+        "prop": "config",
+        "type": "object",
+        "default": "undefined",
+        "desc": "Design and behavior settings. Supported keys: align, bgGradient, padding, autoplay."
       }
     ]
   },

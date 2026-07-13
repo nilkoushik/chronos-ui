@@ -41,7 +41,15 @@ const DEFAULTS = {
     isLoading: false,
     textAlignment: "center" as "center" | "left" | "right",
     media: { type: "image" as "image" | "video", url: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=1200&q=80" },
-    mapLinks: [{ label: "Shop", url: "#shop" }]
+    mapLinks: [{ label: "Shop", url: "#shop" }],
+    backgroundImageUrl: "",
+    ctaLink: "",
+    config: {
+      align: "center" as "center" | "left" | "right",
+      padding: "lg",
+      bgGradient: "",
+      autoplay: true
+    }
   },
   AnnouncementBar: {
     message: "⚡ FLASH SALE: Save 25% off all accessories today only! Code: CHRONOS25",
@@ -634,6 +642,81 @@ ${attrLines.join('\n')}
                       value={jsonInputs.mapLinks || ''}
                       onChange={(e) => handleJsonChange("mapLinks", e.target.value)}
                     />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-slate-400">Background Media URL (Direct Prop)</label>
+                    <input
+                      type="text"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                      value={activeProps.backgroundImageUrl || ''}
+                      onChange={(e) => handlePropChange("backgroundImageUrl", e.target.value)}
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-slate-400">CTA Link / Deeplink (Direct Prop)</label>
+                    <input
+                      type="text"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                      value={activeProps.ctaLink || ''}
+                      onChange={(e) => handlePropChange("ctaLink", e.target.value)}
+                    />
+                  </div>
+
+                  {/* Banner Configuration */}
+                  <div className="border-t border-slate-800 pt-4 mt-4 space-y-4">
+                    <span className="text-xs font-semibold text-slate-400 block">Banner Config Object</span>
+                    
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-slate-500">Alignment (config.align)</label>
+                      <select
+                        className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                        value={activeProps.config?.align || "center"}
+                        onChange={(e) => handleConfigChange("align", e.target.value)}
+                      >
+                        <option value="left">Left</option>
+                        <option value="center">Center</option>
+                        <option value="right">Right</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-slate-500">Padding (config.padding)</label>
+                      <select
+                        className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                        value={activeProps.config?.padding || "lg"}
+                        onChange={(e) => handleConfigChange("padding", e.target.value)}
+                      >
+                        <option value="sm">Small</option>
+                        <option value="md">Medium</option>
+                        <option value="lg">Large</option>
+                        <option value="xl">Extra Large</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-slate-500">Gradient Overlay (config.bgGradient)</label>
+                      <input
+                        type="text"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                        placeholder="e.g. linear-gradient(to right, black, transparent)"
+                        value={activeProps.config?.bgGradient || ""}
+                        onChange={(e) => handleConfigChange("bgGradient", e.target.value)}
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between p-3 bg-slate-900/50 border border-slate-800 rounded-lg">
+                      <div className="flex flex-col">
+                        <span className="text-xs font-semibold text-slate-300">Autoplay Video (config.autoplay)</span>
+                      </div>
+                      <input
+                        type="checkbox"
+                        className="h-4 w-4 rounded border-slate-700 bg-slate-900 text-indigo-600 focus:ring-indigo-500"
+                        checked={activeProps.config?.autoplay ?? true}
+                        onChange={(e) => handleConfigChange("autoplay", e.target.checked)}
+                      />
+                    </div>
                   </div>
                 </>
               )}

@@ -11,6 +11,14 @@ export interface MapLink {
   url?: string;
 }
 
+export interface BannerConfig {
+  align?: 'left' | 'center' | 'right';
+  textAlignment?: 'left' | 'center' | 'right';
+  padding?: 'sm' | 'md' | 'lg' | 'xl' | string;
+  bgGradient?: string;
+  autoplay?: boolean;
+}
+
 export interface BannerProps {
   id?: string;
   title?: string;
@@ -21,6 +29,12 @@ export interface BannerProps {
   textAlignment?: 'left' | 'center' | 'right';
   className?: string;
   isLoading?: boolean;
+  align?: 'left' | 'center' | 'right';
+  backgroundImageUrl?: string;
+  ctaLink?: string;
+  padding?: 'sm' | 'md' | 'lg' | 'xl' | string;
+  bgGradient?: string;
+  config?: BannerConfig;
 }
 
 export default function Banner(props: BannerProps) {
@@ -28,20 +42,43 @@ export default function Banner(props: BannerProps) {
 
   const state = useStore({
     get alignment() {
-      return props.textAlignment || 'center';
+      return props.textAlignment || props.align || props.config?.textAlignment || props.config?.align || 'center';
+    },
+    get hasVideo() {
+      return props.media?.type === 'video' || (props.backgroundImageUrl && props.backgroundImageUrl.endsWith('.mp4')) || (props.media?.url && props.media.url.endsWith('.mp4'));
+    },
+    get videoUrl() {
+      return props.media?.url || props.backgroundImageUrl || '';
+    },
+    get imageUrl() {
+      return props.media?.url || props.backgroundImageUrl || '';
+    },
+    get linkUrl() {
+      return props.mapLinks?.[0]?.url || props.ctaLink || '#';
+    },
+    get gradientOverlay() {
+      return props.config?.bgGradient || props.bgGradient || '';
+    },
+    get paddingValue() {
+      const p = props.config?.padding || props.padding;
+      if (p === 'sm') return 'var(--chronos-spacing-sm)';
+      if (p === 'md') return 'var(--chronos-spacing-md)';
+      if (p === 'lg') return 'var(--chronos-spacing-lg)';
+      if (p === 'xl') return 'var(--chronos-spacing-xl)';
+      return p || '';
     }
   });
   return (
     <div
       class={`chronos-banner ${props.className || ''}`}
       style={{
-        backgroundImage: !props.isLoading && props.media?.type !== 'video' && props.media?.url ? `url(${props.media.url})` : 'none',
+        backgroundImage: !props.isLoading && !state.hasVideo && state.imageUrl ? `url(${state.imageUrl})` : 'none',
         textAlign: state.alignment
       }}
     >
-      <Show when={!props.isLoading && props.media?.type === 'video'}>
+      <Show when={!props.isLoading && state.hasVideo}>
         <video 
-          src={props.media?.url} 
+          src={state.videoUrl} 
           autoPlay 
           loop 
           muted 
@@ -49,7 +86,15 @@ export default function Banner(props: BannerProps) {
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
         />
       </Show>
-      <div class="chronos-banner-overlay" style={{ zIndex: 1, position: 'relative' }}>
+      <div 
+        class="chronos-banner-overlay" 
+        style={{ 
+          zIndex: 1, 
+          position: 'relative',
+          background: state.gradientOverlay || 'rgba(0, 0, 0, 0.4)',
+          padding: state.paddingValue || 'var(--chronos-spacing-xl)'
+        }}
+      >
         <div 
           class="chronos-banner-content"
           style={{
@@ -68,7 +113,7 @@ export default function Banner(props: BannerProps) {
             {props.title && <h2 class="chronos-banner-title">{props.title}</h2>}
             {props.subtitle && <p class="chronos-banner-subtitle">{props.subtitle}</p>}
             {props.ctaText && (
-              <a href={props.mapLinks?.[0]?.url || '#'} class="chronos-banner-cta">
+              <a href={state.linkUrl} class="chronos-banner-cta">
                 {props.ctaText}
               </a>
             )}
