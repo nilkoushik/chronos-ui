@@ -21,11 +21,18 @@ export interface GridBannerItem {
   mapLinks?: MapLink[];
 }
 
+export interface GridBannerConfig {
+  height?: string;
+  minHeight?: string;
+  bgPosition?: string;
+}
+
 export interface GridBannerProps {
   items: GridBannerItem[];
   columns?: number;
   className?: string;
   isLoading?: boolean;
+  config?: GridBannerConfig;
 }
 
 export default function GridBanner(props: GridBannerProps) {
@@ -40,11 +47,22 @@ export default function GridBanner(props: GridBannerProps) {
   return (
     <div 
       class={`chronos-grid-banner ${props.className || ''}`}
-      style={{ gridTemplateColumns: state.gridTemplateColumns }}
+      style={{ 
+        gridTemplateColumns: state.gridTemplateColumns,
+        height: props.config?.height || '',
+        minHeight: props.config?.minHeight || ''
+      }}
     >
       {props.items?.map((item, index) => (
         <a href={item.mapLinks?.[0]?.url || '#'} class="chronos-grid-item" key={item.id || index}>
-          <div class={`chronos-grid-img-wrap ${props.isLoading ? 'chronos-image-shimmer' : ''}`}>
+          <div 
+            class={`chronos-grid-img-wrap ${props.isLoading ? 'chronos-image-shimmer' : ''}`}
+            style={{ 
+              height: props.config?.height || '', 
+              minHeight: props.config?.minHeight || '',
+              aspectRatio: props.config?.height ? 'unset' : '16/9'
+            }}
+          >
             <Show when={!props.isLoading}>
               <Show when={item.media?.type === 'video'}>
                 <video 
@@ -54,11 +72,26 @@ export default function GridBanner(props: GridBannerProps) {
                   muted 
                   playsInline 
                   class="chronos-grid-img" 
-                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                  style={{ 
+                    objectFit: 'cover', 
+                    width: '100%', 
+                    height: '100%',
+                    objectPosition: props.config?.bgPosition || 'center'
+                  }}
                 />
               </Show>
               <Show when={item.media?.type !== 'video'}>
-                <img src={item.media?.url} alt={item.title} class="chronos-grid-img" />
+                <img 
+                  src={item.media?.url} 
+                  alt={item.title} 
+                  class="chronos-grid-img" 
+                  style={{ 
+                    objectFit: 'cover', 
+                    width: '100%', 
+                    height: '100%',
+                    objectPosition: props.config?.bgPosition || 'center'
+                  }}
+                />
               </Show>
             </Show>
           </div>

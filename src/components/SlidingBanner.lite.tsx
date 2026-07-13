@@ -31,6 +31,9 @@ export interface SliderConfig {
   animationEffect?: 'slide' | 'fade' | 'zoom' | 'flip' | 'push-up' | 'push-down' | 'push-left' | 'push-right' | 'wipe-left' | 'wipe-right' | 'cube' | 'door' | 'fall' | 'crush' | 'peel-off' | 'curtain';
   backgroundEffect?: 'none' | 'particles' | 'waves';
   hideArrowsIfNoScroll?: boolean;
+  height?: string;
+  minHeight?: string;
+  bgPosition?: string;
 }
 
 export interface SlidingBannerProps {
@@ -236,6 +239,10 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       class={`chronos-sliding-banner ${props.className || ''} effect-${state.animationClass} bg-effect-${state.backgroundClass}`}
       onMouseEnter={() => state.stopAutoPlay()}
       onMouseLeave={() => state.startAutoPlay()}
+      style={{
+        height: props.config?.height || '',
+        minHeight: props.config?.height === 'auto' ? 'auto' : (props.config?.minHeight || '')
+      }}
     >
       {(state.backgroundClass === 'particles' || state.backgroundClass === 'waves') && (
         <canvas 
@@ -244,9 +251,24 @@ export default function SlidingBanner(props: SlidingBannerProps) {
         ></canvas>
       )}
       
+      <Show when={props.config?.height === 'auto' && props.items?.[0]?.media?.url}>
+        <img 
+          src={props.items[0].media.url} 
+          alt="" 
+          style={{ width: '100%', height: 'auto', display: 'block', visibility: 'hidden', pointerEvents: 'none' }} 
+        />
+      </Show>
+
       <div 
         class={`chronos-sliding-banner-track dir-${state.direction}`}
-        style={{ transform: `translateX(-${state.currentIndex * 100}%)` }}
+        style={{ 
+          transform: `translateX(-${state.currentIndex * 100}%)`,
+          position: props.config?.height === 'auto' ? 'absolute' : 'relative',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%'
+        }}
       >
         {props.items?.map((item, index) => (
           <div 
@@ -267,7 +289,10 @@ export default function SlidingBanner(props: SlidingBannerProps) {
             <Show when={item.media?.type !== 'video'}>
               <div 
                 class={`chronos-sliding-bg ${props.isLoading ? 'chronos-image-shimmer' : ''}`}
-                style={{ backgroundImage: item.media?.url ? `url(${item.media.url})` : 'none' }}
+                style={{ 
+                  backgroundImage: item.media?.url ? `url(${item.media.url})` : 'none',
+                  backgroundPosition: props.config?.bgPosition || 'center'
+                }}
               ></div>
             </Show>
             <div class="chronos-sliding-overlay"></div>

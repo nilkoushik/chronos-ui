@@ -28,6 +28,9 @@ export interface AlternatingConfig {
   showArrows: boolean;
   showDots: boolean;
   hideArrowsIfNoScroll?: boolean;
+  height?: string;
+  minHeight?: string;
+  bgPosition?: string;
 }
 
 export interface AlternatingSliderProps {
@@ -100,8 +103,30 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
       class={`chronos-alt-slider ${props.className || ''}`}
       onMouseEnter={() => state.stopAutoPlay()}
       onMouseLeave={() => state.startAutoPlay()}
+      style={{
+        height: props.config?.height || '',
+        minHeight: props.config?.height === 'auto' ? 'auto' : (props.config?.minHeight || '')
+      }}
     >
-      <div class="chronos-alt-cols-container" style={{ gridTemplateColumns: `repeat(${state.columns}, 1fr)` }}>
+      <Show when={props.config?.height === 'auto' && props.items?.[0]?.media?.url}>
+        <img 
+          src={props.items[0].media.url} 
+          alt="" 
+          style={{ width: '100%', height: 'auto', display: 'block', visibility: 'hidden', pointerEvents: 'none' }} 
+        />
+      </Show>
+
+      <div 
+        class="chronos-alt-cols-container" 
+        style={{ 
+          gridTemplateColumns: `repeat(${state.columns}, 1fr)`,
+          position: props.config?.height === 'auto' ? 'absolute' : 'relative',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%'
+        }}
+      >
         {Array.from({ length: state.columns }).map((_, colIndex) => (
           <div class="chronos-alt-col" key={`col-${colIndex}`}>
             <div 
@@ -131,7 +156,8 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                         <Show when={slideRow[colIndex].media?.type !== 'video'}>
                           <div
                             style={{
-                              backgroundImage: slideRow[colIndex].media?.url ? `url(${slideRow[colIndex].media.url})` : 'none'
+                              backgroundImage: slideRow[colIndex].media?.url ? `url(${slideRow[colIndex].media.url})` : 'none',
+                              backgroundPosition: props.config?.bgPosition || 'center'
                             }}
                             class={`chronos-alt-bg ${props.isLoading ? 'chronos-image-shimmer' : ''}`}
                           />
@@ -180,7 +206,8 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                         <Show when={slideRow[colIndex].media?.type !== 'video'}>
                           <div
                             style={{
-                              backgroundImage: slideRow[colIndex].media?.url ? `url(${slideRow[colIndex].media.url})` : 'none'
+                              backgroundImage: slideRow[colIndex].media?.url ? `url(${slideRow[colIndex].media.url})` : 'none',
+                              backgroundPosition: props.config?.bgPosition || 'center'
                             }}
                             class={`chronos-alt-bg ${props.isLoading ? 'chronos-image-shimmer' : ''}`}
                           />
