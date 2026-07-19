@@ -1,0 +1,5 @@
+# Mandatory pre-commit gate: the compiled dist/ output (react/svelte/webcomponent)
+# must build cleanly from the .lite.tsx sources before a commit is allowed —
+# it's the same command CI's publish workflow runs, so a broken build can never
+# reach a commit, let alone a release/publish.
+npm run build

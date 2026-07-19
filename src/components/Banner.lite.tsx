@@ -116,6 +116,16 @@ export default function Banner(props: BannerProps) {
     },
     hotspotHref(h: Hotspot) {
       return h.action?.type === 'deeplink' ? (h.action.deeplink || h.action.url || '#') : (h.action?.url || '#');
+    },
+    hotspotStyle(h: Hotspot) {
+      return {
+        position: 'absolute',
+        left: `${h.coords.x}%`,
+        top: `${h.coords.y}%`,
+        width: `${h.coords.width}%`,
+        height: `${h.coords.height}%`,
+        clipPath: state.hotspotClip(h) || undefined
+      };
     }
   });
 
@@ -173,27 +183,18 @@ export default function Banner(props: BannerProps) {
       <Show when={state.shouldMount && !!props.hotspots?.length}>
         <div class="chronos-banner-hotspots" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2 }}>
           {props.hotspots?.map((h) => (
-            <a
-              key={h.id}
-              href={state.hotspotHref(h)}
-              aria-label={h.altText || h.label || 'Hotspot link'}
-              title={h.showTooltip ? (h.label || h.altText) : undefined}
-              class={`chronos-hotspot chronos-hotspot-${h.shape} ${h.pulse ? 'chronos-hotspot-pulse' : ''}`}
-              style={{
-                position: 'absolute',
-                left: `${h.coords.x}%`,
-                top: `${h.coords.y}%`,
-                width: `${h.coords.width}%`,
-                height: `${h.coords.height}%`,
-                borderRadius: h.shape === 'oval' ? '50%' : '0',
-                clipPath: state.hotspotClip(h) || undefined,
-                display: 'block'
-              }}
-            >
-              <Show when={!!h.pulse}>
-                <span class="chronos-hotspot-pulse-ring"></span>
-              </Show>
-            </a>
+            <div key={h.id}>
+              <div style={state.hotspotStyle(h)}>
+                <a
+                  href={state.hotspotHref(h)}
+                  aria-label={h.altText || h.label || 'Hotspot link'}
+                  title={h.showTooltip ? (h.label || h.altText) : undefined}
+                  class={`chronos-hotspot chronos-hotspot-${h.shape} ${h.pulse ? 'chronos-hotspot-pulse' : ''}`}
+                >
+                  {h.pulse && <span class="chronos-hotspot-pulse-ring"></span>}
+                </a>
+              </div>
+            </div>
           ))}
         </div>
       </Show>
