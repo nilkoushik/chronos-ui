@@ -38,6 +38,10 @@ jobs:
 
       - name: Publish to npm
         run: |
+          # Keeping the beta dist-tag in sync with stable releases is handled
+          # by the `postpublish` lifecycle hook (scripts/sync-beta-tag.js) so
+          # it applies the same way here and for a manual `npm publish` run
+          # from a local machine.
           if [[ "${GITHUB_REF}" == *"-beta"* ]]; then
             npm publish --access public --provenance --tag beta
           else
