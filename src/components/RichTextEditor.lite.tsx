@@ -176,13 +176,13 @@ export default function RichTextEditor(props: RichTextEditorProps) {
         const success = document.execCommand('insertHTML', false, html);
         if (!success) {
            // Fallback if execCommand fails (e.g. some browsers when focus is tricky)
-           if (state.savedSelection && state.savedSelection.insertNode) {
+           if (state.savedRange && state.savedRange.insertNode) {
                const template = document.createElement('template');
                template.innerHTML = html.trim();
                const frag = template.content;
-               state.savedSelection.deleteContents();
-               state.savedSelection.insertNode(frag);
-               state.savedSelection.collapse(false); // Move caret after inserted node
+               state.savedRange.deleteContents();
+               state.savedRange.insertNode(frag);
+               state.savedRange.collapse(false); // Move caret after inserted node
            } else {
                editorRef.innerHTML += html;
            }
@@ -204,12 +204,12 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     
     clearAllFormatting() {
       // Native clear format for inline styles (bold, italic, etc.)
-      document.execCommand('removeFormat', false, null);
+      document.execCommand('removeFormat', false, undefined);
       // Reset block formatting (removes headings, blockquotes, pre)
       document.execCommand('formatBlock', false, 'P');
       // If we have custom class spans, a quick trick to strip them without losing lines
       // is usually sufficient with removeFormat and formatBlock, but to be sure we also run:
-      document.execCommand('unlink', false, null);
+      document.execCommand('unlink', false, undefined);
       state.syncContent();
       state.checkFormats();
     },
@@ -266,13 +266,13 @@ export default function RichTextEditor(props: RichTextEditorProps) {
         const html = `<a href="${url}" class="chronos-btn" style="${styleStr}">${state.btnText}</a>&nbsp;`;
         const success = document.execCommand('insertHTML', false, html);
         if (!success) {
-           if (state.savedSelection && state.savedSelection.insertNode) {
+           if (state.savedRange && state.savedRange.insertNode) {
                const template = document.createElement('template');
                template.innerHTML = html.trim();
                const frag = template.content;
-               state.savedSelection.deleteContents();
-               state.savedSelection.insertNode(frag);
-               state.savedSelection.collapse(false);
+               state.savedRange.deleteContents();
+               state.savedRange.insertNode(frag);
+               state.savedRange.collapse(false);
            } else {
                editorRef.innerHTML += html;
            }
@@ -565,7 +565,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
   return (
     <div 
       ref={rootRef}
-      class={`chronos-rich-text-editor flex flex-col rounded-xl overflow-hidden relative ${state.isFullscreen ? 'fixed inset-0 z-[9999] w-screen h-screen rounded-none' : 'w-full'}`}
+      class={`chronos-rich-text-editor flex flex-col rounded-xl overflow-hidden relative ${state.isFullscreen ? 'fixed inset-0 z-[9999] w-screen h-screen rounded-none' : 'w-full'} ${props.className || ''}`}
       style={{
         boxSizing: 'border-box',
         background: '#0f172a',
@@ -585,7 +585,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
         <Show when={state.showToolbarOption('fullscreen')}>
           <button type="button" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold text-xs transition-all duration-200" 
                   style={{ background: 'rgba(139, 92, 246, 0.15)', color: '#c4b5fd', border: 'none' }} 
-                  onClick={() => state.toggleFullscreen()} title="Full Screen">
+                  onClick={() => state.toggleFullScreen()} title="Full Screen">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
             {state.isFullscreen ? 'Exit Full Screen' : 'Full Screen'}
           </button>

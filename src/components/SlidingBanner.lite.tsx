@@ -34,6 +34,7 @@ export interface SliderConfig {
   height?: string;
   minHeight?: string;
   bgPosition?: string;
+  align?: 'left' | 'center' | 'right';
 }
 
 export interface SlidingBannerProps {

@@ -4,6 +4,7 @@ export interface TimerWidgetProps {
   targetDate: string;
   title?: string;
   className?: string;
+  variant?: 'neon' | 'dark' | 'gray';
 }
 
 export default function TimerWidget(props: TimerWidgetProps) {
@@ -38,7 +39,7 @@ export default function TimerWidget(props: TimerWidgetProps) {
     if (state.timerId) clearInterval(state.timerId);
   });
   return (
-    <div class={`chronos-timer-widget ${props.className || ''}`}>
+    <div class={`chronos-timer-widget chronos-timer-variant-${props.variant || 'dark'} ${props.className || ''}`}>
       {props.title && <h3 class="chronos-timer-title">{props.title}</h3>}
       <div class="chronos-timer-blocks">
         <div class="chronos-timer-block">
