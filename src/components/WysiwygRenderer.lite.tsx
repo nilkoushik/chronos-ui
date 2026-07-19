@@ -121,7 +121,7 @@ export default function WysiwygRenderer(props: WysiwygRendererProps) {
     }
   });
 
-  let disconnectObserver: (() => void) | null = null;
+  const observerBox = useRef<{ disconnect: (() => void) | null }>({ disconnect: null });
 
   onMount(() => {
     if (props.lazyLoad === false) {
@@ -130,7 +130,7 @@ export default function WysiwygRenderer(props: WysiwygRendererProps) {
       return;
     }
     if (containerRef) {
-      disconnectObserver = observeLazyMount(
+      observerBox.disconnect = observeLazyMount(
         containerRef,
         () => { state.isVisible = true; state.processContent(); },
         props.lazyThreshold ?? 0.1,
@@ -140,7 +140,7 @@ export default function WysiwygRenderer(props: WysiwygRendererProps) {
   });
 
   onUnMount(() => {
-    if (disconnectObserver) disconnectObserver();
+    if (observerBox.disconnect) observerBox.disconnect();
   });
 
   onUpdate(() => {

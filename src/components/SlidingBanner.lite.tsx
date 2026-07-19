@@ -207,7 +207,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     }
   });
 
-  let disconnectObserver: (() => void) | null = null;
+  const observerBox = useRef<{ disconnect: (() => void) | null }>({ disconnect: null });
 
   function mountHeavyContent() {
     state.startAutoPlay();
@@ -226,7 +226,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       return;
     }
     if (rootRef) {
-      disconnectObserver = observeLazyMount(
+      observerBox.disconnect = observeLazyMount(
         rootRef,
         () => { state.isVisible = true; mountHeavyContent(); },
         props.lazyThreshold ?? 0.1,
@@ -262,7 +262,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     if (animContext.dimResizeHandler) {
       window.removeEventListener('resize', animContext.dimResizeHandler);
     }
-    if (disconnectObserver) disconnectObserver();
+    if (observerBox.disconnect) observerBox.disconnect();
   });
   return (
     <div

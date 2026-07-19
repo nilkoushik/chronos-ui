@@ -39,7 +39,7 @@ export default function TimerWidget(props: TimerWidgetProps) {
     }
   });
 
-  let disconnectObserver: (() => void) | null = null;
+  const observerBox = useRef<{ disconnect: (() => void) | null }>({ disconnect: null });
 
   onMount(() => {
     if (props.lazyLoad === false) {
@@ -47,7 +47,7 @@ export default function TimerWidget(props: TimerWidgetProps) {
       return;
     }
     if (rootRef) {
-      disconnectObserver = observeLazyMount(
+      observerBox.disconnect = observeLazyMount(
         rootRef,
         () => state.startTicking(),
         props.lazyThreshold ?? 0.1,
@@ -58,7 +58,7 @@ export default function TimerWidget(props: TimerWidgetProps) {
 
   onUnMount(() => {
     if (state.timerId) clearInterval(state.timerId);
-    if (disconnectObserver) disconnectObserver();
+    if (observerBox.disconnect) observerBox.disconnect();
   });
   return (
     <div ref={rootRef} class={`chronos-timer-widget chronos-timer-variant-${props.variant || 'dark'} ${props.className || ''}`}>

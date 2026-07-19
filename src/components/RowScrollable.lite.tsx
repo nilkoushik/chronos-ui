@@ -62,7 +62,7 @@ export default function RowScrollable(props: RowScrollableProps) {
     }
   });
 
-  let disconnectObserver: (() => void) | null = null;
+  const observerBox = useRef<{ disconnect: (() => void) | null }>({ disconnect: null });
 
   onMount(() => {
     const el = rowRef;
@@ -80,7 +80,7 @@ export default function RowScrollable(props: RowScrollableProps) {
       return;
     }
     if (containerRef) {
-      disconnectObserver = observeLazyMount(
+      observerBox.disconnect = observeLazyMount(
         containerRef,
         () => { state.isVisible = true; },
         props.lazyThreshold ?? 0.1,
@@ -95,7 +95,7 @@ export default function RowScrollable(props: RowScrollableProps) {
       el.removeEventListener('scroll', state.checkScroll);
     }
     window.removeEventListener('resize', state.checkScroll);
-    if (disconnectObserver) disconnectObserver();
+    if (observerBox.disconnect) observerBox.disconnect();
   });
 
   return (

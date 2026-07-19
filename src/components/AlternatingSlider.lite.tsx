@@ -103,7 +103,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
     }
   });
 
-  let disconnectObserver: (() => void) | null = null;
+  const observerBox = useRef<{ disconnect: (() => void) | null }>({ disconnect: null });
 
   onMount(() => {
     if (props.lazyLoad === false) {
@@ -112,7 +112,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
       return;
     }
     if (rootRef) {
-      disconnectObserver = observeLazyMount(
+      observerBox.disconnect = observeLazyMount(
         rootRef,
         () => { state.isVisible = true; state.startAutoPlay(); },
         props.lazyThreshold ?? 0.1,
@@ -123,7 +123,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
 
   onUnMount(() => {
     state.stopAutoPlay();
-    if (disconnectObserver) disconnectObserver();
+    if (observerBox.disconnect) observerBox.disconnect();
   });
   return (
     <div
