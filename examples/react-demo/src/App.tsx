@@ -40,9 +40,13 @@ const DEFAULTS = {
     ctaText: "Shop Collection",
     isLoading: false,
     textAlignment: "center" as "center" | "left" | "right",
-    media: { type: "image" as "image" | "video", url: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=1200&q=80" },
+    media: { type: "image" as "image" | "video", url: "/img/placeholder-01.svg" },
     mapLinks: [{ label: "Shop", url: "#shop" }],
     backgroundImageUrl: "",
+    hotspots: [
+      { id: "h1", altText: "Featured jacket", label: "Jacket", shape: "rect" as "rect", coords: { x: 10, y: 20, width: 18, height: 30 }, action: { type: "link" as "link", url: "#shop" }, pulse: true, showTooltip: true }
+    ],
+    lazyLoad: true,
     ctaLink: "",
     config: {
       align: "center" as "center" | "left" | "right",
@@ -61,27 +65,27 @@ const DEFAULTS = {
     columns: 3,
     isLoading: false,
     items: [
-      { id: "1", title: "Activewear", subtitle: "Comfort meets speed", media: { type: "image", url: "https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&w=600&q=80" }, mapLinks: [{ label: "Explore", url: "/activewear" }] },
-      { id: "2", title: "Footwear", subtitle: "Step into future", media: { type: "image", url: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" }, mapLinks: [{ label: "Shop Shoes", url: "/footwear" }] },
-      { id: "3", title: "Accessories", subtitle: "Complete the look", media: { type: "image", url: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80" }, mapLinks: [{ label: "View All", url: "/accessories" }] }
+      { id: "1", title: "Activewear", subtitle: "Comfort meets speed", media: { type: "image", url: "/img/placeholder-02.svg" }, mapLinks: [{ label: "Explore", url: "/activewear" }] },
+      { id: "2", title: "Footwear", subtitle: "Step into future", media: { type: "image", url: "/img/placeholder-03.svg" }, mapLinks: [{ label: "Shop Shoes", url: "/footwear" }] },
+      { id: "3", title: "Accessories", subtitle: "Complete the look", media: { type: "image", url: "/img/placeholder-04.svg" }, mapLinks: [{ label: "View All", url: "/accessories" }] }
     ]
   },
   MediaGrid: {
     isLoading: false,
-    primaryMedia: { id: "1", title: "Premium Sound", subtitle: "Immersive audio experience", media: { type: "image", url: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=80" }, mapLinks: [{ label: "Buy Now", url: "/audio" }] },
+    primaryMedia: { id: "1", title: "Premium Sound", subtitle: "Immersive audio experience", media: { type: "image", url: "/img/placeholder-05.svg" }, mapLinks: [{ label: "Buy Now", url: "/audio" }] },
     secondaryMedia: [
-      { id: "2", title: "Wireless Comfort", subtitle: "Up to 40 hours playtime", media: { type: "image", url: "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=600&q=80" }, mapLinks: [{ label: "Details", url: "/headphones" }] },
-      { id: "3", title: "Smart Integration", subtitle: "Voice assistant enabled", media: { type: "image", url: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=600&q=80" }, mapLinks: [{ label: "Features", url: "/smart" }] }
+      { id: "2", title: "Wireless Comfort", subtitle: "Up to 40 hours playtime", media: { type: "image", url: "/img/placeholder-06.svg" }, mapLinks: [{ label: "Details", url: "/headphones" }] },
+      { id: "3", title: "Smart Integration", subtitle: "Voice assistant enabled", media: { type: "image", url: "/img/placeholder-07.svg" }, mapLinks: [{ label: "Features", url: "/smart" }] }
     ]
   },
   RowScrollable: {
     isLoading: false,
     title: "Trending Items",
     items: [
-      { id: "1", title: "Smart Watch v2", price: "$299", media: { type: "image", url: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80" } },
-      { id: "2", title: "Leather Wallet", price: "$49", media: { type: "image", url: "https://images.unsplash.com/photo-1627124765135-56c24f6f227b?auto=format&fit=crop&w=400&q=80" } },
-      { id: "3", title: "Bluetooth Speaker", price: "$129", media: { type: "image", url: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=400&q=80" } },
-      { id: "4", title: "Minimalist Backpack", price: "$89", media: { type: "image", url: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80" } }
+      { id: "1", title: "Smart Watch v2", price: "$299", media: { type: "image", url: "/img/placeholder-08.svg" } },
+      { id: "2", title: "Leather Wallet", price: "$49", media: { type: "image", url: "/img/placeholder-09.svg" } },
+      { id: "3", title: "Bluetooth Speaker", price: "$129", media: { type: "image", url: "/img/placeholder-10.svg" } },
+      { id: "4", title: "Minimalist Backpack", price: "$89", media: { type: "image", url: "/img/placeholder-11.svg" } }
     ],
     config: {
       showArrows: true,
@@ -92,9 +96,9 @@ const DEFAULTS = {
   SlidingBanner: {
     isLoading: false,
     items: [
-      { id: "1", title: "Elevate Your Space", subtitle: "Modern minimalist design", media: { type: "image", url: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80" } },
-      { id: "2", title: "Smart Workspace", subtitle: "Engineered for productivity", media: { type: "image", url: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1200&q=80" } },
-      { id: "3", title: "Outdoor Essentials", subtitle: "Built to withstand the elements", media: { type: "image", url: "https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=1200&q=80" } }
+      { id: "1", title: "Elevate Your Space", subtitle: "Modern minimalist design", media: { type: "image", url: "/img/placeholder-12.svg" } },
+      { id: "2", title: "Smart Workspace", subtitle: "Engineered for productivity", media: { type: "image", url: "/img/placeholder-13.svg" } },
+      { id: "3", title: "Outdoor Essentials", subtitle: "Built to withstand the elements", media: { type: "image", url: "/img/placeholder-14.svg" } }
     ],
     config: {
       autoStart: false,
@@ -110,10 +114,10 @@ const DEFAULTS = {
   AlternatingSlider: {
     isLoading: false,
     items: [
-      { id: "1", title: "Ocean Breeze", subtitle: "Fresh styles", media: { type: "image", url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" } },
-      { id: "2", title: "Forest Trail", subtitle: "Eco materials", media: { type: "image", url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80" } },
-      { id: "3", title: "Desert Sun", subtitle: "Warm tones", media: { type: "image", url: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80" } },
-      { id: "4", title: "Mountain Peak", subtitle: "Durable wear", media: { type: "image", url: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" } }
+      { id: "1", title: "Ocean Breeze", subtitle: "Fresh styles", media: { type: "image", url: "/img/placeholder-01.svg" } },
+      { id: "2", title: "Forest Trail", subtitle: "Eco materials", media: { type: "image", url: "/img/placeholder-02.svg" } },
+      { id: "3", title: "Desert Sun", subtitle: "Warm tones", media: { type: "image", url: "/img/placeholder-03.svg" } },
+      { id: "4", title: "Mountain Peak", subtitle: "Durable wear", media: { type: "image", url: "/img/placeholder-04.svg" } }
     ],
     config: {
       columns: 2,

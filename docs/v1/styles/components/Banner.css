@@ -51,7 +51,23 @@
         .chronos-banner-cta:hover {
           filter: brightness(1.1);
         }
-
-
-
+        .chronos-hotspot {
+          cursor: pointer;
+          outline: none;
+        }
+        .chronos-hotspot:focus-visible {
+          box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--chronos-color-primary);
+        }
+        .chronos-hotspot-pulse-ring {
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          border: 2px solid #f472b6;
+          animation: chronosHotspotPulse 1.6s ease-out infinite;
+          pointer-events: none;
+        }
+        @keyframes chronosHotspotPulse {
+          0% { transform: scale(0.9); opacity: 0.9; }
+          100% { transform: scale(1.6); opacity: 0; }
+        }
 

@@ -1,17 +1,28 @@
-import { useStore, onMount, onUpdate, useRef } from '@builder.io/mitosis';
+import { useStore, onMount, onUnMount, onUpdate, useRef } from '@builder.io/mitosis';
+import { observeLazyMount } from '../utils/lazyObserver';
 
 export interface WysiwygRendererProps {
   htmlContent: string;
   className?: string;
   widgetData?: any;
+  lazyLoad?: boolean;
+  lazyThreshold?: number;
+  lazyRootMargin?: string;
 }
 
 export default function WysiwygRenderer(props: WysiwygRendererProps) {
-  
+
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   const state = useStore({
+    isVisible: false,
+    get shouldMount() {
+      return props.lazyLoad === false || state.isVisible;
+    },
+    get renderedHtml() {
+      return state.shouldMount ? props.htmlContent : '';
+    },
     processContent() {
       setTimeout(() => {
         if (!containerRef) return;
@@ -110,18 +121,37 @@ export default function WysiwygRenderer(props: WysiwygRendererProps) {
     }
   });
 
+  let disconnectObserver: (() => void) | null = null;
+
   onMount(() => {
-    state.processContent();
+    if (props.lazyLoad === false) {
+      state.isVisible = true;
+      state.processContent();
+      return;
+    }
+    if (containerRef) {
+      disconnectObserver = observeLazyMount(
+        containerRef,
+        () => { state.isVisible = true; state.processContent(); },
+        props.lazyThreshold ?? 0.1,
+        props.lazyRootMargin ?? '200px'
+      );
+    }
+  });
+
+  onUnMount(() => {
+    if (disconnectObserver) disconnectObserver();
   });
 
   onUpdate(() => {
-    state.processContent();
+    if (state.shouldMount) state.processContent();
   }, [props.htmlContent, props.widgetData]);
   return (
-    <div 
+    <div
       ref={containerRef}
-      class={`chronos-wysiwyg-content ${props.className || ''}`}
-      innerHTML={props.htmlContent}
+      class={`chronos-wysiwyg-content ${!state.shouldMount ? 'chronos-image-shimmer' : ''} ${props.className || ''}`}
+      style={{ minHeight: !state.shouldMount ? '120px' : '' }}
+      innerHTML={state.renderedHtml}
     >
     </div>
   );

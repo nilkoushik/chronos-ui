@@ -87,7 +87,7 @@
               <span class="preview-url">&lt;alternating-slider&gt; Playground</span>
             </div>
             <div class="preview-body-flush" id="preview-container">
-              <alternating-slider id="interactive-preview" items='[{"id":"1","title":"Slide 1: Summer Collection","subtitle":"Refresh your look with light layers.","media":{"type":"image","url":"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&amp;fit=crop&amp;w=800&amp;q=80"}},{"id":"2","title":"Slide 2: Minimalist Living","subtitle":"Design your space for peace.","media":{"type":"image","url":"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&amp;fit=crop&amp;w=800&amp;q=80"}},{"id":"3","title":"Slide 3: Urban Explorer","subtitle":"Ready for any adventure.","media":{"type":"image","url":"https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&amp;fit=crop&amp;w=800&amp;q=80"}},{"id":"4","title":"Slide 4: Modern Workspace","subtitle":"Tools to elevate your focus.","media":{"type":"image","url":"https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&amp;fit=crop&amp;w=800&amp;q=80"}},{"id":"5","title":"Slide 5: Weekend Escape","subtitle":"Travel style curated for you.","media":{"type":"image","url":"https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&amp;fit=crop&amp;w=800&amp;q=80"}},{"id":"6","title":"Slide 6: Evening Lounge","subtitle":"Unwind in comfort.","media":{"type":"image","url":"https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&amp;fit=crop&amp;w=800&amp;q=80"}}]' config='{"columns":2,"autoStart":true,"showDots":true}'></alternating-slider>
+              <alternating-slider id="interactive-preview" items='[{"id":"1","title":"Slide 1: Summer Collection","subtitle":"Refresh your look with light layers.","media":{"type":"image","url":"../assets/img/placeholder-02.svg"}},{"id":"2","title":"Slide 2: Minimalist Living","subtitle":"Design your space for peace.","media":{"type":"image","url":"../assets/img/placeholder-03.svg"}},{"id":"3","title":"Slide 3: Urban Explorer","subtitle":"Ready for any adventure.","media":{"type":"image","url":"../assets/img/placeholder-04.svg"}},{"id":"4","title":"Slide 4: Modern Workspace","subtitle":"Tools to elevate your focus.","media":{"type":"image","url":"../assets/img/placeholder-05.svg"}},{"id":"5","title":"Slide 5: Weekend Escape","subtitle":"Travel style curated for you.","media":{"type":"image","url":"../assets/img/placeholder-06.svg"}},{"id":"6","title":"Slide 6: Evening Lounge","subtitle":"Unwind in comfort.","media":{"type":"image","url":"../assets/img/placeholder-07.svg"}}]' config='{"columns":2,"autoStart":true,"showDots":true}'></alternating-slider>
             </div>
           </div>
         </div>
@@ -105,12 +105,12 @@
         <label class="control-label">items <span class="control-type-badge">array</span></label>
         
         <textarea name="items" class="control-input json-textarea">[
-  {"id":"1","title":"Slide 1: Summer Collection","subtitle":"Refresh your look with light layers.","media":{"type":"image","url":"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80"}},
-  {"id":"2","title":"Slide 2: Minimalist Living","subtitle":"Design your space for peace.","media":{"type":"image","url":"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"}},
-  {"id":"3","title":"Slide 3: Urban Explorer","subtitle":"Ready for any adventure.","media":{"type":"image","url":"https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80"}},
-  {"id":"4","title":"Slide 4: Modern Workspace","subtitle":"Tools to elevate your focus.","media":{"type":"image","url":"https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=800&q=80"}},
-  {"id":"5","title":"Slide 5: Weekend Escape","subtitle":"Travel style curated for you.","media":{"type":"image","url":"https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=80"}},
-  {"id":"6","title":"Slide 6: Evening Lounge","subtitle":"Unwind in comfort.","media":{"type":"image","url":"https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80"}}
+  {"id":"1","title":"Slide 1: Summer Collection","subtitle":"Refresh your look with light layers.","media":{"type":"image","url":"../assets/img/placeholder-07.svg"}},
+  {"id":"2","title":"Slide 2: Minimalist Living","subtitle":"Design your space for peace.","media":{"type":"image","url":"../assets/img/placeholder-08.svg"}},
+  {"id":"3","title":"Slide 3: Urban Explorer","subtitle":"Ready for any adventure.","media":{"type":"image","url":"../assets/img/placeholder-09.svg"}},
+  {"id":"4","title":"Slide 4: Modern Workspace","subtitle":"Tools to elevate your focus.","media":{"type":"image","url":"../assets/img/placeholder-10.svg"}},
+  {"id":"5","title":"Slide 5: Weekend Escape","subtitle":"Travel style curated for you.","media":{"type":"image","url":"../assets/img/placeholder-11.svg"}},
+  {"id":"6","title":"Slide 6: Evening Lounge","subtitle":"Unwind in comfort.","media":{"type":"image","url":"../assets/img/placeholder-12.svg"}}
 ]</textarea>
         <span class="json-error-msg">❌ Invalid JSON Formatting</span>
       
@@ -331,6 +331,24 @@
         <td><span class="prop-type">boolean</span></td>
         <td><span class="prop-default">undefined</span></td>
         <td>Applies shimmer animation to all cells</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyLoad</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Defer autoplay and slide media until scrolled near the viewport (default: true)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyThreshold</span> </td>
+        <td><span class="prop-type">number</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver threshold, 0-1 (default: 0.1)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyRootMargin</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver rootMargin (default: '200px')</td>
       </tr></tbody>
       </table>
     </div>

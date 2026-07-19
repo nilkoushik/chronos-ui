@@ -226,9 +226,13 @@ function initJsfiddle() {
 
     if (framework === 'react') {
       // Setup Babel Standalone in the HTML pane to preserve native ES Modules
+      // Note: the npm 'beta' dist-tag points to a stale pre-release (1.0.0-beta.17)
+      // whose package.json#exports has no './react/*' wildcard, so esm.sh rejects
+      // deep subpath imports like '/react/AlternatingSlider'. 'latest' has the
+      // correct wildcard exports and matches this repo's current published version.
       jsCode = rawCode
-        .replace(/from\s+['"]@chronos-ui\/core\/(.*?)['"]/g, "from 'https://esm.sh/@chronos-ui/core@beta/$1'")
-        .replace(/import\s+['"]@chronos-ui\/core\/(.*?)['"]/g, "import 'https://esm.sh/@chronos-ui/core@beta/$1'");
+        .replace(/from\s+['"]@chronos-ui\/core\/(.*?)['"]/g, "from 'https://esm.sh/@chronos-ui/core@latest/$1'")
+        .replace(/import\s+['"]@chronos-ui\/core\/(.*?)['"]/g, "import 'https://esm.sh/@chronos-ui/core@latest/$1'");
         
       const jsxMatch = jsCode.match(/<([A-Z][a-zA-Z0-9]*)\b[^>]*(\/>|<\/[A-Z][a-zA-Z0-9]*>)/);
       const jsxComponent = jsxMatch ? jsxMatch[0] : '';
@@ -254,10 +258,10 @@ root.render(${jsxComponent || '<div />'});
     } else {
       // Web Component
       htmlCode = `<!-- Load Theme -->
-<link rel="stylesheet" href="https://unpkg.com/@chronos-ui/core@beta/src/styles/theme.css">
+<link rel="stylesheet" href="https://unpkg.com/@chronos-ui/core@latest/src/styles/theme.css">
 
 <!-- Load Web Component -->
-<script type="module" src="https://unpkg.com/@chronos-ui/core@beta/dist/webcomponent/dist/index.js"></script>
+<script type="module" src="https://unpkg.com/@chronos-ui/core@latest/dist/webcomponent/dist/index.js"></script>
 
 ${rawCode.replace(/<link rel="stylesheet" href="node_modules[^>]*>\n?/, '').replace(/<script type="module"[\s\S]*?<\/script>\n*/, '')}`; // strip local script and css tags
     }

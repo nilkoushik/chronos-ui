@@ -8,7 +8,11 @@
     { "name": "mapLinks",      "required": false, "type": "MapLink[]",                     "description": "Link objects; first entry used as the CTA href" },
     { "name": "textAlignment", "required": false, "type": "'left' | 'center' | 'right'",  "description": "Text alignment for all banner content" },
     { "name": "className",     "required": false, "type": "string",                        "description": "Additional CSS class names on the root element" },
-    { "name": "isLoading",     "required": false, "type": "boolean",                       "description": "Applies the <code>chronos-image-shimmer</code> skeleton animation" }
+    { "name": "isLoading",     "required": false, "type": "boolean",                       "description": "Applies the <code>chronos-image-shimmer</code> skeleton animation" },
+    { "name": "hotspots",      "required": false, "type": "Hotspot[]",                     "description": "Clickable image-map regions (rect/oval/polygon) overlaid on the media, each linking to a URL or deeplink" },
+    { "name": "lazyLoad",      "required": false, "type": "boolean",                       "description": "Defer mounting media/hotspots until the banner scrolls near the viewport (default: true)" },
+    { "name": "lazyThreshold", "required": false, "type": "number",                        "description": "IntersectionObserver threshold, 0-1 (default: 0.1)" },
+    { "name": "lazyRootMargin","required": false, "type": "string",                        "description": "IntersectionObserver rootMargin, e.g. preload distance (default: '200px')" }
   ],
   "AnnouncementBar": [
     { "name": "message",         "required": true,  "type": "string",              "description": "The announcement text content" },
@@ -21,13 +25,19 @@
     { "name": "items",     "required": true,  "type": "GridBannerItem[]", "description": "Array of card items to display in the grid" },
     { "name": "columns",   "required": false, "type": "number",            "description": "Number of grid columns on desktop (default: 3); collapses to 2 at 768 px, 1 at 480 px" },
     { "name": "className", "required": false, "type": "string",            "description": "Additional CSS class names on the root element" },
-    { "name": "isLoading", "required": false, "type": "boolean",           "description": "Applies shimmer skeleton animation to all cards" }
+    { "name": "isLoading", "required": false, "type": "boolean",           "description": "Applies shimmer skeleton animation to all cards" },
+    { "name": "lazyLoad",       "required": false, "type": "boolean", "description": "Defer mounting card media until the grid scrolls near the viewport (default: true)" },
+    { "name": "lazyThreshold",  "required": false, "type": "number",  "description": "IntersectionObserver threshold, 0-1 (default: 0.1)" },
+    { "name": "lazyRootMargin", "required": false, "type": "string",  "description": "IntersectionObserver rootMargin (default: '200px')" }
   ],
   "MediaGrid": [
     { "name": "primaryMedia",   "required": true,  "type": "MediaGridItem",   "description": "The large featured asset occupying 2/3 of the grid width" },
     { "name": "secondaryMedia", "required": false, "type": "MediaGridItem[]", "description": "Optional stacked secondary assets in the right column" },
     { "name": "className",      "required": false, "type": "string",           "description": "Additional CSS class names on the root element" },
-    { "name": "isLoading",      "required": false, "type": "boolean",          "description": "Applies shimmer skeleton loading animation to the grid" }
+    { "name": "isLoading",      "required": false, "type": "boolean",          "description": "Applies shimmer skeleton loading animation to the grid" },
+    { "name": "lazyLoad",       "required": false, "type": "boolean", "description": "Defer mounting media until the grid scrolls near the viewport (default: true)" },
+    { "name": "lazyThreshold",  "required": false, "type": "number",  "description": "IntersectionObserver threshold, 0-1 (default: 0.1)" },
+    { "name": "lazyRootMargin", "required": false, "type": "string",  "description": "IntersectionObserver rootMargin (default: '200px')" }
   ],
   "RowScrollable": [
     { "name": "items",     "required": true,  "type": "RowScrollableItem[]", "description": "Array of card items to render in the scrollable row" },
@@ -36,7 +46,10 @@
     { "name": "config.showArrows",           "required": false, "type": "boolean", "description": "Show next/previous arrows (default: true)" },
     { "name": "config.hideArrowsIfNoScroll", "required": false, "type": "boolean", "description": "Hide navigation arrows if content doesn't overflow container width" },
     { "name": "config.hideScrollbar",        "required": false, "type": "boolean", "description": "Hide the browser scrollbar while keeping swipe/scroll functionality" },
-    { "name": "isLoading",                   "required": false, "type": "boolean", "description": "Applies shimmer skeleton loading animation to all items" }
+    { "name": "isLoading",                   "required": false, "type": "boolean", "description": "Applies shimmer skeleton loading animation to all items" },
+    { "name": "lazyLoad",       "required": false, "type": "boolean", "description": "Defer mounting card media until the row scrolls near the viewport (default: true)" },
+    { "name": "lazyThreshold",  "required": false, "type": "number",  "description": "IntersectionObserver threshold, 0-1 (default: 0.1)" },
+    { "name": "lazyRootMargin", "required": false, "type": "string",  "description": "IntersectionObserver rootMargin (default: '200px')" }
   ],
   "SlidingBanner": [
     { "name": "items",     "required": true,  "type": "WidgetItem[]",  "description": "Array of slide items" },
@@ -50,7 +63,10 @@
     { "name": "config.backgroundEffect", "required": false, "type": "'none' | 'particles' | 'waves'", "description": "Canvas background animation (default: 'none')" },
     { "name": "config.hideArrowsIfNoScroll", "required": false, "type": "boolean", "description": "Hide arrows if there is only one slide (default: true)" },
     { "name": "className", "required": false, "type": "string",         "description": "Additional CSS class names on the root element" },
-    { "name": "isLoading", "required": false, "type": "boolean",        "description": "Applies shimmer to all slide backgrounds" }
+    { "name": "isLoading", "required": false, "type": "boolean",        "description": "Applies shimmer to all slide backgrounds" },
+    { "name": "lazyLoad",       "required": false, "type": "boolean", "description": "Defer autoplay/canvas effects and slide media until scrolled near the viewport (default: true)" },
+    { "name": "lazyThreshold",  "required": false, "type": "number",  "description": "IntersectionObserver threshold, 0-1 (default: 0.1)" },
+    { "name": "lazyRootMargin", "required": false, "type": "string",  "description": "IntersectionObserver rootMargin (default: '200px')" }
   ],
   "AlternatingSlider": [
     { "name": "items",     "required": true,  "type": "WidgetItem[]",        "description": "Flat list; grouped into slide-sets by the <code>columns</code> config value" },
@@ -61,17 +77,26 @@
     { "name": "config.showDots", "required": false, "type": "boolean", "description": "Show navigation dots (default: true)" },
     { "name": "config.hideArrowsIfNoScroll", "required": false, "type": "boolean", "description": "Hide arrows if there is only one slide set (default: true)" },
     { "name": "className", "required": false, "type": "string",               "description": "Additional CSS class names on the root element" },
-    { "name": "isLoading", "required": false, "type": "boolean",              "description": "Applies shimmer animation to all cells" }
+    { "name": "isLoading", "required": false, "type": "boolean",              "description": "Applies shimmer animation to all cells" },
+    { "name": "lazyLoad",       "required": false, "type": "boolean", "description": "Defer autoplay and slide media until scrolled near the viewport (default: true)" },
+    { "name": "lazyThreshold",  "required": false, "type": "number",  "description": "IntersectionObserver threshold, 0-1 (default: 0.1)" },
+    { "name": "lazyRootMargin", "required": false, "type": "string",  "description": "IntersectionObserver rootMargin (default: '200px')" }
   ],
   "TimerWidget": [
     { "name": "targetDate", "required": true,  "type": "string",  "description": "ISO 8601 date-time string; the countdown ticks towards this date" },
     { "name": "title",      "required": false, "type": "string",  "description": "Optional heading displayed above the timer blocks" },
-    { "name": "className",  "required": false, "type": "string",  "description": "Additional CSS class names on the root element" }
+    { "name": "className",  "required": false, "type": "string",  "description": "Additional CSS class names on the root element" },
+    { "name": "lazyLoad",       "required": false, "type": "boolean", "description": "Defer starting the countdown interval until scrolled near the viewport (default: true)" },
+    { "name": "lazyThreshold",  "required": false, "type": "number",  "description": "IntersectionObserver threshold, 0-1 (default: 0.1)" },
+    { "name": "lazyRootMargin", "required": false, "type": "string",  "description": "IntersectionObserver rootMargin (default: '200px')" }
   ],
   "WysiwygRenderer": [
     { "name": "htmlContent", "required": true,  "type": "string", "description": "Raw HTML string from a CMS rich-text field; rendered with <code>innerHTML</code>" },
     { "name": "className",   "required": false, "type": "string", "description": "Additional CSS class names on the wrapper element" },
-    { "name": "widgetData",  "required": false, "type": "any",     "description": "Optional data object for embedded widgets" }
+    { "name": "widgetData",  "required": false, "type": "any",     "description": "Optional data object for embedded widgets" },
+    { "name": "lazyLoad",       "required": false, "type": "boolean", "description": "Defer rendering HTML and processing social/widget embeds until scrolled near the viewport (default: true)" },
+    { "name": "lazyThreshold",  "required": false, "type": "number",  "description": "IntersectionObserver threshold, 0-1 (default: 0.1)" },
+    { "name": "lazyRootMargin", "required": false, "type": "string",  "description": "IntersectionObserver rootMargin (default: '200px')" }
   ],
   "RichTextEditor": [
     { "name": "content",          "required": false, "type": "string", "description": "Initial HTML content for the editor." },

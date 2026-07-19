@@ -1,4 +1,5 @@
-import { useStore, Show } from '@builder.io/mitosis';
+import { useStore, useRef, onMount, onUnMount, Show } from '@builder.io/mitosis';
+import { observeLazyMount } from '../utils/lazyObserver';
 
 export interface MediaGridItem {
   id: string;
@@ -13,20 +14,56 @@ export interface MediaGridProps {
   secondaryMedia?: MediaGridItem[];
   className?: string;
   isLoading?: boolean;
+  lazyLoad?: boolean;
+  lazyThreshold?: number;
+  lazyRootMargin?: string;
 }
 
 export default function MediaGrid(props: MediaGridProps) {
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  const state = useStore({
+    isVisible: false,
+    get shouldMount() {
+      return props.lazyLoad === false || state.isVisible;
+    },
+    get showSkeleton() {
+      return !!props.isLoading || !state.shouldMount;
+    }
+  });
+
+  let disconnectObserver: (() => void) | null = null;
+
+  onMount(() => {
+    if (props.lazyLoad === false) {
+      state.isVisible = true;
+      return;
+    }
+    if (rootRef) {
+      disconnectObserver = observeLazyMount(
+        rootRef,
+        () => { state.isVisible = true; },
+        props.lazyThreshold ?? 0.1,
+        props.lazyRootMargin ?? '200px'
+      );
+    }
+  });
+
+  onUnMount(() => {
+    if (disconnectObserver) disconnectObserver();
+  });
+
   return (
-    <div class={`chronos-media-grid ${props.className || ''}`}>
-      <Show when={props.isLoading}>
+    <div ref={rootRef} class={`chronos-media-grid ${props.className || ''}`}>
+      <Show when={state.showSkeleton}>
         <div class="chronos-media-primary chronos-image-shimmer" />
         <div class="chronos-media-secondary-col">
           <div class="chronos-media-secondary-item chronos-image-shimmer" />
           <div class="chronos-media-secondary-item chronos-image-shimmer" />
         </div>
       </Show>
-      
-      <Show when={!props.isLoading}>
+
+      <Show when={!state.showSkeleton}>
         {props.primaryMedia && (
           <a href={props.primaryMedia.mapLinks?.[0]?.url || '#'} class="chronos-media-primary">
             {props.primaryMedia.media?.type === 'video' ? (
@@ -36,7 +73,7 @@ export default function MediaGrid(props: MediaGridProps) {
             )}
           </a>
         )}
-        
+
         {props.secondaryMedia && props.secondaryMedia.length > 0 && (
           <div class="chronos-media-secondary-col">
             {props.secondaryMedia.map((item) => (

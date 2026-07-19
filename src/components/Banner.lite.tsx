@@ -1,4 +1,5 @@
-import { useStore, Show } from '@builder.io/mitosis';
+import { useStore, useRef, onMount, onUnMount, Show } from '@builder.io/mitosis';
+import { observeLazyMount } from '../utils/lazyObserver';
 
 export interface BannerMedia {
   type?: 'image' | 'video' | string;
@@ -22,6 +23,22 @@ export interface BannerConfig {
   bgPosition?: string;
 }
 
+export type HotspotShape = 'rect' | 'oval' | 'polygon';
+export interface HotspotCoords { x: number; y: number; width: number; height: number; }
+export interface HotspotPoint { x: number; y: number; }
+export interface HotspotAction { type: 'link' | 'deeplink'; url: string; deeplink?: string; }
+export interface Hotspot {
+  id: string;
+  label?: string;
+  altText: string;
+  shape: HotspotShape;
+  coords: HotspotCoords;
+  points?: HotspotPoint[];
+  action: HotspotAction;
+  showTooltip?: boolean;
+  pulse?: boolean;
+}
+
 export interface BannerProps {
   id?: string;
   title?: string;
@@ -38,12 +55,25 @@ export interface BannerProps {
   padding?: 'sm' | 'md' | 'lg' | 'xl' | string;
   bgGradient?: string;
   config?: BannerConfig;
+  hotspots?: Hotspot[];
+  lazyLoad?: boolean;
+  lazyThreshold?: number;
+  lazyRootMargin?: string;
 }
 
 export default function Banner(props: BannerProps) {
-  
+
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const state = useStore({
+    isVisible: false,
+
+    get shouldMount() {
+      return props.lazyLoad === false || state.isVisible;
+    },
+    get showSkeleton() {
+      return !!props.isLoading || !state.shouldMount;
+    },
     get alignment() {
       return props.textAlignment || props.align || props.config?.textAlignment || props.config?.align || 'center';
     },
@@ -75,41 +105,103 @@ export default function Banner(props: BannerProps) {
     },
     get minHeightValue() {
       if (props.config?.height === 'auto') return 'auto';
-      return props.config?.minHeight || props.config?.height || '';
+      return props.config?.minHeight || props.config?.height || '300px';
+    },
+    hotspotClip(h: Hotspot) {
+      if (h.shape !== 'polygon' || !h.points?.length) return '';
+      const points = h.points
+        .map((p) => `${((p.x - h.coords.x) / h.coords.width) * 100}% ${((p.y - h.coords.y) / h.coords.height) * 100}%`)
+        .join(', ');
+      return `polygon(${points})`;
+    },
+    hotspotHref(h: Hotspot) {
+      return h.action?.type === 'deeplink' ? (h.action.deeplink || h.action.url || '#') : (h.action?.url || '#');
     }
   });
+
+  let disconnectObserver: (() => void) | null = null;
+
+  onMount(() => {
+    if (props.lazyLoad === false) {
+      state.isVisible = true;
+      return;
+    }
+    if (rootRef) {
+      disconnectObserver = observeLazyMount(
+        rootRef,
+        () => { state.isVisible = true; },
+        props.lazyThreshold ?? 0.1,
+        props.lazyRootMargin ?? '200px'
+      );
+    }
+  });
+
+  onUnMount(() => {
+    if (disconnectObserver) disconnectObserver();
+  });
+
   return (
     <div
-      class={`chronos-banner ${props.className || ''}`}
+      ref={rootRef}
+      class={`chronos-banner ${state.showSkeleton ? 'chronos-image-shimmer' : ''} ${props.className || ''}`}
       style={{
-        backgroundImage: !props.isLoading && !state.hasVideo && state.imageUrl && props.config?.height !== 'auto' ? `url(${state.imageUrl})` : 'none',
+        backgroundImage: state.shouldMount && !props.isLoading && !state.hasVideo && state.imageUrl && props.config?.height !== 'auto' ? `url(${state.imageUrl})` : 'none',
         textAlign: state.alignment,
         backgroundPosition: state.backgroundPosition || 'center',
         minHeight: state.minHeightValue || '',
         height: props.config?.height || ''
       }}
     >
-      <Show when={!props.isLoading && state.hasVideo}>
-        <video 
-          src={state.videoUrl} 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
+      <Show when={state.shouldMount && !props.isLoading && state.hasVideo}>
+        <video
+          src={state.videoUrl}
+          autoPlay
+          loop
+          muted
+          playsInline
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
         />
       </Show>
-      <Show when={!props.isLoading && !state.hasVideo && state.imageUrl && props.config?.height === 'auto'}>
-        <img 
-          src={state.imageUrl} 
-          alt="" 
-          style={{ width: '100%', height: 'auto', display: 'block', zIndex: 0, objectFit: 'cover', objectPosition: state.backgroundPosition || 'center' }} 
+      <Show when={state.shouldMount && !props.isLoading && !state.hasVideo && state.imageUrl && props.config?.height === 'auto'}>
+        <img
+          src={state.imageUrl}
+          alt=""
+          style={{ width: '100%', height: 'auto', display: 'block', zIndex: 0, objectFit: 'cover', objectPosition: state.backgroundPosition || 'center' }}
         />
       </Show>
-      <div 
-        class="chronos-banner-overlay" 
-        style={{ 
-          zIndex: 1, 
+
+      <Show when={state.shouldMount && !!props.hotspots?.length}>
+        <div class="chronos-banner-hotspots" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2 }}>
+          {props.hotspots?.map((h) => (
+            <a
+              key={h.id}
+              href={state.hotspotHref(h)}
+              aria-label={h.altText || h.label || 'Hotspot link'}
+              title={h.showTooltip ? (h.label || h.altText) : undefined}
+              class={`chronos-hotspot chronos-hotspot-${h.shape} ${h.pulse ? 'chronos-hotspot-pulse' : ''}`}
+              style={{
+                position: 'absolute',
+                left: `${h.coords.x}%`,
+                top: `${h.coords.y}%`,
+                width: `${h.coords.width}%`,
+                height: `${h.coords.height}%`,
+                borderRadius: h.shape === 'oval' ? '50%' : '0',
+                clipPath: state.hotspotClip(h) || undefined,
+                display: 'block'
+              }}
+            >
+              <Show when={!!h.pulse}>
+                <span class="chronos-hotspot-pulse-ring"></span>
+              </Show>
+            </a>
+          ))}
+        </div>
+      </Show>
+
+      <div
+        class="chronos-banner-overlay"
+        style={{
+          zIndex: 1,
           position: props.config?.height === 'auto' ? 'absolute' : 'relative',
           top: 0,
           left: 0,
@@ -119,7 +211,7 @@ export default function Banner(props: BannerProps) {
           padding: state.paddingValue || 'var(--chronos-spacing-xl)'
         }}
       >
-        <div 
+        <div
           class="chronos-banner-content"
           style={{
             display: 'flex',
@@ -127,13 +219,13 @@ export default function Banner(props: BannerProps) {
             alignItems: state.alignment === 'center' ? 'center' : state.alignment === 'right' ? 'flex-end' : 'flex-start'
           }}
         >
-          <Show when={props.isLoading}>
+          <Show when={state.showSkeleton}>
             <div class="chronos-skeleton-title chronos-image-shimmer" style={{ width: '60%', height: '36px', marginBottom: '16px' }} />
             <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '80%', height: '18px', marginBottom: '10px' }} />
             <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '50%', height: '18px', marginBottom: '24px' }} />
             <div class="chronos-skeleton-button chronos-image-shimmer" style={{ width: '140px', height: '42px' }} />
           </Show>
-          <Show when={!props.isLoading}>
+          <Show when={!state.showSkeleton}>
             {props.title && <h2 class="chronos-banner-title">{props.title}</h2>}
             {props.subtitle && <p class="chronos-banner-subtitle">{props.subtitle}</p>}
             {props.ctaText && (

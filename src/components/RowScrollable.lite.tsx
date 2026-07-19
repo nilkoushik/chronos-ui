@@ -1,4 +1,5 @@
 import { useStore, useRef, onMount, onUnMount, Show } from '@builder.io/mitosis';
+import { observeLazyMount } from '../utils/lazyObserver';
 
 export interface RowScrollableItem {
   id: string;
@@ -20,14 +21,26 @@ export interface RowScrollableProps {
   className?: string;
   config?: RowScrollableConfig;
   isLoading?: boolean;
+  lazyLoad?: boolean;
+  lazyThreshold?: number;
+  lazyRootMargin?: string;
 }
 
 export default function RowScrollable(props: RowScrollableProps) {
   const rowRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const state = useStore({
     canScrollLeft: false,
     canScrollRight: false,
+    isVisible: false,
+
+    get shouldMount() {
+      return props.lazyLoad === false || state.isVisible;
+    },
+    get showSkeleton() {
+      return !!props.isLoading || !state.shouldMount;
+    },
 
     checkScroll() {
       const el = rowRef;
@@ -49,6 +62,8 @@ export default function RowScrollable(props: RowScrollableProps) {
     }
   });
 
+  let disconnectObserver: (() => void) | null = null;
+
   onMount(() => {
     const el = rowRef;
     if (el) {
@@ -59,6 +74,19 @@ export default function RowScrollable(props: RowScrollableProps) {
       }, 150);
     }
     window.addEventListener('resize', state.checkScroll);
+
+    if (props.lazyLoad === false) {
+      state.isVisible = true;
+      return;
+    }
+    if (containerRef) {
+      disconnectObserver = observeLazyMount(
+        containerRef,
+        () => { state.isVisible = true; },
+        props.lazyThreshold ?? 0.1,
+        props.lazyRootMargin ?? '200px'
+      );
+    }
   });
 
   onUnMount(() => {
@@ -67,24 +95,25 @@ export default function RowScrollable(props: RowScrollableProps) {
       el.removeEventListener('scroll', state.checkScroll);
     }
     window.removeEventListener('resize', state.checkScroll);
+    if (disconnectObserver) disconnectObserver();
   });
 
   return (
-    <div class={`chronos-scrollable-container ${props.className || ''}`}>
+    <div ref={containerRef} class={`chronos-scrollable-container ${props.className || ''}`}>
       {props.title && <h3 class="chronos-scrollable-title">{props.title}</h3>}
-      
+
       <div class="chronos-scrollable-wrapper" style={{ position: 'relative' }}>
-        <div 
-          ref={rowRef} 
+        <div
+          ref={rowRef}
           class={`chronos-scrollable-row ${props.config?.hideScrollbar ? 'chronos-scrollable-hide-scrollbar' : ''}`}
         >
           {props.items?.map((item) => (
-            <a 
-              href={item.mapLinks?.[0]?.url || '#'} 
-              class={`chronos-scrollable-card ${props.isLoading ? 'chronos-image-shimmer' : ''}`} 
+            <a
+              href={item.mapLinks?.[0]?.url || '#'}
+              class={`chronos-scrollable-card ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
               key={item.id}
             >
-              <Show when={!props.isLoading}>
+              <Show when={!state.showSkeleton}>
                 {item.media?.url && (
                   <div class="chronos-scrollable-img-wrap">
                     {item.media?.type === 'video' ? (
@@ -106,8 +135,8 @@ export default function RowScrollable(props: RowScrollableProps) {
         {props.config?.showArrows !== false && (
           <>
             <Show when={!props.config?.hideArrowsIfNoScroll || state.canScrollLeft}>
-              <button 
-                class="chronos-scrollable-arrow prev" 
+              <button
+                class="chronos-scrollable-arrow prev"
                 onClick={() => state.scroll('left')}
                 style={{
                   opacity: !state.canScrollLeft ? '0.35' : '1',
@@ -118,8 +147,8 @@ export default function RowScrollable(props: RowScrollableProps) {
               </button>
             </Show>
             <Show when={!props.config?.hideArrowsIfNoScroll || state.canScrollRight}>
-              <button 
-                class="chronos-scrollable-arrow next" 
+              <button
+                class="chronos-scrollable-arrow next"
                 onClick={() => state.scroll('right')}
                 style={{
                   opacity: !state.canScrollRight ? '0.35' : '1',

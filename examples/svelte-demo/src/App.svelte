@@ -40,10 +40,14 @@
 
   <section>
     <h2>Banner</h2>
-    <Banner 
-      title="Welcome Banner" 
-      subtitle="This is a simple banner component" 
-      backgroundImageUrl="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=1200&q=80" 
+    <Banner
+      title="Welcome Banner"
+      subtitle="This is a simple banner component"
+      media={{ type: 'image', url: '/img/placeholder-01.svg' }}
+      hotspots={[
+        { id: 'h1', altText: 'Featured item', label: 'Featured', shape: 'rect', coords: { x: 10, y: 20, width: 18, height: 30 }, action: { type: 'link', url: '#explore' }, pulse: true, showTooltip: true }
+      ]}
+      lazyLoad={true}
       ctaText="Explore Now"
       ctaLink="#explore"
       config={{
@@ -59,10 +63,10 @@
     <GridBanner 
       columns={4}
       items={[
-        { id: '1', title: 'Grid 1', media: { type: 'image', url: 'https://placehold.co/400x400' } },
-        { id: '2', title: 'Grid 2', media: { type: 'image', url: 'https://placehold.co/400x400' } },
-        { id: '3', title: 'Grid 3', media: { type: 'image', url: 'https://placehold.co/400x400' } },
-        { id: '4', title: 'Grid 4', media: { type: 'image', url: 'https://placehold.co/400x400' } }
+        { id: '1', title: 'Grid 1', media: { type: 'image', url: '/img/placeholder-06.svg' } },
+        { id: '2', title: 'Grid 2', media: { type: 'image', url: '/img/placeholder-06.svg' } },
+        { id: '3', title: 'Grid 3', media: { type: 'image', url: '/img/placeholder-06.svg' } },
+        { id: '4', title: 'Grid 4', media: { type: 'image', url: '/img/placeholder-06.svg' } }
       ]}
     />
   </section>
@@ -70,10 +74,10 @@
   <section>
     <h2>Media Grid</h2>
     <MediaGrid 
-      primaryMedia={{ id: 'p1', media: { type: 'image', url: 'https://placehold.co/600x600' } }}
+      primaryMedia={{ id: 'p1', media: { type: 'image', url: '/img/placeholder-07.svg' } }}
       secondaryMedia={[
-        { id: 's1', media: { type: 'image', url: 'https://placehold.co/300x300' } },
-        { id: 's2', media: { type: 'image', url: 'https://placehold.co/300x300' } }
+        { id: 's1', media: { type: 'image', url: '/img/placeholder-08.svg' } },
+        { id: 's2', media: { type: 'image', url: '/img/placeholder-08.svg' } }
       ]}
     />
   </section>
@@ -83,11 +87,11 @@
     <RowScrollable 
       title="Scrollable Row" 
       items={[
-        { id: '1', title: 'Item 1', media: { type: 'image', url: 'https://placehold.co/200x200' } },
-        { id: '2', title: 'Item 2', media: { type: 'image', url: 'https://placehold.co/200x200' } },
-        { id: '3', title: 'Item 3', media: { type: 'image', url: 'https://placehold.co/200x200' } },
-        { id: '4', title: 'Item 4', media: { type: 'image', url: 'https://placehold.co/200x200' } },
-        { id: '5', title: 'Item 5', media: { type: 'image', url: 'https://placehold.co/200x200' } }
+        { id: '1', title: 'Item 1', media: { type: 'image', url: '/img/placeholder-09.svg' } },
+        { id: '2', title: 'Item 2', media: { type: 'image', url: '/img/placeholder-09.svg' } },
+        { id: '3', title: 'Item 3', media: { type: 'image', url: '/img/placeholder-09.svg' } },
+        { id: '4', title: 'Item 4', media: { type: 'image', url: '/img/placeholder-09.svg' } },
+        { id: '5', title: 'Item 5', media: { type: 'image', url: '/img/placeholder-09.svg' } }
       ]}
     />
   </section>
@@ -97,8 +101,8 @@
     <SlidingBanner 
       config={{ autoStart: true, showDots: true, animationEffect: 'fade' }}
       items={[
-        { id: '1', title: 'Slide 1', subtitle: 'First slide description', media: { type: 'image', url: 'https://placehold.co/800x400' } },
-        { id: '2', title: 'Slide 2', subtitle: 'Second slide description', media: { type: 'image', url: 'https://placehold.co/800x400' } }
+        { id: '1', title: 'Slide 1', subtitle: 'First slide description', media: { type: 'image', url: '/img/placeholder-10.svg' } },
+        { id: '2', title: 'Slide 2', subtitle: 'Second slide description', media: { type: 'image', url: '/img/placeholder-10.svg' } }
       ]}
     />
   </section>
@@ -107,10 +111,10 @@
     <h2>Alternating Slider</h2>
     <AlternatingSlider 
       items={[
-        { id: '1', title: 'Category 1', subtitle: 'Explore', media: { type: 'image', url: 'https://images.unsplash.com/photo-1434389678369-183428d00c4c?auto=format&fit=crop&w=800&q=80' } },
-        { id: '2', title: 'Category 2', subtitle: 'Discover', media: { type: 'image', url: 'https://images.unsplash.com/photo-1558769132-cb1fac084092?auto=format&fit=crop&w=800&q=80' } },
-        { id: '3', title: 'Category 3', subtitle: 'Shop', media: { type: 'image', url: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=800&q=80' } },
-        { id: '4', title: 'Category 4', subtitle: 'Trends', media: { type: 'image', url: 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=800&q=80' } }
+        { id: '1', title: 'Category 1', subtitle: 'Explore', media: { type: 'image', url: '/img/placeholder-02.svg' } },
+        { id: '2', title: 'Category 2', subtitle: 'Discover', media: { type: 'image', url: '/img/placeholder-03.svg' } },
+        { id: '3', title: 'Category 3', subtitle: 'Shop', media: { type: 'image', url: '/img/placeholder-04.svg' } },
+        { id: '4', title: 'Category 4', subtitle: 'Trends', media: { type: 'image', url: '/img/placeholder-05.svg' } }
       ]}
       config={{ columns: 2, autoStart: true, delayMs: 4000, showDots: true, showArrows: true }}
     />

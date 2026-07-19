@@ -1,14 +1,19 @@
-import { useStore, onMount, onUnMount } from '@builder.io/mitosis';
+import { useStore, useRef, onMount, onUnMount } from '@builder.io/mitosis';
+import { observeLazyMount } from '../utils/lazyObserver';
 
 export interface TimerWidgetProps {
   targetDate: string;
   title?: string;
   className?: string;
   variant?: 'neon' | 'dark' | 'gray';
+  lazyLoad?: boolean;
+  lazyThreshold?: number;
+  lazyRootMargin?: string;
 }
 
 export default function TimerWidget(props: TimerWidgetProps) {
-  
+
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const state = useStore({
     timeLeft: { days: 0, hours: 0, minutes: 0, seconds: 0 },
@@ -25,21 +30,38 @@ export default function TimerWidget(props: TimerWidgetProps) {
       } else {
         state.timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
       }
+    },
+    startTicking() {
+      state.calculateTimeLeft();
+      state.timerId = setInterval(() => {
+        state.calculateTimeLeft();
+      }, 1000);
     }
   });
 
+  let disconnectObserver: (() => void) | null = null;
+
   onMount(() => {
-    state.calculateTimeLeft();
-    state.timerId = setInterval(() => {
-      state.calculateTimeLeft();
-    }, 1000);
+    if (props.lazyLoad === false) {
+      state.startTicking();
+      return;
+    }
+    if (rootRef) {
+      disconnectObserver = observeLazyMount(
+        rootRef,
+        () => state.startTicking(),
+        props.lazyThreshold ?? 0.1,
+        props.lazyRootMargin ?? '200px'
+      );
+    }
   });
 
   onUnMount(() => {
     if (state.timerId) clearInterval(state.timerId);
+    if (disconnectObserver) disconnectObserver();
   });
   return (
-    <div class={`chronos-timer-widget chronos-timer-variant-${props.variant || 'dark'} ${props.className || ''}`}>
+    <div ref={rootRef} class={`chronos-timer-widget chronos-timer-variant-${props.variant || 'dark'} ${props.className || ''}`}>
       {props.title && <h3 class="chronos-timer-title">{props.title}</h3>}
       <div class="chronos-timer-blocks">
         <div class="chronos-timer-block">
@@ -59,7 +81,7 @@ export default function TimerWidget(props: TimerWidgetProps) {
           <span class="chronos-timer-label">Seconds</span>
         </div>
       </div>
-      
+
     </div>
   );
 }

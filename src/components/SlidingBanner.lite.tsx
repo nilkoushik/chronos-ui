@@ -1,4 +1,5 @@
 import { useStore, onMount, onUnMount, useRef, Show, onUpdate } from '@builder.io/mitosis';
+import { observeLazyMount } from '../utils/lazyObserver';
 
 export interface BannerMedia {
   type?: 'image' | 'video' | string;
@@ -42,6 +43,9 @@ export interface SlidingBannerProps {
   config?: SliderConfig;
   className?: string;
   isLoading?: boolean;
+  lazyLoad?: boolean;
+  lazyThreshold?: number;
+  lazyRootMargin?: string;
 }
 
 export default function SlidingBanner(props: SlidingBannerProps) {
@@ -60,7 +64,14 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     currentIndex: 0,
     previousIndex: 0,
     direction: 'next' as 'next' | 'prev',
-    
+    isVisible: false,
+
+    get shouldMount() {
+      return props.lazyLoad === false || state.isVisible;
+    },
+    get showSkeleton() {
+      return !!props.isLoading || !state.shouldMount;
+    },
     get animationClass() {
       return props.config?.animationEffect || 'slide';
     },
@@ -196,13 +207,31 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     }
   });
 
-  onMount(() => {
+  let disconnectObserver: (() => void) | null = null;
+
+  function mountHeavyContent() {
     state.startAutoPlay();
     state.setupDimensions();
     animContext.dimResizeHandler = () => state.setupDimensions();
     window.addEventListener('resize', animContext.dimResizeHandler);
     if (canvasRef) {
       state.initCanvasAnimations(canvasRef);
+    }
+  }
+
+  onMount(() => {
+    if (props.lazyLoad === false) {
+      state.isVisible = true;
+      mountHeavyContent();
+      return;
+    }
+    if (rootRef) {
+      disconnectObserver = observeLazyMount(
+        rootRef,
+        () => { state.isVisible = true; mountHeavyContent(); },
+        props.lazyThreshold ?? 0.1,
+        props.lazyRootMargin ?? '200px'
+      );
     }
   });
 
@@ -233,11 +262,12 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     if (animContext.dimResizeHandler) {
       window.removeEventListener('resize', animContext.dimResizeHandler);
     }
+    if (disconnectObserver) disconnectObserver();
   });
   return (
-    <div 
+    <div
       ref={rootRef}
-      class={`chronos-sliding-banner ${props.className || ''} effect-${state.animationClass} bg-effect-${state.backgroundClass}`}
+      class={`chronos-sliding-banner ${state.showSkeleton ? 'chronos-image-shimmer' : ''} ${props.className || ''} effect-${state.animationClass} bg-effect-${state.backgroundClass}`}
       onMouseEnter={() => state.stopAutoPlay()}
       onMouseLeave={() => state.startAutoPlay()}
       style={{
@@ -276,20 +306,20 @@ export default function SlidingBanner(props: SlidingBannerProps) {
             class={`chronos-sliding-slide ${index === state.currentIndex ? 'active' : ''} ${index === state.previousIndex && index !== state.currentIndex ? 'previous' : ''}`} 
             key={item.id || index}
           >
-            <Show when={item.media?.type === 'video'}>
+            <Show when={state.shouldMount && item.media?.type === 'video'}>
               <video 
                 src={item.media?.url} 
                 autoPlay 
                 loop 
                 muted 
                 playsInline 
-                class={`chronos-sliding-bg-video ${props.isLoading ? 'chronos-image-shimmer' : ''}`}
+                class={`chronos-sliding-bg-video ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
                 style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </Show>
-            <Show when={item.media?.type !== 'video'}>
+            <Show when={state.shouldMount && item.media?.type !== 'video'}>
               <div 
-                class={`chronos-sliding-bg ${props.isLoading ? 'chronos-image-shimmer' : ''}`}
+                class={`chronos-sliding-bg ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
                 style={{ 
                   backgroundImage: item.media?.url ? `url(${item.media.url})` : 'none',
                   backgroundPosition: props.config?.bgPosition || 'center'
@@ -306,13 +336,13 @@ export default function SlidingBanner(props: SlidingBannerProps) {
                 alignItems: (item.textAlignment || props.config?.align || 'center') === 'center' ? 'center' : (item.textAlignment || props.config?.align || 'center') === 'right' ? 'flex-end' : 'flex-start'
               }}
             >
-              <Show when={props.isLoading}>
+              <Show when={state.showSkeleton}>
                 <div class="chronos-skeleton-title chronos-image-shimmer" style={{ width: '50%', height: '32px', marginBottom: '16px' }} />
                 <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '70%', height: '16px', marginBottom: '10px' }} />
                 <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '40%', height: '16px', marginBottom: '24px' }} />
                 <div class="chronos-skeleton-button chronos-image-shimmer" style={{ width: '130px', height: '40px' }} />
               </Show>
-              <Show when={!props.isLoading}>
+              <Show when={!state.showSkeleton}>
                 <h2 class="chronos-sliding-title">{item.title}</h2>
                 {item.subtitle && <p class="chronos-sliding-subtitle">{item.subtitle}</p>}
                 {item.ctaText && (

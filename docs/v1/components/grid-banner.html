@@ -87,7 +87,7 @@
               <span class="preview-url">&lt;grid-banner&gt; Playground</span>
             </div>
             <div class="preview-body" id="preview-container">
-              <grid-banner id="interactive-preview" columns="3" items='[{"id":"1","title":"Women\'s Collection","media":{"type":"image","url":"https://images.unsplash.com/photo-1434389678369-183428d00c4c?auto=format&amp;fit=crop&amp;w=400&amp;q=80"}},{"id":"2","title":"Men\'s Essentials","media":{"type":"image","url":"https://images.unsplash.com/photo-1558769132-cb1fac084092?auto=format&amp;fit=crop&amp;w=400&amp;q=80"}},{"id":"3","title":"Trending Footwear","media":{"type":"image","url":"https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&amp;fit=crop&amp;w=400&amp;q=80"}}]'></grid-banner>
+              <grid-banner id="interactive-preview" columns="3" items='[{"id":"1","title":"Women\'s Collection","media":{"type":"image","url":"../assets/img/placeholder-02.svg"}},{"id":"2","title":"Men\'s Essentials","media":{"type":"image","url":"../assets/img/placeholder-03.svg"}},{"id":"3","title":"Trending Footwear","media":{"type":"image","url":"../assets/img/placeholder-04.svg"}}]'></grid-banner>
             </div>
           </div>
         </div>
@@ -105,9 +105,9 @@
         <label class="control-label">items <span class="control-type-badge">array</span></label>
         
         <textarea name="items" class="control-input json-textarea">[
-  {"id":"1","title":"Women's Collection","media":{"type":"image","url":"https://images.unsplash.com/photo-1434389678369-183428d00c4c?auto=format&fit=crop&w=400&q=80"}},
-  {"id":"2","title":"Men's Essentials","media":{"type":"image","url":"https://images.unsplash.com/photo-1558769132-cb1fac084092?auto=format&fit=crop&w=400&q=80"}},
-  {"id":"3","title":"Trending Footwear","media":{"type":"image","url":"https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=400&q=80"}}
+  {"id":"1","title":"Women's Collection","media":{"type":"image","url":"../assets/img/placeholder-08.svg"}},
+  {"id":"2","title":"Men's Essentials","media":{"type":"image","url":"../assets/img/placeholder-09.svg"}},
+  {"id":"3","title":"Trending Footwear","media":{"type":"image","url":"../assets/img/placeholder-10.svg"}}
 ]</textarea>
         <span class="json-error-msg">❌ Invalid JSON Formatting</span>
       
@@ -235,6 +235,24 @@
         <td><span class="prop-type">boolean</span></td>
         <td><span class="prop-default">undefined</span></td>
         <td>Applies shimmer skeleton animation to all cards</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyLoad</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Defer mounting card media until the grid scrolls near the viewport (default: true)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyThreshold</span> </td>
+        <td><span class="prop-type">number</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver threshold, 0-1 (default: 0.1)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyRootMargin</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver rootMargin (default: '200px')</td>
       </tr></tbody>
       </table>
     </div>

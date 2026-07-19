@@ -87,7 +87,7 @@
               <span class="preview-url">&lt;media-grid&gt; Playground</span>
             </div>
             <div class="preview-body" id="preview-container">
-              <media-grid id="interactive-preview" primary-media='{"id":"p1","media":{"type":"image","url":"https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&amp;fit=crop&amp;w=800&amp;q=80"},"altText":"Primary Accent Banner"}' secondary-media='[{"id":"s1","media":{"type":"image","url":"https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&amp;fit=crop&amp;w=400&amp;q=80"}},{"id":"s2","media":{"type":"image","url":"https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&amp;fit=crop&amp;w=400&amp;q=80"}}]'></media-grid>
+              <media-grid id="interactive-preview" primary-media='{"id":"p1","media":{"type":"image","url":"../assets/img/placeholder-05.svg"},"altText":"Primary Accent Banner"}' secondary-media='[{"id":"s1","media":{"type":"image","url":"../assets/img/placeholder-06.svg"}},{"id":"s2","media":{"type":"image","url":"../assets/img/placeholder-07.svg"}}]'></media-grid>
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@
       <div class="control-group">
         <label class="control-label">primaryMedia <span class="control-type-badge">object</span></label>
         
-        <textarea name="primaryMedia" class="control-input json-textarea">{"id":"p1","media":{"type":"image","url":"https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=800&q=80"},"altText":"Primary Accent Banner"}</textarea>
+        <textarea name="primaryMedia" class="control-input json-textarea">{"id":"p1","media":{"type":"image","url":"../assets/img/placeholder-13.svg"},"altText":"Primary Accent Banner"}</textarea>
         <span class="json-error-msg">❌ Invalid JSON Formatting</span>
       
         <div class="control-desc">Large feature item. { id, media: { type, url }, mapLinks }</div>
@@ -114,8 +114,8 @@
         <label class="control-label">secondaryMedia <span class="control-type-badge">array</span></label>
         
         <textarea name="secondaryMedia" class="control-input json-textarea">[
-  {"id":"s1","media":{"type":"image","url":"https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=400&q=80"}},
-  {"id":"s2","media":{"type":"image","url":"https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=400&q=80"}}
+  {"id":"s1","media":{"type":"image","url":"../assets/img/placeholder-11.svg"}},
+  {"id":"s2","media":{"type":"image","url":"../assets/img/placeholder-12.svg"}}
 ]</textarea>
         <span class="json-error-msg">❌ Invalid JSON Formatting</span>
       
@@ -237,6 +237,24 @@
         <td><span class="prop-type">boolean</span></td>
         <td><span class="prop-default">undefined</span></td>
         <td>Applies shimmer skeleton loading animation to the grid</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyLoad</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Defer mounting media until the grid scrolls near the viewport (default: true)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyThreshold</span> </td>
+        <td><span class="prop-type">number</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver threshold, 0-1 (default: 0.1)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyRootMargin</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver rootMargin (default: '200px')</td>
       </tr></tbody>
       </table>
     </div>

@@ -87,7 +87,7 @@
               <span class="preview-url">&lt;chronos-banner&gt; Playground</span>
             </div>
             <div class="preview-body" id="preview-container">
-              <chronos-banner id="interactive-preview" title="Experience Vibrant Colors &amp; Premium Innovation" subtitle="Explore our premium collection of responsive components. Zero dependencies, ultra lightweight." cta-text="Explore Collection" media='{"type":"image","url":"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"}'></chronos-banner>
+              <chronos-banner id="interactive-preview" title="Experience Vibrant Colors &amp; Premium Innovation" subtitle="Explore our premium collection of responsive components. Zero dependencies, ultra lightweight." cta-text="Explore Collection" media='{"type":"image","url":"../assets/img/placeholder-01.svg"}'></chronos-banner>
             </div>
           </div>
         </div>
@@ -140,7 +140,7 @@
       <div class="control-group">
         <label class="control-label">media <span class="control-type-badge">object</span></label>
         
-        <textarea name="media" class="control-input json-textarea">{"type":"image","url":"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80"}</textarea>
+        <textarea name="media" class="control-input json-textarea">{"type":"image","url":"../assets/img/placeholder-14.svg"}</textarea>
         <span class="json-error-msg">❌ Invalid JSON Formatting</span>
       
         <div class="control-desc">Background media object. { type: "image" | "video", url: string }</div>
@@ -200,6 +200,27 @@
         <div class="control-desc">Design and behavior settings. Supported keys: align, bgGradient, padding, autoplay, height, bgPosition.</div>
       </div>
     
+      <div class="control-group">
+        <label class="control-label">hotspots <span class="control-type-badge">array</span></label>
+        
+        <textarea name="hotspots" class="control-input json-textarea"></textarea>
+        <span class="json-error-msg">❌ Invalid JSON Formatting</span>
+      
+        <div class="control-desc">Clickable image-map regions overlaid on the media. Each: { id, altText, shape: 'rect'|'oval'|'polygon', coords: {x,y,width,height}, points?, action: {type,url,deeplink?}, showTooltip?, pulse? } (coords/points are % of the banner).</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">lazyLoad <span class="control-type-badge">boolean</span></label>
+        
+        <label class="control-checkbox-label">
+          <input type="checkbox" name="lazyLoad" checked>
+          <span class="control-checkbox-custom"></span>
+          Enable lazyLoad
+        </label>
+      
+        <div class="control-desc">Defer mounting media/hotspots until scrolled near the viewport.</div>
+      </div>
+    
               </form>
             </div>
           </div>
@@ -232,8 +253,12 @@
   title=<span class="str">"Summer Collection 2026"</span>
   subtitle=<span class="str">"Discover the new season"</span>
   ctaText=<span class="str">"Shop Now"</span>
-  backgroundImageUrl=<span class="str">"/hero.jpg"</span>
+  media={{ type: <span class="str">'image'</span>, url: <span class="str">'/hero.jpg'</span> }}
+  hotspots={[
+    { id: <span class="str">'h1'</span>, altText: <span class="str">'Jacket'</span>, shape: <span class="str">'rect'</span>, coords: { x: 10, y: 20, width: 15, height: 25 }, action: { type: <span class="str">'link'</span>, url: <span class="str">'/products/jacket'</span> }, pulse: <span class="kw">true</span>, showTooltip: <span class="kw">true</span>, label: <span class="str">'Jacket'</span> }
+  ]}
   ctaLink=<span class="str">"/shop"</span>
+  lazyLoad
   config={{
     align: <span class="str">'center'</span>,
     padding: <span class="str">'lg'</span>,
@@ -257,8 +282,12 @@
   title=<span class="str">"Summer Collection 2026"</span>
   subtitle=<span class="str">"Discover the new season"</span>
   ctaText=<span class="str">"Shop Now"</span>
-  backgroundImageUrl=<span class="str">"/hero.jpg"</span>
+  media={{ type: <span class="str">'image'</span>, url: <span class="str">'/hero.jpg'</span> }}
+  hotspots={[
+    { id: <span class="str">'h1'</span>, altText: <span class="str">'Jacket'</span>, shape: <span class="str">'rect'</span>, coords: { x: 10, y: 20, width: 15, height: 25 }, action: { type: <span class="str">'link'</span>, url: <span class="str">'/products/jacket'</span> }, pulse: <span class="kw">true</span>, showTooltip: <span class="kw">true</span>, label: <span class="str">'Jacket'</span> }
+  ]}
   ctaLink=<span class="str">"/shop"</span>
+  lazyLoad={<span class="kw">true</span>}
   config={{
     align: <span class="str">'center'</span>,
     padding: <span class="str">'lg'</span>,
@@ -281,8 +310,10 @@
   title=<span class="str">"Summer Collection 2026"</span>
   subtitle=<span class="str">"Discover the new season"</span>
   cta-text=<span class="str">"Shop Now"</span>
-  background-image-url=<span class="str">"/hero.jpg"</span>
+  media=<span class="str">'{"type":"image","url":"/hero.jpg"}'</span>
+  hotspots=<span class="str">'[{"id":"h1","altText":"Jacket","shape":"rect","coords":{"x":10,"y":20,"width":15,"height":25},"action":{"type":"link","url":"/products/jacket"},"pulse":<span class="kw">true</span>,"showTooltip":<span class="kw">true</span>,"label":"Jacket"}]'</span>
   cta-link=<span class="str">"/shop"</span>
+  lazy-load=<span class="str">"<span class="kw">true</span>"</span>
   config=<span class="str">'{"align":"center","padding":"lg","height":"auto","bgPosition":"center"}'</span>
 &gt;&lt;/<span class="tag">banner</span>&gt;</code></pre>
     </div>
@@ -351,6 +382,30 @@
         <td><span class="prop-type">boolean</span></td>
         <td><span class="prop-default">undefined</span></td>
         <td>Applies the <code>chronos-image-shimmer</code> skeleton animation</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">hotspots</span> </td>
+        <td><span class="prop-type">Hotspot[]</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Clickable image-map regions (rect/oval/polygon) overlaid on the media, each linking to a URL or deeplink</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyLoad</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Defer mounting media/hotspots until the banner scrolls near the viewport (default: true)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyThreshold</span> </td>
+        <td><span class="prop-type">number</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver threshold, 0-1 (default: 0.1)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyRootMargin</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver rootMargin, e.g. preload distance (default: '200px')</td>
       </tr></tbody>
       </table>
     </div>
@@ -358,6 +413,8 @@
       <!-- Notes -->
       <div class="alert alert-tip"><strong>Theming:</strong> Override <code>--chronos-color-primary</code> in your stylesheet to change the CTA button colour.</div>
 <div class="alert alert-info"><strong>Video background:</strong> Set <code>media.type = 'video'</code> — the component renders a muted, autoplayed, looped <code>&lt;video&gt;</code> positioned absolutely behind the overlay.</div>
+<div class="alert alert-info"><strong>Hotspots:</strong> Pass <code>hotspots</code> (rect/oval/polygon regions with <code>coords</code> as percentages) to overlay clickable image-map regions on the media, each linking to a URL or app deeplink. <code>backgroundImageUrl</code> remains supported as a legacy alternative to <code>media</code>.</div>
+<div class="alert alert-tip"><strong>Lazy loading:</strong> By default the banner defers mounting its media/hotspots until it scrolls near the viewport (shared <code>IntersectionObserver</code> per threshold across all widgets on the page). Pass <code>lazyLoad={false}</code> to disable, or tune <code>lazyThreshold</code> / <code>lazyRootMargin</code>.</div>
     </div>
   </main>
 </div>

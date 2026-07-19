@@ -1,4 +1,5 @@
-import { useStore, onMount, onUnMount } from '@builder.io/mitosis';
+import { useStore, useRef, onMount, onUnMount, Show } from '@builder.io/mitosis';
+import { observeLazyMount } from '../utils/lazyObserver';
 
 export interface BannerMedia {
   type?: string;
@@ -38,19 +39,30 @@ export interface AlternatingSliderProps {
   config?: AlternatingConfig;
   className?: string;
   isLoading?: boolean;
+  lazyLoad?: boolean;
+  lazyThreshold?: number;
+  lazyRootMargin?: string;
 }
 
 export default function AlternatingSlider(props: AlternatingSliderProps) {
-  
+
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const state = useStore({
     currentIndex: 0,
     intervalId: null as any,
-    
+    isVisible: false,
+
+    get shouldMount() {
+      return props.lazyLoad === false || state.isVisible;
+    },
+    get showSkeleton() {
+      return !!props.isLoading || !state.shouldMount;
+    },
     get columns() {
       return props.config?.columns || 2;
     },
-    
+
     // We group items into sets, each set has length = columns
     get slideSets() {
       const sets: WidgetItem[][] = [];
@@ -61,7 +73,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
       }
       return sets;
     },
-    
+
     get totalSlides() {
       return state.slideSets.length;
     },
@@ -91,16 +103,32 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
     }
   });
 
+  let disconnectObserver: (() => void) | null = null;
+
   onMount(() => {
-    state.startAutoPlay();
+    if (props.lazyLoad === false) {
+      state.isVisible = true;
+      state.startAutoPlay();
+      return;
+    }
+    if (rootRef) {
+      disconnectObserver = observeLazyMount(
+        rootRef,
+        () => { state.isVisible = true; state.startAutoPlay(); },
+        props.lazyThreshold ?? 0.1,
+        props.lazyRootMargin ?? '200px'
+      );
+    }
   });
 
   onUnMount(() => {
     state.stopAutoPlay();
+    if (disconnectObserver) disconnectObserver();
   });
   return (
-    <div 
-      class={`chronos-alt-slider ${props.className || ''}`}
+    <div
+      ref={rootRef}
+      class={`chronos-alt-slider ${state.showSkeleton ? 'chronos-image-shimmer' : ''} ${props.className || ''}`}
       onMouseEnter={() => state.stopAutoPlay()}
       onMouseLeave={() => state.startAutoPlay()}
       style={{
@@ -109,16 +137,16 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
       }}
     >
       <Show when={props.config?.height === 'auto' && props.items?.[0]?.media?.url}>
-        <img 
-          src={props.items[0].media.url} 
-          alt="" 
-          style={{ width: '100%', height: 'auto', display: 'block', visibility: 'hidden', pointerEvents: 'none' }} 
+        <img
+          src={props.items[0].media.url}
+          alt=""
+          style={{ width: '100%', height: 'auto', display: 'block', visibility: 'hidden', pointerEvents: 'none' }}
         />
       </Show>
 
-      <div 
-        class="chronos-alt-cols-container" 
-        style={{ 
+      <div
+        class="chronos-alt-cols-container"
+        style={{
           gridTemplateColumns: `repeat(${state.columns}, 1fr)`,
           position: props.config?.height === 'auto' ? 'absolute' : 'relative',
           top: 0,
@@ -129,56 +157,56 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
       >
         {Array.from({ length: state.columns }).map((_, colIndex) => (
           <div class="chronos-alt-col" key={`col-${colIndex}`}>
-            <div 
-              class="chronos-alt-track" 
+            <div
+              class="chronos-alt-track"
               style={{ transform: `translateY(${colIndex % 2 === 0 ? -state.currentIndex * 100 : state.currentIndex * 100}%)` }}
             >
               {state.slideSets.map((slideRow, slideIndex) => (
-                <div 
-                  class="chronos-alt-cell" 
+                <div
+                  class="chronos-alt-cell"
                   key={`cell-${slideIndex}-${colIndex}`}
                   style={{ top: `${colIndex % 2 === 0 ? slideIndex * 100 : -slideIndex * 100}%` }}
                 >
                   <Show when={slideRow[colIndex]}>
                     <Show when={slideRow[colIndex].mapLinks?.[0]?.url}>
                       <a class="chronos-alt-content-wrap" href={slideRow[colIndex].mapLinks[0].url} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
-                        <Show when={slideRow[colIndex].media?.type === 'video'}>
-                          <video 
-                            src={slideRow[colIndex].media?.url} 
-                            autoPlay 
-                            loop 
-                            muted 
-                            playsInline 
-                            class={`chronos-alt-bg-video ${props.isLoading ? 'chronos-image-shimmer' : ''}`}
+                        <Show when={state.shouldMount && slideRow[colIndex].media?.type === 'video'}>
+                          <video
+                            src={slideRow[colIndex].media?.url}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            class={`chronos-alt-bg-video ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
                             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                           />
                         </Show>
-                        <Show when={slideRow[colIndex].media?.type !== 'video'}>
+                        <Show when={state.shouldMount && slideRow[colIndex].media?.type !== 'video'}>
                           <div
                             style={{
                               backgroundImage: slideRow[colIndex].media?.url ? `url(${slideRow[colIndex].media.url})` : 'none',
                               backgroundPosition: props.config?.bgPosition || 'center'
                             }}
-                            class={`chronos-alt-bg ${props.isLoading ? 'chronos-image-shimmer' : ''}`}
+                            class={`chronos-alt-bg ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
                           />
                         </Show>
                         <div class="chronos-alt-overlay" />
-                        <div 
-                          class="chronos-alt-content" 
-                          style={{ 
+                        <div
+                          class="chronos-alt-content"
+                          style={{
                             textAlign: slideRow[colIndex].textAlignment || 'left',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: (slideRow[colIndex].textAlignment || 'left') === 'center' ? 'center' : (slideRow[colIndex].textAlignment || 'left') === 'right' ? 'flex-end' : 'flex-start'
                           }}
                         >
-                          <Show when={props.isLoading}>
+                          <Show when={state.showSkeleton}>
                             <div class="chronos-skeleton-title chronos-image-shimmer" style={{ width: '60%', height: '24px', marginBottom: '12px' }} />
                             <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '80%', height: '14px', marginBottom: '8px' }} />
                             <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '50%', height: '14px', marginBottom: '16px' }} />
                             <div class="chronos-skeleton-button chronos-image-shimmer" style={{ width: '110px', height: '36px' }} />
                           </Show>
-                          <Show when={!props.isLoading}>
+                          <Show when={!state.showSkeleton}>
                             <h2 class="chronos-alt-title">{slideRow[colIndex].title}</h2>
                             <Show when={slideRow[colIndex].subtitle}>
                               <p class="chronos-alt-subtitle">{slideRow[colIndex].subtitle}</p>
@@ -192,43 +220,43 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                     </Show>
                     <Show when={!slideRow[colIndex].mapLinks?.[0]?.url}>
                       <div class="chronos-alt-content-wrap">
-                        <Show when={slideRow[colIndex].media?.type === 'video'}>
-                          <video 
-                            src={slideRow[colIndex].media?.url} 
-                            autoPlay 
-                            loop 
-                            muted 
-                            playsInline 
-                            class={`chronos-alt-bg-video ${props.isLoading ? 'chronos-image-shimmer' : ''}`}
+                        <Show when={state.shouldMount && slideRow[colIndex].media?.type === 'video'}>
+                          <video
+                            src={slideRow[colIndex].media?.url}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            class={`chronos-alt-bg-video ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
                             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                           />
                         </Show>
-                        <Show when={slideRow[colIndex].media?.type !== 'video'}>
+                        <Show when={state.shouldMount && slideRow[colIndex].media?.type !== 'video'}>
                           <div
                             style={{
                               backgroundImage: slideRow[colIndex].media?.url ? `url(${slideRow[colIndex].media.url})` : 'none',
                               backgroundPosition: props.config?.bgPosition || 'center'
                             }}
-                            class={`chronos-alt-bg ${props.isLoading ? 'chronos-image-shimmer' : ''}`}
+                            class={`chronos-alt-bg ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
                           />
                         </Show>
                         <div class="chronos-alt-overlay" />
-                        <div 
-                          class="chronos-alt-content" 
-                          style={{ 
+                        <div
+                          class="chronos-alt-content"
+                          style={{
                             textAlign: slideRow[colIndex].textAlignment || 'left',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: (slideRow[colIndex].textAlignment || 'left') === 'center' ? 'center' : (slideRow[colIndex].textAlignment || 'left') === 'right' ? 'flex-end' : 'flex-start'
                           }}
                         >
-                          <Show when={props.isLoading}>
+                          <Show when={state.showSkeleton}>
                             <div class="chronos-skeleton-title chronos-image-shimmer" style={{ width: '60%', height: '24px', marginBottom: '12px' }} />
                             <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '80%', height: '14px', marginBottom: '8px' }} />
                             <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '50%', height: '14px', marginBottom: '16px' }} />
                             <div class="chronos-skeleton-button chronos-image-shimmer" style={{ width: '110px', height: '36px' }} />
                           </Show>
-                          <Show when={!props.isLoading}>
+                          <Show when={!state.showSkeleton}>
                             <h2 class="chronos-alt-title">{slideRow[colIndex].title}</h2>
                             <Show when={slideRow[colIndex].subtitle}>
                               <p class="chronos-alt-subtitle">{slideRow[colIndex].subtitle}</p>
@@ -248,7 +276,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
         ))}
       </div>
 
-      {(props.config?.showArrows && 
+      {(props.config?.showArrows &&
         (!props.config?.hideArrowsIfNoScroll || state.slideSets.length > 1)) && (
         <>
           <button class="chronos-alt-arrow prev" onClick={() => state.prev()}>
@@ -263,7 +291,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
       {props.config?.showDots && (
         <div class="chronos-alt-dots">
           {state.slideSets.map((_, index) => (
-            <button 
+            <button
               key={`dot-${index}`}
               class={`chronos-alt-dot ${index === state.currentIndex ? 'active' : ''}`}
               onClick={() => state.goTo(index)}
