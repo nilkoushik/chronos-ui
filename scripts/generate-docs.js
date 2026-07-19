@@ -58,7 +58,7 @@ const DEFAULT_WC_ELEMENTS = {
   
   'row-scrollable': `<row-scrollable id="interactive-preview" title="Vibrant Modern Accents" items='[{"id":"1","title":"Neon Abstract","subtitle":"Vibrant Colors","media":{"type":"image","url":"../assets/img/placeholder-06.svg"}},{"id":"2","title":"Cyberpunk Glow","subtitle":"Tech Vibes","media":{"type":"image","url":"../assets/img/placeholder-07.svg"}},{"id":"3","title":"Pastel Gradient","subtitle":"Soft Warmth","media":{"type":"image","url":"../assets/img/placeholder-08.svg"}},{"id":"4","title":"Ocean Waves","subtitle":"Cool Tones","media":{"type":"image","url":"../assets/img/placeholder-09.svg"}}]'></row-scrollable>`,
   
-  'sliding-banner': `<sliding-banner id="interactive-preview" items='[{"id":"1","title":"Slide 1: Summer Collection","subtitle":"Refresh your look with light layers.","media":{"type":"image","url":"../assets/img/placeholder-10.svg"}},{"id":"2","title":"Slide 2: Minimalist Living","subtitle":"Design your space for peace.","media":{"type":"image","url":"../assets/img/placeholder-11.svg"}},{"id":"3","title":"Slide 3: Urban Explorer","subtitle":"Ready for any adventure.","media":{"type":"image","url":"../assets/img/placeholder-12.svg"}},{"id":"4","title":"Slide 4: Modern Workspace","subtitle":"Tools to elevate your focus.","media":{"type":"image","url":"../assets/img/placeholder-13.svg"}},{"id":"5","title":"Slide 5: Weekend Escape","subtitle":"Travel style curated for you.","media":{"type":"image","url":"../assets/img/placeholder-14.svg"}},{"id":"6","title":"Slide 6: Evening Lounge","subtitle":"Unwind in comfort.","media":{"type":"image","url":"../assets/img/placeholder-01.svg"}}]' config='{"autoStart":true,"rotateAgain":true,"showDots":true,"showArrows":true,"animationEffect":"fade"}'></sliding-banner>`,
+  'sliding-banner': `<sliding-banner id="interactive-preview" items='[{"id":"1","title":"Slide 1: Summer Collection","subtitle":"Refresh your look with light layers.","media":{"type":"image","url":"../assets/img/placeholder-10.svg"}},{"id":"2","title":"Slide 2: Minimalist Living","subtitle":"Design your space for peace.","media":{"type":"image","url":"../assets/img/placeholder-11.svg"}},{"id":"3","title":"Slide 3: Urban Explorer","subtitle":"Ready for any adventure.","media":{"type":"image","url":"../assets/img/placeholder-12.svg"}},{"id":"4","title":"Slide 4: Modern Workspace","subtitle":"Tools to elevate your focus.","media":{"type":"image","url":"../assets/img/placeholder-13.svg"}},{"id":"5","title":"Slide 5: Weekend Escape","subtitle":"Travel style curated for you.","media":{"type":"image","url":"../assets/img/placeholder-14.svg"}},{"id":"6","title":"Slide 6: Evening Lounge","subtitle":"Unwind in comfort.","media":{"type":"image","url":"../assets/img/placeholder-01.svg"}}]' config='{"autoStart":true,"rotateAgain":true,"showDots":true,"showArrows":true,"animationEffect":"fade","backgroundEffect":"waves"}'></sliding-banner>`,
   
   'alternating-slider': `<alternating-slider id="interactive-preview" items='[{"id":"1","title":"Slide 1: Summer Collection","subtitle":"Refresh your look with light layers.","media":{"type":"image","url":"../assets/img/placeholder-02.svg"}},{"id":"2","title":"Slide 2: Minimalist Living","subtitle":"Design your space for peace.","media":{"type":"image","url":"../assets/img/placeholder-03.svg"}},{"id":"3","title":"Slide 3: Urban Explorer","subtitle":"Ready for any adventure.","media":{"type":"image","url":"../assets/img/placeholder-04.svg"}},{"id":"4","title":"Slide 4: Modern Workspace","subtitle":"Tools to elevate your focus.","media":{"type":"image","url":"../assets/img/placeholder-05.svg"}},{"id":"5","title":"Slide 5: Weekend Escape","subtitle":"Travel style curated for you.","media":{"type":"image","url":"../assets/img/placeholder-06.svg"}},{"id":"6","title":"Slide 6: Evening Lounge","subtitle":"Unwind in comfort.","media":{"type":"image","url":"../assets/img/placeholder-07.svg"}}]' config='{"columns":2,"autoStart":true,"showDots":true}'></alternating-slider>`,
   
@@ -66,7 +66,7 @@ const DEFAULT_WC_ELEMENTS = {
   
   'wysiwyg-renderer': `<wysiwyg-renderer id="interactive-preview" content="<h2>Premium Editorial Layout</h2><p>This component safely renders HTML content and processes external media embeds in real-time:</p><h3>YouTube Media Integration</h3><div class='chronos-social-embed' data-platform='youtube' data-url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'></div><h3>Social X / Twitter Post</h3><div class='chronos-social-embed' data-platform='x' data-url='https://x.com/NASA/status/1684947936109961216'></div><p>All scripts and scoped layouts load dynamically and securely.</p>"></wysiwyg-renderer>`,
   
-  'rich-text-editor': `<rich-text-editor id="interactive-preview" initial-content="<p>Welcome to <strong>Chronos Editor Playground</strong>! Configure the toolbar options on the right in real-time to customize my controls.</p>" config='{"toolbar":["bold","italic","underline","link"]}'></rich-text-editor>`
+  'rich-text-editor': `<rich-text-editor id="interactive-preview" initial-content="<p>Welcome to <strong>Chronos Editor Playground</strong>! Configure the toolbar options on the right in real-time to customize my controls.</p>" config='{"toolbar":["fullscreen","source","bold","italic","underline","strikeThrough","code","quote","clear","headings","foreColor","backColor","justifyLeft","justifyCenter","justifyRight","image","link","table","unorderedList","orderedList","horizontalRule","video","social","insertButton","addWidget","save","classInput"]}'></rich-text-editor>`
 };
 
 // ── Sidebar HTML (shared across every page) ────────────────────────────────
@@ -196,7 +196,7 @@ function buildControlsForm(component) {
         </div>
         <div class="control-group">
           <label class="control-label">Toolbar Config (JSON Object)</label>
-          <textarea name="config" class="control-input json-textarea" style="height:120px;">{"toolbar":["bold","italic","underline","link"]}</textarea>
+          <textarea name="config" class="control-input json-textarea" style="height:120px;">{"toolbar":["fullscreen","source","bold","italic","underline","strikeThrough","code","quote","clear","headings","foreColor","backColor","justifyLeft","justifyCenter","justifyRight","image","link","table","unorderedList","orderedList","horizontalRule","video","social","insertButton","addWidget","save","classInput"]}</textarea>
           <span class="json-error-msg">❌ Invalid JSON Object</span>
         </div>
       `;
@@ -287,9 +287,9 @@ function buildControlsForm(component) {
     } else if (type === 'string' && propName === 'config.backgroundEffect') {
       inputHtml = `
         <select name="${propName}" class="control-select">
-          <option value="none" selected>none</option>
+          <option value="none">none</option>
           <option value="particles">particles</option>
-          <option value="waves">waves</option>
+          <option value="waves" selected>waves</option>
         </select>
       `;
     } else if (type === 'array' || type === 'object') {

@@ -87,7 +87,7 @@
               <span class="preview-url">&lt;sliding-banner&gt; Playground</span>
             </div>
             <div class="preview-body-flush" id="preview-container">
-              <sliding-banner id="interactive-preview" items='[{"id":"1","title":"Slide 1: Summer Collection","subtitle":"Refresh your look with light layers.","media":{"type":"image","url":"../assets/img/placeholder-10.svg"}},{"id":"2","title":"Slide 2: Minimalist Living","subtitle":"Design your space for peace.","media":{"type":"image","url":"../assets/img/placeholder-11.svg"}},{"id":"3","title":"Slide 3: Urban Explorer","subtitle":"Ready for any adventure.","media":{"type":"image","url":"../assets/img/placeholder-12.svg"}},{"id":"4","title":"Slide 4: Modern Workspace","subtitle":"Tools to elevate your focus.","media":{"type":"image","url":"../assets/img/placeholder-13.svg"}},{"id":"5","title":"Slide 5: Weekend Escape","subtitle":"Travel style curated for you.","media":{"type":"image","url":"../assets/img/placeholder-14.svg"}},{"id":"6","title":"Slide 6: Evening Lounge","subtitle":"Unwind in comfort.","media":{"type":"image","url":"../assets/img/placeholder-01.svg"}}]' config='{"autoStart":true,"rotateAgain":true,"showDots":true,"showArrows":true,"animationEffect":"fade"}'></sliding-banner>
+              <sliding-banner id="interactive-preview" items='[{"id":"1","title":"Slide 1: Summer Collection","subtitle":"Refresh your look with light layers.","media":{"type":"image","url":"../assets/img/placeholder-10.svg"}},{"id":"2","title":"Slide 2: Minimalist Living","subtitle":"Design your space for peace.","media":{"type":"image","url":"../assets/img/placeholder-11.svg"}},{"id":"3","title":"Slide 3: Urban Explorer","subtitle":"Ready for any adventure.","media":{"type":"image","url":"../assets/img/placeholder-12.svg"}},{"id":"4","title":"Slide 4: Modern Workspace","subtitle":"Tools to elevate your focus.","media":{"type":"image","url":"../assets/img/placeholder-13.svg"}},{"id":"5","title":"Slide 5: Weekend Escape","subtitle":"Travel style curated for you.","media":{"type":"image","url":"../assets/img/placeholder-14.svg"}},{"id":"6","title":"Slide 6: Evening Lounge","subtitle":"Unwind in comfort.","media":{"type":"image","url":"../assets/img/placeholder-01.svg"}}]' config='{"autoStart":true,"rotateAgain":true,"showDots":true,"showArrows":true,"animationEffect":"fade","backgroundEffect":"waves"}'></sliding-banner>
             </div>
           </div>
         </div>
@@ -160,9 +160,9 @@
         <label class="control-label">config.backgroundEffect <span class="control-type-badge">string</span></label>
         
         <select name="config.backgroundEffect" class="control-select">
-          <option value="none" selected>none</option>
+          <option value="none">none</option>
           <option value="particles">particles</option>
-          <option value="waves">waves</option>
+          <option value="waves" selected>waves</option>
         </select>
       
         <div class="control-desc">Canvas background effect: "none", "particles", or "waves".</div>
@@ -270,7 +270,7 @@
     showNextPrev: <span class="kw">true</span>,
     showDots: <span class="kw">true</span>,
     animationEffect: <span class="str">'fade'</span>,
-    backgroundEffect: <span class="str">'particles'</span>,
+    backgroundEffect: <span class="str">'waves'</span>,
   }}
 /&gt;</code></pre>
     </div>
@@ -281,11 +281,16 @@
       <button class="copy-btn">Copy</button>
       <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
   <span class="kw">import</span> SlidingBanner <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/SlidingBanner.svelte'</span>;
+
+  <span class="kw">const</span> items = [
+    { id: <span class="str">'1'</span>, title: <span class="str">'Summer Sale'</span>,   subtitle: <span class="str">'Up to 50% off'</span>, media: { type: <span class="str">'image'</span>, url: <span class="str">'/s1.jpg'</span> } },
+    { id: <span class="str">'2'</span>, title: <span class="str">'New Arrivals'</span>, subtitle: <span class="str">'Latest collection'</span>, media: { type: <span class="str">'image'</span>, url: <span class="str">'/s2.jpg'</span> } },
+  ];
 &lt;/<span class="tag">script</span>&gt;
 
 &lt;<span class="tag">SlidingBanner</span>
   {items}
-  config={{ autoStart: <span class="kw">true</span>, showDots: <span class="kw">true</span>, animationEffect: <span class="str">'zoom'</span> }}
+  config={{ autoStart: <span class="kw">true</span>, showDots: <span class="kw">true</span>, animationEffect: <span class="str">'zoom'</span>, backgroundEffect: <span class="str">'waves'</span> }}
 /&gt;</code></pre>
     </div>
         </div>
@@ -298,7 +303,7 @@
 
 &lt;<span class="tag">sliding-banner</span>
   items=<span class="str">'[{"id":"1","title":"Sale"}]'</span>
-  config=<span class="str">'{"autoStart":<span class="kw">true</span>,"showDots":<span class="kw">true</span>,"animationEffect":"fade"}'</span>
+  config=<span class="str">'{"autoStart":<span class="kw">true</span>,"showDots":<span class="kw">true</span>,"animationEffect":"fade","backgroundEffect":"waves"}'</span>
 &gt;&lt;/<span class="tag">sliding-banner</span>&gt;</code></pre>
     </div>
         </div>

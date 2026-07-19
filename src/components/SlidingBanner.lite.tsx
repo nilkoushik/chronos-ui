@@ -59,7 +59,8 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     resizeHandler: null as any,
     dimResizeHandler: null as any
   });
-  
+  const observerBox = useRef<{ disconnect: (() => void) | null }>({ disconnect: null });
+
   const state = useStore({
     currentIndex: 0,
     previousIndex: 0,
@@ -206,8 +207,6 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       }
     }
   });
-
-  const observerBox = useRef<{ disconnect: (() => void) | null }>({ disconnect: null });
 
   function mountHeavyContent() {
     state.startAutoPlay();

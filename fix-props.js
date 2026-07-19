@@ -23,6 +23,16 @@ if (fs.existsSync(srcDir)) {
       );
     }
 
+    // Mitosis' Svelte generator only auto-declares useRef()s bound via bind:this;
+    // a plain-object useRef like observerBox (used for lazy-mount IntersectionObserver
+    // cleanup) is used but never declared, causing a ReferenceError at runtime.
+    if (content.includes('observerBox.') && !/\blet observerBox\b/.test(content)) {
+      content = content.replace(
+        /(<script lang="ts">\n)/,
+        '$1  let observerBox = { disconnect: null };\n'
+      );
+    }
+
     fs.writeFileSync(filePath, content, 'utf8');
   }
   console.log('Added <svelte:options runes={false} /> to Svelte components and patched missing declarations.');

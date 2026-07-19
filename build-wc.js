@@ -14,6 +14,29 @@ if (!fs.existsSync(wcDistDir)) {
   fs.mkdirSync(wcDistDir, { recursive: true });
 }
 
+// 0. Compile src/utils/*.ts (e.g. lazyObserver) into dist/webcomponent/dist/utils/*.js.
+// Mitosis only builds src/components/**, so shared utils imported by the generated
+// components are never transpiled/emitted on their own -- without this step the
+// browser 404s on the extensionless `../utils/lazyObserver` import and every
+// web-component demo silently fails to register/render.
+const utilsSrcDir = path.join(__dirname, 'src', 'utils');
+const utilsDistDir = path.join(wcDistDir, 'utils');
+if (fs.existsSync(utilsSrcDir)) {
+  if (!fs.existsSync(utilsDistDir)) {
+    fs.mkdirSync(utilsDistDir, { recursive: true });
+  }
+  for (const file of fs.readdirSync(utilsSrcDir).filter(f => f.endsWith('.ts'))) {
+    const code = fs.readFileSync(path.join(utilsSrcDir, file), 'utf8');
+    const result = ts.transpileModule(code, {
+      compilerOptions: {
+        target: ts.ScriptTarget.ES2020,
+        module: ts.ModuleKind.ES2020
+      }
+    });
+    fs.writeFileSync(path.join(utilsDistDir, file.replace('.ts', '.js')), result.outputText);
+  }
+}
+
 // 1. Generate index.ts
 const files = fs.readdirSync(wcSrcDir).filter(f => f.endsWith('.ts') && f !== 'index.ts');
 const exportsList = files.map(f => `export * from './${f.replace('.ts', '')}.js';`).join('\n');
@@ -34,7 +57,19 @@ for (const file of allFiles) {
   
   const outPath = path.join(wcDistDir, file.replace('.ts', '.js'));
   let finalCode = result.outputText;
-  
+
+  // The generated source (dist/webcomponent/src/components/*.ts) imports shared
+  // utils as `../utils/...`, correct for its own nested src/components/ location.
+  // But this loop flattens output straight into dist/webcomponent/dist/, where
+  // utils/ is now a sibling, not a cousin -- so `../utils/` must become `./utils/`.
+  finalCode = finalCode.replace(/from\s+(["'])\.\.\/utils\//g, 'from $1./utils/');
+
+  // Browser ESM requires explicit extensions on relative specifiers; TS emits them
+  // bare (e.g. `from "./utils/lazyObserver"`), which 404s at runtime.
+  finalCode = finalCode.replace(/(from\s+["'](?:\.\.?\/)[^"']+?)(["'])/g, (match, specifier, quote) => {
+    return /\.[a-zA-Z0-9]+$/.test(specifier) ? match : `${specifier}.js${quote}`;
+  });
+
   // Fix invalid custom element names that don't have a hyphen (e.g. "banner")
   finalCode = finalCode.replace(/customElements\.define\("([^"-]+)",/g, 'customElements.define("chronos-$1",');
   
@@ -121,6 +156,43 @@ for (const file of allFiles) {
       queryRegex.lastIndex = startIdx + replacement.length;
     }
   }
+
+  // Fix onUpdate's dependency-array effect (Mitosis' compiled equivalent of
+  // useEffect/onUpdate([...deps])) using Array.find() to detect a changed
+  // dependency and then checking `!== undefined` to see if anything was found.
+  // find() returns the *matching value*, not a boolean -- and updateDeps[0]
+  // starts as [undefined, null] (set in the constructor, before props/refs
+  // exist), so the very first real comparison finds its mismatch exactly where
+  // the previous value is `undefined`, making `__hasChange` literally
+  // `undefined` even though a change was found. The guard then reads that as
+  // "no change" and skips both the effect body AND updating updateDeps -- so
+  // every later comparison repeats the same false negative forever, and the
+  // effect never fires again for the component's whole lifetime (e.g. a canvas
+  // background effect picked at mount can never be changed at runtime).
+  finalCode = finalCode.replace(
+    /const __hasChange = __prev\.find\(\(val, index\) => val !== __next\[index\]\);\s*if \(__hasChange !== undefined\) \{/g,
+    'const __hasChange = __prev.some((val, index) => val !== __next[index]);\n            if (__hasChange) {'
+  );
+
+  // Fix hydrateDom unconditionally reverting every stateful input/textarea back to
+  // its pre-render value. Mitosis snapshots `el.value` before updateBindings() runs
+  // (to protect an in-progress keystroke from being wiped by a full re-render) but
+  // then restores that stale snapshot onto *every* data-dom-state element regardless
+  // of focus -- so any programmatic `value={state.x}` update (e.g. toggling into
+  // source-code view) gets immediately reverted to whatever the field held before.
+  // Only the element that actually had focus should be hydrated.
+  const hydrateDomRegex = /hydrateDom\(preValues,\s*stateful\)\s*\{[\s\S]*?return stateful\.map\(\(el,\s*index\)\s*=>\s*\{[\s\S]*?\}\);\s*\}/;
+  finalCode = finalCode.replace(hydrateDomRegex, `hydrateDom(preValues, stateful) {
+        const self = this;
+        return stateful.map((el, index) => {
+            const prev = preValues.find((prev) => el.dataset.domState === prev.id);
+            if (prev && prev.active) {
+                el.value = prev.value;
+                el.focus();
+                el.selectionStart = prev.selectionStart;
+            }
+        });
+    }`);
 
   // Rewrite destroyAnyNodes to preserve elements marked with __persistent
   const destroyRegex = /destroyAnyNodes\(\)\s*\{[\s\S]*?this\.nodesToDestroy\s*=\s*\[\];\s*\}/g;

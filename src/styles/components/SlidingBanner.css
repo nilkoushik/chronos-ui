@@ -23,6 +23,10 @@
   width: 100%;
   height: 100%;
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Contain the per-slide z-index (e.g. .active gets z-index:2 for non-slide
+     effects) inside its own stacking context so it never outranks the
+     background-effect canvas, which sits outside the track at z-index:1. */
+  isolation: isolate;
 }
 
 .chronos-sliding-slide {

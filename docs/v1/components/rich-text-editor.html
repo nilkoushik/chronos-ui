@@ -87,7 +87,7 @@
               <span class="preview-url">&lt;rich-text-editor&gt; Playground</span>
             </div>
             <div class="preview-body" id="preview-container">
-              <rich-text-editor id="interactive-preview" initial-content="<p>Welcome to <strong>Chronos Editor Playground</strong>! Configure the toolbar options on the right in real-time to customize my controls.</p>" config='{"toolbar":["bold","italic","underline","link"]}'></rich-text-editor>
+              <rich-text-editor id="interactive-preview" initial-content="<p>Welcome to <strong>Chronos Editor Playground</strong>! Configure the toolbar options on the right in real-time to customize my controls.</p>" config='{"toolbar":["fullscreen","source","bold","italic","underline","strikeThrough","code","quote","clear","headings","foreColor","backColor","justifyLeft","justifyCenter","justifyRight","image","link","table","unorderedList","orderedList","horizontalRule","video","social","insertButton","addWidget","save","classInput"]}'></rich-text-editor>
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@
         </div>
         <div class="control-group">
           <label class="control-label">Toolbar Config (JSON Object)</label>
-          <textarea name="config" class="control-input json-textarea" style="height:120px;">{"toolbar":["bold","italic","underline","link"]}</textarea>
+          <textarea name="config" class="control-input json-textarea" style="height:120px;">{"toolbar":["fullscreen","source","bold","italic","underline","strikeThrough","code","quote","clear","headings","foreColor","backColor","justifyLeft","justifyCenter","justifyRight","image","link","table","unorderedList","orderedList","horizontalRule","video","social","insertButton","addWidget","save","classInput"]}</textarea>
           <span class="json-error-msg">❌ Invalid JSON Object</span>
         </div>
       
@@ -144,9 +144,18 @@
       <pre><code><span class="kw">import</span> RichTextEditor <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/RichTextEditor'</span>;
 <span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
 
+<span class="kw">const</span> toolbar = [
+  <span class="str">'fullscreen'</span>, <span class="str">'source'</span>, <span class="str">'bold'</span>, <span class="str">'italic'</span>, <span class="str">'underline'</span>, <span class="str">'strikeThrough'</span>,
+  <span class="str">'code'</span>, <span class="str">'quote'</span>, <span class="str">'clear'</span>, <span class="str">'headings'</span>, <span class="str">'foreColor'</span>, <span class="str">'backColor'</span>,
+  <span class="str">'justifyLeft'</span>, <span class="str">'justifyCenter'</span>, <span class="str">'justifyRight'</span>,
+  <span class="str">'image'</span>, <span class="str">'link'</span>, <span class="str">'table'</span>, <span class="str">'unorderedList'</span>, <span class="str">'orderedList'</span>, <span class="str">'horizontalRule'</span>,
+  <span class="str">'video'</span>, <span class="str">'social'</span>, <span class="str">'insertButton'</span>, <span class="str">'addWidget'</span>, <span class="str">'save'</span>, <span class="str">'classInput'</span>,
+];
+
 &lt;<span class="tag">RichTextEditor</span> 
   content=<span class="str">"&lt;<span class="tag">p</span>&gt;Hello World!&lt;/<span class="tag">p</span>&gt;"</span>
   availableClasses={[<span class="str">'text-pink-500'</span>, <span class="str">'font-bold'</span>]}
+  config={{ toolbar }}
   onChange={(html) =&gt; console.log(html)}
 /&gt;</code></pre>
     </div>
@@ -157,10 +166,19 @@
       <button class="copy-btn">Copy</button>
       <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
   <span class="kw">import</span> RichTextEditor <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/RichTextEditor.svelte'</span>;
+
+  <span class="kw">const</span> toolbar = [
+    <span class="str">'fullscreen'</span>, <span class="str">'source'</span>, <span class="str">'bold'</span>, <span class="str">'italic'</span>, <span class="str">'underline'</span>, <span class="str">'strikeThrough'</span>,
+    <span class="str">'code'</span>, <span class="str">'quote'</span>, <span class="str">'clear'</span>, <span class="str">'headings'</span>, <span class="str">'foreColor'</span>, <span class="str">'backColor'</span>,
+    <span class="str">'justifyLeft'</span>, <span class="str">'justifyCenter'</span>, <span class="str">'justifyRight'</span>,
+    <span class="str">'image'</span>, <span class="str">'link'</span>, <span class="str">'table'</span>, <span class="str">'unorderedList'</span>, <span class="str">'orderedList'</span>, <span class="str">'horizontalRule'</span>,
+    <span class="str">'video'</span>, <span class="str">'social'</span>, <span class="str">'insertButton'</span>, <span class="str">'addWidget'</span>, <span class="str">'save'</span>, <span class="str">'classInput'</span>,
+  ];
 &lt;/<span class="tag">script</span>&gt;
 
 &lt;<span class="tag">RichTextEditor</span> 
   content=<span class="str">"&lt;<span class="tag">p</span>&gt;Hello World!&lt;/<span class="tag">p</span>&gt;"</span>
+  config={{ toolbar }}
 /&gt;</code></pre>
     </div>
         </div>
@@ -173,6 +191,7 @@
 
 &lt;<span class="tag">rich-text-editor</span> 
   content=<span class="str">"&lt;<span class="tag">p</span>&gt;Hello World!&lt;/<span class="tag">p</span>&gt;"</span>
+  config=<span class="str">'{"toolbar":["fullscreen","source","bold","italic","underline","strikeThrough","code","quote","clear","headings","foreColor","backColor","justifyLeft","justifyCenter","justifyRight","image","link","table","unorderedList","orderedList","horizontalRule","video","social","insertButton","addWidget","save","classInput"]}'</span>
 &gt;&lt;/<span class="tag">rich-text-editor</span>&gt;</code></pre>
     </div>
         </div>

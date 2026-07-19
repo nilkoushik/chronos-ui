@@ -116,11 +116,12 @@ export default function RowScrollable(props: RowScrollableProps) {
               <Show when={!state.showSkeleton}>
                 {item.media?.url && (
                   <div class="chronos-scrollable-img-wrap">
-                    {item.media?.type === 'video' ? (
+                    <Show when={item.media?.type === 'video'}>
                       <video src={item.media?.url} autoPlay loop muted playsInline class="chronos-scrollable-img" />
-                    ) : (
+                    </Show>
+                    <Show when={item.media?.type !== 'video'}>
                       <img src={item.media?.url} alt={item.title || ''} class="chronos-scrollable-img" />
-                    )}
+                    </Show>
                   </div>
                 )}
                 <div class="chronos-scrollable-body">
