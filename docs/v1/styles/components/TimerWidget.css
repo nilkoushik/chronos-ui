@@ -2,14 +2,38 @@
 /* Styles for TimerWidget */
 /* TimerWidget Styles */
 .chronos-timer-widget {
+          position: relative;
           background-color: var(--chronos-color-surface);
           border: var(--chronos-border-width) solid var(--chronos-color-border);
           border-radius: var(--chronos-border-radius-md);
-          padding: var(--chronos-spacing-lg);
           font-family: var(--chronos-font-family);
           color: var(--chronos-color-text-main);
           text-align: center;
           box-shadow: var(--chronos-shadow-sm);
+          background-size: cover;
+          overflow: hidden;
+        }
+        .chronos-timer-widget.chronos-timer-has-bg {
+          color: #fff;
+        }
+        .chronos-timer-overlay {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+        }
+        .chronos-timer-content {
+          position: relative;
+          z-index: 1;
+          padding: var(--chronos-spacing-lg);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+        .chronos-timer-expired {
+          margin: 0;
+          font-size: var(--chronos-font-size-subtitle);
+          font-weight: 600;
         }
         .chronos-timer-title {
           margin-top: 0;
@@ -41,6 +65,17 @@
           text-transform: uppercase;
           color: var(--chronos-color-text-muted);
           margin-top: 0.25rem;
+        }
+        .chronos-timer-has-bg .chronos-timer-block {
+          background: rgba(15, 17, 21, 0.55);
+          border-color: rgba(255, 255, 255, 0.25);
+          backdrop-filter: blur(2px);
+        }
+        .chronos-timer-has-bg .chronos-timer-value {
+          color: #fff;
+        }
+        .chronos-timer-has-bg .chronos-timer-label {
+          color: rgba(255, 255, 255, 0.75);
         }
 
 

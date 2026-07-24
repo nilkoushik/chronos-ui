@@ -249,13 +249,19 @@
       <pre><code><span class="kw">import</span> Banner <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/Banner'</span>;
 <span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
 
+<span class="cm">// Every hotspot shape renders as a real SVG rect/ellipse/polygon (not</span>
+<span class="cm">// clip-path), each with its own keyboard-focusable &lt;<span class="tag">a</span>&gt; sized to at least</span>
+<span class="cm">// config.hotspotMinTargetSize CSS px (WCAG 2.5.8), a visible focus outline</span>
+<span class="cm">// (2.4.7), and an optional hover/focus tooltip (1.4.13).</span>
 &lt;<span class="tag">Banner</span>
   title=<span class="str">"Summer Collection 2026"</span>
   subtitle=<span class="str">"Discover the new season"</span>
   ctaText=<span class="str">"Shop Now"</span>
   media={{ type: <span class="str">'image'</span>, url: <span class="str">'/hero.jpg'</span> }}
   hotspots={[
-    { id: <span class="str">'h1'</span>, altText: <span class="str">'Jacket'</span>, shape: <span class="str">'rect'</span>, coords: { x: 10, y: 20, width: 15, height: 25 }, action: { type: <span class="str">'link'</span>, url: <span class="str">'/products/jacket'</span> }, pulse: <span class="kw">true</span>, showTooltip: <span class="kw">true</span>, label: <span class="str">'Jacket'</span> }
+    { id: <span class="str">'h1'</span>, altText: <span class="str">'Jacket'</span>, shape: <span class="str">'rect'</span>, coords: { x: 8, y: 18, width: 14, height: 24 }, action: { type: <span class="str">'link'</span>, url: <span class="str">'/products/jacket'</span> }, pulse: <span class="kw">true</span>, showTooltip: <span class="kw">true</span>, label: <span class="str">'Jacket'</span> },
+    { id: <span class="str">'h2'</span>, altText: <span class="str">'Sunglasses'</span>, shape: <span class="str">'oval'</span>, coords: { x: 34, y: 12, width: 10, height: 8 }, action: { type: <span class="str">'link'</span>, url: <span class="str">'/products/sunglasses'</span> }, pulse: <span class="kw">true</span>, showTooltip: <span class="kw">true</span>, label: <span class="str">'Sunglasses'</span> },
+    { id: <span class="str">'h3'</span>, altText: <span class="str">'Sneakers'</span>, shape: <span class="str">'polygon'</span>, coords: { x: 55, y: 60, width: 20, height: 15 }, points: [{ x: 55, y: 68 }, { x: 62, y: 60 }, { x: 75, y: 62 }, { x: 70, y: 75 }], action: { type: <span class="str">'link'</span>, url: <span class="str">'/products/sneakers'</span> }, pulse: <span class="kw">true</span>, showTooltip: <span class="kw">true</span>, label: <span class="str">'Sneakers'</span> }
   ]}
   ctaLink=<span class="str">"/shop"</span>
   lazyLoad
@@ -264,7 +270,9 @@
     padding: <span class="str">'lg'</span>,
     bgGradient: <span class="str">'linear-gradient(to right, black, transparent)'</span>,
     height: <span class="str">'auto'</span>,
-    bgPosition: <span class="str">'center'</span>
+    bgPosition: <span class="str">'center'</span>,
+    hotspotMinTargetSize: 24,
+    backgroundEffect: <span class="str">'rain'</span>
   }}
 /&gt;</code></pre>
     </div>
@@ -278,13 +286,17 @@
   <span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
 &lt;/<span class="tag">script</span>&gt;
 
+&lt;!-- Rect, oval and polygon hotspots all render as native SVG shapes with a
+     matching pulse ring and an accessible, min-24px hit target. --&gt;
 &lt;<span class="tag">Banner</span>
   title=<span class="str">"Summer Collection 2026"</span>
   subtitle=<span class="str">"Discover the new season"</span>
   ctaText=<span class="str">"Shop Now"</span>
   media={{ type: <span class="str">'image'</span>, url: <span class="str">'/hero.jpg'</span> }}
   hotspots={[
-    { id: <span class="str">'h1'</span>, altText: <span class="str">'Jacket'</span>, shape: <span class="str">'rect'</span>, coords: { x: 10, y: 20, width: 15, height: 25 }, action: { type: <span class="str">'link'</span>, url: <span class="str">'/products/jacket'</span> }, pulse: <span class="kw">true</span>, showTooltip: <span class="kw">true</span>, label: <span class="str">'Jacket'</span> }
+    { id: <span class="str">'h1'</span>, altText: <span class="str">'Jacket'</span>, shape: <span class="str">'rect'</span>, coords: { x: 8, y: 18, width: 14, height: 24 }, action: { type: <span class="str">'link'</span>, url: <span class="str">'/products/jacket'</span> }, pulse: <span class="kw">true</span>, showTooltip: <span class="kw">true</span>, label: <span class="str">'Jacket'</span> },
+    { id: <span class="str">'h2'</span>, altText: <span class="str">'Sunglasses'</span>, shape: <span class="str">'oval'</span>, coords: { x: 34, y: 12, width: 10, height: 8 }, action: { type: <span class="str">'link'</span>, url: <span class="str">'/products/sunglasses'</span> }, pulse: <span class="kw">true</span>, showTooltip: <span class="kw">true</span>, label: <span class="str">'Sunglasses'</span> },
+    { id: <span class="str">'h3'</span>, altText: <span class="str">'Sneakers'</span>, shape: <span class="str">'polygon'</span>, coords: { x: 55, y: 60, width: 20, height: 15 }, points: [{ x: 55, y: 68 }, { x: 62, y: 60 }, { x: 75, y: 62 }, { x: 70, y: 75 }], action: { type: <span class="str">'link'</span>, url: <span class="str">'/products/sneakers'</span> }, pulse: <span class="kw">true</span>, showTooltip: <span class="kw">true</span>, label: <span class="str">'Sneakers'</span> }
   ]}
   ctaLink=<span class="str">"/shop"</span>
   lazyLoad={<span class="kw">true</span>}
@@ -293,7 +305,9 @@
     padding: <span class="str">'lg'</span>,
     bgGradient: <span class="str">'linear-gradient(to right, black, transparent)'</span>,
     height: <span class="str">'auto'</span>,
-    bgPosition: <span class="str">'center'</span>
+    bgPosition: <span class="str">'center'</span>,
+    hotspotMinTargetSize: 24,
+    backgroundEffect: <span class="str">'rain'</span>
   }}
 /&gt;</code></pre>
     </div>
@@ -311,10 +325,10 @@
   subtitle=<span class="str">"Discover the new season"</span>
   cta-text=<span class="str">"Shop Now"</span>
   media=<span class="str">'{"type":"image","url":"/hero.jpg"}'</span>
-  hotspots=<span class="str">'[{"id":"h1","altText":"Jacket","shape":"rect","coords":{"x":10,"y":20,"width":15,"height":25},"action":{"type":"link","url":"/products/jacket"},"pulse":<span class="kw">true</span>,"showTooltip":<span class="kw">true</span>,"label":"Jacket"}]'</span>
+  hotspots=<span class="str">'[{"id":"h1","altText":"Jacket","shape":"rect","coords":{"x":8,"y":18,"width":14,"height":24},"action":{"type":"link","url":"/products/jacket"},"pulse":<span class="kw">true</span>,"showTooltip":<span class="kw">true</span>,"label":"Jacket"},{"id":"h2","altText":"Sunglasses","shape":"oval","coords":{"x":34,"y":12,"width":10,"height":8},"action":{"type":"link","url":"/products/sunglasses"},"pulse":<span class="kw">true</span>,"showTooltip":<span class="kw">true</span>,"label":"Sunglasses"},{"id":"h3","altText":"Sneakers","shape":"polygon","coords":{"x":55,"y":60,"width":20,"height":15},"points":[{"x":55,"y":68},{"x":62,"y":60},{"x":75,"y":62},{"x":70,"y":75}],"action":{"type":"link","url":"/products/sneakers"},"pulse":<span class="kw">true</span>,"showTooltip":<span class="kw">true</span>,"label":"Sneakers"}]'</span>
   cta-link=<span class="str">"/shop"</span>
   lazy-load=<span class="str">"<span class="kw">true</span>"</span>
-  config=<span class="str">'{"align":"center","padding":"lg","height":"auto","bgPosition":"center"}'</span>
+  config=<span class="str">'{"align":"center","padding":"lg","height":"auto","bgPosition":"center","hotspotMinTargetSize":24,"backgroundEffect":"rain"}'</span>
 &gt;&lt;/<span class="tag">banner</span>&gt;</code></pre>
     </div>
         </div>
@@ -387,7 +401,19 @@
         <td><span class="prop-name">hotspots</span> </td>
         <td><span class="prop-type">Hotspot[]</span></td>
         <td><span class="prop-default">undefined</span></td>
-        <td>Clickable image-map regions (rect/oval/polygon) overlaid on the media, each linking to a URL or deeplink</td>
+        <td>Clickable SVG image-map regions (rect/oval/polygon) overlaid on the media, each linking to a URL or deeplink. Renders as a real SVG shape (not clip-path), with a separately-sized keyboard-focusable hit target per hotspot</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">config.hotspotMinTargetSize</span> </td>
+        <td><span class="prop-type">number</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Minimum hotspot hit-target size in CSS px, enforced independently of the drawn shape size (WCAG 2.5.8). Default: 24</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">config.backgroundEffect</span> </td>
+        <td><span class="prop-type">'none' | 'particles' | 'waves' | 'rain' | 'thunderstorm' | 'sunrise' | 'sunset' | 'fog' | 'autumn' | 'festival' | 'santa' | 'sea'</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Animated canvas layer rendered behind the media/overlay. Shared plugin engine (<code>src/utils/backgroundEffects.ts</code>) also used by SlidingBanner — new effects can be added there without touching this component. 'rain'/'thunderstorm' include a water band along the bottom edge with landing ripples; 'thunderstorm' additionally adds periodic lightning flashes/bolts. 'fog' is winter fog drifting with wind, light snow, plus cinematic frost shards. 'autumn' is falling, swaying autumn leaves. 'festival' is an Indian-festival (Diwali-style) look with ambient diya sparkle and periodic firework bursts. 'santa' has twinkling string lights, snowfall mixed with tumbling candy canes and peppermints, a galloping-reindeer sleigh flyby (with a glowing Rudolph nose leading) that drops a trail of tumbling candy canes and mints as it flies, loops back right-to-left through the bottom half of the frame after its first pass instead of just vanishing, and a playful Santa cap that randomly peeks in and out from one of the four frame edges like hide-and-seek. 'sea' is an aerial-view waterline wash — the effect stays transparent everywhere except a thin translucent, sea-tinted band (~10% of the banner height) along the bottom edge, so the banner's own background image reads as the seashore/beach itself. The band breathes in and out on a natural (non-mechanical) surge rhythm, with drifting aerial-style foam blobs and lacy filament streaks, like a top-down drone shot of waves lapping the sand. Default: 'none'</td>
       </tr>
       <tr>
         <td><span class="prop-name">lazyLoad</span> </td>
@@ -413,7 +439,9 @@
       <!-- Notes -->
       <div class="alert alert-tip"><strong>Theming:</strong> Override <code>--chronos-color-primary</code> in your stylesheet to change the CTA button colour.</div>
 <div class="alert alert-info"><strong>Video background:</strong> Set <code>media.type = 'video'</code> — the component renders a muted, autoplayed, looped <code>&lt;video&gt;</code> positioned absolutely behind the overlay.</div>
-<div class="alert alert-info"><strong>Hotspots:</strong> Pass <code>hotspots</code> (rect/oval/polygon regions with <code>coords</code> as percentages) to overlay clickable image-map regions on the media, each linking to a URL or app deeplink. <code>backgroundImageUrl</code> remains supported as a legacy alternative to <code>media</code>.</div>
+<div class="alert alert-info"><strong>Hotspots:</strong> Pass <code>hotspots</code> (rect/oval/polygon regions with <code>coords</code> as percentages) to overlay clickable image-map regions on the media, each linking to a URL or app deeplink. Shapes render as real, anti-aliased SVG (not CSS <code>clip-path</code>), so polygon edges and the pulse ring look correct for every shape — matching what you see in the Hotspot Designer. <code>backgroundImageUrl</code> remains supported as a legacy alternative to <code>media</code>.</div>
+<div class="alert alert-tip"><strong>Accessibility:</strong> Each hotspot is a real, keyboard-focusable <code>&lt;a&gt;</code> with an <code>aria-label</code> from <code>altText</code>/<code>label</code>, a visible <code>:focus-visible</code> outline, and a hit target that's always at least <code>config.hotspotMinTargetSize</code> CSS px (default 24, per WCAG 2.5.8) regardless of the drawn shape's size. Set <code>showTooltip</code> for a hover/focus tooltip that meets WCAG 1.4.13. The pulse animation automatically pauses under <code>prefers-reduced-motion: reduce</code>.</div>
+<div class="alert alert-info"><strong>Background effects:</strong> Set <code>config.backgroundEffect</code> to <code>'particles'</code>, <code>'waves'</code>, <code>'rain'</code>, <code>'thunderstorm'</code>, <code>'sunrise'</code>, <code>'sunset'</code>, or <code>'fog'</code> to render an animated canvas layer behind the banner's media/overlay. This is powered by a standalone plugin engine at <code>src/utils/backgroundEffects.ts</code> (also used by SlidingBanner) — it's a plain registry of canvas renderers, so new effects can be added there once and become available to every component that uses it, without any per-component changes.</div>
 <div class="alert alert-tip"><strong>Lazy loading:</strong> By default the banner defers mounting its media/hotspots until it scrolls near the viewport (shared <code>IntersectionObserver</code> per threshold across all widgets on the page). Pass <code>lazyLoad={false}</code> to disable, or tune <code>lazyThreshold</code> / <code>lazyRootMargin</code>.</div>
     </div>
   </main>

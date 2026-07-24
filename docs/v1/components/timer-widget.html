@@ -202,6 +202,48 @@
         <td>Optional heading displayed above the timer blocks</td>
       </tr>
       <tr>
+        <td><span class="prop-name">variant</span> </td>
+        <td><span class="prop-type">'neon' | 'dark' | 'gray'</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Visual color theme for the timer blocks (default: 'dark')</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">backgroundImageUrl</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Background image URL. When set, renders behind the widget with a readability overlay so timer blocks stay legible over photos</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">backgroundPosition</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>CSS background-position for the background image (default: 'center')</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">overlay</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>CSS background for the scrim over the background image, e.g. a gradient or rgba() color (default: 'rgba(0, 0, 0, 0.45)')</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">expiredText</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Message shown once targetDate has passed, in place of the countdown blocks</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">width</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>CSS width for the root element (default: 'auto')</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">height</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>CSS height for the root element (default: 'auto'). When 'auto' and backgroundImageUrl is set, the widget's height follows the image's natural aspect ratio via an in-flow <img>. Pass an explicit value (e.g. '320px') to pin the height instead — the CMS admin computes and saves this from the image so the public page can reserve the space up front and avoid layout shift</td>
+      </tr>
+      <tr>
         <td><span class="prop-name">className</span> </td>
         <td><span class="prop-type">string</span></td>
         <td><span class="prop-default">undefined</span></td>

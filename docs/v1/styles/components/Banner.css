@@ -51,6 +51,59 @@
         .chronos-banner-cta:hover {
           filter: brightness(1.1);
         }
+        .chronos-banner-bg-effect {
+          display: block;
+        }
+
+        /* ── Visual layer (SVG image map) ──────────────────────────────────
+           Pure presentation: pointer-events are disabled here so clicks pass
+           through to the HTML hit-target layer below. Shapes are invisible by
+           default (fill/stroke transparent) — only the pulse ring, if any, is
+           ever drawn — matching the original hotspot behavior while fixing
+           polygon anti-aliasing and giving polygons a working pulse effect. */
+        .chronos-banner-hotspots-svg {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+        }
+        .chronos-hotspot-visual rect,
+        .chronos-hotspot-visual ellipse,
+        .chronos-hotspot-visual polygon {
+          fill: transparent;
+          stroke: none;
+        }
+        .chronos-hotspot-pulse-ring {
+          fill: transparent;
+          stroke: #f472b6;
+          stroke-width: 2;
+          transform-box: fill-box;
+          transform-origin: center;
+          animation: chronosHotspotPulse 1.6s ease-out infinite;
+        }
+        @keyframes chronosHotspotPulse {
+          0% { transform: scale(0.92); opacity: 0.9; }
+          100% { transform: scale(1.35); opacity: 0; }
+        }
+        /* WCAG 2.3.3 / general motion-sensitivity best practice: honor the
+           user's OS-level reduced-motion preference by freezing the ring in
+           a single, still, low-opacity state instead of animating it. */
+        @media (prefers-reduced-motion: reduce) {
+          .chronos-hotspot-pulse-ring {
+            animation: none;
+            opacity: 0.6;
+          }
+        }
+
+        /* ── Interactive layer (real, focusable HTML links) ────────────────
+           Positioned/centered by hotspotHitStyle() in the component, with a
+           min-width/min-height floor applied here via inline style so every
+           hotspot's click/tap target meets WCAG 2.5.8 (24x24 CSS px minimum)
+           regardless of how small the authored shape is. */
+        .chronos-hotspot-hit {
+          display: block;
+        }
         .chronos-hotspot {
           position: absolute;
           inset: 0;
@@ -58,22 +111,47 @@
           cursor: pointer;
           outline: none;
         }
-        .chronos-hotspot-oval {
-          border-radius: 50%;
-        }
+        /* Visible, high-contrast focus indicator (WCAG 2.4.7 / 2.4.11).
+           Uses outline (not box-shadow) so it still renders in Windows
+           High Contrast / forced-colors mode. */
         .chronos-hotspot:focus-visible {
-          box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--chronos-color-primary);
+          outline: 3px solid var(--chronos-color-primary, #7c3aed);
+          outline-offset: 2px;
+          border-radius: 2px;
         }
-        .chronos-hotspot-pulse-ring {
+
+        /* Tooltip: content shown on hover/focus (WCAG 1.4.13). It stays
+           visible while either the link or the tooltip itself is hovered or
+           focused, doesn't obscure other content, and disappears on
+           mouse-out/blur without requiring a pointer gesture to dismiss. */
+        .chronos-hotspot-tooltip {
           position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          border: 2px solid #f472b6;
-          animation: chronosHotspotPulse 1.6s ease-out infinite;
+          bottom: calc(100% + 8px);
+          left: 50%;
+          transform: translateX(-50%) translateY(4px);
+          background: rgba(15, 17, 21, 0.92);
+          color: #fff;
+          font-size: 12px;
+          font-weight: 600;
+          line-height: 1.3;
+          padding: 4px 8px;
+          border-radius: 4px;
+          white-space: nowrap;
           pointer-events: none;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.15s ease, transform 0.15s ease;
+          z-index: 3;
         }
-        @keyframes chronosHotspotPulse {
-          0% { transform: scale(0.9); opacity: 0.9; }
-          100% { transform: scale(1.6); opacity: 0; }
+        .chronos-hotspot:hover .chronos-hotspot-tooltip,
+        .chronos-hotspot:focus-visible .chronos-hotspot-tooltip {
+          opacity: 1;
+          visibility: visible;
+          transform: translateX(-50%) translateY(0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .chronos-hotspot-tooltip {
+            transition: none;
+          }
         }
 
