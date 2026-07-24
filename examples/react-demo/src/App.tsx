@@ -44,7 +44,9 @@ const DEFAULTS = {
     mapLinks: [{ label: "Shop", url: "#shop" }],
     backgroundImageUrl: "",
     hotspots: [
-      { id: "h1", altText: "Featured jacket", label: "Jacket", shape: "rect" as "rect", coords: { x: 10, y: 20, width: 18, height: 30 }, action: { type: "link" as "link", url: "#shop" }, pulse: true, showTooltip: true }
+      { id: "h1", altText: "Featured jacket", label: "Jacket", shape: "rect" as "rect", coords: { x: 8, y: 18, width: 16, height: 28 }, action: { type: "link" as "link", url: "#shop" }, pulse: true, showTooltip: true },
+      { id: "h2", altText: "Sunglasses", label: "Sunglasses", shape: "oval" as "oval", coords: { x: 34, y: 12, width: 10, height: 8 }, action: { type: "link" as "link", url: "#shop" }, pulse: true, showTooltip: true },
+      { id: "h3", altText: "Sneakers", label: "Sneakers", shape: "polygon" as "polygon", coords: { x: 55, y: 60, width: 20, height: 15 }, points: [{ x: 55, y: 68 }, { x: 62, y: 60 }, { x: 75, y: 62 }, { x: 70, y: 75 }], action: { type: "link" as "link", url: "#shop" }, pulse: true, showTooltip: true }
     ],
     lazyLoad: true,
     ctaLink: "",
@@ -52,7 +54,8 @@ const DEFAULTS = {
       align: "center" as "center" | "left" | "right",
       padding: "lg",
       bgGradient: "",
-      autoplay: true
+      autoplay: true,
+      hotspotMinTargetSize: 24
     }
   },
   AnnouncementBar: {
@@ -130,7 +133,14 @@ const DEFAULTS = {
   },
   TimerWidget: {
     title: "Special Offer Ends In:",
-    targetDate: "2026-12-31T23:59:59Z"
+    targetDate: "2026-12-31T23:59:59Z",
+    variant: "dark" as "neon" | "dark" | "gray",
+    backgroundImageUrl: "",
+    backgroundPosition: "center",
+    overlay: "",
+    expiredText: "This offer has ended.",
+    width: "auto",
+    height: "auto"
   },
   WysiwygRenderer: {
     htmlContent: `<div style="padding:10px;">
@@ -648,6 +658,21 @@ ${attrLines.join('\n')}
                     />
                   </div>
 
+                  {/* JSON Editor for Hotspots */}
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center">
+                      <label className="text-xs font-semibold text-slate-400">Hotspots (JSON Array)</label>
+                      {jsonErrors.hotspots && <span className="text-[10px] text-rose-400 font-bold">Invalid JSON</span>}
+                    </div>
+                    <p className="text-[10px] text-slate-500">rect/oval/polygon regions rendered as a real SVG image map. <code>coords</code> are percentages; <code>points</code> (percentages) are required for polygon shapes.</p>
+                    <textarea
+                      rows={8}
+                      className={`w-full bg-slate-950/70 border rounded-lg p-2 text-xs font-mono text-slate-300 focus:outline-none ${jsonErrors.hotspots ? 'border-rose-500/80 focus:border-rose-500' : 'border-slate-800 focus:border-indigo-500'}`}
+                      value={jsonInputs.hotspots || ''}
+                      onChange={(e) => handleJsonChange("hotspots", e.target.value)}
+                    />
+                  </div>
+
                   <div className="space-y-1.5">
                     <label className="text-xs font-semibold text-slate-400">Background Media URL (Direct Prop)</label>
                     <input
@@ -720,6 +745,41 @@ ${attrLines.join('\n')}
                         checked={activeProps.config?.autoplay ?? true}
                         onChange={(e) => handleConfigChange("autoplay", e.target.checked)}
                       />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-slate-500">Background Effect (config.backgroundEffect)</label>
+                      <select
+                        className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                        value={activeProps.config?.backgroundEffect || "none"}
+                        onChange={(e) => handleConfigChange("backgroundEffect", e.target.value)}
+                      >
+                        <option value="none">None</option>
+                        <option value="particles">Particles</option>
+                        <option value="waves">Waves</option>
+                        <option value="rain">Rain</option>
+                        <option value="thunderstorm">Thunderstorm</option>
+                        <option value="sunrise">Sunrise</option>
+                        <option value="sunset">Sunset</option>
+                        <option value="fog">Winter Fog (wind + frost shards)</option>
+                        <option value="autumn">Autumn Leaves</option>
+                        <option value="festival">Indian Festival (Diwali)</option>
+                        <option value="santa">Santa Sleigh</option>
+                        <option value="sea">Sea Waves (aerial seashore)</option>
+                      </select>
+                      <p className="text-[10px] text-slate-500">Animated canvas layer behind the media/overlay, from the shared background-effects plugin engine (also used by SlidingBanner).</p>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-slate-500">Hotspot Min Target Size, px (config.hotspotMinTargetSize)</label>
+                      <input
+                        type="number"
+                        min={0}
+                        className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                        value={activeProps.config?.hotspotMinTargetSize ?? 24}
+                        onChange={(e) => handleConfigChange("hotspotMinTargetSize", parseInt(e.target.value) || 0)}
+                      />
+                      <p className="text-[10px] text-slate-500">Guaranteed minimum hotspot hit-target size, independent of the drawn shape (WCAG 2.5.8).</p>
                     </div>
                   </div>
                 </>
@@ -1085,6 +1145,15 @@ ${attrLines.join('\n')}
                         <option value="none">None</option>
                         <option value="particles">Particles</option>
                         <option value="waves">Waves</option>
+                        <option value="rain">Rain</option>
+                        <option value="thunderstorm">Thunderstorm</option>
+                        <option value="sunrise">Sunrise</option>
+                        <option value="sunset">Sunset</option>
+                        <option value="fog">Winter Fog (wind + frost shards)</option>
+                        <option value="autumn">Autumn Leaves</option>
+                        <option value="festival">Indian Festival (Diwali)</option>
+                        <option value="santa">Santa Sleigh</option>
+                        <option value="sea">Sea Waves (aerial seashore)</option>
                       </select>
                     </div>
                   </div>
@@ -1231,6 +1300,84 @@ ${attrLines.join('\n')}
                       value={activeProps.targetDate.replace('Z', '').substring(0, 16)}
                       onChange={(e) => handlePropChange("targetDate", e.target.value ? `${e.target.value}:00Z` : "")}
                     />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-slate-400">Color Variant</label>
+                    <select
+                      className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                      value={activeProps.variant || "dark"}
+                      onChange={(e) => handlePropChange("variant", e.target.value)}
+                    >
+                      <option value="dark">Dark</option>
+                      <option value="neon">Neon</option>
+                      <option value="gray">Gray</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-slate-400">Expired Message</label>
+                    <input
+                      type="text"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                      placeholder="Shown once the countdown reaches zero"
+                      value={activeProps.expiredText || ''}
+                      onChange={(e) => handlePropChange("expiredText", e.target.value)}
+                    />
+                  </div>
+
+                  <div className="border-t border-slate-800 pt-4 mt-4 space-y-4">
+                    <span className="text-xs font-semibold text-slate-400 block">Background Image</span>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-slate-500">Background Image URL</label>
+                      <input
+                        type="text"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                        placeholder="/img/placeholder-05.svg"
+                        value={activeProps.backgroundImageUrl || ''}
+                        onChange={(e) => handlePropChange("backgroundImageUrl", e.target.value)}
+                      />
+                      <p className="text-[10px] text-slate-500">When set and height is "auto", the widget's height follows the image's natural aspect ratio.</p>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-slate-500">Overlay Scrim (CSS background)</label>
+                      <input
+                        type="text"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                        placeholder="rgba(0, 0, 0, 0.45)"
+                        value={activeProps.overlay || ''}
+                        onChange={(e) => handlePropChange("overlay", e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="border-t border-slate-800 pt-4 mt-4 space-y-4">
+                    <span className="text-xs font-semibold text-slate-400 block">Sizing</span>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-slate-500">Width</label>
+                      <input
+                        type="text"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                        placeholder="auto"
+                        value={activeProps.width || ''}
+                        onChange={(e) => handlePropChange("width", e.target.value)}
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-slate-500">Height</label>
+                      <input
+                        type="text"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                        placeholder="auto, or e.g. 320px"
+                        value={activeProps.height || ''}
+                        onChange={(e) => handlePropChange("height", e.target.value)}
+                      />
+                      <p className="text-[10px] text-slate-500">"auto" sizes from the background image (or content, if none). A CMS typically computes and saves an explicit pixel value here to avoid layout shift on the public page.</p>
+                    </div>
                   </div>
                 </>
               )}

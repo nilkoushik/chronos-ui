@@ -1,5 +1,6 @@
 import { useStore, onMount, onUnMount, useRef, Show, onUpdate } from '@builder.io/mitosis';
 import { observeLazyMount } from '../utils/lazyObserver';
+import { startBackgroundEffect, stopBackgroundEffect, BackgroundEffectContext, BackgroundEffectName } from '../utils/backgroundEffects';
 
 export interface BannerMedia {
   type?: 'image' | 'video' | string;
@@ -30,7 +31,7 @@ export interface SliderConfig {
   showArrows?: boolean;
   showDots: boolean;
   animationEffect?: 'slide' | 'fade' | 'zoom' | 'flip' | 'push-up' | 'push-down' | 'push-left' | 'push-right' | 'wipe-left' | 'wipe-right' | 'cube' | 'door' | 'fall' | 'crush' | 'peel-off' | 'curtain';
-  backgroundEffect?: 'none' | 'particles' | 'waves';
+  backgroundEffect?: BackgroundEffectName;
   hideArrowsIfNoScroll?: boolean;
   height?: string;
   minHeight?: string;
@@ -55,10 +56,9 @@ export default function SlidingBanner(props: SlidingBannerProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const animContext = useRef({
     intervalId: null as any,
-    animationFrameId: null as any,
-    resizeHandler: null as any,
     dimResizeHandler: null as any
   });
+  const bgEffectContext = useRef<BackgroundEffectContext>({ animationFrameId: null, resizeHandler: null });
   const observerBox = useRef<{ disconnect: (() => void) | null }>({ disconnect: null });
 
   const state = useStore({
@@ -126,85 +126,6 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       if (rootRef) {
         rootRef.style.setProperty('--slider-half-width', `${rootRef.offsetWidth / 2}px`);
       }
-    },
-    initCanvasAnimations(canvas: HTMLCanvasElement) {
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      
-      const effect = props.config?.backgroundEffect;
-      if (effect !== 'particles' && effect !== 'waves') return;
-
-      const resize = () => {
-        if (canvas) {
-          canvas.width = canvas.offsetWidth;
-          canvas.height = canvas.offsetHeight;
-        }
-      };
-      resize();
-      animContext.resizeHandler = resize;
-      window.addEventListener('resize', animContext.resizeHandler);
-
-      if (effect === 'particles') {
-        const particles: any[] = [];
-        for(let i=0; i<70; i++) {
-          particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            size: Math.random() * 3 + 1,
-            speedX: Math.random() * 1 - 0.5,
-            speedY: Math.random() * -1 - 0.2,
-            opacity: Math.random() * 0.5 + 0.1
-          });
-        }
-        
-        const animate = () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          for (let i = 0; i < particles.length; i++) {
-            let p = particles[i];
-            ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fill();
-            p.x += p.speedX;
-            p.y += p.speedY;
-            if (p.y < -10) p.y = canvas.height + 10;
-            if (p.x < -10) p.x = canvas.width + 10;
-            if (p.x > canvas.width + 10) p.x = -10;
-          }
-          animContext.animationFrameId = requestAnimationFrame(animate);
-        };
-        animate();
-      } else if (effect === 'waves') {
-        let time = 0;
-        const animate = () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          
-          // Back wave
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-          ctx.beginPath();
-          ctx.moveTo(0, canvas.height);
-          for(let i=0; i<=canvas.width; i+=20) {
-            ctx.lineTo(i, canvas.height - 80 + Math.sin(i * 0.005 + time) * 30);
-          }
-          ctx.lineTo(canvas.width, canvas.height);
-          ctx.fill();
-          
-          // Front wave
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-          ctx.beginPath();
-          ctx.moveTo(0, canvas.height);
-          for(let i=0; i<=canvas.width; i+=20) {
-            ctx.lineTo(i, canvas.height - 40 + Math.sin(i * 0.008 + time * 1.5) * 20);
-          }
-          ctx.lineTo(canvas.width, canvas.height);
-          ctx.fill();
-
-          time += 0.03;
-          animContext.animationFrameId = requestAnimationFrame(animate);
-        };
-        animate();
-      }
     }
   });
 
@@ -214,7 +135,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     animContext.dimResizeHandler = () => state.setupDimensions();
     window.addEventListener('resize', animContext.dimResizeHandler);
     if (canvasRef) {
-      state.initCanvasAnimations(canvasRef);
+      startBackgroundEffect(canvasRef, props.config?.backgroundEffect, bgEffectContext);
     }
   }
 
@@ -235,29 +156,15 @@ export default function SlidingBanner(props: SlidingBannerProps) {
   });
 
   onUpdate(() => {
-    // Cancel the old canvas loop
-    if (animContext.animationFrameId) {
-      cancelAnimationFrame(animContext.animationFrameId);
-      animContext.animationFrameId = null;
-    }
-    if (animContext.resizeHandler) {
-      window.removeEventListener('resize', animContext.resizeHandler);
-      animContext.resizeHandler = null;
-    }
-    // Start a fresh loop on the canvas
+    // Start a fresh loop on the canvas (startBackgroundEffect stops the old one first)
     if (canvasRef) {
-      state.initCanvasAnimations(canvasRef);
+      startBackgroundEffect(canvasRef, props.config?.backgroundEffect, bgEffectContext);
     }
   }, [props.config?.backgroundEffect, canvasRef]);
 
   onUnMount(() => {
     state.stopAutoPlay();
-    if (animContext.animationFrameId) {
-      cancelAnimationFrame(animContext.animationFrameId);
-    }
-    if (animContext.resizeHandler) {
-      window.removeEventListener('resize', animContext.resizeHandler);
-    }
+    stopBackgroundEffect(bgEffectContext);
     if (animContext.dimResizeHandler) {
       window.removeEventListener('resize', animContext.dimResizeHandler);
     }
@@ -274,9 +181,9 @@ export default function SlidingBanner(props: SlidingBannerProps) {
         minHeight: props.config?.height === 'auto' ? 'auto' : (props.config?.minHeight || '')
       }}
     >
-      {(state.backgroundClass === 'particles' || state.backgroundClass === 'waves') && (
-        <canvas 
-          ref={canvasRef} 
+      {state.backgroundClass !== 'none' && (
+        <canvas
+          ref={canvasRef}
           class="chronos-sliding-banner-canvas"
         ></canvas>
       )}

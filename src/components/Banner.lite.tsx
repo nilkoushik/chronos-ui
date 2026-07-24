@@ -1,5 +1,6 @@
-import { useStore, useRef, onMount, onUnMount, Show } from '@builder.io/mitosis';
+import { useStore, useRef, onMount, onUnMount, onUpdate, Show } from '@builder.io/mitosis';
 import { observeLazyMount } from '../utils/lazyObserver';
+import { startBackgroundEffect, stopBackgroundEffect, BackgroundEffectContext, BackgroundEffectName } from '../utils/backgroundEffects';
 
 export interface BannerMedia {
   type?: 'image' | 'video' | string;
@@ -21,6 +22,8 @@ export interface BannerConfig {
   height?: string;
   minHeight?: string;
   bgPosition?: string;
+  hotspotMinTargetSize?: number;
+  backgroundEffect?: BackgroundEffectName;
 }
 
 export type HotspotShape = 'rect' | 'oval' | 'polygon';
@@ -64,6 +67,8 @@ export interface BannerProps {
 export default function Banner(props: BannerProps) {
 
   const rootRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animContext = useRef<BackgroundEffectContext>({ animationFrameId: null, resizeHandler: null });
 
   const state = useStore({
     isVisible: false,
@@ -107,24 +112,44 @@ export default function Banner(props: BannerProps) {
       if (props.config?.height === 'auto') return 'auto';
       return props.config?.minHeight || props.config?.height || '300px';
     },
-    hotspotClip(h: Hotspot) {
-      if (h.shape !== 'polygon' || !h.points?.length) return '';
-      const points = h.points
-        .map((p) => `${((p.x - h.coords.x) / h.coords.width) * 100}% ${((p.y - h.coords.y) / h.coords.height) * 100}%`)
-        .join(', ');
-      return `polygon(${points})`;
+    get hotspotMinTarget() {
+      return props.config?.hotspotMinTargetSize ?? 24;
     },
     hotspotHref(h: Hotspot) {
       return h.action?.type === 'deeplink' ? (h.action.deeplink || h.action.url || '#') : (h.action?.url || '#');
     },
-    hotspotStyle(h: Hotspot) {
+    hotspotLabel(h: Hotspot) {
+      return h.altText || h.label || 'Hotspot link';
+    },
+    // SVG points string for polygon shapes, in the shared 0-100 viewBox space.
+    hotspotPolygonPoints(h: Hotspot) {
+      if (!h.points?.length) return '';
+      return h.points.map((p) => `${p.x},${p.y}`).join(' ');
+    },
+    // Center of the shape's bounding box (0-100 space) — used to anchor the
+    // real interactive <a> so it can be enlarged to the minimum target size
+    // without shifting off the visual shape.
+    hotspotCenter(h: Hotspot) {
+      return {
+        x: h.coords.x + h.coords.width / 2,
+        y: h.coords.y + h.coords.height / 2
+      };
+    },
+    // The interactive hit-target, positioned by its center and sized with a
+    // CSS min-width/min-height floor (independent of the % based visual
+    // shape) so it always satisfies WCAG 2.5.8 (24x24 CSS px minimum),
+    // even when the authored hotspot is drawn smaller than that.
+    hotspotHitStyle(h: Hotspot) {
+      const c = state.hotspotCenter(h);
       return {
         position: 'absolute',
-        left: `${h.coords.x}%`,
-        top: `${h.coords.y}%`,
+        left: `${c.x}%`,
+        top: `${c.y}%`,
         width: `${h.coords.width}%`,
         height: `${h.coords.height}%`,
-        clipPath: state.hotspotClip(h) || undefined
+        minWidth: `${state.hotspotMinTarget}px`,
+        minHeight: `${state.hotspotMinTarget}px`,
+        transform: 'translate(-50%, -50%)'
       };
     }
   });
@@ -134,20 +159,29 @@ export default function Banner(props: BannerProps) {
   onMount(() => {
     if (props.lazyLoad === false) {
       state.isVisible = true;
+      if (canvasRef) startBackgroundEffect(canvasRef, props.config?.backgroundEffect, animContext);
       return;
     }
     if (rootRef) {
       observerBox.disconnect = observeLazyMount(
         rootRef,
-        () => { state.isVisible = true; },
+        () => {
+          state.isVisible = true;
+          if (canvasRef) startBackgroundEffect(canvasRef, props.config?.backgroundEffect, animContext);
+        },
         props.lazyThreshold ?? 0.1,
         props.lazyRootMargin ?? '200px'
       );
     }
   });
 
+  onUpdate(() => {
+    if (state.isVisible && canvasRef) startBackgroundEffect(canvasRef, props.config?.backgroundEffect, animContext);
+  }, [props.config?.backgroundEffect, canvasRef]);
+
   onUnMount(() => {
     if (observerBox.disconnect) observerBox.disconnect();
+    stopBackgroundEffect(animContext);
   });
 
   return (
@@ -180,18 +214,85 @@ export default function Banner(props: BannerProps) {
         />
       </Show>
 
+      <Show when={!!props.config?.backgroundEffect && props.config.backgroundEffect !== 'none'}>
+        <canvas
+          ref={canvasRef}
+          class="chronos-banner-bg-effect"
+          aria-hidden="true"
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }}
+        />
+      </Show>
+
       <Show when={state.shouldMount && !!props.hotspots?.length}>
         <div class="chronos-banner-hotspots" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2 }}>
+          {/* Visual layer: a true SVG image map with native anti-aliasing (no jagged clip-path edges); the pulse ring uses the same geometry for every shape, including polygons. */}
+          <svg
+            class="chronos-banner-hotspots-svg"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            {props.hotspots?.map((h) => (
+              <g key={`${h.id}-visual`}>
+              <g class={`chronos-hotspot-visual chronos-hotspot-visual-${h.shape}`}>
+                <Show when={h.shape === 'rect'}>
+                  <rect x={h.coords.x} y={h.coords.y} width={h.coords.width} height={h.coords.height} vector-effect="non-scaling-stroke" />
+                </Show>
+                <Show when={h.shape === 'oval'}>
+                  <ellipse
+                    cx={h.coords.x + h.coords.width / 2}
+                    cy={h.coords.y + h.coords.height / 2}
+                    rx={h.coords.width / 2}
+                    ry={h.coords.height / 2}
+                    vector-effect="non-scaling-stroke"
+                  />
+                </Show>
+                <Show when={h.shape === 'polygon'}>
+                  <polygon points={state.hotspotPolygonPoints(h)} vector-effect="non-scaling-stroke" />
+                </Show>
+                {h.pulse && (
+                  <Show when={h.shape === 'rect'}>
+                    <rect class="chronos-hotspot-pulse-ring" x={h.coords.x} y={h.coords.y} width={h.coords.width} height={h.coords.height} vector-effect="non-scaling-stroke" />
+                  </Show>
+                )}
+                {h.pulse && (
+                  <Show when={h.shape === 'oval'}>
+                    <ellipse
+                      class="chronos-hotspot-pulse-ring"
+                      cx={h.coords.x + h.coords.width / 2}
+                      cy={h.coords.y + h.coords.height / 2}
+                      rx={h.coords.width / 2}
+                      ry={h.coords.height / 2}
+                      vector-effect="non-scaling-stroke"
+                    />
+                  </Show>
+                )}
+                {h.pulse && (
+                  <Show when={h.shape === 'polygon'}>
+                    <polygon class="chronos-hotspot-pulse-ring" points={state.hotspotPolygonPoints(h)} vector-effect="non-scaling-stroke" />
+                  </Show>
+                )}
+              </g>
+              </g>
+            ))}
+          </svg>
+
+          {/* Interactive layer: real HTML <a> elements, kept separate from the SVG visuals so each link can have a guaranteed minimum touch target (2.5.8), a visible focus outline (2.4.7), and a hoverable/focusable tooltip (1.4.13). */}
           {props.hotspots?.map((h) => (
             <div key={h.id}>
-              <div style={state.hotspotStyle(h)}>
+              <div class="chronos-hotspot-hit" style={state.hotspotHitStyle(h)}>
                 <a
                   href={state.hotspotHref(h)}
-                  aria-label={h.altText || h.label || 'Hotspot link'}
-                  title={h.showTooltip ? (h.label || h.altText) : undefined}
-                  class={`chronos-hotspot chronos-hotspot-${h.shape} ${h.pulse ? 'chronos-hotspot-pulse' : ''}`}
+                  aria-label={state.hotspotLabel(h)}
+                  aria-describedby={h.showTooltip ? `chronos-hotspot-tip-${h.id}` : undefined}
+                  class={`chronos-hotspot chronos-hotspot-${h.shape}`}
                 >
-                  {h.pulse && <span class="chronos-hotspot-pulse-ring"></span>}
+                  <Show when={!!h.showTooltip}>
+                    <span id={`chronos-hotspot-tip-${h.id}`} role="tooltip" class="chronos-hotspot-tooltip">
+                      {h.label || h.altText}
+                    </span>
+                  </Show>
                 </a>
               </div>
             </div>

@@ -35,7 +35,24 @@
 
   <section>
     <h2>Timer Widget</h2>
-    <TimerWidget title="Ends in:" targetDate="2027-12-31T23:59:59Z" />
+    <TimerWidget title="Ends in:" targetDate="2027-12-31T23:59:59Z" variant="dark" expiredText="This offer has ended." />
+  </section>
+
+  <section>
+    <h2>Timer Widget (background image, height set explicitly)</h2>
+    <!-- width defaults to "auto"; height is set to a fixed value here the way a CMS
+         would after computing it from the image's natural aspect ratio, so the space
+         is reserved up front and the page doesn't reflow once the image loads. -->
+    <TimerWidget
+      title="Flash Sale Ends In"
+      targetDate="2027-12-31T23:59:59Z"
+      variant="neon"
+      backgroundImageUrl="/img/placeholder-05.svg"
+      overlay="rgba(0, 0, 0, 0.5)"
+      width="auto"
+      height="320px"
+      expiredText="This offer has ended."
+    />
   </section>
 
   <section>
@@ -45,7 +62,9 @@
       subtitle="This is a simple banner component"
       media={{ type: 'image', url: '/img/placeholder-01.svg' }}
       hotspots={[
-        { id: 'h1', altText: 'Featured item', label: 'Featured', shape: 'rect', coords: { x: 10, y: 20, width: 18, height: 30 }, action: { type: 'link', url: '#explore' }, pulse: true, showTooltip: true }
+        { id: 'h1', altText: 'Featured item', label: 'Featured', shape: 'rect', coords: { x: 8, y: 18, width: 16, height: 28 }, action: { type: 'link', url: '#explore' }, pulse: true, showTooltip: true },
+        { id: 'h2', altText: 'Sunglasses', label: 'Sunglasses', shape: 'oval', coords: { x: 34, y: 12, width: 10, height: 8 }, action: { type: 'link', url: '#explore' }, pulse: true, showTooltip: true },
+        { id: 'h3', altText: 'Sneakers', label: 'Sneakers', shape: 'polygon', coords: { x: 55, y: 60, width: 20, height: 15 }, points: [{ x: 55, y: 68 }, { x: 62, y: 60 }, { x: 75, y: 62 }, { x: 70, y: 75 }], action: { type: 'link', url: '#explore' }, pulse: true, showTooltip: true }
       ]}
       lazyLoad={true}
       ctaText="Explore Now"
@@ -53,11 +72,50 @@
       config={{
         align: 'center',
         padding: 'lg',
-        bgGradient: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6))'
+        bgGradient: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6))',
+        hotspotMinTargetSize: 24
       }}
     />
   </section>
   
+  <section>
+    <h2>Banner — Background Effects</h2>
+    <p>Animated canvas layer rendered behind the media/overlay, from the shared background-effects plugin engine (<code>src/utils/backgroundEffects.ts</code>) — also used by SlidingBanner. New effects can be registered there once and become available everywhere the engine is used.</p>
+
+    <h3>Particles</h3>
+    <Banner title="Particles" media={{ type: 'image', url: '/img/placeholder-06.svg' }} config={{ height: '260px', backgroundEffect: 'particles' }} />
+
+    <h3>Waves</h3>
+    <Banner title="Waves" media={{ type: 'image', url: '/img/placeholder-07.svg' }} config={{ height: '260px', backgroundEffect: 'waves' }} />
+
+    <h3>Rain</h3>
+    <Banner title="Rain" media={{ type: 'image', url: '/img/placeholder-08.svg' }} config={{ height: '260px', backgroundEffect: 'rain' }} />
+
+    <h3>Thunderstorm</h3>
+    <Banner title="Thunderstorm" media={{ type: 'image', url: '/img/placeholder-09.svg' }} config={{ height: '260px', backgroundEffect: 'thunderstorm' }} />
+
+    <h3>Sunrise</h3>
+    <Banner title="Sunrise" media={{ type: 'image', url: '/img/placeholder-10.svg' }} config={{ height: '260px', backgroundEffect: 'sunrise' }} />
+
+    <h3>Sunset</h3>
+    <Banner title="Sunset" media={{ type: 'image', url: '/img/placeholder-11.svg' }} config={{ height: '260px', backgroundEffect: 'sunset' }} />
+
+    <h3>Winter Fog (wind + frost shards)</h3>
+    <Banner title="Winter Fog" media={{ type: 'image', url: '/img/placeholder-12.svg' }} config={{ height: '260px', backgroundEffect: 'fog' }} />
+
+    <h3>Autumn Leaves</h3>
+    <Banner title="Autumn" media={{ type: 'image', url: '/img/placeholder-13.svg' }} config={{ height: '260px', backgroundEffect: 'autumn' }} />
+
+    <h3>Indian Festival (Diwali)</h3>
+    <Banner title="Festival" media={{ type: 'image', url: '/img/placeholder-14.svg' }} config={{ height: '260px', backgroundEffect: 'festival' }} />
+
+    <h3>Santa Sleigh</h3>
+    <Banner title="Santa" media={{ type: 'image', url: '/img/placeholder-01.svg' }} config={{ height: '260px', backgroundEffect: 'santa' }} />
+
+    <h3>Sea Waves (aerial seashore)</h3>
+    <Banner title="Sea" media={{ type: 'image', url: '/img/placeholder-02.svg' }} config={{ height: '260px', backgroundEffect: 'sea' }} />
+  </section>
+
   <section>
     <h2>Grid Banner</h2>
     <GridBanner 

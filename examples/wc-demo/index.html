@@ -44,12 +44,75 @@
 
       <section>
         <h2>Timer Widget</h2>
-        <timer-widget title="Ends in:" target-date="2027-12-31T23:59:59Z"></timer-widget>
+        <timer-widget title="Ends in:" target-date="2027-12-31T23:59:59Z" expired-text="This offer has ended."></timer-widget>
+      </section>
+
+      <section>
+        <h2>Timer Widget (background image, height set explicitly)</h2>
+        <!-- width defaults to "auto"; height is set to a fixed value here the way a CMS
+             would after computing it from the image's natural aspect ratio, so the
+             space is reserved up front and the page doesn't reflow once the image loads. -->
+        <timer-widget
+          title="Flash Sale Ends In"
+          target-date="2027-12-31T23:59:59Z"
+          variant="neon"
+          background-image-url="/img/placeholder-05.svg"
+          overlay="rgba(0, 0, 0, 0.5)"
+          width="auto"
+          height="320px"
+          expired-text="This offer has ended."
+        ></timer-widget>
       </section>
 
       <section>
         <h2>Banner</h2>
-        <chronos-banner title="Welcome Banner" subtitle="This is a simple banner component" cta-text="Shop Now" text-alignment="center"></chronos-banner>
+        <chronos-banner
+          title="Welcome Banner"
+          subtitle="This is a simple banner component"
+          cta-text="Shop Now"
+          text-alignment="center"
+          media='{"type":"image","url":"/img/placeholder-01.svg"}'
+          hotspots='[{"id":"h1","altText":"Featured item","label":"Featured","shape":"rect","coords":{"x":8,"y":18,"width":16,"height":28},"action":{"type":"link","url":"#shop"},"pulse":true,"showTooltip":true},{"id":"h2","altText":"Sunglasses","label":"Sunglasses","shape":"oval","coords":{"x":34,"y":12,"width":10,"height":8},"action":{"type":"link","url":"#shop"},"pulse":true,"showTooltip":true},{"id":"h3","altText":"Sneakers","label":"Sneakers","shape":"polygon","coords":{"x":55,"y":60,"width":20,"height":15},"points":[{"x":55,"y":68},{"x":62,"y":60},{"x":75,"y":62},{"x":70,"y":75}],"action":{"type":"link","url":"#shop"},"pulse":true,"showTooltip":true}]'
+          config='{"align":"center","padding":"lg","hotspotMinTargetSize":24}'
+        ></chronos-banner>
+      </section>
+
+      <section>
+        <h2>Banner — Background Effects</h2>
+        <p>Animated canvas layer rendered behind the media/overlay, from the shared background-effects plugin engine (<code>src/utils/backgroundEffects.ts</code>) — also used by SlidingBanner.</p>
+
+        <h3>Particles</h3>
+        <chronos-banner title="Particles" media='{"type":"image","url":"/img/placeholder-06.svg"}' config='{"height":"260px","backgroundEffect":"particles"}'></chronos-banner>
+
+        <h3>Waves</h3>
+        <chronos-banner title="Waves" media='{"type":"image","url":"/img/placeholder-07.svg"}' config='{"height":"260px","backgroundEffect":"waves"}'></chronos-banner>
+
+        <h3>Rain</h3>
+        <chronos-banner title="Rain" media='{"type":"image","url":"/img/placeholder-08.svg"}' config='{"height":"260px","backgroundEffect":"rain"}'></chronos-banner>
+
+        <h3>Thunderstorm</h3>
+        <chronos-banner title="Thunderstorm" media='{"type":"image","url":"/img/placeholder-09.svg"}' config='{"height":"260px","backgroundEffect":"thunderstorm"}'></chronos-banner>
+
+        <h3>Sunrise</h3>
+        <chronos-banner title="Sunrise" media='{"type":"image","url":"/img/placeholder-10.svg"}' config='{"height":"260px","backgroundEffect":"sunrise"}'></chronos-banner>
+
+        <h3>Sunset</h3>
+        <chronos-banner title="Sunset" media='{"type":"image","url":"/img/placeholder-11.svg"}' config='{"height":"260px","backgroundEffect":"sunset"}'></chronos-banner>
+
+        <h3>Winter Fog (wind + frost shards)</h3>
+        <chronos-banner title="Winter Fog" media='{"type":"image","url":"/img/placeholder-12.svg"}' config='{"height":"260px","backgroundEffect":"fog"}'></chronos-banner>
+
+        <h3>Autumn Leaves</h3>
+        <chronos-banner title="Autumn" media='{"type":"image","url":"/img/placeholder-13.svg"}' config='{"height":"260px","backgroundEffect":"autumn"}'></chronos-banner>
+
+        <h3>Indian Festival (Diwali)</h3>
+        <chronos-banner title="Festival" media='{"type":"image","url":"/img/placeholder-14.svg"}' config='{"height":"260px","backgroundEffect":"festival"}'></chronos-banner>
+
+        <h3>Santa Sleigh</h3>
+        <chronos-banner title="Santa" media='{"type":"image","url":"/img/placeholder-01.svg"}' config='{"height":"260px","backgroundEffect":"santa"}'></chronos-banner>
+
+        <h3>Sea Waves (aerial seashore)</h3>
+        <chronos-banner title="Sea" media='{"type":"image","url":"/img/placeholder-02.svg"}' config='{"height":"260px","backgroundEffect":"sea"}'></chronos-banner>
       </section>
 
       <section>
