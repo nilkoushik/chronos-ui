@@ -27,6 +27,12 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
+      - name: Reset npm config
+        run: |
+          npm config delete always-auth || true
+          npm config set fund false
+          npm config set audit false
+
       - name: Verify npm auth token
         run: |
           if [ -z "${NODE_AUTH_TOKEN:-}" ]; then
