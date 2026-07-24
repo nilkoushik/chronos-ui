@@ -18,5 +18,16 @@ if (pkg.version.includes('-beta')) {
 }
 
 const spec = `${pkg.name}@${pkg.version}`;
+const isCi = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true';
+
+if (isCi) {
+  console.warn('[postpublish] skipping beta dist-tag sync in CI; the release publish has already completed.');
+  process.exit(0);
+}
+
 console.log(`[postpublish] syncing beta dist-tag -> ${spec}`);
-execSync(`npm dist-tag add ${spec} beta`, { stdio: 'inherit' });
+try {
+  execSync(`npm dist-tag add ${spec} beta`, { stdio: 'inherit' });
+} catch (error) {
+  console.warn('[postpublish] warning: could not sync the beta dist-tag. Continuing because the release itself has already been published.');
+}
