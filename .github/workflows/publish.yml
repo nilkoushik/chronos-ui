@@ -4,12 +4,14 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     permissions:
       contents: read
       id-token: write   # for npm provenance
@@ -24,6 +26,13 @@ jobs:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
+
+      - name: Verify npm auth token
+        run: |
+          if [ -z "${NODE_AUTH_TOKEN:-}" ]; then
+            echo "NPM_TOKEN secret is not configured for this repository."
+            exit 1
+          fi
 
       - name: Install dependencies
         run: npm ci
@@ -42,7 +51,7 @@ jobs:
           # by the `postpublish` lifecycle hook (scripts/sync-beta-tag.js) so
           # it applies the same way here and for a manual `npm publish` run
           # from a local machine.
-          if [[ "${GITHUB_REF}" == *"-beta"* ]]; then
+          if [[ "${GITHUB_REF}" == *"-beta"* ]] || [[ "${GITHUB_REF_NAME}" == *"-beta"* ]]; then
             npm publish --access public --provenance --tag beta
           else
             npm publish --access public --provenance
