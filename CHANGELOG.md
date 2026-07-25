@@ -1,3 +1,9 @@
+## [1.4.0](https://github.com/nilkoushik/chronos-ui/compare/v1.3.3...v1.4.0) (2026-07-25)
+
+### Features
+
+* **test:** add Cucumber BDD suite across React/Svelte/Web Component targets, wired into pre-commit ([0dbd50c](https://github.com/nilkoushik/chronos-ui/commit/0dbd50c2d276d3fa59691077701c4887877fcdb9))
+
 ## [1.3.3](https://github.com/nilkoushik/chronos-ui/compare/v1.3.2...v1.3.3) (2026-07-25)
 
 ### Bug Fixes
