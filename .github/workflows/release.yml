@@ -12,11 +12,16 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    # Scopes the OIDC token's environment claim to "release", matching the
+    # Trusted Publisher configured on npmjs.com for this package — npm checks
+    # that claim, so the environment name must match exactly (and the
+    # environment itself must exist under repo Settings -> Environments).
+    environment: release
     permissions:
       contents: write      # semantic-release commits CHANGELOG/package.json bump + creates the git tag
       issues: write        # @semantic-release/github comments on referenced issues/PRs
       pull-requests: write
-      id-token: write      # npm provenance
+      id-token: write      # OIDC for npm trusted publishing (also covers provenance)
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -37,10 +42,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # No NPM_TOKEN/NODE_AUTH_TOKEN needed anymore — @semantic-release/npm
+      # (v13.1.5+) detects the GitHub Actions OIDC context automatically and
+      # exchanges it for a short-lived publish credential via npm's Trusted
+      # Publisher flow, which also generates provenance attestations without
+      # needing NPM_CONFIG_PROVENANCE explicitly set.
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
         run: npx semantic-release
