@@ -12,6 +12,9 @@
   "bugs": {
     "url": "https://github.com/nilkoushik/chronos-ui/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "ui",
     "components",
@@ -47,8 +50,7 @@
     "prepare": "husky && npm run build",
     "prepublishOnly": "npm run build",
     "postpublish": "node -e \"if (process.env.CI !== 'true' && process.env.GITHUB_ACTIONS !== 'true') require('./scripts/sync-beta-tag.js')\"",
-    "version": "npm run build && git add -A",
-    "postversion": "git push && git push --tags",
+    "release": "semantic-release",
     "test": "echo \"No tests yet\" && exit 0"
   },
   "peerDependencies": {
@@ -63,7 +65,18 @@
   "devDependencies": {
     "@builder.io/mitosis": "^0.13.0",
     "@builder.io/mitosis-cli": "^0.13.0",
+    "@playwright/mcp": "^0.0.78",
+    "@playwright/test": "^1.62.0",
+    "@semantic-release/changelog": "^7.0.0",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/git": "^11.0.1",
+    "@semantic-release/github": "^12.0.9",
+    "@semantic-release/npm": "^13.1.5",
+    "@semantic-release/release-notes-generator": "^14.1.1",
+    "@types/node": "^26.1.1",
+    "conventional-changelog-conventionalcommits": "^10.2.1",
     "husky": "^9.1.7",
+    "semantic-release": "^25.0.8",
     "typescript": "^6.0.3"
   }
 }
