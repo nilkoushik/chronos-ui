@@ -41,6 +41,16 @@ jobs:
       - name: Build library and generate docs pages
         run: npm run build
 
+      # Runs even if scenarios fail -- the Allure report's whole purpose is
+      # showing pass/fail history, so a regression should still deploy a
+      # report that shows it, not silently skip generating one.
+      - name: Run BDD suite (Allure results)
+        run: npm run test:bdd
+        continue-on-error: true
+
+      - name: Generate Allure report
+        run: npm run report:allure
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

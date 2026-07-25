@@ -100,6 +100,7 @@ function buildSidebar(activeSlug, isLandingPage) {
         <a href="${GITHUB_URL}" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
         <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
         <a href="${prefix}dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
+        <a href="${prefix}allure-report/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">✅</span> Test Report</a>
       </nav>
     </aside>`;
 }

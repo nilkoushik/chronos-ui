@@ -55,7 +55,8 @@
     "postpublish": "node -e \"if (process.env.CI !== 'true' && process.env.GITHUB_ACTIONS !== 'true') require('./scripts/sync-beta-tag.js')\"",
     "release": "semantic-release",
     "test": "npm run test:bdd",
-    "test:bdd": "playwright install chromium && cucumber-js --config cucumber.cjs"
+    "test:bdd": "playwright install chromium && cucumber-js --config cucumber.cjs",
+    "report:allure": "node scripts/generate-allure-report.js"
   },
   "peerDependencies": {
     "react": ">=17",
@@ -80,6 +81,8 @@
     "@semantic-release/npm": "^13.1.5",
     "@semantic-release/release-notes-generator": "^14.1.1",
     "@types/node": "^26.1.1",
+    "allure-commandline": "^2.43.0",
+    "allure-cucumberjs": "^3.10.2",
     "conventional-changelog-conventionalcommits": "^9.3.1",
     "esbuild": "^0.28.1",
     "husky": "^9.1.7",
