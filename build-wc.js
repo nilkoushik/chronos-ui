@@ -64,6 +64,19 @@ for (const file of allFiles) {
   // utils/ is now a sibling, not a cousin -- so `../utils/` must become `./utils/`.
   finalCode = finalCode.replace(/from\s+(["'])\.\.\/utils\//g, 'from $1./utils/');
 
+  // Mitosis's own webcomponent codegen dispatches attribute changes to props by
+  // unanchored substring match: `new RegExp(jsVar, "i").test(prop)`. Any prop
+  // name that is itself a substring of another (e.g. "backgroundEffect" inside
+  // "backgroundEffectPlugin") means setting the shorter attribute also
+  // clobbers the longer prop with the same raw string value -- e.g. setting
+  // background-effect="rain" also set props.backgroundEffectPlugin = "rain",
+  // a string with no .start()/.stop(), crashing the animation. Anchor the
+  // regex to a full match so each attribute only ever maps to its own prop.
+  finalCode = finalCode.replace(
+    /new RegExp\((\w+), ["']i["']\)/g,
+    'new RegExp("^" + $1 + "$", "i")'
+  );
+
   // Browser ESM requires explicit extensions on relative specifiers; TS emits them
   // bare (e.g. `from "./utils/lazyObserver"`), which 404s at runtime.
   finalCode = finalCode.replace(/(from\s+["'](?:\.\.?\/)[^"']+?)(["'])/g, (match, specifier, quote) => {
@@ -326,7 +339,7 @@ for (const file of allFiles) {
     }
     attributeChangedCallback(name, oldValue, newValue) {
         const jsVar = name.replace(/-/g, "");
-        const regexp = new RegExp(jsVar, "i");
+        const regexp = new RegExp("^" + jsVar + "$", "i");
         if (this.componentProps) {
             this.componentProps.forEach((prop) => {
                 if (regexp.test(prop)) {

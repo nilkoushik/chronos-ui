@@ -1225,6 +1225,15 @@ export function startBackgroundEffect(
   ctxBox.resizeHandler = resize;
   window.addEventListener('resize', ctxBox.resizeHandler);
 
+  // In some hosts (notably the web-component target's shadow DOM), the
+  // canvas's own layout hasn't settled yet on this synchronous call, so
+  // offsetWidth/offsetHeight above can read 0 — every effect then draws
+  // into a zero-size buffer forever, since nothing else ever re-measures.
+  // Re-run once after layout has had a chance to commit; renderers read
+  // canvas.width/height fresh every frame, so this alone is enough to
+  // self-heal without restarting the renderer.
+  requestAnimationFrame(resize);
+
   renderer(ctx, canvas, ctxBox);
 }
 
