@@ -1,3 +1,9 @@
+## [1.3.1](https://github.com/nilkoushik/chronos-ui/compare/v1.3.0...v1.3.1) (2026-07-25)
+
+### Bug Fixes
+
+* **RichTextEditor:** image/video insert failing due to stale selection ref ([fab7c66](https://github.com/nilkoushik/chronos-ui/commit/fab7c66d27f603100a522dbaba7a9dd2cca93fb1))
+
 ## [1.3.0](https://github.com/nilkoushik/chronos-ui/compare/v1.2.2...v1.3.0) (2026-07-25)
 
 ### Features
