@@ -1,8 +1,19 @@
 ## [1.2.1](https://github.com/nilkoushik/chronos-ui/compare/v1.2.0...v1.2.1) (2026-07-25)
 
-## [1.2.0](https://github.com/nilkoushik/chronos-ui/compare/v1.1.4...v1.2.0) (2026-07-25)
+### Bug Fixes
+
+* **build:** add missing JS/CSS minification — no step in the build pipeline ever minified React/web-component output or CSS ([11f2654](https://github.com/nilkoushik/chronos-ui/commit/11f2654))
+* **TimerWidget:** implement `variant` styling — the `neon`/`dark`/`gray` classes were applied but had no matching CSS ([11f2654](https://github.com/nilkoushik/chronos-ui/commit/11f2654))
 
 ## [1.2.0](https://github.com/nilkoushik/chronos-ui/compare/v1.1.4...v1.2.0) (2026-07-25)
+
+### Features
+
+* **docs:** add "Open in CodeSandbox" alongside "Play in JSFiddle"; fix the live-demo generator crashing on a bad CSS import, a duplicate React instance, and missing per-component stylesheets ([1ea8454](https://github.com/nilkoushik/chronos-ui/commit/1ea8454))
+
+### Bug Fixes
+
+* **SlidingBanner:** correct zoom/wipe/curtain/cube transition effects, fix arrows/dots needing an extra click due to stale autoplay state and a missing web-component `update()` call, and fix the waves canvas background's edge seam ([e6a2010](https://github.com/nilkoushik/chronos-ui/commit/e6a2010))
 
 # Changelog
 
