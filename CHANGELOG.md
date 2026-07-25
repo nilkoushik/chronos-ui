@@ -1,3 +1,9 @@
+## [1.4.1](https://github.com/nilkoushik/chronos-ui/compare/v1.4.0...v1.4.1) (2026-07-25)
+
+### Bug Fixes
+
+* **ci:** publish the Allure BDD test report to GitHub Pages per version ([c3145fa](https://github.com/nilkoushik/chronos-ui/commit/c3145fa273c4d5eaea781bc3e355be46f56d8ffc))
+
 ## [1.4.0](https://github.com/nilkoushik/chronos-ui/compare/v1.3.3...v1.4.0) (2026-07-25)
 
 ### Features
