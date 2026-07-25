@@ -29,6 +29,14 @@
   isolation: isolate;
 }
 
+/* Applied for one frame during a wraparound (last -> first / first -> last)
+   on the default `slide` effect, which has no infinite-loop clone. Without
+   this, wrapping would animate across the entire track distance instead of
+   cutting straight to the wrapped slide. */
+.chronos-sliding-banner-track.no-transition {
+  transition: none !important;
+}
+
 .chronos-sliding-slide {
   flex: 0 0 100%;
   position: relative;
@@ -173,13 +181,9 @@
 .effect-fade .chronos-sliding-banner-track,
 .effect-zoom .chronos-sliding-banner-track,
 .effect-flip .chronos-sliding-banner-track,
-.effect-push .chronos-sliding-banner-track,
-.effect-push-up .chronos-sliding-banner-track,
-.effect-push-down .chronos-sliding-banner-track,
-.effect-push-left .chronos-sliding-banner-track,
-.effect-push-right .chronos-sliding-banner-track,
-.effect-wipe-left .chronos-sliding-banner-track,
-.effect-wipe-right .chronos-sliding-banner-track,
+.effect-push-horizontal .chronos-sliding-banner-track,
+.effect-push-vertical .chronos-sliding-banner-track,
+.effect-wipe .chronos-sliding-banner-track,
 .effect-cube .chronos-sliding-banner-track,
 .effect-door .chronos-sliding-banner-track,
 .effect-fall .chronos-sliding-banner-track,
@@ -192,13 +196,9 @@
 .effect-fade .chronos-sliding-slide,
 .effect-zoom .chronos-sliding-slide,
 .effect-flip .chronos-sliding-slide,
-.effect-push .chronos-sliding-slide,
-.effect-push-up .chronos-sliding-slide,
-.effect-push-down .chronos-sliding-slide,
-.effect-push-left .chronos-sliding-slide,
-.effect-push-right .chronos-sliding-slide,
-.effect-wipe-left .chronos-sliding-slide,
-.effect-wipe-right .chronos-sliding-slide,
+.effect-push-horizontal .chronos-sliding-slide,
+.effect-push-vertical .chronos-sliding-slide,
+.effect-wipe .chronos-sliding-slide,
 .effect-cube .chronos-sliding-slide,
 .effect-door .chronos-sliding-slide,
 .effect-fall .chronos-sliding-slide,
@@ -208,19 +208,36 @@
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
   opacity: 0; pointer-events: none;
+}
+
+/* Only the slide becoming visible (.active) and the one it replaced
+   (.previous) ever need to animate. A merely-resting slide's direction-aware
+   position (see the push/cube/door/fall dir-prev blocks below) still needs
+   to flip instantly when Next/Prev direction changes, but MUST NOT
+   transition when it does — otherwise, since that flip moves it from one
+   off-screen edge to the other, it would visibly sweep all the way across
+   the visible banner even though it's never the slide being shown. */
+.effect-fade .chronos-sliding-slide.active, .effect-fade .chronos-sliding-slide.previous,
+.effect-zoom .chronos-sliding-slide.active, .effect-zoom .chronos-sliding-slide.previous,
+.effect-flip .chronos-sliding-slide.active, .effect-flip .chronos-sliding-slide.previous,
+.effect-push-horizontal .chronos-sliding-slide.active, .effect-push-horizontal .chronos-sliding-slide.previous,
+.effect-push-vertical .chronos-sliding-slide.active, .effect-push-vertical .chronos-sliding-slide.previous,
+.effect-wipe .chronos-sliding-slide.active, .effect-wipe .chronos-sliding-slide.previous,
+.effect-cube .chronos-sliding-slide.active, .effect-cube .chronos-sliding-slide.previous,
+.effect-door .chronos-sliding-slide.active, .effect-door .chronos-sliding-slide.previous,
+.effect-fall .chronos-sliding-slide.active, .effect-fall .chronos-sliding-slide.previous,
+.effect-crush .chronos-sliding-slide.active, .effect-crush .chronos-sliding-slide.previous,
+.effect-peel-off .chronos-sliding-slide.active, .effect-peel-off .chronos-sliding-slide.previous,
+.effect-curtain .chronos-sliding-slide.active, .effect-curtain .chronos-sliding-slide.previous {
   transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), clip-path 0.8s ease, filter 0.5s ease, box-shadow 0.6s ease;
 }
 
 .effect-fade .chronos-sliding-slide.active,
 .effect-zoom .chronos-sliding-slide.active,
 .effect-flip .chronos-sliding-slide.active,
-.effect-push .chronos-sliding-slide.active,
-.effect-push-up .chronos-sliding-slide.active,
-.effect-push-down .chronos-sliding-slide.active,
-.effect-push-left .chronos-sliding-slide.active,
-.effect-push-right .chronos-sliding-slide.active,
-.effect-wipe-left .chronos-sliding-slide.active,
-.effect-wipe-right .chronos-sliding-slide.active,
+.effect-push-horizontal .chronos-sliding-slide.active,
+.effect-push-vertical .chronos-sliding-slide.active,
+.effect-wipe .chronos-sliding-slide.active,
 .effect-cube .chronos-sliding-slide.active,
 .effect-door .chronos-sliding-slide.active,
 .effect-fall .chronos-sliding-slide.active,
@@ -230,92 +247,138 @@
   opacity: 1; pointer-events: auto; z-index: 2;
 }
 
+/* zoom — incoming slide scales UP from undersized to normal while fading
+   in (a "zoom in" approach), outgoing slide continues growing past normal
+   size while fading out, so it reads as passing by/toward the viewer
+   instead of shrinking away. */
+.effect-zoom .chronos-sliding-slide { transform: scale(0.85); z-index: 1; }
+.effect-zoom .chronos-sliding-slide.active { transform: scale(1); z-index: 2; }
+.effect-zoom .chronos-sliding-slide.previous { transform: scale(1.18); z-index: 1; }
+.quality-detailed.effect-zoom .chronos-sliding-slide.active { animation: chronos-slide-blur-enter 0.6s ease-out; }
+.quality-detailed.effect-zoom .chronos-sliding-slide.previous { animation: chronos-slide-blur-exit 0.6s ease-in; }
+
+/* flip — incoming slide rotates in face-on from behind; outgoing slide
+   keeps rotating away on the same axis instead of resetting. "detailed"
+   adds perspective depth and a raking shadow like the other 3D effects. */
+.effect-flip .chronos-sliding-banner-track { perspective: 1500px; }
+.effect-flip .chronos-sliding-slide { transform: rotateY(-180deg); transform-origin: center; backface-visibility: hidden; z-index: 1; }
+.effect-flip .chronos-sliding-slide.active { transform: rotateY(0deg); transform-origin: center; backface-visibility: hidden; z-index: 2; }
+.effect-flip .chronos-sliding-slide.previous { transform: rotateY(180deg); transform-origin: center; backface-visibility: hidden; z-index: 1; }
+/* reverse rotation direction when navigating backward */
+.effect-flip .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: rotateY(180deg); }
+.effect-flip .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: rotateY(0deg); }
+.effect-flip .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: rotateY(-180deg); }
+.quality-detailed.effect-flip .chronos-sliding-banner-track { perspective: 2000px; }
+.quality-detailed.effect-flip .chronos-sliding-slide { transform-style: preserve-3d; }
+.quality-detailed.effect-flip .chronos-sliding-slide.active { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); }
+
 /* ==========================================================================
    Push Effects (Direction-Aware based on click/arrow direction)
+   push-horizontal and push-vertical each cover both directions themselves
+   (no separate push-left/push-right/push-up/push-down effects) — which way
+   a slide pushes is decided purely by whether the click was Next or Prev.
    ========================================================================== */
 
-/* push & push-left — Next pushes LEFT (incoming from right), Prev pushes RIGHT (incoming from left) */
-.effect-push .chronos-sliding-slide,
-.effect-push-left .chronos-sliding-slide { transform: translateX(100%); opacity: 1 !important; z-index: 1; }
-.effect-push .chronos-sliding-slide.active,
-.effect-push-left .chronos-sliding-slide.active { transform: translateX(0); opacity: 1 !important; z-index: 2; }
-.effect-push .chronos-sliding-slide.previous,
-.effect-push-left .chronos-sliding-slide.previous { transform: translateX(-100%); opacity: 1 !important; z-index: 1; }
+/* push-horizontal — Next pushes LEFT (incoming from right), Prev pushes RIGHT (incoming from left) */
+.effect-push-horizontal .chronos-sliding-slide { transform: translateX(100%); opacity: 1 !important; z-index: 1; }
+.effect-push-horizontal .chronos-sliding-slide.active { transform: translateX(0); opacity: 1 !important; z-index: 2; }
+.effect-push-horizontal .chronos-sliding-slide.previous { transform: translateX(-100%); opacity: 1 !important; z-index: 1; }
 
-.effect-push .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide,
-.effect-push-left .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: translateX(-100%); }
-.effect-push .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active,
-.effect-push-left .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: translateX(0); }
-.effect-push .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous,
-.effect-push-left .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: translateX(100%); }
+.effect-push-horizontal .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: translateX(-100%); }
+.effect-push-horizontal .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: translateX(0); }
+.effect-push-horizontal .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: translateX(100%); }
 
-.quality-detailed.effect-push .chronos-sliding-slide.active,
-.quality-detailed.effect-push-left .chronos-sliding-slide.active { box-shadow: -16px 0 32px rgba(0, 0, 0, 0.3); }
-.quality-detailed.effect-push .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active,
-.quality-detailed.effect-push-left .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { box-shadow: 16px 0 32px rgba(0, 0, 0, 0.3); }
+.quality-detailed.effect-push-horizontal .chronos-sliding-slide.active { box-shadow: -16px 0 32px rgba(0, 0, 0, 0.3); }
+.quality-detailed.effect-push-horizontal .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { box-shadow: 16px 0 32px rgba(0, 0, 0, 0.3); }
 
-/* push-right — Next pushes RIGHT (incoming from left), Prev pushes LEFT (incoming from right) */
-.effect-push-right .chronos-sliding-slide { transform: translateX(-100%); opacity: 1 !important; z-index: 1; }
-.effect-push-right .chronos-sliding-slide.active { transform: translateX(0); opacity: 1 !important; z-index: 2; }
-.effect-push-right .chronos-sliding-slide.previous { transform: translateX(100%); opacity: 1 !important; z-index: 1; }
+/* push-vertical — Next pushes UP (incoming from bottom), Prev pushes DOWN (incoming from top) */
+.effect-push-vertical .chronos-sliding-slide { transform: translateY(100%); opacity: 1 !important; z-index: 1; }
+.effect-push-vertical .chronos-sliding-slide.active { transform: translateY(0); opacity: 1 !important; z-index: 2; }
+.effect-push-vertical .chronos-sliding-slide.previous { transform: translateY(-100%); opacity: 1 !important; z-index: 1; }
 
-.effect-push-right .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: translateX(100%); }
-.effect-push-right .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: translateX(0); }
-.effect-push-right .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: translateX(-100%); }
+.effect-push-vertical .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: translateY(-100%); }
+.effect-push-vertical .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: translateY(0); }
+.effect-push-vertical .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: translateY(100%); }
 
-.quality-detailed.effect-push-right .chronos-sliding-slide.active { box-shadow: 16px 0 32px rgba(0, 0, 0, 0.3); }
-.quality-detailed.effect-push-right .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { box-shadow: -16px 0 32px rgba(0, 0, 0, 0.3); }
+.quality-detailed.effect-push-vertical .chronos-sliding-slide.active { box-shadow: 0 -16px 32px rgba(0, 0, 0, 0.3); }
+.quality-detailed.effect-push-vertical .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3); }
 
-/* push-up — Next pushes UP (incoming from bottom), Prev pushes DOWN (incoming from top) */
-.effect-push-up .chronos-sliding-slide { transform: translateY(100%); opacity: 1 !important; z-index: 1; }
-.effect-push-up .chronos-sliding-slide.active { transform: translateY(0); opacity: 1 !important; z-index: 2; }
-.effect-push-up .chronos-sliding-slide.previous { transform: translateY(-100%); opacity: 1 !important; z-index: 1; }
+/* wipe — the incoming slide sits fully visible and static underneath from
+   the very start (no self-reveal animation of its own); the outgoing slide
+   stays on top and wipes itself away via a shrinking clip-path, uncovering
+   the already-present incoming slide beneath it. Which edge it recedes
+   toward is direction-aware: Next recedes to the right (reveal sweeps
+   leftward), Prev recedes to the left (reveal sweeps rightward). "detailed"
+   adds a light blur plus a shadow trailing the receding wipe edge, so the
+   departing panel reads as physically sliding off rather than a mask
+   animating. */
+.effect-wipe .chronos-sliding-slide { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); opacity: 1; z-index: 0; }
+.effect-wipe .chronos-sliding-slide.active { z-index: 1; }
+.effect-wipe .chronos-sliding-slide.previous { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); z-index: 2; transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
 
-.effect-push-up .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: translateY(-100%); }
-.effect-push-up .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: translateY(0); }
-.effect-push-up .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: translateY(100%); }
+.effect-wipe .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
 
-.quality-detailed.effect-push-up .chronos-sliding-slide.active { box-shadow: 0 -16px 32px rgba(0, 0, 0, 0.3); }
-.quality-detailed.effect-push-up .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3); }
+.quality-detailed.effect-wipe .chronos-sliding-slide.previous { box-shadow: -12px 0 24px rgba(0, 0, 0, 0.35); animation: chronos-slide-blur-exit 0.7s ease-in; }
+.quality-detailed.effect-wipe .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { box-shadow: 12px 0 24px rgba(0, 0, 0, 0.35); }
 
-/* push-down — Next pushes DOWN (incoming from top), Prev pushes UP (incoming from bottom) */
-.effect-push-down .chronos-sliding-slide { transform: translateY(-100%); opacity: 1 !important; z-index: 1; }
-.effect-push-down .chronos-sliding-slide.active { transform: translateY(0); opacity: 1 !important; z-index: 2; }
-.effect-push-down .chronos-sliding-slide.previous { transform: translateY(100%); opacity: 1 !important; z-index: 1; }
-
-.effect-push-down .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: translateY(100%); }
-.effect-push-down .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: translateY(0); }
-.effect-push-down .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: translateY(-100%); }
-
-.quality-detailed.effect-push-down .chronos-sliding-slide.active { box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3); }
-.quality-detailed.effect-push-down .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { box-shadow: 0 -16px 32px rgba(0, 0, 0, 0.3); }
-
-/* wipe — clip-path reveal; "detailed" adds a light blur as the reveal edge
-   sweeps across plus a shadow on the leading edge, so one panel reads as
-   physically sliding over another rather than a mask animating */
-.effect-wipe-left .chronos-sliding-slide { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); opacity: 1; z-index: 1; transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
-.effect-wipe-left .chronos-sliding-slide.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); z-index: 2; }
-.effect-wipe-right .chronos-sliding-slide { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); opacity: 1; z-index: 1; transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
-.effect-wipe-right .chronos-sliding-slide.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); z-index: 2; }
-.quality-detailed.effect-wipe-left .chronos-sliding-slide.active { box-shadow: -12px 0 24px rgba(0, 0, 0, 0.35); animation: chronos-slide-blur-enter 0.7s ease-out; }
-.quality-detailed.effect-wipe-right .chronos-sliding-slide.active { box-shadow: 12px 0 24px rgba(0, 0, 0, 0.35); animation: chronos-slide-blur-enter 0.7s ease-out; }
-
-/* cube — outgoing face keeps rotating away from the opposite edge instead of
-   resetting to the incoming face's starting pose. "detailed" adds deeper
-   perspective plus a raking shadow along the rotating edge so the "box"
-   reads as solid; "light" keeps a flatter but still-real 3D rotation. */
+/* cube — each slide is a face of the same physical cube: the incoming and
+   outgoing faces are rotated 90deg around their shared vertical edge and
+   pushed back along Z by exactly half the banner's rendered width (see
+   --slider-half-width, computed in JS from actual offsetWidth). That depth
+   is what makes the two faces meet edge-to-edge as a true right-angle
+   corner instead of a flat card rotating in empty space — a mismatched or
+   hardcoded depth is what makes a "cube" look like it isn't one. "detailed"
+   adds deeper perspective plus a raking shadow along the rotating edge so
+   the box reads as solid; "light" keeps a flatter but still-real rotation. */
 .effect-cube .chronos-sliding-banner-track { perspective: 1500px; }
-.effect-cube .chronos-sliding-slide { transform: rotateY(-90deg) translateZ(200px); transform-origin: left; opacity: 1; z-index: 1; }
+.effect-cube .chronos-sliding-slide {
+  transform: rotateY(-90deg) translateZ(var(--slider-half-width, 200px));
+  transform-origin: left; opacity: 1; z-index: 1; transform-style: preserve-3d;
+}
+/* The shared cross-effect transition rule (.active, .previous — 3 class
+   selectors) is MORE specific than a plain ".effect-cube .chronos-sliding-slide"
+   override (2 class selectors), so it wins regardless of source order. Its
+   0.6s heavily front-loaded ease-out finishes ~95% of a 90deg turn in the
+   first ~150ms — fine for a flat crossfade, but it makes a 3D rotation read
+   as an instant cut instead of a visible flip. Override at matching
+   specificity (.active/.previous again) with a slower, symmetric curve so
+   the turn is actually perceivable throughout the transition. */
+.effect-cube .chronos-sliding-slide.active,
+.effect-cube .chronos-sliding-slide.previous {
+  transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
+}
 .effect-cube .chronos-sliding-slide.active { transform: rotateY(0deg) translateZ(0); transform-origin: left; z-index: 2; }
-.effect-cube .chronos-sliding-slide.previous { transform: rotateY(90deg) translateZ(200px); transform-origin: right; z-index: 1; }
+.effect-cube .chronos-sliding-slide.previous { transform: rotateY(90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: right; z-index: 1; }
 /* reverse which edge the cube hinges on when navigating backward */
-.effect-cube .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: rotateY(90deg) translateZ(200px); transform-origin: right; }
+.effect-cube .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: rotateY(90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: right; }
 .effect-cube .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: rotateY(0deg) translateZ(0); transform-origin: right; }
-.effect-cube .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: rotateY(-90deg) translateZ(200px); transform-origin: left; }
+.effect-cube .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: rotateY(-90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: left; }
 .quality-detailed.effect-cube .chronos-sliding-banner-track { perspective: 2000px; }
-.quality-detailed.effect-cube .chronos-sliding-slide { transform-style: preserve-3d; }
 .quality-detailed.effect-cube .chronos-sliding-slide.active { animation: chronos-slide-blur-enter 0.8s ease-out; box-shadow: -30px 0 60px rgba(0, 0, 0, 0.4); }
 .quality-detailed.effect-cube .chronos-sliding-slide.previous { animation: chronos-slide-blur-exit 0.8s ease-in; }
+
+/* cube's connecting side wall: a real 6-sided cube would show one of its
+   other faces during the turn instead of the front face just fading to a
+   black void mid-rotation. This is a rigid child of each face (kept in the
+   same 3D space via transform-style:preserve-3d above) permanently offset
+   90deg from its parent at the SAME hinge edge/depth — so as the parent
+   rotates away from flush, this child rotates smoothly INTO flush,
+   handing off the "what's facing the viewer" role exactly as the parent
+   goes edge-on, instead of both going dark at once. */
+.chronos-cube-side {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(to right, rgba(15, 15, 25, 0.92), rgba(70, 70, 95, 0.55));
+  opacity: 0;
+  backface-visibility: hidden;
+  transition: opacity 0.15s linear;
+}
+.effect-cube .chronos-sliding-slide .chronos-cube-side { transform: rotateY(90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: left; }
+.effect-cube .chronos-sliding-slide.previous .chronos-cube-side { transform: rotateY(-90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: right; }
+.effect-cube .chronos-sliding-slide.active .chronos-cube-side,
+.effect-cube .chronos-sliding-slide.previous .chronos-cube-side { opacity: 1; }
+
+.effect-cube .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide .chronos-cube-side { transform: rotateY(-90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: right; }
+.effect-cube .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous .chronos-cube-side { transform: rotateY(90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: left; }
 
 /* door — two "doors" swing open from the center-right; the outgoing slide
    swings away in the opposite rotation so both halves feel symmetric.
@@ -400,30 +463,48 @@
 }
 .quality-detailed.effect-peel-off .chronos-sliding-slide.previous { box-shadow: -24px 24px 48px rgba(0, 0, 0, 0.45); }
 
-/* curtain — outgoing slide shrinks toward the center like a closing curtain,
-   revealing the incoming slide that's already sitting fully visible beneath
-   it. "light" mode uses a smaller glow; "detailed" a deeper one. */
-.effect-curtain .chronos-sliding-slide {
+/* curtain — a real two-panel curtain, not a mask animating over a flat
+   image. The incoming slide sits fully visible and static underneath, like
+   wipe/push. The outgoing slide's own flat background/overlay/content fade
+   out almost instantly (its content lives in the panels now); two separate
+   .chronos-curtain-panel divs (each showing its own half of the same
+   image, via background-size:200%) sit on top and physically part down
+   the middle — sliding out to their edge and folding back slightly in 3D
+   (rotateY), like real fabric swinging open, rather than a flat clip
+   revealing what's already sitting still underneath. "detailed" adds a
+   deeper shadow along the trailing fold. */
+.effect-curtain .chronos-sliding-slide { opacity: 1; z-index: 0; }
+.effect-curtain .chronos-sliding-slide.active { z-index: 1; }
+.effect-curtain .chronos-sliding-slide.previous { z-index: 2; }
+.effect-curtain .chronos-sliding-slide.previous .chronos-sliding-bg,
+.effect-curtain .chronos-sliding-slide.previous .chronos-sliding-overlay,
+.effect-curtain .chronos-sliding-slide.previous .chronos-sliding-content {
   opacity: 0;
-  transform: scaleX(1);
-  z-index: 0;
-  transition-property: opacity, transform, box-shadow;
-  transition-duration: 0.8s;
-  transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+  transition: opacity 0.1s linear;
 }
-.effect-curtain .chronos-sliding-slide.active {
-  opacity: 1;
-  transform: scaleX(1);
-  z-index: 1;
+
+.effect-curtain .chronos-sliding-banner-track { perspective: 1600px; }
+.chronos-curtain-panel {
+  position: absolute; top: 0; width: 50%; height: 100%;
+  background-size: 200% 100%;
+  opacity: 0; pointer-events: none;
+  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
 }
-.effect-curtain .chronos-sliding-slide.previous {
-  opacity: 1;
-  transform: scaleX(0);
-  transform-origin: center;
-  box-shadow: 0 0 24px rgba(0, 0, 0, 0.35);
-  z-index: 3;
+.chronos-curtain-panel-left { left: 0; background-position: left center; transform-origin: left center; transform: translateX(0) rotateY(0deg); }
+.chronos-curtain-panel-right { right: 0; background-position: right center; transform-origin: right center; transform: translateX(0) rotateY(0deg); }
+
+.effect-curtain .chronos-sliding-slide.previous .chronos-curtain-panel { opacity: 1; }
+.effect-curtain .chronos-sliding-slide.previous .chronos-curtain-panel-left {
+  transform: translateX(-100%) rotateY(-25deg);
+  box-shadow: 16px 0 32px rgba(0, 0, 0, 0.4);
 }
-.quality-detailed.effect-curtain .chronos-sliding-slide.previous { box-shadow: 0 0 60px rgba(0, 0, 0, 0.5); }
+.effect-curtain .chronos-sliding-slide.previous .chronos-curtain-panel-right {
+  transform: translateX(100%) rotateY(25deg);
+  box-shadow: -16px 0 32px rgba(0, 0, 0, 0.4);
+}
+.quality-detailed.effect-curtain .chronos-sliding-banner-track { perspective: 2000px; }
+.quality-detailed.effect-curtain .chronos-sliding-slide.previous .chronos-curtain-panel-left { box-shadow: 30px 0 60px rgba(0, 0, 0, 0.5); }
+.quality-detailed.effect-curtain .chronos-sliding-slide.previous .chronos-curtain-panel-right { box-shadow: -30px 0 60px rgba(0, 0, 0, 0.5); }
 
 
 

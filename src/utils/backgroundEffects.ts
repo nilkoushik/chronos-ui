@@ -68,6 +68,11 @@ function renderWaves(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, c
     for (let i = 0; i <= canvas.width; i += 20) {
       ctx.lineTo(i, canvas.height - 80 + Math.sin(i * 0.005 + time) * 30);
     }
+    // Continue the curve to the exact right edge (the 20px-stepped loop above
+    // rarely lands exactly on canvas.width) before dropping to the bottom
+    // corner — otherwise that last segment is a straight diagonal cut across
+    // the wave instead of the wave itself reaching the edge.
+    ctx.lineTo(canvas.width, canvas.height - 80 + Math.sin(canvas.width * 0.005 + time) * 30);
     ctx.lineTo(canvas.width, canvas.height);
     ctx.fill();
 
@@ -77,6 +82,7 @@ function renderWaves(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, c
     for (let i = 0; i <= canvas.width; i += 20) {
       ctx.lineTo(i, canvas.height - 40 + Math.sin(i * 0.008 + time * 1.5) * 20);
     }
+    ctx.lineTo(canvas.width, canvas.height - 40 + Math.sin(canvas.width * 0.008 + time * 1.5) * 20);
     ctx.lineTo(canvas.width, canvas.height);
     ctx.fill();
 

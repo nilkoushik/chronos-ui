@@ -30,7 +30,7 @@ export interface SliderConfig {
   showNextPrev: boolean;
   showArrows?: boolean;
   showDots: boolean;
-  animationEffect?: 'slide' | 'fade' | 'zoom' | 'flip' | 'push' | 'push-up' | 'push-down' | 'push-left' | 'push-right' | 'wipe-left' | 'wipe-right' | 'cube' | 'door' | 'fall' | 'crush' | 'peel-off' | 'curtain';
+  animationEffect?: 'slide' | 'fade' | 'zoom' | 'flip' | 'push-horizontal' | 'push-vertical' | 'wipe' | 'cube' | 'door' | 'fall' | 'crush' | 'peel-off' | 'curtain';
   animationQuality?: 'light' | 'detailed';
   backgroundEffect?: BackgroundEffectName;
   hideArrowsIfNoScroll?: boolean;
@@ -61,12 +61,31 @@ export default function SlidingBanner(props: SlidingBannerProps) {
   });
   const bgEffectContext = useRef<BackgroundEffectContext>({ animationFrameId: null, resizeHandler: null });
   const observerBox = useRef<{ disconnect: (() => void) | null }>({ disconnect: null });
+  // Autoplay's setInterval is only ever created once (on mount / on becoming
+  // visible / on mouse-leave) and left running for its full delay — it is
+  // never torn down and recreated on every slide change. Compiled targets
+  // (React/Svelte) turn `state.currentIndex` into per-render local state, so
+  // a naive `setInterval(() => state.next(), ...)` set up once would call a
+  // `next` permanently frozen on the render it was created in. Instead the
+  // interval always calls through this ref, which is repointed at the
+  // latest `next` after every render — so the tick is always fresh without
+  // ever needing to reset the timer (and without the render churn that
+  // restarting on every click would add).
+  const latestNext = useRef<{ fn: () => void }>({ fn: () => {} });
 
   const state = useStore({
     currentIndex: 0,
     previousIndex: 0,
     direction: 'next' as 'next' | 'prev',
     isVisible: false,
+    // True for exactly one render when a next()/prev() call wraps around the
+    // end of the list. The default `slide` effect just does
+    // translateX(-index*100%) with no infinite-loop clone, so a wraparound
+    // jump (last -> first, or first -> last) would otherwise animate across
+    // the *entire* track distance in what looks like the wrong direction.
+    // While this is true the track's CSS transition is suppressed so the
+    // wrap is an instant cut instead of a multi-slide flythrough.
+    wrapping: false,
 
     get shouldMount() {
       return props.lazyLoad === false || state.isVisible;
@@ -89,10 +108,11 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       state.previousIndex = state.currentIndex;
       if (state.currentIndex >= props.items.length - 1) {
         if (props.config?.rotateAgain !== false) {
+          state.wrapping = true;
           state.currentIndex = 0;
         }
       } else {
-        state.currentIndex++;
+        state.currentIndex = state.currentIndex + 1;
       }
     },
     prev() {
@@ -101,10 +121,11 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       state.previousIndex = state.currentIndex;
       if (state.currentIndex <= 0) {
         if (props.config?.rotateAgain !== false) {
+          state.wrapping = true;
           state.currentIndex = props.items.length - 1;
         }
       } else {
-        state.currentIndex--;
+        state.currentIndex = state.currentIndex - 1;
       }
     },
     goTo(index: number) {
@@ -115,15 +136,17 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       }
     },
     startAutoPlay() {
+      if (animContext.intervalId) return;
       if (props.config?.autoStart !== false && props.items?.length > 1) {
         animContext.intervalId = setInterval(() => {
-          state.next();
+          latestNext.fn();
         }, props.config?.delayMs || 5000);
       }
     },
     stopAutoPlay() {
       if (animContext.intervalId) {
         clearInterval(animContext.intervalId);
+        animContext.intervalId = null;
       }
     },
     setupDimensions() {
@@ -158,6 +181,24 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       );
     }
   });
+
+  // Keep the autoplay ref pointed at a `next` that always reads this
+  // render's fresh `state.currentIndex`/props. Runs after every render.
+  onUpdate(() => {
+    latestNext.fn = state.next;
+  });
+
+  // After a wraparound's instant, transition-less jump has painted, hand
+  // control back to the normal CSS transition for the next click. A single
+  // requestAnimationFrame is enough since the transform change above already
+  // committed synchronously with this render.
+  onUpdate(() => {
+    if (state.wrapping) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { state.wrapping = false; });
+      });
+    }
+  }, [state.wrapping]);
 
   // Only restart once the widget has actually mounted its heavy content, and
   // only when the effect name itself changed (state.backgroundClass is a
@@ -206,8 +247,8 @@ export default function SlidingBanner(props: SlidingBannerProps) {
         />
       </Show>
 
-      <div 
-        class={`chronos-sliding-banner-track dir-${state.direction}`}
+      <div
+        class={`chronos-sliding-banner-track dir-${state.direction} ${state.wrapping ? 'no-transition' : ''}`}
         style={{ 
           transform: `translateX(-${state.currentIndex * 100}%)`,
           position: props.config?.height === 'auto' ? 'absolute' : 'relative',
@@ -242,10 +283,29 @@ export default function SlidingBanner(props: SlidingBannerProps) {
                 }}
               ></div>
             </Show>
+            <Show when={state.animationClass === 'curtain' && item.media?.type !== 'video'}>
+              <div
+                class="chronos-curtain-panel chronos-curtain-panel-left"
+                style={{
+                  backgroundImage: item.media?.url ? `url(${item.media.url})` : 'none',
+                  backgroundPosition: props.config?.bgPosition || 'center'
+                }}
+              ></div>
+              <div
+                class="chronos-curtain-panel chronos-curtain-panel-right"
+                style={{
+                  backgroundImage: item.media?.url ? `url(${item.media.url})` : 'none',
+                  backgroundPosition: props.config?.bgPosition || 'center'
+                }}
+              ></div>
+            </Show>
+            <Show when={state.animationClass === 'cube'}>
+              <div class="chronos-cube-side"></div>
+            </Show>
             <div class="chronos-sliding-overlay"></div>
-            <div 
-              class="chronos-sliding-content" 
-              style={{ 
+            <div
+              class="chronos-sliding-content"
+              style={{
                 textAlign: item.textAlignment || props.config?.align || 'center',
                 display: 'flex',
                 flexDirection: 'column',
