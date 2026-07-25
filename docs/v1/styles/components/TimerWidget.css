@@ -81,6 +81,62 @@
           color: rgba(255, 255, 255, 0.75);
         }
 
+        /* Variants — control the widget's own background/text when there's no
+           photo background (backgroundImageUrl already forces the "has-bg"
+           look above); the block/value/label accent styling always applies,
+           even over a photo, so e.g. neon's glow still reads on top of one. */
+        .chronos-timer-variant-dark:not(.chronos-timer-has-bg) {
+          background-color: #0f172a;
+          color: #fff;
+          border-color: rgba(255, 255, 255, 0.12);
+        }
+        .chronos-timer-variant-dark:not(.chronos-timer-has-bg) .chronos-timer-block {
+          background: rgba(255, 255, 255, 0.06);
+          border-color: rgba(255, 255, 255, 0.14);
+        }
+        .chronos-timer-variant-dark:not(.chronos-timer-has-bg) .chronos-timer-value {
+          color: #fff;
+        }
+        .chronos-timer-variant-dark:not(.chronos-timer-has-bg) .chronos-timer-label {
+          color: rgba(255, 255, 255, 0.6);
+        }
 
+        .chronos-timer-variant-gray:not(.chronos-timer-has-bg) {
+          background-color: #64748b;
+          color: #fff;
+          border-color: rgba(255, 255, 255, 0.15);
+        }
+        .chronos-timer-variant-gray:not(.chronos-timer-has-bg) .chronos-timer-block {
+          background: rgba(255, 255, 255, 0.12);
+          border-color: rgba(255, 255, 255, 0.2);
+        }
+        .chronos-timer-variant-gray:not(.chronos-timer-has-bg) .chronos-timer-value {
+          color: #fff;
+        }
+        .chronos-timer-variant-gray:not(.chronos-timer-has-bg) .chronos-timer-label {
+          color: rgba(255, 255, 255, 0.75);
+        }
 
+        .chronos-timer-variant-neon:not(.chronos-timer-has-bg) {
+          background-color: #0a0a12;
+          color: #fff;
+          border-color: rgba(6, 240, 240, 0.4);
+        }
+        .chronos-timer-variant-neon .chronos-timer-block {
+          background: rgba(10, 10, 20, 0.55);
+          border: 1px solid rgba(6, 240, 240, 0.6);
+          box-shadow: 0 0 12px rgba(6, 240, 240, 0.5), inset 0 0 8px rgba(255, 0, 200, 0.15);
+        }
+        .chronos-timer-variant-neon .chronos-timer-value {
+          color: #0ff0f0;
+          text-shadow: 0 0 8px rgba(6, 240, 240, 0.9), 0 0 16px rgba(6, 240, 240, 0.5);
+        }
+        .chronos-timer-variant-neon .chronos-timer-label {
+          color: rgba(255, 0, 200, 0.85);
+          text-shadow: 0 0 6px rgba(255, 0, 200, 0.6);
+        }
+        .chronos-timer-variant-neon .chronos-timer-title {
+          color: #0ff0f0;
+          text-shadow: 0 0 10px rgba(6, 240, 240, 0.7);
+        }
 

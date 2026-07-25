@@ -36,15 +36,15 @@
   ],
   "exports": {
     ".": "./dist/react/src/components/index.js",
-    "./theme.css": "./src/styles/theme.css",
-    "./styles/*": "./src/styles/*",
+    "./theme.css": "./dist/styles/theme.css",
+    "./styles/*": "./dist/styles/*",
     "./react/*": "./dist/react/src/components/*.js",
     "./svelte/*": "./dist/svelte/src/components/*",
     "./webcomponent/*": "./dist/webcomponent/dist/*"
   },
   "main": "./dist/react/src/components/index.js",
   "scripts": {
-    "build": "npx mitosis build && node fix-styles.js && node fix-props.js && node fix-react.js && node fix-wc-props.js && node build-wc.js && node fix-wc-onmount.js",
+    "build": "npx mitosis build && node fix-styles.js && node fix-props.js && node fix-react.js && node fix-wc-props.js && node build-wc.js && node fix-wc-onmount.js && node fix-minify.js",
     "docs": "node scripts/generate-docs.js",
     "postbuild": "npm run docs",
     "prepare": "husky && npm run build",
@@ -75,6 +75,7 @@
     "@semantic-release/release-notes-generator": "^14.1.1",
     "@types/node": "^26.1.1",
     "conventional-changelog-conventionalcommits": "^10.2.1",
+    "esbuild": "^0.28.1",
     "husky": "^9.1.7",
     "semantic-release": "^25.0.8",
     "typescript": "^6.0.3"
