@@ -1,3 +1,9 @@
+## [1.3.3](https://github.com/nilkoushik/chronos-ui/compare/v1.3.2...v1.3.3) (2026-07-25)
+
+### Bug Fixes
+
+* **webcomponent:** substring attribute-matching clobbered backgroundEffectPlugin; fix canvas 0-height race ([408a09e](https://github.com/nilkoushik/chronos-ui/commit/408a09e125e0d594f60d73b5aacdc4958edc8442))
+
 ## [1.3.2](https://github.com/nilkoushik/chronos-ui/compare/v1.3.1...v1.3.2) (2026-07-25)
 
 ### Bug Fixes
