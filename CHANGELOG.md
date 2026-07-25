@@ -1,3 +1,9 @@
+## [1.3.2](https://github.com/nilkoushik/chronos-ui/compare/v1.3.1...v1.3.2) (2026-07-25)
+
+### Bug Fixes
+
+* **docs:** exclude backgroundEffectPlugin from the auto-generated interactive form ([3d42c4e](https://github.com/nilkoushik/chronos-ui/commit/3d42c4e384ea0adc67da47ce6a0047f52e79505d))
+
 ## [1.3.1](https://github.com/nilkoushik/chronos-ui/compare/v1.3.0...v1.3.1) (2026-07-25)
 
 ### Bug Fixes
