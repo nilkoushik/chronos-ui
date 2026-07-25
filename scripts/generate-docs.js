@@ -215,6 +215,15 @@ function buildControlsForm(component) {
     if (item.prop === 'config') {
       return !api.some(x => x.prop.startsWith('config.'));
     }
+    // backgroundEffectPlugin is a { start, stop } function pair — it isn't
+    // representable as a form control, and a generic text-input fallback
+    // would serialize its literal placeholder string into the live
+    // preview's config, breaking the plugin resolution (a truthy string
+    // isn't `{ start, stop }`) and silently killing every background
+    // effect. It stays documented in the API table, just not interactive.
+    if (item.prop === 'backgroundEffectPlugin' || item.prop === 'config.backgroundEffectPlugin') {
+      return false;
+    }
     return true;
   });
 
