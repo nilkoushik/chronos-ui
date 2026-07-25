@@ -3,3 +3,8 @@
 # it's the same command CI's publish workflow runs, so a broken build can never
 # reach a commit, let alone a release/publish.
 npm run build
+
+# BDD gate: exercise every component's built web-component output (real dist/,
+# not a bundler dev server) across its documented options/effects, so a commit
+# can never land a component whose bundle throws or silently fails to render.
+npm run test:bdd

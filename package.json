@@ -54,7 +54,8 @@
     "prepublishOnly": "npm run build",
     "postpublish": "node -e \"if (process.env.CI !== 'true' && process.env.GITHUB_ACTIONS !== 'true') require('./scripts/sync-beta-tag.js')\"",
     "release": "semantic-release",
-    "test": "echo \"No tests yet\" && exit 0"
+    "test": "npm run test:bdd",
+    "test:bdd": "playwright install chromium && cucumber-js --config cucumber.cjs"
   },
   "peerDependencies": {
     "react": ">=17",
@@ -66,8 +67,10 @@
     }
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@builder.io/mitosis": "^0.13.0",
     "@builder.io/mitosis-cli": "^0.13.0",
+    "@cucumber/cucumber": "^13.2.0",
     "@playwright/mcp": "^0.0.78",
     "@playwright/test": "^1.62.0",
     "@semantic-release/changelog": "^7.0.0",
@@ -80,6 +83,7 @@
     "conventional-changelog-conventionalcommits": "^9.3.1",
     "esbuild": "^0.28.1",
     "husky": "^9.1.7",
+    "react-dom": "^19.2.8",
     "semantic-release": "^25.0.8",
     "typescript": "^6.0.3"
   }
