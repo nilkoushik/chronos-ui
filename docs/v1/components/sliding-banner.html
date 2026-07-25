@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sliding Banner — Chronos UI</title>
-  <meta name="description" content="Full-featured slider with 13 transition effects, 11 canvas background effects, autoplay, arrows & dots." />
+  <meta name="description" content="Full-featured slider with 14 transition effects, 11 canvas background effects, autoplay, arrows & dots." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="../css/docs.css" />
   <link rel="stylesheet" href="../styles/theme.css" />
@@ -64,7 +64,7 @@
       <div class="page-header">
         <div class="page-badge">▶ Component</div>
         <h1 class="page-title">Sliding Banner</h1>
-        <p class="page-description">Full-featured slider with 13 transition effects, 11 canvas background effects, autoplay, arrows & dots.</p>
+        <p class="page-description">Full-featured slider with 14 transition effects, 11 canvas background effects, autoplay, arrows & dots.</p>
       </div>
 
       <!-- Install -->
@@ -73,7 +73,7 @@
         <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
       </div>
 
-      <h2 class="section-heading">Available Effects</h2><div class="effect-list"><span class="effect-pill">slide</span><span class="effect-pill">fade</span><span class="effect-pill">zoom</span><span class="effect-pill">flip</span><span class="effect-pill">push-up</span><span class="effect-pill">push-down</span><span class="effect-pill">push-left</span><span class="effect-pill">push-right</span><span class="effect-pill">wipe-left</span><span class="effect-pill">wipe-right</span><span class="effect-pill">cube</span><span class="effect-pill">door</span><span class="effect-pill">fall</span><span class="effect-pill">crush</span><span class="effect-pill">peel-off</span><span class="effect-pill">curtain</span></div><style>.effect-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}.effect-pill{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;font-family:var(--font-mono);background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);color:#a78bfa}</style>
+      <h2 class="section-heading">Available Effects</h2><div class="effect-list"><span class="effect-pill">slide</span><span class="effect-pill">fade</span><span class="effect-pill">zoom</span><span class="effect-pill">flip</span><span class="effect-pill">push-horizontal</span><span class="effect-pill">push-vertical</span><span class="effect-pill">wipe</span><span class="effect-pill">cube</span><span class="effect-pill">door</span><span class="effect-pill">fall</span><span class="effect-pill">crush</span><span class="effect-pill">peel-off</span><span class="effect-pill">curtain</span></div><style>.effect-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}.effect-pill{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;font-family:var(--font-mono);background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);color:#a78bfa}</style>
 
       <!-- Interactive Playground -->
       <h2 class="section-heading">Interactive Demo Playground</h2>
@@ -148,13 +148,9 @@
           <option value="fade" selected>fade</option>
           <option value="zoom">zoom</option>
           <option value="flip">flip</option>
-          <option value="push">push</option>
-          <option value="push-up">push-up</option>
-          <option value="push-down">push-down</option>
-          <option value="push-left">push-left</option>
-          <option value="push-right">push-right</option>
-          <option value="wipe-left">wipe-left</option>
-          <option value="wipe-right">wipe-right</option>
+          <option value="push-horizontal">push-horizontal</option>
+          <option value="push-vertical">push-vertical</option>
+          <option value="wipe">wipe</option>
           <option value="cube">cube</option>
           <option value="door">door</option>
           <option value="fall">fall</option>
@@ -163,7 +159,7 @@
           <option value="curtain">curtain</option>
         </select>
       
-        <div class="control-desc">Transition effect: "slide", "fade", "zoom", "flip", "push-up", "push-down", "push-left", "push-right", "wipe-left", "wipe-right", "cube", "door", "fall", "crush", "peel-off", or "curtain".</div>
+        <div class="control-desc">Transition effect: "slide", "fade", "zoom", "flip", "push-horizontal", "push-vertical", "wipe", "cube", "door", "fall", "crush", "peel-off", or "curtain".</div>
       </div>
     
       <div class="control-group">
@@ -268,10 +264,16 @@
       <!-- Code Tabs -->
       <h2 class="section-heading" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
         Usage Code Generator
-        <button class="jsfiddle-btn" id="jsfiddle-btn" style="background:var(--accent); color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:600; display:flex; align-items:center; gap:6px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-          Play in JSFiddle
-        </button>
+        <span style="display:flex; gap:8px;">
+          <button class="jsfiddle-btn" id="jsfiddle-btn" style="background:var(--accent); color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:600; display:flex; align-items:center; gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+            Play in JSFiddle
+          </button>
+          <button class="codesandbox-btn" id="codesandbox-btn" style="background:#151515; color:#fff; border:1px solid #333; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:600; display:flex; align-items:center; gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            Open in CodeSandbox
+          </button>
+        </span>
       </h2>
       <div class="tab-group">
         <div class="tabs-bar">
