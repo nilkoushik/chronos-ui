@@ -1,3 +1,9 @@
+## [1.2.2](https://github.com/nilkoushik/chronos-ui/compare/v1.2.1...v1.2.2) (2026-07-25)
+
+### Bug Fixes
+
+* **release:** pin conventional-changelog-conventionalcommits to compatible major ([06c4eeb](https://github.com/nilkoushik/chronos-ui/commit/06c4eeba6f07f2611a5ccab93bd249b41b7522eb))
+
 ## [1.2.1](https://github.com/nilkoushik/chronos-ui/compare/v1.2.0...v1.2.1) (2026-07-25)
 
 ### Bug Fixes
