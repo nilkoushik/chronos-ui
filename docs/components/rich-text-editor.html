@@ -16,7 +16,7 @@
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.0.6</span>
+        <span class="sidebar-version">v1.1.4</span>
       </a>
       <nav class="sidebar-nav">
         <div class="sidebar-section-label">Getting Started</div>
@@ -153,14 +153,20 @@
         <td>Initial HTML content for the editor.</td>
       </tr>
       <tr>
+        <td><span class="prop-name">initialContent</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Initial HTML content for the editor if content is not controlled.</td>
+      </tr>
+      <tr>
         <td><span class="prop-name">onChange</span> </td>
-        <td><span class="prop-type">(content: string) =&gt; void</span></td>
+        <td><span class="prop-type">(content: string) => void</span></td>
         <td><span class="prop-default">undefined</span></td>
         <td>Callback triggered when content changes.</td>
       </tr>
       <tr>
         <td><span class="prop-name">onMediaRequest</span> </td>
-        <td><span class="prop-type">(type: 'image' | 'video' | 'audio') =&gt; Promise&lt;string&gt;</span></td>
+        <td><span class="prop-type">(type: 'image' | 'video' | 'audio') => Promise<string></span></td>
         <td><span class="prop-default">undefined</span></td>
         <td>Callback to open an external media library modal.</td>
       </tr>
@@ -175,6 +181,12 @@
         <td><span class="prop-type">string</span></td>
         <td><span class="prop-default">undefined</span></td>
         <td>Additional CSS class names for the wrapper element.</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">config.toolbar</span> </td>
+        <td><span class="prop-type">string[]</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>List of toolbar buttons to display (e.g. <code>['bold', 'italic', 'underline', 'link']</code>).</td>
       </tr></tbody>
       </table>
     </div>

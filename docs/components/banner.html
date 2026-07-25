@@ -16,7 +16,7 @@
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.0.6</span>
+        <span class="sidebar-version">v1.1.4</span>
       </a>
       <nav class="sidebar-nav">
         <div class="sidebar-section-label">Getting Started</div>
@@ -110,6 +110,7 @@
   textAlignment=<span class="str">"center"</span>
   media={{ type: <span class="str">'image'</span>, url: <span class="str">'/hero.jpg'</span> }}
   mapLinks={[{ url: <span class="str">'/shop'</span> }]}
+  config={{ backgroundEffect: <span class="str">'rain'</span> }}
 /&gt;</code></pre>
     </div>
         </div>
@@ -129,6 +130,7 @@
   textAlignment=<span class="str">"center"</span>
   media={{ type: <span class="str">'image'</span>, url: <span class="str">'/hero.jpg'</span> }}
   mapLinks={[{ url: <span class="str">'/shop'</span> }]}
+  config={{ backgroundEffect: <span class="str">'rain'</span> }}
 /&gt;</code></pre>
     </div>
         </div>
@@ -145,6 +147,7 @@
   subtitle=<span class="str">"Discover the new season"</span>
   cta-text=<span class="str">"Shop Now"</span>
   text-alignment=<span class="str">"center"</span>
+  config=<span class="str">'{"backgroundEffect":"rain"}'</span>
 &gt;&lt;/<span class="tag">banner</span>&gt;</code></pre>
     </div>
         </div>
@@ -212,6 +215,42 @@
         <td><span class="prop-type">boolean</span></td>
         <td><span class="prop-default">undefined</span></td>
         <td>Applies the <code>chronos-image-shimmer</code> skeleton animation</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">hotspots</span> </td>
+        <td><span class="prop-type">Hotspot[]</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Clickable SVG image-map regions (rect/oval/polygon) overlaid on the media, each linking to a URL or deeplink. Renders as a real SVG shape (not clip-path), with a separately-sized keyboard-focusable hit target per hotspot</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">config.hotspotMinTargetSize</span> </td>
+        <td><span class="prop-type">number</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Minimum hotspot hit-target size in CSS px, enforced independently of the drawn shape size (WCAG 2.5.8). Default: 24</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">config.backgroundEffect</span> </td>
+        <td><span class="prop-type">'none' | 'particles' | 'waves' | 'rain' | 'thunderstorm' | 'sunrise' | 'sunset' | 'fog' | 'autumn' | 'festival' | 'santa' | 'sea'</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Animated canvas layer rendered behind the media/overlay. Shared plugin engine (<code>src/utils/backgroundEffects.ts</code>) also used by SlidingBanner — new effects can be added there without touching this component. 'rain'/'thunderstorm' include a water band along the bottom edge with landing ripples; 'thunderstorm' additionally adds periodic lightning flashes/bolts. 'fog' is winter fog drifting with wind, light snow, plus cinematic frost shards. 'autumn' is falling, swaying autumn leaves. 'festival' is an Indian-festival (Diwali-style) look with ambient diya sparkle and periodic firework bursts. 'santa' has twinkling string lights, snowfall mixed with tumbling candy canes and peppermints, a galloping-reindeer sleigh flyby (with a glowing Rudolph nose leading) that drops a trail of tumbling candy canes and mints as it flies, loops back right-to-left through the bottom half of the frame after its first pass instead of just vanishing, and a playful Santa cap that randomly peeks in and out from one of the four frame edges like hide-and-seek. 'sea' is an aerial-view waterline wash — the effect stays transparent everywhere except a thin translucent, sea-tinted band (~10% of the banner height) along the bottom edge, so the banner's own background image reads as the seashore/beach itself. The band breathes in and out on a natural (non-mechanical) surge rhythm, with drifting aerial-style foam blobs and lacy filament streaks, like a top-down drone shot of waves lapping the sand. Default: 'none'</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyLoad</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Defer mounting media/hotspots until the banner scrolls near the viewport (default: true)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyThreshold</span> </td>
+        <td><span class="prop-type">number</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver threshold, 0-1 (default: 0.1)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyRootMargin</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver rootMargin, e.g. preload distance (default: '200px')</td>
       </tr></tbody>
       </table>
     </div>
@@ -219,6 +258,8 @@
       <!-- Notes -->
       <div class="alert alert-tip"><strong>Theming:</strong> Override <code>--chronos-color-primary</code> in your stylesheet to change the CTA button colour.</div>
 <div class="alert alert-info"><strong>Video background:</strong> Set <code>media.type = 'video'</code> — the component renders a muted, autoplayed, looped <code>&lt;video&gt;</code> positioned absolutely behind the overlay.</div>
+<div class="alert alert-info"><strong>Hotspots:</strong> Pass <code>hotspots</code> (rect/oval/polygon regions with <code>coords</code> as percentages) to overlay clickable image-map regions on the media, each linking to a URL or app deeplink. Shapes render as real, anti-aliased SVG (not CSS <code>clip-path</code>). Each hotspot is a keyboard-focusable <code>&lt;a&gt;</code> with a hit target that's always at least <code>config.hotspotMinTargetSize</code> CSS px (default 24, per WCAG 2.5.8), and an optional hover/focus tooltip via <code>showTooltip</code>.</div>
+<div class="alert alert-info"><strong>Background effects:</strong> Set <code>config.backgroundEffect</code> to <code>'particles'</code>, <code>'waves'</code>, <code>'rain'</code>, <code>'thunderstorm'</code>, <code>'sunrise'</code>, <code>'sunset'</code>, <code>'fog'</code>, <code>'autumn'</code>, <code>'festival'</code>, <code>'santa'</code>, or <code>'sea'</code> to render an animated canvas layer behind the banner's media/overlay. Powered by a shared plugin engine at <code>src/utils/backgroundEffects.ts</code> (also used by SlidingBanner) — new effects can be added there once and become available to every component that uses it.</div>
     </div>
   </main>
 </div>

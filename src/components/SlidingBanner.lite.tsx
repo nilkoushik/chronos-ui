@@ -30,7 +30,8 @@ export interface SliderConfig {
   showNextPrev: boolean;
   showArrows?: boolean;
   showDots: boolean;
-  animationEffect?: 'slide' | 'fade' | 'zoom' | 'flip' | 'push-up' | 'push-down' | 'push-left' | 'push-right' | 'wipe-left' | 'wipe-right' | 'cube' | 'door' | 'fall' | 'crush' | 'peel-off' | 'curtain';
+  animationEffect?: 'slide' | 'fade' | 'zoom' | 'flip' | 'push' | 'push-up' | 'push-down' | 'push-left' | 'push-right' | 'wipe-left' | 'wipe-right' | 'cube' | 'door' | 'fall' | 'crush' | 'peel-off' | 'curtain';
+  animationQuality?: 'light' | 'detailed';
   backgroundEffect?: BackgroundEffectName;
   hideArrowsIfNoScroll?: boolean;
   height?: string;
@@ -78,6 +79,9 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     },
     get backgroundClass() {
       return props.config?.backgroundEffect || 'none';
+    },
+    get qualityClass() {
+      return props.config?.animationQuality || 'detailed';
     },
     next() {
       if (!props.items?.length) return;
@@ -135,7 +139,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     animContext.dimResizeHandler = () => state.setupDimensions();
     window.addEventListener('resize', animContext.dimResizeHandler);
     if (canvasRef) {
-      startBackgroundEffect(canvasRef, props.config?.backgroundEffect, bgEffectContext);
+      startBackgroundEffect(canvasRef, state.backgroundClass as BackgroundEffectName, bgEffectContext);
     }
   }
 
@@ -155,12 +159,17 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     }
   });
 
+  // Only restart once the widget has actually mounted its heavy content, and
+  // only when the effect name itself changed (state.backgroundClass is a
+  // stable derived string) — not on every unrelated re-render such as a
+  // slide index change, which would otherwise tear down and restart the
+  // canvas loop on every click and make the effect look like it's
+  // stuttering/never settling.
   onUpdate(() => {
-    // Start a fresh loop on the canvas (startBackgroundEffect stops the old one first)
-    if (canvasRef) {
-      startBackgroundEffect(canvasRef, props.config?.backgroundEffect, bgEffectContext);
+    if (state.isVisible && canvasRef) {
+      startBackgroundEffect(canvasRef, state.backgroundClass as BackgroundEffectName, bgEffectContext);
     }
-  }, [props.config?.backgroundEffect, canvasRef]);
+  }, [state.backgroundClass, canvasRef]);
 
   onUnMount(() => {
     state.stopAutoPlay();
@@ -173,9 +182,10 @@ export default function SlidingBanner(props: SlidingBannerProps) {
   return (
     <div
       ref={rootRef}
-      class={`chronos-sliding-banner ${state.showSkeleton ? 'chronos-image-shimmer' : ''} ${props.className || ''} effect-${state.animationClass} bg-effect-${state.backgroundClass}`}
+      class={`chronos-sliding-banner ${state.showSkeleton ? 'chronos-image-shimmer' : ''} ${props.className || ''} effect-${state.animationClass} bg-effect-${state.backgroundClass} quality-${state.qualityClass}`}
       onMouseEnter={() => state.stopAutoPlay()}
       onMouseLeave={() => state.startAutoPlay()}
+      role="region"
       style={{
         height: props.config?.height || '',
         minHeight: props.config?.height === 'auto' ? 'auto' : (props.config?.minHeight || '')
@@ -265,10 +275,10 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       {((props.config?.showArrows || props.config?.showNextPrev) && 
         (!props.config?.hideArrowsIfNoScroll || (props.items && props.items.length > 1))) && (
         <>
-          <button class="chronos-sliding-arrow prev" onClick={() => state.prev()}>
+          <button type="button" class="chronos-sliding-arrow prev" aria-label="Previous" onClick={() => state.prev()}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
           </button>
-          <button class="chronos-sliding-arrow next" onClick={() => state.next()}>
+          <button type="button" class="chronos-sliding-arrow next" aria-label="Next" onClick={() => state.next()}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
           </button>
         </>
@@ -277,9 +287,11 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       {props.config?.showDots && (
         <div class="chronos-sliding-dots">
           {props.items?.map((_, index) => (
-            <button 
+            <button
+              type="button"
               key={index}
               class={`chronos-sliding-dot ${index === state.currentIndex ? 'active' : ''}`}
+              aria-label={`Go to slide ${index + 1}`}
               onClick={() => state.goTo(index)}
             ></button>
           ))}

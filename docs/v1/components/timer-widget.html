@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Timer Widget — Chronos UI</title>
-  <meta name="description" content="Live countdown timer updating every second. Shows days, hours, minutes, and seconds to any target date." />
+  <meta name="description" content="Live countdown timer updating every second, with days/hours/minutes/seconds to any target date. Style it with neon/dark/gray variants, or drop in a background image with an adjustable overlay scrim for a photo-backed hero look." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="../css/docs.css" />
   <link rel="stylesheet" href="../styles/theme.css" />
@@ -18,7 +18,7 @@
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.1.3</span>
+        <span class="sidebar-version">v1.1.4</span>
       </a>
       <div class="sidebar-version-picker" style="padding: 0.5rem 1.25rem; border-bottom: 1px solid var(--border);">
         <select class="control-select version-select" style="width: 100%; font-size: 0.8rem; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-secondary); padding: 6px 10px; border-radius: var(--radius-sm); outline: none; cursor: pointer;" onchange="window.location.href = this.value">
@@ -64,7 +64,7 @@
       <div class="page-header">
         <div class="page-badge">⏳ Component</div>
         <h1 class="page-title">Timer Widget</h1>
-        <p class="page-description">Live countdown timer updating every second. Shows days, hours, minutes, and seconds to any target date.</p>
+        <p class="page-description">Live countdown timer updating every second, with days/hours/minutes/seconds to any target date. Style it with neon/dark/gray variants, or drop in a background image with an adjustable overlay scrim for a photo-backed hero look.</p>
       </div>
 
       <!-- Install -->
@@ -87,7 +87,7 @@
               <span class="preview-url">&lt;timer-widget&gt; Playground</span>
             </div>
             <div class="preview-body" id="preview-container">
-              <timer-widget id="interactive-preview" title="Special Sale Ends In:" target-date="2027-12-31T23:59:59Z"></timer-widget>
+              <timer-widget id="interactive-preview" title="Special Sale Ends In:" target-date="2027-12-31T23:59:59Z" variant="dark" background-image-url="../assets/images/summer_sale.png" background-position="center" overlay="rgba(0, 0, 0, 0.45)" background-effect="rain" expired-text="This offer has expired" width="auto" height="auto"></timer-widget>
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@
       <div class="control-group">
         <label class="control-label">title <span class="control-type-badge">string</span></label>
         
-        <input type="text" name="title" value="" class="control-input">
+        <input type="text" name="title" value="Special Sale Ends In:" class="control-input">
       
         <div class="control-desc">Heading above the timer blocks.</div>
       </div>
@@ -112,9 +112,121 @@
       <div class="control-group">
         <label class="control-label">targetDate <span class="control-type-badge">string</span></label>
         
-        <input type="text" name="target-date" value="" class="control-input">
+        <input type="text" name="target-date" value="2027-12-31T23:59:59Z" class="control-input">
       
         <div class="control-desc">ISO 8601 UTC date string to count down to (e.g. "2026-12-31T23:59:59Z").</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">variant <span class="control-type-badge">string</span></label>
+        
+        <select name="variant" class="control-select">
+          <option value="dark" selected>dark</option>
+          <option value="neon">neon</option>
+          <option value="gray">gray</option>
+        </select>
+      
+        <div class="control-desc">Visual color theme for the timer blocks: "neon", "dark", or "gray".</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">backgroundImageUrl <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="background-image-url" value="../assets/images/summer_sale.png" class="control-input">
+      
+        <div class="control-desc">Background image URL. When set, renders behind the widget with a readability overlay so timer blocks stay legible over photos.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">backgroundPosition <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="background-position" value="center" class="control-input">
+      
+        <div class="control-desc">CSS background-position for the background image.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">overlay <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="overlay" value="rgba(0, 0, 0, 0.45)" class="control-input">
+      
+        <div class="control-desc">CSS background for the scrim over the background image, e.g. a gradient or rgba() color.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">backgroundEffect <span class="control-type-badge">string</span></label>
+        
+        <select name="background-effect" class="control-select">
+          <option value="none">none</option>
+          <option value="particles">particles</option>
+          <option value="waves">waves</option>
+          <option value="rain" selected>rain</option>
+          <option value="thunderstorm">thunderstorm</option>
+          <option value="sunrise">sunrise</option>
+          <option value="sunset">sunset</option>
+          <option value="fog">fog</option>
+          <option value="autumn">autumn</option>
+          <option value="festival">festival</option>
+          <option value="santa">santa</option>
+          <option value="sea">sea</option>
+        </select>
+      
+        <div class="control-desc">Canvas background effect: "none", "particles", "waves", "rain", "thunderstorm", "sunrise", "sunset", "fog", "autumn", "festival", "santa", or "sea".</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">expiredText <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="expired-text" value="This offer has expired" class="control-input">
+      
+        <div class="control-desc">Message shown once targetDate has passed, in place of the countdown blocks.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">width <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="width" value="auto" class="control-input">
+      
+        <div class="control-desc">CSS width for the root element.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">height <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="height" value="auto" class="control-input">
+      
+        <div class="control-desc">CSS height for the root element. When 'auto' and backgroundImageUrl is set, height follows the image's natural aspect ratio.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">lazyLoad <span class="control-type-badge">boolean</span></label>
+        
+        <label class="control-checkbox-label">
+          <input type="checkbox" name="lazyLoad" checked>
+          <span class="control-checkbox-custom"></span>
+          Enable lazyLoad
+        </label>
+      
+        <div class="control-desc">Defer starting the countdown interval until scrolled near the viewport.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">lazyThreshold <span class="control-type-badge">number</span></label>
+        
+        <div class="control-slider-wrap">
+          <input type="range" name="lazyThreshold" min="1" max="10" step="1" value="0.1" class="control-slider">
+          <span class="control-slider-val">0.1</span>
+        </div>
+      
+        <div class="control-desc">IntersectionObserver threshold, 0-1.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">lazyRootMargin <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="lazy-root-margin" value="200px" class="control-input">
+      
+        <div class="control-desc">IntersectionObserver rootMargin.</div>
       </div>
     
               </form>
@@ -148,6 +260,13 @@
 &lt;<span class="tag">TimerWidget</span>
   title=<span class="str">"Sale ends in:"</span>
   targetDate=<span class="str">"2026-12-31T23:59:59Z"</span>
+  variant=<span class="str">"neon"</span>
+  backgroundImageUrl=<span class="str">"/hero-sale.jpg"</span>
+  backgroundPosition=<span class="str">"center"</span>
+  overlay=<span class="str">"linear-gradient(to top, rgba(0,0,0,.7), rgba(0,0,0,.2))"</span>
+  backgroundEffect=<span class="str">"particles"</span>
+  expiredText=<span class="str">"This sale has ended — check back soon!"</span>
+  width=<span class="str">"100%"</span>
 /&gt;</code></pre>
     </div>
         </div>
@@ -162,6 +281,11 @@
 &lt;<span class="tag">TimerWidget</span>
   title=<span class="str">"Sale ends in:"</span>
   targetDate=<span class="str">"2026-12-31T23:59:59Z"</span>
+  variant=<span class="str">"neon"</span>
+  backgroundImageUrl=<span class="str">"/hero-sale.jpg"</span>
+  overlay=<span class="str">"linear-gradient(to top, rgba(0,0,0,.7), rgba(0,0,0,.2))"</span>
+  backgroundEffect=<span class="str">"particles"</span>
+  expiredText=<span class="str">"This sale has ended — check back soon!"</span>
 /&gt;</code></pre>
     </div>
         </div>
@@ -175,6 +299,11 @@
 &lt;<span class="tag">timer-widget</span>
   title=<span class="str">"Sale ends in:"</span>
   target-date=<span class="str">"2026-12-31T23:59:59Z"</span>
+  variant=<span class="str">"neon"</span>
+  background-image-url=<span class="str">"/hero-sale.jpg"</span>
+  overlay=<span class="str">"linear-gradient(to top, rgba(0,0,0,.7), rgba(0,0,0,.2))"</span>
+  background-effect=<span class="str">"particles"</span>
+  expired-text=<span class="str">"This sale has ended — check back soon!"</span>
 &gt;&lt;/<span class="tag">timer-widget</span>&gt;</code></pre>
     </div>
         </div>
@@ -226,6 +355,12 @@
         <td>CSS background for the scrim over the background image, e.g. a gradient or rgba() color (default: 'rgba(0, 0, 0, 0.45)')</td>
       </tr>
       <tr>
+        <td><span class="prop-name">backgroundEffect</span> </td>
+        <td><span class="prop-type">'none' | 'particles' | 'waves' | 'rain' | 'thunderstorm' | 'sunrise' | 'sunset' | 'fog' | 'autumn' | 'festival' | 'santa' | 'sea'</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Animated canvas layer rendered behind the timer blocks, from the same shared plugin engine (<code>src/utils/backgroundEffects.ts</code>) also used by Banner and SlidingBanner. Default: 'none'</td>
+      </tr>
+      <tr>
         <td><span class="prop-name">expiredText</span> </td>
         <td><span class="prop-type">string</span></td>
         <td><span class="prop-default">undefined</span></td>
@@ -271,8 +406,10 @@
     </div>
 
       <!-- Notes -->
-      <div class="alert alert-warn"><strong>Past dates:</strong> When <code>targetDate</code> is in the past all values show <code>0</code>. Update or remove the component via your CMS when the countdown expires.</div>
+      <div class="alert alert-warn"><strong>Past dates:</strong> When <code>targetDate</code> is in the past all values show <code>0</code>, or <code>expiredText</code> if set. Update or remove the component via your CMS when the countdown expires.</div>
 <div class="alert alert-tip"><strong>SSR:</strong> The timer renders <code>0</code> on the server then hydrates on the client, avoiding any hydration mismatch.</div>
+<div class="alert alert-tip"><strong>Background image:</strong> Set <code>backgroundImageUrl</code> to render a photo behind the countdown, with a legibility scrim controlled by <code>overlay</code> (any CSS <code>background</code> value — solid, rgba, or gradient). Leave <code>height</code> at its default <code>'auto'</code> to let the widget follow the image's natural aspect ratio, or pin an explicit height (e.g. <code>'320px'</code>) to avoid layout shift.</div>
+<div class="alert alert-tip"><strong>Background effects:</strong> Set <code>backgroundEffect</code> to <code>'particles'</code>, <code>'waves'</code>, <code>'rain'</code>, <code>'thunderstorm'</code>, <code>'sunrise'</code>, <code>'sunset'</code>, <code>'fog'</code>, <code>'autumn'</code>, <code>'festival'</code>, <code>'santa'</code>, or <code>'sea'</code> to render an animated canvas layer behind the countdown — the same shared plugin engine (<code>src/utils/backgroundEffects.ts</code>) used by Banner and SlidingBanner. Combine with <code>backgroundImageUrl</code> and <code>overlay</code> for a photo backdrop with motion, or use it alone over the solid <code>variant</code> background.</div>
     </div>
   </main>
 </div>

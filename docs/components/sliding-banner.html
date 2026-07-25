@@ -16,7 +16,7 @@
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.0.6</span>
+        <span class="sidebar-version">v1.1.4</span>
       </a>
       <nav class="sidebar-nav">
         <div class="sidebar-section-label">Getting Started</div>
@@ -191,6 +191,12 @@
         <td>Show next/previous arrows (default: true)</td>
       </tr>
       <tr>
+        <td><span class="prop-name">config.showArrows</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Show next/previous arrows (default: true)</td>
+      </tr>
+      <tr>
         <td><span class="prop-name">config.showDots</span> </td>
         <td><span class="prop-type">boolean</span></td>
         <td><span class="prop-default">undefined</span></td>
@@ -204,9 +210,15 @@
       </tr>
       <tr>
         <td><span class="prop-name">config.backgroundEffect</span> </td>
-        <td><span class="prop-type">'none' | 'particles' | 'waves'</span></td>
+        <td><span class="prop-type">'none' | 'particles' | 'waves' | 'rain' | 'thunderstorm' | 'sunrise' | 'sunset' | 'fog' | 'autumn' | 'festival' | 'santa' | 'sea'</span></td>
         <td><span class="prop-default">undefined</span></td>
-        <td>Canvas background animation (default: 'none')</td>
+        <td>Canvas background animation, from the shared plugin engine (<code>src/utils/backgroundEffects.ts</code>) also used by Banner. Default: 'none'</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">config.hideArrowsIfNoScroll</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Hide arrows if there is only one slide (default: true)</td>
       </tr>
       <tr>
         <td><span class="prop-name">className</span> </td>
@@ -219,12 +231,30 @@
         <td><span class="prop-type">boolean</span></td>
         <td><span class="prop-default">undefined</span></td>
         <td>Applies shimmer to all slide backgrounds</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyLoad</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Defer autoplay/canvas effects and slide media until scrolled near the viewport (default: true)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyThreshold</span> </td>
+        <td><span class="prop-type">number</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver threshold, 0-1 (default: 0.1)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyRootMargin</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver rootMargin (default: '200px')</td>
       </tr></tbody>
       </table>
     </div>
 
       <!-- Notes -->
-      
+      <div class="alert alert-info"><strong>Background effects:</strong> <code>config.backgroundEffect</code> now supports <code>'particles'</code>, <code>'waves'</code>, <code>'rain'</code>, <code>'thunderstorm'</code>, <code>'sunrise'</code>, <code>'sunset'</code>, <code>'fog'</code>, <code>'autumn'</code>, <code>'festival'</code>, <code>'santa'</code>, and <code>'sea'</code> — an animated canvas layer rendered behind each slide, from the same shared plugin engine used by Banner (<code>src/utils/backgroundEffects.ts</code>).</div>
     </div>
   </main>
 </div>

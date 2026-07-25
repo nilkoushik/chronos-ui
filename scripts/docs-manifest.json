@@ -32,7 +32,7 @@
       },
       {
         "type": "info",
-        "text": "<strong>Background effects:</strong> Set <code>config.backgroundEffect</code> to <code>'particles'</code>, <code>'waves'</code>, <code>'rain'</code>, <code>'thunderstorm'</code>, <code>'sunrise'</code>, <code>'sunset'</code>, or <code>'fog'</code> to render an animated canvas layer behind the banner's media/overlay. This is powered by a standalone plugin engine at <code>src/utils/backgroundEffects.ts</code> (also used by SlidingBanner) — it's a plain registry of canvas renderers, so new effects can be added there once and become available to every component that uses it, without any per-component changes."
+        "text": "<strong>Background effects:</strong> Set <code>config.backgroundEffect</code> to <code>'particles'</code>, <code>'waves'</code>, <code>'rain'</code>, <code>'thunderstorm'</code>, <code>'sunrise'</code>, <code>'sunset'</code>, <code>'fog'</code>, <code>'autumn'</code>, <code>'festival'</code>, <code>'santa'</code>, or <code>'sea'</code> to render an animated canvas layer behind the banner's media/overlay. This is powered by a standalone plugin engine at <code>src/utils/backgroundEffects.ts</code> (also used by SlidingBanner) — it's a plain registry of canvas renderers, so new effects can be added there once and become available to every component that uses it, without any per-component changes."
       },
       {
         "type": "tip",
@@ -104,7 +104,49 @@
         "prop": "config",
         "type": "object",
         "default": "undefined",
-        "desc": "Design and behavior settings. Supported keys: align, bgGradient, padding, autoplay, height, bgPosition."
+        "desc": "Design and behavior settings. Supported keys: align, bgGradient, padding, autoplay, height, bgPosition, hotspotMinTargetSize, backgroundEffect."
+      },
+      {
+        "prop": "config.align",
+        "type": "string",
+        "default": "\"center\"",
+        "desc": "Content alignment: \"left\", \"center\", or \"right\"."
+      },
+      {
+        "prop": "config.bgGradient",
+        "type": "string",
+        "default": "undefined",
+        "desc": "CSS background for the overlay layer, e.g. a gradient or rgba() color (default: 'rgba(0, 0, 0, 0.4)')."
+      },
+      {
+        "prop": "config.padding",
+        "type": "string",
+        "default": "\"lg\"",
+        "desc": "Overlay padding: \"sm\", \"md\", \"lg\", \"xl\", or a raw CSS value."
+      },
+      {
+        "prop": "config.height",
+        "type": "string",
+        "default": "undefined",
+        "desc": "CSS height for the root element. 'auto' follows the media's natural aspect ratio via an in-flow image/video."
+      },
+      {
+        "prop": "config.bgPosition",
+        "type": "string",
+        "default": "\"center\"",
+        "desc": "CSS background-position / object-position for the media."
+      },
+      {
+        "prop": "config.hotspotMinTargetSize",
+        "type": "number",
+        "default": "24",
+        "desc": "Minimum hit-target size in CSS px for hotspot links (WCAG 2.5.8)."
+      },
+      {
+        "prop": "config.backgroundEffect",
+        "type": "string",
+        "default": "\"none\"",
+        "desc": "Canvas background effect: \"none\", \"particles\", \"waves\", \"rain\", \"thunderstorm\", \"sunrise\", \"sunset\", \"fog\", \"autumn\", \"festival\", \"santa\", or \"sea\"."
       },
       {
         "prop": "hotspots",
@@ -303,7 +345,7 @@
     "slug": "sliding-banner",
     "icon": "▶",
     "cardGradient": "linear-gradient(135deg,#0f0c29,#302b63)",
-    "cardDesc": "Full-featured slider with 13 transition effects, canvas backgrounds (particles/waves), autoplay, arrows & dots.",
+    "cardDesc": "Full-featured slider with 13 transition effects, 11 canvas background effects, autoplay, arrows & dots.",
     "previewLabel": "SlidingBanner — fade effect · autoplay",
     "previewCss": "#slider-demo{position:relative;width:100%;height:280px;overflow:hidden;border-radius:10px;background:#000;font-family:'Inter',sans-serif}.demo-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;opacity:0;transition:opacity .8s ease;pointer-events:none}.demo-slide.active{opacity:1;pointer-events:auto}.demo-slide h3{font-size:1.75rem;font-weight:800;text-shadow:0 2px 8px rgba(0,0,0,.8);margin-bottom:.5rem}.demo-slide p{font-size:.95rem;text-shadow:0 1px 4px rgba(0,0,0,.8);opacity:.9}.ds1{background:url('../assets/images/summer_sale.png') center/cover}.ds2{background:url('../assets/images/new_arrivals.png') center/cover}.ds3{background:url('../assets/images/accessories.png') center/cover}.demo-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;border-radius:50%;width:38px;height:38px;color:#fff;font-size:1rem;cursor:pointer;z-index:10;transition:background .2s;display:flex;align-items:center;justify-content:center}.demo-arrow:hover{background:rgba(255,255,255,.3)}.demo-arrow.prev{left:14px}.demo-arrow.next{right:14px}.demo-dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}.demo-dot{width:9px;height:9px;border-radius:50%;border:2px solid #fff;background:transparent;cursor:pointer;transition:all .3s;padding:0}.demo-dot.active{background:#fff;transform:scale(1.3)}",
     "previewHtml": "<div id=\"slider-demo\"><div class=\"demo-slide ds1 active\"><h3>Summer Sale</h3><p>Up to 50% off everything</p></div><div class=\"demo-slide ds2\"><h3>New Arrivals</h3><p>Shop the latest collection</p></div><div class=\"demo-slide ds3\"><h3>Free Shipping</h3><p>On all orders over $75</p></div><button class=\"demo-arrow prev\">‹</button><button class=\"demo-arrow next\">›</button><div class=\"demo-dots\"><button class=\"demo-dot active\"></button><button class=\"demo-dot\"></button><button class=\"demo-dot\"></button></div></div>",
@@ -313,7 +355,7 @@
       "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/SlidingBanner.js\"></script>\n\n<sliding-banner\n  items='[{\"id\":\"1\",\"title\":\"Sale\"}]'\n  config='{\"autoStart\":true,\"showDots\":true,\"animationEffect\":\"fade\",\"backgroundEffect\":\"waves\"}'\n></sliding-banner>"
     },
     "notes": [],
-    "extra": "<h2 class=\"section-heading\">Available Effects</h2><div class=\"effect-list\"><span class=\"effect-pill\">slide</span><span class=\"effect-pill\">fade</span><span class=\"effect-pill\">zoom</span><span class=\"effect-pill\">flip</span><span class=\"effect-pill\">push-up</span><span class=\"effect-pill\">push-down</span><span class=\"effect-pill\">push-left</span><span class=\"effect-pill\">push-right</span><span class=\"effect-pill\">wipe-left</span><span class=\"effect-pill\">wipe-right</span><span class=\"effect-pill\">cube</span><span class=\"effect-pill\">door</span><span class=\"effect-pill\">fall</span></div><style>.effect-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}.effect-pill{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;font-family:var(--font-mono);background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);color:#a78bfa}</style>",
+    "extra": "<h2 class=\"section-heading\">Available Effects</h2><div class=\"effect-list\"><span class=\"effect-pill\">slide</span><span class=\"effect-pill\">fade</span><span class=\"effect-pill\">zoom</span><span class=\"effect-pill\">flip</span><span class=\"effect-pill\">push-up</span><span class=\"effect-pill\">push-down</span><span class=\"effect-pill\">push-left</span><span class=\"effect-pill\">push-right</span><span class=\"effect-pill\">wipe-left</span><span class=\"effect-pill\">wipe-right</span><span class=\"effect-pill\">cube</span><span class=\"effect-pill\">door</span><span class=\"effect-pill\">fall</span><span class=\"effect-pill\">crush</span><span class=\"effect-pill\">peel-off</span><span class=\"effect-pill\">curtain</span></div><style>.effect-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}.effect-pill{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;font-family:var(--font-mono);background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);color:#a78bfa}</style>",
     "api": [
       {
         "prop": "items",
@@ -343,13 +385,19 @@
         "prop": "config.animationEffect",
         "type": "string",
         "default": "\"slide\"",
-        "desc": "Transition effect: \"slide\", \"fade\", \"cube\", \"flip\", \"zoom\", etc."
+        "desc": "Transition effect: \"slide\", \"fade\", \"zoom\", \"flip\", \"push-up\", \"push-down\", \"push-left\", \"push-right\", \"wipe-left\", \"wipe-right\", \"cube\", \"door\", \"fall\", \"crush\", \"peel-off\", or \"curtain\"."
+      },
+      {
+        "prop": "config.animationQuality",
+        "type": "string",
+        "default": "\"detailed\"",
+        "desc": "Visual fidelity of the transition: \"detailed\" adds motion-blur pulses and directional shadows for a premium feel; \"light\" keeps just the core transform for cheaper compositing on low-powered devices or embeds where the extra draw cost isn't worth it."
       },
       {
         "prop": "config.backgroundEffect",
         "type": "string",
         "default": "\"none\"",
-        "desc": "Canvas background effect: \"none\", \"particles\", or \"waves\"."
+        "desc": "Canvas background effect: \"none\", \"particles\", \"waves\", \"rain\", \"thunderstorm\", \"sunrise\", \"sunset\", \"fog\", \"autumn\", \"festival\", \"santa\", or \"sea\"."
       },
       {
         "prop": "config.showArrows",
@@ -465,38 +513,112 @@
     "slug": "timer-widget",
     "icon": "⏳",
     "cardGradient": "linear-gradient(135deg,#001a0e,#003d1f)",
-    "cardDesc": "Live countdown timer updating every second. Shows days, hours, minutes, and seconds to any target date.",
+    "cardDesc": "Live countdown timer updating every second, with days/hours/minutes/seconds to any target date. Style it with neon/dark/gray variants, or drop in a background image with an adjustable overlay scrim for a photo-backed hero look.",
     "previewLabel": "TimerWidget — live countdown",
     "previewCss": ".demo-timer{background:#111118;border:1px solid rgba(124,58,237,.2);border-radius:12px;padding:2rem;text-align:center;font-family:'Inter',sans-serif}.demo-timer-title{color:#e2e8f0;font-size:1rem;font-weight:600;margin-bottom:1.25rem}.demo-timer-blocks{display:flex;justify-content:center;gap:1rem}.demo-timer-block{background:#0a0a0f;border:1px solid rgba(124,58,237,.3);border-radius:8px;padding:1rem;min-width:72px;display:flex;flex-direction:column;align-items:center}.demo-timer-value{font-size:2rem;font-weight:800;color:#a78bfa;font-variant-numeric:tabular-nums}.demo-timer-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:#5c5c80;margin-top:4px}.timer-control{margin-bottom:1rem;display:flex;align-items:center;gap:.75rem}.timer-control label{font-size:.85rem;color:var(--text-secondary)}.timer-control input{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);padding:6px 10px;font-family:var(--font-mono);font-size:.8rem}",
     "previewHtml": "<div class=\"timer-control\"><label for=\"timer-target\">Target date:</label><input type=\"datetime-local\" id=\"timer-target\" /></div><div class=\"demo-timer\"><div class=\"demo-timer-title\">⏳ Sale ends in:</div><div class=\"demo-timer-blocks\" id=\"timer-demo\"><div class=\"demo-timer-block\"><span class=\"demo-timer-value\" data-unit=\"days\">0</span><span class=\"demo-timer-label\">Days</span></div><div class=\"demo-timer-block\"><span class=\"demo-timer-value\" data-unit=\"hours\">0</span><span class=\"demo-timer-label\">Hours</span></div><div class=\"demo-timer-block\"><span class=\"demo-timer-value\" data-unit=\"minutes\">0</span><span class=\"demo-timer-label\">Minutes</span></div><div class=\"demo-timer-block\"><span class=\"demo-timer-value\" data-unit=\"seconds\">0</span><span class=\"demo-timer-label\">Seconds</span></div></div></div>",
     "previewScript": "const inp=document.getElementById('timer-target');if(inp){const d=new Date(Date.now()+7*86400000);inp.value=d.toISOString().slice(0,16);}",
     "examples": {
-      "react": "import TimerWidget from '@chronos-ui/core/react/TimerWidget';\nimport '@chronos-ui/core/theme.css';\n\n<TimerWidget\n  title=\"Sale ends in:\"\n  targetDate=\"2026-12-31T23:59:59Z\"\n/>",
-      "svelte": "<script lang=\"ts\">\n  import TimerWidget from '@chronos-ui/core/svelte/TimerWidget.svelte';\n</script>\n\n<TimerWidget\n  title=\"Sale ends in:\"\n  targetDate=\"2026-12-31T23:59:59Z\"\n/>",
-      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/TimerWidget.js\"></script>\n\n<timer-widget\n  title=\"Sale ends in:\"\n  target-date=\"2026-12-31T23:59:59Z\"\n></timer-widget>"
+      "react": "import TimerWidget from '@chronos-ui/core/react/TimerWidget';\nimport '@chronos-ui/core/theme.css';\n\n<TimerWidget\n  title=\"Sale ends in:\"\n  targetDate=\"2026-12-31T23:59:59Z\"\n  variant=\"neon\"\n  backgroundImageUrl=\"/hero-sale.jpg\"\n  backgroundPosition=\"center\"\n  overlay=\"linear-gradient(to top, rgba(0,0,0,.7), rgba(0,0,0,.2))\"\n  backgroundEffect=\"particles\"\n  expiredText=\"This sale has ended — check back soon!\"\n  width=\"100%\"\n/>",
+      "svelte": "<script lang=\"ts\">\n  import TimerWidget from '@chronos-ui/core/svelte/TimerWidget.svelte';\n</script>\n\n<TimerWidget\n  title=\"Sale ends in:\"\n  targetDate=\"2026-12-31T23:59:59Z\"\n  variant=\"neon\"\n  backgroundImageUrl=\"/hero-sale.jpg\"\n  overlay=\"linear-gradient(to top, rgba(0,0,0,.7), rgba(0,0,0,.2))\"\n  backgroundEffect=\"particles\"\n  expiredText=\"This sale has ended — check back soon!\"\n/>",
+      "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/TimerWidget.js\"></script>\n\n<timer-widget\n  title=\"Sale ends in:\"\n  target-date=\"2026-12-31T23:59:59Z\"\n  variant=\"neon\"\n  background-image-url=\"/hero-sale.jpg\"\n  overlay=\"linear-gradient(to top, rgba(0,0,0,.7), rgba(0,0,0,.2))\"\n  background-effect=\"particles\"\n  expired-text=\"This sale has ended — check back soon!\"\n></timer-widget>"
     },
     "notes": [
       {
         "type": "warn",
-        "text": "<strong>Past dates:</strong> When <code>targetDate</code> is in the past all values show <code>0</code>. Update or remove the component via your CMS when the countdown expires."
+        "text": "<strong>Past dates:</strong> When <code>targetDate</code> is in the past all values show <code>0</code>, or <code>expiredText</code> if set. Update or remove the component via your CMS when the countdown expires."
       },
       {
         "type": "tip",
         "text": "<strong>SSR:</strong> The timer renders <code>0</code> on the server then hydrates on the client, avoiding any hydration mismatch."
+      },
+      {
+        "type": "tip",
+        "text": "<strong>Background image:</strong> Set <code>backgroundImageUrl</code> to render a photo behind the countdown, with a legibility scrim controlled by <code>overlay</code> (any CSS <code>background</code> value — solid, rgba, or gradient). Leave <code>height</code> at its default <code>'auto'</code> to let the widget follow the image's natural aspect ratio, or pin an explicit height (e.g. <code>'320px'</code>) to avoid layout shift."
+      },
+      {
+        "type": "tip",
+        "text": "<strong>Background effects:</strong> Set <code>backgroundEffect</code> to <code>'particles'</code>, <code>'waves'</code>, <code>'rain'</code>, <code>'thunderstorm'</code>, <code>'sunrise'</code>, <code>'sunset'</code>, <code>'fog'</code>, <code>'autumn'</code>, <code>'festival'</code>, <code>'santa'</code>, or <code>'sea'</code> to render an animated canvas layer behind the countdown — the same shared plugin engine (<code>src/utils/backgroundEffects.ts</code>) used by Banner and SlidingBanner. Combine with <code>backgroundImageUrl</code> and <code>overlay</code> for a photo backdrop with motion, or use it alone over the solid <code>variant</code> background."
       }
     ],
     "api": [
       {
         "prop": "title",
         "type": "string",
-        "default": "undefined",
+        "default": "\"Special Sale Ends In:\"",
         "desc": "Heading above the timer blocks."
       },
       {
         "prop": "targetDate",
         "type": "string",
-        "default": "undefined",
+        "default": "\"2027-12-31T23:59:59Z\"",
         "desc": "ISO 8601 UTC date string to count down to (e.g. \"2026-12-31T23:59:59Z\")."
+      },
+      {
+        "prop": "variant",
+        "type": "string",
+        "default": "\"dark\"",
+        "desc": "Visual color theme for the timer blocks: \"neon\", \"dark\", or \"gray\"."
+      },
+      {
+        "prop": "backgroundImageUrl",
+        "type": "string",
+        "default": "\"../assets/images/summer_sale.png\"",
+        "desc": "Background image URL. When set, renders behind the widget with a readability overlay so timer blocks stay legible over photos."
+      },
+      {
+        "prop": "backgroundPosition",
+        "type": "string",
+        "default": "\"center\"",
+        "desc": "CSS background-position for the background image."
+      },
+      {
+        "prop": "overlay",
+        "type": "string",
+        "default": "\"rgba(0, 0, 0, 0.45)\"",
+        "desc": "CSS background for the scrim over the background image, e.g. a gradient or rgba() color."
+      },
+      {
+        "prop": "backgroundEffect",
+        "type": "string",
+        "default": "\"rain\"",
+        "desc": "Canvas background effect: \"none\", \"particles\", \"waves\", \"rain\", \"thunderstorm\", \"sunrise\", \"sunset\", \"fog\", \"autumn\", \"festival\", \"santa\", or \"sea\"."
+      },
+      {
+        "prop": "expiredText",
+        "type": "string",
+        "default": "\"This offer has expired\"",
+        "desc": "Message shown once targetDate has passed, in place of the countdown blocks."
+      },
+      {
+        "prop": "width",
+        "type": "string",
+        "default": "\"auto\"",
+        "desc": "CSS width for the root element."
+      },
+      {
+        "prop": "height",
+        "type": "string",
+        "default": "\"auto\"",
+        "desc": "CSS height for the root element. When 'auto' and backgroundImageUrl is set, height follows the image's natural aspect ratio."
+      },
+      {
+        "prop": "lazyLoad",
+        "type": "boolean",
+        "default": "true",
+        "desc": "Defer starting the countdown interval until scrolled near the viewport."
+      },
+      {
+        "prop": "lazyThreshold",
+        "type": "number",
+        "default": "0.1",
+        "desc": "IntersectionObserver threshold, 0-1."
+      },
+      {
+        "prop": "lazyRootMargin",
+        "type": "string",
+        "default": "\"200px\"",
+        "desc": "IntersectionObserver rootMargin."
       }
     ]
   },

@@ -16,7 +16,7 @@
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.0.6</span>
+        <span class="sidebar-version">v1.1.4</span>
       </a>
       <nav class="sidebar-nav">
         <div class="sidebar-section-label">Getting Started</div>
@@ -191,6 +191,12 @@
         <td>Show navigation dots (default: true)</td>
       </tr>
       <tr>
+        <td><span class="prop-name">config.hideArrowsIfNoScroll</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Hide arrows if there is only one slide set (default: true)</td>
+      </tr>
+      <tr>
         <td><span class="prop-name">className</span> </td>
         <td><span class="prop-type">string</span></td>
         <td><span class="prop-default">undefined</span></td>
@@ -201,6 +207,24 @@
         <td><span class="prop-type">boolean</span></td>
         <td><span class="prop-default">undefined</span></td>
         <td>Applies shimmer animation to all cells</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyLoad</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Defer autoplay and slide media until scrolled near the viewport (default: true)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyThreshold</span> </td>
+        <td><span class="prop-type">number</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver threshold, 0-1 (default: 0.1)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyRootMargin</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver rootMargin (default: '200px')</td>
       </tr></tbody>
       </table>
     </div>

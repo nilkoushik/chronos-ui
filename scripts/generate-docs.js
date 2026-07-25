@@ -48,7 +48,7 @@ function copyDir(src, dest) {
 
 // ── Default Interactive Web Component Elements ─────────────────────────────
 const DEFAULT_WC_ELEMENTS = {
-  'banner': `<chronos-banner id="interactive-preview" title="Experience Vibrant Colors &amp; Premium Innovation" subtitle="Explore our premium collection of responsive components. Zero dependencies, ultra lightweight." cta-text="Explore Collection" media='{"type":"image","url":"../assets/img/placeholder-01.svg"}'></chronos-banner>`,
+  'banner': `<chronos-banner id="interactive-preview" title="Experience Vibrant Colors &amp; Premium Innovation" subtitle="Explore our premium collection of responsive components. Zero dependencies, ultra lightweight." cta-text="Explore Collection" media='{"type":"image","url":"../assets/img/placeholder-01.svg"}' config='{"align":"center","padding":"lg","bgPosition":"center","hotspotMinTargetSize":24,"backgroundEffect":"particles"}'></chronos-banner>`,
   
   'announcement-bar': `<announcement-bar id="interactive-preview" message="🚀 Free shipping on orders over $75 — Shop the sale →" background-color="#8b5cf6" text-color="#ffffff" map-links='[{"url":"#"}]'></announcement-bar>`,
   
@@ -62,7 +62,7 @@ const DEFAULT_WC_ELEMENTS = {
   
   'alternating-slider': `<alternating-slider id="interactive-preview" items='[{"id":"1","title":"Slide 1: Summer Collection","subtitle":"Refresh your look with light layers.","media":{"type":"image","url":"../assets/img/placeholder-02.svg"}},{"id":"2","title":"Slide 2: Minimalist Living","subtitle":"Design your space for peace.","media":{"type":"image","url":"../assets/img/placeholder-03.svg"}},{"id":"3","title":"Slide 3: Urban Explorer","subtitle":"Ready for any adventure.","media":{"type":"image","url":"../assets/img/placeholder-04.svg"}},{"id":"4","title":"Slide 4: Modern Workspace","subtitle":"Tools to elevate your focus.","media":{"type":"image","url":"../assets/img/placeholder-05.svg"}},{"id":"5","title":"Slide 5: Weekend Escape","subtitle":"Travel style curated for you.","media":{"type":"image","url":"../assets/img/placeholder-06.svg"}},{"id":"6","title":"Slide 6: Evening Lounge","subtitle":"Unwind in comfort.","media":{"type":"image","url":"../assets/img/placeholder-07.svg"}}]' config='{"columns":2,"autoStart":true,"showDots":true}'></alternating-slider>`,
   
-  'timer-widget': `<timer-widget id="interactive-preview" title="Special Sale Ends In:" target-date="2027-12-31T23:59:59Z"></timer-widget>`,
+  'timer-widget': `<timer-widget id="interactive-preview" title="Special Sale Ends In:" target-date="2027-12-31T23:59:59Z" variant="dark" background-image-url="../assets/images/summer_sale.png" background-position="center" overlay="rgba(0, 0, 0, 0.45)" background-effect="rain" expired-text="This offer has expired" width="auto" height="auto"></timer-widget>`,
   
   'wysiwyg-renderer': `<wysiwyg-renderer id="interactive-preview" content="<h2>Premium Editorial Layout</h2><p>This component safely renders HTML content and processes external media embeds in real-time:</p><h3>YouTube Media Integration</h3><div class='chronos-social-embed' data-platform='youtube' data-url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'></div><h3>Social X / Twitter Post</h3><div class='chronos-social-embed' data-platform='x' data-url='https://x.com/NASA/status/1684947936109961216'></div><p>All scripts and scoped layouts load dynamically and securely.</p>"></wysiwyg-renderer>`,
   
@@ -273,23 +273,34 @@ function buildControlsForm(component) {
         </select>
       `;
     } else if (type === 'string' && propName === 'config.animationEffect') {
+      const animOptions = ['slide', 'fade', 'zoom', 'flip', 'push', 'push-up', 'push-down', 'push-left', 'push-right', 'wipe-left', 'wipe-right', 'cube', 'door', 'fall', 'crush', 'peel-off', 'curtain'];
       inputHtml = `
         <select name="${propName}" class="control-select">
-          <option value="slide">slide</option>
-          <option value="fade" selected>fade</option>
-          <option value="zoom">zoom</option>
-          <option value="flip">flip</option>
-          <option value="cube">cube</option>
-          <option value="door">door</option>
-          <option value="fall">fall</option>
+          ${animOptions.map(opt => `<option value="${opt}"${opt === 'fade' ? ' selected' : ''}>${opt}</option>`).join('\n          ')}
         </select>
       `;
-    } else if (type === 'string' && propName === 'config.backgroundEffect') {
+    } else if (type === 'string' && propName === 'variant') {
+      inputHtml = `
+        <select name="${attrName}" class="control-select">
+          <option value="dark" selected>dark</option>
+          <option value="neon">neon</option>
+          <option value="gray">gray</option>
+        </select>
+      `;
+    } else if (type === 'string' && propName === 'config.animationQuality') {
       inputHtml = `
         <select name="${propName}" class="control-select">
-          <option value="none">none</option>
-          <option value="particles">particles</option>
-          <option value="waves" selected>waves</option>
+          <option value="light">light</option>
+          <option value="detailed" selected>detailed</option>
+        </select>
+      `;
+    } else if (type === 'string' && (propName === 'config.backgroundEffect' || propName === 'backgroundEffect')) {
+      const isConfig = propName.startsWith('config.');
+      const selectedEffect = isConfig ? 'waves' : 'rain';
+      const effectOptions = ['none', 'particles', 'waves', 'rain', 'thunderstorm', 'sunrise', 'sunset', 'fog', 'autumn', 'festival', 'santa', 'sea'];
+      inputHtml = `
+        <select name="${isConfig ? propName : attrName}" class="control-select">
+          ${effectOptions.map(opt => `<option value="${opt}"${opt === selectedEffect ? ' selected' : ''}>${opt}</option>`).join('\n          ')}
         </select>
       `;
     } else if (type === 'array' || type === 'object') {

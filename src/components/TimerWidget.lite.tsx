@@ -1,5 +1,6 @@
-import { useStore, useRef, onMount, onUnMount, Show } from '@builder.io/mitosis';
+import { useStore, useRef, onMount, onUnMount, onUpdate, Show } from '@builder.io/mitosis';
 import { observeLazyMount } from '../utils/lazyObserver';
+import { startBackgroundEffect, stopBackgroundEffect, BackgroundEffectContext, BackgroundEffectName } from '../utils/backgroundEffects';
 
 export interface TimerWidgetProps {
   targetDate: string;
@@ -9,6 +10,7 @@ export interface TimerWidgetProps {
   backgroundImageUrl?: string;
   backgroundPosition?: string;
   overlay?: string;
+  backgroundEffect?: BackgroundEffectName;
   expiredText?: string;
   width?: string;
   height?: string;
@@ -20,6 +22,8 @@ export interface TimerWidgetProps {
 export default function TimerWidget(props: TimerWidgetProps) {
 
   const rootRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animContext = useRef<BackgroundEffectContext>({ animationFrameId: null, resizeHandler: null });
 
   const state = useStore({
     timeLeft: { days: 0, hours: 0, minutes: 0, seconds: 0 },
@@ -63,6 +67,9 @@ export default function TimerWidget(props: TimerWidgetProps) {
     },
     get contentOverlaysBox() {
       return state.useImageForHeight || !!state.fixedHeightValue;
+    },
+    get backgroundEffectClass() {
+      return props.backgroundEffect || 'none';
     }
   });
 
@@ -71,21 +78,35 @@ export default function TimerWidget(props: TimerWidgetProps) {
   onMount(() => {
     if (props.lazyLoad === false) {
       state.startTicking();
+      if (canvasRef) startBackgroundEffect(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
       return;
     }
     if (rootRef) {
       observerBox.disconnect = observeLazyMount(
         rootRef,
-        () => state.startTicking(),
+        () => {
+          state.startTicking();
+          if (canvasRef) startBackgroundEffect(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
+        },
         props.lazyThreshold ?? 0.1,
         props.lazyRootMargin ?? '200px'
       );
     }
   });
 
+  // Depend on the stable derived class (and NOT on state.timerId, which
+  // changes every second via the countdown tick) so the canvas loop starts
+  // once and only restarts if the effect name itself actually changes —
+  // otherwise it was tearing down and restarting every second, which made
+  // the animation look like it was stuttering/never settling.
+  onUpdate(() => {
+    if (canvasRef) startBackgroundEffect(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
+  }, [state.backgroundEffectClass, canvasRef]);
+
   onUnMount(() => {
     if (state.timerId) clearInterval(state.timerId);
     if (observerBox.disconnect) observerBox.disconnect();
+    stopBackgroundEffect(animContext);
   });
   return (
     <div
@@ -107,6 +128,14 @@ export default function TimerWidget(props: TimerWidgetProps) {
       </Show>
       <Show when={state.hasBackgroundImage}>
         <div class="chronos-timer-overlay" style={{ background: props.overlay || 'rgba(0, 0, 0, 0.45)' }} />
+      </Show>
+      <Show when={state.backgroundEffectClass !== 'none'}>
+        <canvas
+          ref={canvasRef}
+          class="chronos-timer-bg-effect"
+          aria-hidden="true"
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }}
+        />
       </Show>
       <div class="chronos-timer-content" style={{ position: state.contentOverlaysBox ? 'absolute' : 'relative', top: state.contentOverlaysBox ? 0 : undefined, left: state.contentOverlaysBox ? 0 : undefined, width: state.contentOverlaysBox ? '100%' : undefined, height: state.contentOverlaysBox ? '100%' : undefined }}>
         {props.title && <h3 class="chronos-timer-title">{props.title}</h3>}

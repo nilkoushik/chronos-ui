@@ -138,6 +138,7 @@ export default function RowScrollable(props: RowScrollableProps) {
             <Show when={!props.config?.hideArrowsIfNoScroll || state.canScrollLeft}>
               <button
                 class="chronos-scrollable-arrow prev"
+                aria-label="Previous"
                 onClick={() => state.scroll('left')}
                 style={{
                   opacity: !state.canScrollLeft ? '0.35' : '1',
@@ -150,6 +151,7 @@ export default function RowScrollable(props: RowScrollableProps) {
             <Show when={!props.config?.hideArrowsIfNoScroll || state.canScrollRight}>
               <button
                 class="chronos-scrollable-arrow next"
+                aria-label="Next"
                 onClick={() => state.scroll('right')}
                 style={{
                   opacity: !state.canScrollRight ? '0.35' : '1',

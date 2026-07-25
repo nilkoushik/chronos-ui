@@ -16,7 +16,7 @@
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.0.6</span>
+        <span class="sidebar-version">v1.1.4</span>
       </a>
       <nav class="sidebar-nav">
         <div class="sidebar-section-label">Getting Started</div>
@@ -106,6 +106,12 @@
 &lt;<span class="tag">TimerWidget</span>
   title=<span class="str">"Sale ends in:"</span>
   targetDate=<span class="str">"2026-12-31T23:59:59Z"</span>
+  variant=<span class="str">"neon"</span>
+  backgroundImageUrl=<span class="str">"/sale-bg.jpg"</span>
+  overlay=<span class="str">"rgba(0, 0, 0, 0.5)"</span>
+  expiredText=<span class="str">"This offer has ended"</span>
+  width=<span class="str">"400px"</span>
+  height=<span class="str">"auto"</span>
 /&gt;</code></pre>
     </div>
         </div>
@@ -120,6 +126,12 @@
 &lt;<span class="tag">TimerWidget</span>
   title=<span class="str">"Sale ends in:"</span>
   targetDate=<span class="str">"2026-12-31T23:59:59Z"</span>
+  variant=<span class="str">"neon"</span>
+  backgroundImageUrl=<span class="str">"/sale-bg.jpg"</span>
+  overlay=<span class="str">"rgba(0, 0, 0, 0.5)"</span>
+  expiredText=<span class="str">"This offer has ended"</span>
+  width=<span class="str">"400px"</span>
+  height=<span class="str">"auto"</span>
 /&gt;</code></pre>
     </div>
         </div>
@@ -133,6 +145,12 @@
 &lt;<span class="tag">timer-widget</span>
   title=<span class="str">"Sale ends in:"</span>
   target-date=<span class="str">"2026-12-31T23:59:59Z"</span>
+  variant=<span class="str">"neon"</span>
+  background-image-url=<span class="str">"/sale-bg.jpg"</span>
+  overlay=<span class="str">"rgba(0, 0, 0, 0.5)"</span>
+  expired-text=<span class="str">"This offer has ended"</span>
+  width=<span class="str">"400px"</span>
+  height=<span class="str">"auto"</span>
 &gt;&lt;/<span class="tag">timer-widget</span>&gt;</code></pre>
     </div>
         </div>
@@ -160,17 +178,78 @@
         <td>Optional heading displayed above the timer blocks</td>
       </tr>
       <tr>
+        <td><span class="prop-name">variant</span> </td>
+        <td><span class="prop-type">'neon' | 'dark' | 'gray'</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Visual color theme for the timer blocks (default: 'dark')</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">backgroundImageUrl</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Background image URL. When set, renders behind the widget with a readability overlay so timer blocks stay legible over photos</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">backgroundPosition</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>CSS background-position for the background image (default: 'center')</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">overlay</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>CSS background for the scrim over the background image, e.g. a gradient or rgba() color (default: 'rgba(0, 0, 0, 0.45)')</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">expiredText</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Message shown once targetDate has passed, in place of the countdown blocks</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">width</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>CSS width for the root element (default: 'auto')</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">height</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>CSS height for the root element (default: 'auto'). When 'auto' and backgroundImageUrl is set, the widget's height follows the image's natural aspect ratio via an in-flow <img>. Pass an explicit value (e.g. '320px') to pin the height instead — the CMS admin computes and saves this from the image so the public page can reserve the space up front and avoid layout shift</td>
+      </tr>
+      <tr>
         <td><span class="prop-name">className</span> </td>
         <td><span class="prop-type">string</span></td>
         <td><span class="prop-default">undefined</span></td>
         <td>Additional CSS class names on the root element</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyLoad</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Defer starting the countdown interval until scrolled near the viewport (default: true)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyThreshold</span> </td>
+        <td><span class="prop-type">number</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver threshold, 0-1 (default: 0.1)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyRootMargin</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver rootMargin (default: '200px')</td>
       </tr></tbody>
       </table>
     </div>
 
       <!-- Notes -->
-      <div class="alert alert-warn"><strong>Past dates:</strong> When <code>targetDate</code> is in the past all values show <code>0</code>. Update or remove the component via your CMS when the countdown expires.</div>
+      <div class="alert alert-warn"><strong>Past dates:</strong> When <code>targetDate</code> is in the past all values show <code>0</code>, or <code>expiredText</code> is displayed in place of the countdown blocks if set. Update or remove the component via your CMS when the countdown expires.</div>
 <div class="alert alert-tip"><strong>SSR:</strong> The timer renders <code>0</code> on the server then hydrates on the client, avoiding any hydration mismatch.</div>
+<div class="alert alert-info"><strong>Background images &amp; styling:</strong> Set <code>backgroundImageUrl</code> to render a photo behind the widget with a readability <code>overlay</code> scrim (default: <code>rgba(0, 0, 0, 0.45)</code>), positioned via <code>backgroundPosition</code>. Leave <code>height="auto"</code> to let the widget follow the image's natural aspect ratio, or pass an explicit height (e.g. <code>"320px"</code>) to pin it and avoid layout shift. Use <code>width</code> to constrain the root element's CSS width, and <code>variant</code> (<code>'neon' | 'dark' | 'gray'</code>) to switch the timer-block color theme.</div>
     </div>
   </main>
 </div>

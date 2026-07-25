@@ -18,7 +18,7 @@
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.1.3</span>
+        <span class="sidebar-version">v1.1.4</span>
       </a>
       <div class="sidebar-version-picker" style="padding: 0.5rem 1.25rem; border-bottom: 1px solid var(--border);">
         <select class="control-select version-select" style="width: 100%; font-size: 0.8rem; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-secondary); padding: 6px 10px; border-radius: var(--radius-sm); outline: none; cursor: pointer;" onchange="window.location.href = this.value">
@@ -87,7 +87,7 @@
               <span class="preview-url">&lt;chronos-banner&gt; Playground</span>
             </div>
             <div class="preview-body" id="preview-container">
-              <chronos-banner id="interactive-preview" title="Experience Vibrant Colors &amp; Premium Innovation" subtitle="Explore our premium collection of responsive components. Zero dependencies, ultra lightweight." cta-text="Explore Collection" media='{"type":"image","url":"../assets/img/placeholder-01.svg"}'></chronos-banner>
+              <chronos-banner id="interactive-preview" title="Experience Vibrant Colors &amp; Premium Innovation" subtitle="Explore our premium collection of responsive components. Zero dependencies, ultra lightweight." cta-text="Explore Collection" media='{"type":"image","url":"../assets/img/placeholder-01.svg"}' config='{"align":"center","padding":"lg","bgPosition":"center","hotspotMinTargetSize":24,"backgroundEffect":"particles"}'></chronos-banner>
             </div>
           </div>
         </div>
@@ -192,12 +192,75 @@
       </div>
     
       <div class="control-group">
-        <label class="control-label">config <span class="control-type-badge">object</span></label>
+        <label class="control-label">config.align <span class="control-type-badge">string</span></label>
         
-        <textarea name="config" class="control-input json-textarea">{}</textarea>
-        <span class="json-error-msg">❌ Invalid JSON Formatting</span>
+        <input type="text" name="config.align" value="center" class="control-input">
       
-        <div class="control-desc">Design and behavior settings. Supported keys: align, bgGradient, padding, autoplay, height, bgPosition.</div>
+        <div class="control-desc">Content alignment: "left", "center", or "right".</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">config.bgGradient <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="config.bgGradient" value="" class="control-input">
+      
+        <div class="control-desc">CSS background for the overlay layer, e.g. a gradient or rgba() color (default: 'rgba(0, 0, 0, 0.4)').</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">config.padding <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="config.padding" value="lg" class="control-input">
+      
+        <div class="control-desc">Overlay padding: "sm", "md", "lg", "xl", or a raw CSS value.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">config.height <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="config.height" value="" class="control-input">
+      
+        <div class="control-desc">CSS height for the root element. 'auto' follows the media's natural aspect ratio via an in-flow image/video.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">config.bgPosition <span class="control-type-badge">string</span></label>
+        
+        <input type="text" name="config.bgPosition" value="center" class="control-input">
+      
+        <div class="control-desc">CSS background-position / object-position for the media.</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">config.hotspotMinTargetSize <span class="control-type-badge">number</span></label>
+        
+        <div class="control-slider-wrap">
+          <input type="range" name="config.hotspotMinTargetSize" min="1" max="10" step="1" value="24" class="control-slider">
+          <span class="control-slider-val">24</span>
+        </div>
+      
+        <div class="control-desc">Minimum hit-target size in CSS px for hotspot links (WCAG 2.5.8).</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">config.backgroundEffect <span class="control-type-badge">string</span></label>
+        
+        <select name="config.backgroundEffect" class="control-select">
+          <option value="none">none</option>
+          <option value="particles">particles</option>
+          <option value="waves" selected>waves</option>
+          <option value="rain">rain</option>
+          <option value="thunderstorm">thunderstorm</option>
+          <option value="sunrise">sunrise</option>
+          <option value="sunset">sunset</option>
+          <option value="fog">fog</option>
+          <option value="autumn">autumn</option>
+          <option value="festival">festival</option>
+          <option value="santa">santa</option>
+          <option value="sea">sea</option>
+        </select>
+      
+        <div class="control-desc">Canvas background effect: "none", "particles", "waves", "rain", "thunderstorm", "sunrise", "sunset", "fog", "autumn", "festival", "santa", or "sea".</div>
       </div>
     
       <div class="control-group">
@@ -441,7 +504,7 @@
 <div class="alert alert-info"><strong>Video background:</strong> Set <code>media.type = 'video'</code> — the component renders a muted, autoplayed, looped <code>&lt;video&gt;</code> positioned absolutely behind the overlay.</div>
 <div class="alert alert-info"><strong>Hotspots:</strong> Pass <code>hotspots</code> (rect/oval/polygon regions with <code>coords</code> as percentages) to overlay clickable image-map regions on the media, each linking to a URL or app deeplink. Shapes render as real, anti-aliased SVG (not CSS <code>clip-path</code>), so polygon edges and the pulse ring look correct for every shape — matching what you see in the Hotspot Designer. <code>backgroundImageUrl</code> remains supported as a legacy alternative to <code>media</code>.</div>
 <div class="alert alert-tip"><strong>Accessibility:</strong> Each hotspot is a real, keyboard-focusable <code>&lt;a&gt;</code> with an <code>aria-label</code> from <code>altText</code>/<code>label</code>, a visible <code>:focus-visible</code> outline, and a hit target that's always at least <code>config.hotspotMinTargetSize</code> CSS px (default 24, per WCAG 2.5.8) regardless of the drawn shape's size. Set <code>showTooltip</code> for a hover/focus tooltip that meets WCAG 1.4.13. The pulse animation automatically pauses under <code>prefers-reduced-motion: reduce</code>.</div>
-<div class="alert alert-info"><strong>Background effects:</strong> Set <code>config.backgroundEffect</code> to <code>'particles'</code>, <code>'waves'</code>, <code>'rain'</code>, <code>'thunderstorm'</code>, <code>'sunrise'</code>, <code>'sunset'</code>, or <code>'fog'</code> to render an animated canvas layer behind the banner's media/overlay. This is powered by a standalone plugin engine at <code>src/utils/backgroundEffects.ts</code> (also used by SlidingBanner) — it's a plain registry of canvas renderers, so new effects can be added there once and become available to every component that uses it, without any per-component changes.</div>
+<div class="alert alert-info"><strong>Background effects:</strong> Set <code>config.backgroundEffect</code> to <code>'particles'</code>, <code>'waves'</code>, <code>'rain'</code>, <code>'thunderstorm'</code>, <code>'sunrise'</code>, <code>'sunset'</code>, <code>'fog'</code>, <code>'autumn'</code>, <code>'festival'</code>, <code>'santa'</code>, or <code>'sea'</code> to render an animated canvas layer behind the banner's media/overlay. This is powered by a standalone plugin engine at <code>src/utils/backgroundEffects.ts</code> (also used by SlidingBanner) — it's a plain registry of canvas renderers, so new effects can be added there once and become available to every component that uses it, without any per-component changes.</div>
 <div class="alert alert-tip"><strong>Lazy loading:</strong> By default the banner defers mounting its media/hotspots until it scrolls near the viewport (shared <code>IntersectionObserver</code> per threshold across all widgets on the page). Pass <code>lazyLoad={false}</code> to disable, or tune <code>lazyThreshold</code> / <code>lazyRootMargin</code>.</div>
     </div>
   </main>

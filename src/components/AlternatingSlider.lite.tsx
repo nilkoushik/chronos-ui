@@ -131,6 +131,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
       class={`chronos-alt-slider ${state.showSkeleton ? 'chronos-image-shimmer' : ''} ${props.className || ''}`}
       onMouseEnter={() => state.stopAutoPlay()}
       onMouseLeave={() => state.startAutoPlay()}
+      role="region"
       style={{
         height: props.config?.height || '',
         minHeight: props.config?.height === 'auto' ? 'auto' : (props.config?.minHeight || '')
@@ -279,10 +280,10 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
       {(props.config?.showArrows &&
         (!props.config?.hideArrowsIfNoScroll || state.slideSets.length > 1)) && (
         <>
-          <button class="chronos-alt-arrow prev" onClick={() => state.prev()}>
+          <button class="chronos-alt-arrow prev" aria-label="Previous" onClick={() => state.prev()}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
           </button>
-          <button class="chronos-alt-arrow next" onClick={() => state.next()}>
+          <button class="chronos-alt-arrow next" aria-label="Next" onClick={() => state.next()}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
           </button>
         </>
@@ -294,6 +295,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
             <button
               key={`dot-${index}`}
               class={`chronos-alt-dot ${index === state.currentIndex ? 'active' : ''}`}
+              aria-label={`Go to slide ${index + 1}`}
               onClick={() => state.goTo(index)}
             ></button>
           ))}

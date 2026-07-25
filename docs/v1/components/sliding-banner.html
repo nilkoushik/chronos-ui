@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sliding Banner — Chronos UI</title>
-  <meta name="description" content="Full-featured slider with 13 transition effects, canvas backgrounds (particles/waves), autoplay, arrows & dots." />
+  <meta name="description" content="Full-featured slider with 13 transition effects, 11 canvas background effects, autoplay, arrows & dots." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="../css/docs.css" />
   <link rel="stylesheet" href="../styles/theme.css" />
@@ -18,7 +18,7 @@
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.1.3</span>
+        <span class="sidebar-version">v1.1.4</span>
       </a>
       <div class="sidebar-version-picker" style="padding: 0.5rem 1.25rem; border-bottom: 1px solid var(--border);">
         <select class="control-select version-select" style="width: 100%; font-size: 0.8rem; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-secondary); padding: 6px 10px; border-radius: var(--radius-sm); outline: none; cursor: pointer;" onchange="window.location.href = this.value">
@@ -64,7 +64,7 @@
       <div class="page-header">
         <div class="page-badge">▶ Component</div>
         <h1 class="page-title">Sliding Banner</h1>
-        <p class="page-description">Full-featured slider with 13 transition effects, canvas backgrounds (particles/waves), autoplay, arrows & dots.</p>
+        <p class="page-description">Full-featured slider with 13 transition effects, 11 canvas background effects, autoplay, arrows & dots.</p>
       </div>
 
       <!-- Install -->
@@ -73,7 +73,7 @@
         <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
       </div>
 
-      <h2 class="section-heading">Available Effects</h2><div class="effect-list"><span class="effect-pill">slide</span><span class="effect-pill">fade</span><span class="effect-pill">zoom</span><span class="effect-pill">flip</span><span class="effect-pill">push-up</span><span class="effect-pill">push-down</span><span class="effect-pill">push-left</span><span class="effect-pill">push-right</span><span class="effect-pill">wipe-left</span><span class="effect-pill">wipe-right</span><span class="effect-pill">cube</span><span class="effect-pill">door</span><span class="effect-pill">fall</span></div><style>.effect-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}.effect-pill{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;font-family:var(--font-mono);background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);color:#a78bfa}</style>
+      <h2 class="section-heading">Available Effects</h2><div class="effect-list"><span class="effect-pill">slide</span><span class="effect-pill">fade</span><span class="effect-pill">zoom</span><span class="effect-pill">flip</span><span class="effect-pill">push-up</span><span class="effect-pill">push-down</span><span class="effect-pill">push-left</span><span class="effect-pill">push-right</span><span class="effect-pill">wipe-left</span><span class="effect-pill">wipe-right</span><span class="effect-pill">cube</span><span class="effect-pill">door</span><span class="effect-pill">fall</span><span class="effect-pill">crush</span><span class="effect-pill">peel-off</span><span class="effect-pill">curtain</span></div><style>.effect-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}.effect-pill{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;font-family:var(--font-mono);background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);color:#a78bfa}</style>
 
       <!-- Interactive Playground -->
       <h2 class="section-heading">Interactive Demo Playground</h2>
@@ -148,12 +148,33 @@
           <option value="fade" selected>fade</option>
           <option value="zoom">zoom</option>
           <option value="flip">flip</option>
+          <option value="push">push</option>
+          <option value="push-up">push-up</option>
+          <option value="push-down">push-down</option>
+          <option value="push-left">push-left</option>
+          <option value="push-right">push-right</option>
+          <option value="wipe-left">wipe-left</option>
+          <option value="wipe-right">wipe-right</option>
           <option value="cube">cube</option>
           <option value="door">door</option>
           <option value="fall">fall</option>
+          <option value="crush">crush</option>
+          <option value="peel-off">peel-off</option>
+          <option value="curtain">curtain</option>
         </select>
       
-        <div class="control-desc">Transition effect: "slide", "fade", "cube", "flip", "zoom", etc.</div>
+        <div class="control-desc">Transition effect: "slide", "fade", "zoom", "flip", "push-up", "push-down", "push-left", "push-right", "wipe-left", "wipe-right", "cube", "door", "fall", "crush", "peel-off", or "curtain".</div>
+      </div>
+    
+      <div class="control-group">
+        <label class="control-label">config.animationQuality <span class="control-type-badge">string</span></label>
+        
+        <select name="config.animationQuality" class="control-select">
+          <option value="light">light</option>
+          <option value="detailed" selected>detailed</option>
+        </select>
+      
+        <div class="control-desc">Visual fidelity of the transition: "detailed" adds motion-blur pulses and directional shadows for a premium feel; "light" keeps just the core transform for cheaper compositing on low-powered devices or embeds where the extra draw cost isn't worth it.</div>
       </div>
     
       <div class="control-group">
@@ -163,9 +184,18 @@
           <option value="none">none</option>
           <option value="particles">particles</option>
           <option value="waves" selected>waves</option>
+          <option value="rain">rain</option>
+          <option value="thunderstorm">thunderstorm</option>
+          <option value="sunrise">sunrise</option>
+          <option value="sunset">sunset</option>
+          <option value="fog">fog</option>
+          <option value="autumn">autumn</option>
+          <option value="festival">festival</option>
+          <option value="santa">santa</option>
+          <option value="sea">sea</option>
         </select>
       
-        <div class="control-desc">Canvas background effect: "none", "particles", or "waves".</div>
+        <div class="control-desc">Canvas background effect: "none", "particles", "waves", "rain", "thunderstorm", "sunrise", "sunset", "fog", "autumn", "festival", "santa", or "sea".</div>
       </div>
     
       <div class="control-group">
@@ -365,6 +395,12 @@
         <td><span class="prop-type">'slide' | 'fade' | 'cube' | 'flip' | 'zoom' | ...</span></td>
         <td><span class="prop-default">undefined</span></td>
         <td>Transition effect between slides (default: 'slide')</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">config.animationQuality</span> </td>
+        <td><span class="prop-type">'light' | 'detailed'</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Visual fidelity of the transition effect. 'detailed' (default) layers in motion-blur pulses and directional shadows on the rotational/fast effects (flip, cube, door, fall, push, wipe, crush, peel-off, curtain) for a premium feel. 'light' keeps only the core transform/opacity/clip-path animation — cheaper to composite, useful for low-powered devices or embeds where the extra draw cost isn't worth it.</td>
       </tr>
       <tr>
         <td><span class="prop-name">config.backgroundEffect</span> </td>

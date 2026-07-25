@@ -16,7 +16,7 @@
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.0.6</span>
+        <span class="sidebar-version">v1.1.4</span>
       </a>
       <nav class="sidebar-nav">
         <div class="sidebar-section-label">Getting Started</div>
@@ -137,7 +137,50 @@
 
       <!-- Props Table -->
       <h2 class="section-heading">Props</h2>
-      <p style="color:var(--text-muted);font-size:.85rem">No props parsed — ensure the .lite.tsx interface matches the naming convention.</p>
+      <div class="props-table-wrap">
+      <table class="props-table">
+        <thead>
+          <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td><span class="prop-name">htmlContent</span> <span class="prop-required">required</span></td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">—</span></td>
+        <td>Raw HTML string from a CMS rich-text field; rendered with <code>innerHTML</code></td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">className</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Additional CSS class names on the wrapper element</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">widgetData</span> </td>
+        <td><span class="prop-type">any</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Optional data object for embedded widgets</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyLoad</span> </td>
+        <td><span class="prop-type">boolean</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Defer rendering HTML and processing social/widget embeds until scrolled near the viewport (default: true)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyThreshold</span> </td>
+        <td><span class="prop-type">number</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver threshold, 0-1 (default: 0.1)</td>
+      </tr>
+      <tr>
+        <td><span class="prop-name">lazyRootMargin</span> </td>
+        <td><span class="prop-type">string</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>IntersectionObserver rootMargin (default: '200px')</td>
+      </tr></tbody>
+      </table>
+    </div>
 
       <!-- Notes -->
       <div class="alert alert-warn"><strong>Security:</strong> This component renders raw HTML. Always sanitise untrusted CMS content server-side (e.g. with DOMPurify) before passing it to <code>content</code>.</div>
