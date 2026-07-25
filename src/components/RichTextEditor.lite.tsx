@@ -19,7 +19,15 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 
   const rootRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<HTMLDivElement>(null);
-  
+  // A plain ref (not useStore state) so saveSelection() -> restoreSelection()
+  // called back-to-back in the same handler (e.g. around a blocking
+  // window.prompt()) always sees the just-saved range. On the React target,
+  // Mitosis compiles useStore fields to useState, whose setter is async —
+  // reading it back synchronously in the same tick returned the previous
+  // (stale, often null) range, so insertMedia/insertHTML calls silently
+  // failed or landed at the wrong position.
+  const savedRangeRef = useRef<any>(null);
+
   const state = useStore({
     mode: 'visual',
     isFullscreen: false,
@@ -104,21 +112,19 @@ export default function RichTextEditor(props: RichTextEditorProps) {
       }
     },
     
-    savedRange: null as any,
-
     saveSelection() {
       const sel = window.getSelection();
       if (sel && sel.rangeCount > 0) {
-        state.savedRange = sel.getRangeAt(0);
+        savedRangeRef = sel.getRangeAt(0);
       }
     },
     restoreSelection() {
-      if (state.savedRange && editorRef) {
+      if (savedRangeRef && editorRef) {
         editorRef.focus();
         const sel = window.getSelection();
         if (sel) {
           sel.removeAllRanges();
-          sel.addRange(state.savedRange);
+          sel.addRange(savedRangeRef);
         }
       }
     },
@@ -176,13 +182,13 @@ export default function RichTextEditor(props: RichTextEditorProps) {
         const success = document.execCommand('insertHTML', false, html);
         if (!success) {
            // Fallback if execCommand fails (e.g. some browsers when focus is tricky)
-           if (state.savedRange && state.savedRange.insertNode) {
+           if (savedRangeRef && savedRangeRef.insertNode) {
                const template = document.createElement('template');
                template.innerHTML = html.trim();
                const frag = template.content;
-               state.savedRange.deleteContents();
-               state.savedRange.insertNode(frag);
-               state.savedRange.collapse(false); // Move caret after inserted node
+               savedRangeRef.deleteContents();
+               savedRangeRef.insertNode(frag);
+               savedRangeRef.collapse(false); // Move caret after inserted node
            } else {
                editorRef.innerHTML += html;
            }
@@ -266,13 +272,13 @@ export default function RichTextEditor(props: RichTextEditorProps) {
         const html = `<a href="${url}" class="chronos-btn" style="${styleStr}">${state.btnText}</a>&nbsp;`;
         const success = document.execCommand('insertHTML', false, html);
         if (!success) {
-           if (state.savedRange && state.savedRange.insertNode) {
+           if (savedRangeRef && savedRangeRef.insertNode) {
                const template = document.createElement('template');
                template.innerHTML = html.trim();
                const frag = template.content;
-               state.savedRange.deleteContents();
-               state.savedRange.insertNode(frag);
-               state.savedRange.collapse(false);
+               savedRangeRef.deleteContents();
+               savedRangeRef.insertNode(frag);
+               savedRangeRef.collapse(false);
            } else {
                editorRef.innerHTML += html;
            }

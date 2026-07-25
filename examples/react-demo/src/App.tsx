@@ -138,6 +138,7 @@ const DEFAULTS = {
     backgroundImageUrl: "",
     backgroundPosition: "center",
     overlay: "",
+    backgroundEffect: "none",
     expiredText: "This offer has ended.",
     width: "auto",
     height: "auto"
@@ -250,6 +251,12 @@ export default function App() {
 
   const activeProps = states[activeTab];
 
+  // Components that support the pluggable background-effect canvas engine.
+  // The plugin ({ start, stop } functions) can't be represented in the
+  // Config Dashboard's JSON/form fields, so it's shown as an appended usage
+  // snippet instead of a live-editable prop.
+  const BG_EFFECT_PLUGIN_COMPONENTS: ComponentKey[] = ['Banner', 'SlidingBanner', 'TimerWidget'];
+
   // Helper to generate the JSX code snippet
   const generateReactCode = () => {
     const propLines = Object.entries(activeProps)
@@ -266,14 +273,24 @@ export default function App() {
       propLines.push(`  onChange={(html) => console.log(html)}`);
     }
 
+    const pluginImport = BG_EFFECT_PLUGIN_COMPONENTS.includes(activeTab)
+      ? `\n// Optional: swap in your own canvas animation engine per-instance\n// (falls back to the built-in effects above when omitted).\n// import { defaultBackgroundEffectPlugin } from '@chronos-ui/core/react/utils/backgroundEffects';\n// const myPlugin = { start: (canvas, effect, ctxBox) => { /* ... */ }, stop: (ctxBox) => { /* ... */ } };`
+      : '';
+    const pluginProp = activeTab === 'TimerWidget'
+      ? '\n      backgroundEffectPlugin={myPlugin} // <- pass above the closing tag'
+      : (activeTab === 'Banner' || activeTab === 'SlidingBanner')
+        ? '\n      // add backgroundEffectPlugin: myPlugin inside the config={{ ... }} object above'
+        : '';
+
     return `import ${activeTab} from '@chronos-ui/core/react/${activeTab}';
 import '@chronos-ui/core/theme.css';
 import '@chronos-ui/core/styles/components/${activeTab}.css';
+${pluginImport}
 
 function App() {
   return (
     <${activeTab}
-${propLines.join('\n')}
+${propLines.join('\n')}${pluginProp}
     />
   );
 }`;
@@ -294,14 +311,25 @@ ${propLines.join('\n')}
       propLines.push(`  availableClasses={${JSON.stringify(activeProps.availableClasses)}}`);
     }
 
+    const pluginScript = BG_EFFECT_PLUGIN_COMPONENTS.includes(activeTab)
+      ? `\n  // Optional: swap in your own canvas animation engine per-instance\n  // (falls back to the built-in effects above when omitted).\n  // import { defaultBackgroundEffectPlugin } from '@chronos-ui/core/svelte/utils/backgroundEffects';\n  // const myPlugin = { start: (canvas, effect, ctxBox) => { /* ... */ }, stop: (ctxBox) => { /* ... */ } };`
+      : '';
+    const pluginProp = activeTab === 'TimerWidget'
+      ? '\n  backgroundEffectPlugin={myPlugin}'
+      : '';
+    const pluginConfigHint = (activeTab === 'Banner' || activeTab === 'SlidingBanner')
+      ? '\n<!-- add backgroundEffectPlugin: myPlugin inside the config={{ ... }} object above -->'
+      : '';
+
     return `<script>
   import ${activeTab} from '@chronos-ui/core/svelte/${activeTab}.svelte';
   import '@chronos-ui/core/theme.css';
   import '@chronos-ui/core/styles/components/${activeTab}.css';
+${pluginScript}
 </script>
-
+${pluginConfigHint}
 <${activeTab}
-${propLines.join('\n')}
+${propLines.join('\n')}${pluginProp}
 />`;
   };
 
@@ -322,6 +350,12 @@ ${propLines.join('\n')}
       attrLines.push(`  available-classes='${JSON.stringify(activeProps.availableClasses)}'`);
     }
 
+    const pluginScript = BG_EFFECT_PLUGIN_COMPONENTS.includes(activeTab)
+      ? `\n<script type="module">\n  // backgroundEffectPlugin ({ start, stop } functions) can't be passed as an\n  // HTML attribute string (attributes only carry strings) — assign it as a\n  // JS property instead, once the element is defined:\n  const myPlugin = { start: (canvas, effect, ctxBox) => { /* ... */ }, stop: (ctxBox) => { /* ... */ } };\n  ${activeTab === 'TimerWidget'
+          ? `document.querySelector('${kebabCase}').backgroundEffectPlugin = myPlugin;`
+          : `const el = document.querySelector('${kebabCase}');\n  el.config = { ...el.config, backgroundEffectPlugin: myPlugin };`}\n</script>`
+      : '';
+
     return `<!-- Include global variables and module script -->
 <link rel="stylesheet" href="node_modules/@chronos-ui/core/theme.css" />
 <link rel="stylesheet" href="node_modules/@chronos-ui/core/styles/components/${activeTab}.css" />
@@ -329,7 +363,8 @@ ${propLines.join('\n')}
 
 <${kebabCase}
 ${attrLines.join('\n')}
-></${kebabCase}>`;
+></${kebabCase}>
+${pluginScript}`;
   };
 
   const getCodeString = () => {
@@ -1377,6 +1412,33 @@ ${attrLines.join('\n')}
                         onChange={(e) => handlePropChange("height", e.target.value)}
                       />
                       <p className="text-[10px] text-slate-500">"auto" sizes from the background image (or content, if none). A CMS typically computes and saves an explicit pixel value here to avoid layout shift on the public page.</p>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-slate-800 pt-4 mt-4 space-y-4">
+                    <span className="text-xs font-semibold text-slate-400 block">Background Animation</span>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-slate-500">Background Effect (backgroundEffect)</label>
+                      <select
+                        className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                        value={activeProps.backgroundEffect || "none"}
+                        onChange={(e) => handlePropChange("backgroundEffect", e.target.value)}
+                      >
+                        <option value="none">None</option>
+                        <option value="particles">Particles</option>
+                        <option value="waves">Waves</option>
+                        <option value="rain">Rain</option>
+                        <option value="thunderstorm">Thunderstorm</option>
+                        <option value="sunrise">Sunrise</option>
+                        <option value="sunset">Sunset</option>
+                        <option value="fog">Winter Fog (wind + frost shards)</option>
+                        <option value="autumn">Autumn Leaves</option>
+                        <option value="festival">Indian Festival (Diwali)</option>
+                        <option value="santa">Santa Sleigh</option>
+                        <option value="sea">Sea Waves (aerial seashore)</option>
+                      </select>
+                      <p className="text-[10px] text-slate-500">Animated canvas layer behind the countdown blocks, from the same shared background-effects plugin engine used by Banner and SlidingBanner.</p>
                     </div>
                   </div>
                 </>

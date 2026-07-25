@@ -39,13 +39,15 @@
     "./theme.css": "./dist/styles/theme.css",
     "./styles/*": "./dist/styles/*",
     "./react/*": "./dist/react/src/components/*.js",
+    "./react/utils/*": "./dist/react/src/utils/*.js",
     "./svelte/*": "./dist/svelte/src/components/*",
     "./svelte/utils/*": "./dist/svelte/src/utils/*",
-    "./webcomponent/*": "./dist/webcomponent/dist/*"
+    "./webcomponent/*": "./dist/webcomponent/dist/*",
+    "./webcomponent/utils/*": "./dist/webcomponent/dist/utils/*.js"
   },
   "main": "./dist/react/src/components/index.js",
   "scripts": {
-    "build": "npx mitosis build && node fix-styles.js && node fix-props.js && node fix-react.js && node fix-wc-props.js && node build-wc.js && node fix-wc-onmount.js && node fix-minify.js",
+    "build": "npx mitosis build && node fix-styles.js && node fix-props.js && node fix-svelte-utils.js && node fix-react.js && node fix-wc-props.js && node build-wc.js && node fix-wc-onmount.js && node fix-minify.js",
     "docs": "node scripts/generate-docs.js",
     "postbuild": "npm run docs",
     "prepare": "husky && npm run build",
