@@ -35,6 +35,10 @@
         "text": "<strong>Background effects:</strong> Set <code>config.backgroundEffect</code> to <code>'particles'</code>, <code>'waves'</code>, <code>'rain'</code>, <code>'thunderstorm'</code>, <code>'sunrise'</code>, <code>'sunset'</code>, <code>'fog'</code>, <code>'autumn'</code>, <code>'festival'</code>, <code>'santa'</code>, or <code>'sea'</code> to render an animated canvas layer behind the banner's media/overlay. This is powered by a standalone plugin engine at <code>src/utils/backgroundEffects.ts</code> (also used by SlidingBanner) — it's a plain registry of canvas renderers, so new effects can be added there once and become available to every component that uses it, without any per-component changes."
       },
       {
+        "type": "info",
+        "text": "<strong>Custom animation engine:</strong> Pass <code>config.backgroundEffectPlugin={{ start, stop }}</code> to inject your own animation implementation per-instance instead of the built-in canvas renderers — useful when a consumer (e.g. the CMS page editor) wants to control the effect engine itself. Omit it and the component falls back to <code>defaultBackgroundEffectPlugin</code>, exported alongside the built-in effects."
+      },
+      {
         "type": "tip",
         "text": "<strong>Lazy loading:</strong> By default the banner defers mounting its media/hotspots until it scrolls near the viewport (shared <code>IntersectionObserver</code> per threshold across all widgets on the page). Pass <code>lazyLoad={false}</code> to disable, or tune <code>lazyThreshold</code> / <code>lazyRootMargin</code>."
       }
@@ -104,7 +108,7 @@
         "prop": "config",
         "type": "object",
         "default": "undefined",
-        "desc": "Design and behavior settings. Supported keys: align, bgGradient, padding, autoplay, height, bgPosition, hotspotMinTargetSize, backgroundEffect."
+        "desc": "Design and behavior settings. Supported keys: align, bgGradient, padding, autoplay, height, bgPosition, hotspotMinTargetSize, backgroundEffect, backgroundEffectPlugin."
       },
       {
         "prop": "config.align",
@@ -149,6 +153,12 @@
         "desc": "Canvas background effect: \"none\", \"particles\", \"waves\", \"rain\", \"thunderstorm\", \"sunrise\", \"sunset\", \"fog\", \"autumn\", \"festival\", \"santa\", or \"sea\"."
       },
       {
+        "prop": "config.backgroundEffectPlugin",
+        "type": "BackgroundEffectPlugin",
+        "default": "defaultBackgroundEffectPlugin",
+        "desc": "Optional { start, stop } override so a consumer (e.g. the CMS page editor) can inject its own animation engine per-instance instead of the built-in canvas renderers."
+      },
+      {
         "prop": "hotspots",
         "type": "array",
         "default": "undefined",
@@ -186,26 +196,26 @@
       {
         "prop": "message",
         "type": "string",
-        "default": "undefined",
+        "default": "required",
         "desc": "The announcement message."
       },
       {
         "prop": "backgroundColor",
         "type": "string",
-        "default": "undefined",
-        "desc": "Background color hex code (e.g. \"#7c3aed\")."
+        "default": "\"var(--violet, #8b5cf6)\"",
+        "desc": "Background color, any CSS color value (hex, rgb, CSS variable, etc.)."
       },
       {
         "prop": "textColor",
         "type": "string",
-        "default": "undefined",
-        "desc": "Text color hex code."
+        "default": "\"#ffffff\"",
+        "desc": "Text color, any CSS color value."
       },
       {
         "prop": "mapLinks",
         "type": "array",
         "default": "undefined",
-        "desc": "Array containing link for the bar. { url: string }"
+        "desc": "Array containing link for the bar. { url: string }. When set, the message renders as a link to the first entry's url; otherwise it renders as plain text."
       }
     ]
   },
@@ -354,7 +364,12 @@
       "svelte": "<script lang=\"ts\">\n  import SlidingBanner from '@chronos-ui/core/svelte/SlidingBanner.svelte';\n\n  const items = [\n    { id: '1', title: 'Summer Sale',   subtitle: 'Up to 50% off', media: { type: 'image', url: '/s1.jpg' } },\n    { id: '2', title: 'New Arrivals', subtitle: 'Latest collection', media: { type: 'image', url: '/s2.jpg' } },\n  ];\n</script>\n\n<SlidingBanner\n  {items}\n  config={{ autoStart: true, showDots: true, animationEffect: 'zoom', backgroundEffect: 'waves' }}\n/>",
       "wc": "<script type=\"module\"\n  src=\"node_modules/@chronos-ui/core/webcomponents/SlidingBanner.js\"></script>\n\n<sliding-banner\n  items='[{\"id\":\"1\",\"title\":\"Sale\"}]'\n  config='{\"autoStart\":true,\"showDots\":true,\"animationEffect\":\"fade\",\"backgroundEffect\":\"waves\"}'\n></sliding-banner>"
     },
-    "notes": [],
+    "notes": [
+      {
+        "type": "info",
+        "text": "<strong>Custom animation engine:</strong> Pass <code>config.backgroundEffectPlugin={{ start, stop }}</code> to inject your own animation implementation per-instance instead of the built-in canvas renderers — useful when a consumer (e.g. the CMS page editor) wants to control the effect engine itself. Omit it and the component falls back to <code>defaultBackgroundEffectPlugin</code>, exported from <code>src/utils/backgroundEffects.ts</code>."
+      }
+    ],
     "extra": "<h2 class=\"section-heading\">Available Effects</h2><div class=\"effect-list\"><span class=\"effect-pill\">slide</span><span class=\"effect-pill\">fade</span><span class=\"effect-pill\">zoom</span><span class=\"effect-pill\">flip</span><span class=\"effect-pill\">push-horizontal</span><span class=\"effect-pill\">push-vertical</span><span class=\"effect-pill\">wipe</span><span class=\"effect-pill\">cube</span><span class=\"effect-pill\">door</span><span class=\"effect-pill\">fall</span><span class=\"effect-pill\">crush</span><span class=\"effect-pill\">peel-off</span><span class=\"effect-pill\">curtain</span></div><style>.effect-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}.effect-pill{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;font-family:var(--font-mono);background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);color:#a78bfa}</style>",
     "api": [
       {
@@ -398,6 +413,12 @@
         "type": "string",
         "default": "\"none\"",
         "desc": "Canvas background effect: \"none\", \"particles\", \"waves\", \"rain\", \"thunderstorm\", \"sunrise\", \"sunset\", \"fog\", \"autumn\", \"festival\", \"santa\", or \"sea\"."
+      },
+      {
+        "prop": "config.backgroundEffectPlugin",
+        "type": "BackgroundEffectPlugin",
+        "default": "defaultBackgroundEffectPlugin",
+        "desc": "Optional { start, stop } override so a consumer (e.g. the CMS page editor) can inject its own animation engine per-instance instead of the built-in canvas renderers."
       },
       {
         "prop": "config.showArrows",
@@ -534,6 +555,10 @@
       },
       {
         "type": "tip",
+        "text": "<strong>Custom animation engine:</strong> Pass <code>backgroundEffectPlugin={{ start, stop }}</code> to swap the built-in canvas renderers for your own — useful for a CMS page editor that wants to inject a different animation implementation per-instance. Omit it to use the built-in <code>defaultBackgroundEffectPlugin</code>."
+      },
+      {
+        "type": "tip",
         "text": "<strong>Background image:</strong> Set <code>backgroundImageUrl</code> to render a photo behind the countdown, with a legibility scrim controlled by <code>overlay</code> (any CSS <code>background</code> value — solid, rgba, or gradient). Leave <code>height</code> at its default <code>'auto'</code> to let the widget follow the image's natural aspect ratio, or pin an explicit height (e.g. <code>'320px'</code>) to avoid layout shift."
       },
       {
@@ -583,6 +608,12 @@
         "type": "string",
         "default": "\"rain\"",
         "desc": "Canvas background effect: \"none\", \"particles\", \"waves\", \"rain\", \"thunderstorm\", \"sunrise\", \"sunset\", \"fog\", \"autumn\", \"festival\", \"santa\", or \"sea\"."
+      },
+      {
+        "prop": "backgroundEffectPlugin",
+        "type": "BackgroundEffectPlugin",
+        "default": "defaultBackgroundEffectPlugin",
+        "desc": "Optional { start, stop } override so a consumer (e.g. the CMS page editor) can inject its own animation engine per-instance instead of the built-in canvas renderers."
       },
       {
         "prop": "expiredText",

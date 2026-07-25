@@ -1,6 +1,7 @@
 import { useStore, onMount, onUnMount, useRef, Show, onUpdate } from '@builder.io/mitosis';
 import { observeLazyMount } from '../utils/lazyObserver';
-import { startBackgroundEffect, stopBackgroundEffect, BackgroundEffectContext, BackgroundEffectName } from '../utils/backgroundEffects';
+import { defaultBackgroundEffectPlugin } from '../utils/backgroundEffects';
+import type { BackgroundEffectContext, BackgroundEffectName, BackgroundEffectPlugin } from '../utils/backgroundEffects';
 
 export interface BannerMedia {
   type?: 'image' | 'video' | string;
@@ -33,6 +34,7 @@ export interface SliderConfig {
   animationEffect?: 'slide' | 'fade' | 'zoom' | 'flip' | 'push-horizontal' | 'push-vertical' | 'wipe' | 'cube' | 'door' | 'fall' | 'crush' | 'peel-off' | 'curtain';
   animationQuality?: 'light' | 'detailed';
   backgroundEffect?: BackgroundEffectName;
+  backgroundEffectPlugin?: BackgroundEffectPlugin;
   hideArrowsIfNoScroll?: boolean;
   height?: string;
   minHeight?: string;
@@ -99,6 +101,9 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     get backgroundClass() {
       return props.config?.backgroundEffect || 'none';
     },
+    get plugin() {
+      return props.config?.backgroundEffectPlugin || defaultBackgroundEffectPlugin;
+    },
     get qualityClass() {
       return props.config?.animationQuality || 'detailed';
     },
@@ -162,7 +167,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
     animContext.dimResizeHandler = () => state.setupDimensions();
     window.addEventListener('resize', animContext.dimResizeHandler);
     if (canvasRef) {
-      startBackgroundEffect(canvasRef, state.backgroundClass as BackgroundEffectName, bgEffectContext);
+      state.plugin.start(canvasRef, state.backgroundClass as BackgroundEffectName, bgEffectContext);
     }
   }
 
@@ -208,13 +213,13 @@ export default function SlidingBanner(props: SlidingBannerProps) {
   // stuttering/never settling.
   onUpdate(() => {
     if (state.isVisible && canvasRef) {
-      startBackgroundEffect(canvasRef, state.backgroundClass as BackgroundEffectName, bgEffectContext);
+      state.plugin.start(canvasRef, state.backgroundClass as BackgroundEffectName, bgEffectContext);
     }
   }, [state.backgroundClass, canvasRef]);
 
   onUnMount(() => {
     state.stopAutoPlay();
-    stopBackgroundEffect(bgEffectContext);
+    state.plugin.stop(bgEffectContext);
     if (animContext.dimResizeHandler) {
       window.removeEventListener('resize', animContext.dimResizeHandler);
     }

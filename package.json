@@ -40,6 +40,7 @@
     "./styles/*": "./dist/styles/*",
     "./react/*": "./dist/react/src/components/*.js",
     "./svelte/*": "./dist/svelte/src/components/*",
+    "./svelte/utils/*": "./dist/svelte/src/utils/*",
     "./webcomponent/*": "./dist/webcomponent/dist/*"
   },
   "main": "./dist/react/src/components/index.js",

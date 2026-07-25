@@ -1,6 +1,7 @@
 import { useStore, useRef, onMount, onUnMount, onUpdate, Show } from '@builder.io/mitosis';
 import { observeLazyMount } from '../utils/lazyObserver';
-import { startBackgroundEffect, stopBackgroundEffect, BackgroundEffectContext, BackgroundEffectName } from '../utils/backgroundEffects';
+import { defaultBackgroundEffectPlugin } from '../utils/backgroundEffects';
+import type { BackgroundEffectContext, BackgroundEffectName, BackgroundEffectPlugin } from '../utils/backgroundEffects';
 
 export interface BannerMedia {
   type?: 'image' | 'video' | string;
@@ -24,6 +25,7 @@ export interface BannerConfig {
   bgPosition?: string;
   hotspotMinTargetSize?: number;
   backgroundEffect?: BackgroundEffectName;
+  backgroundEffectPlugin?: BackgroundEffectPlugin;
 }
 
 export type HotspotShape = 'rect' | 'oval' | 'polygon';
@@ -118,6 +120,9 @@ export default function Banner(props: BannerProps) {
     get backgroundEffectClass() {
       return props.config?.backgroundEffect || 'none';
     },
+    get plugin() {
+      return props.config?.backgroundEffectPlugin || defaultBackgroundEffectPlugin;
+    },
     hotspotHref(h: Hotspot) {
       return h.action?.type === 'deeplink' ? (h.action.deeplink || h.action.url || '#') : (h.action?.url || '#');
     },
@@ -162,7 +167,7 @@ export default function Banner(props: BannerProps) {
   onMount(() => {
     if (props.lazyLoad === false) {
       state.isVisible = true;
-      if (canvasRef) startBackgroundEffect(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
+      if (canvasRef) state.plugin.start(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
       return;
     }
     if (rootRef) {
@@ -170,7 +175,7 @@ export default function Banner(props: BannerProps) {
         rootRef,
         () => {
           state.isVisible = true;
-          if (canvasRef) startBackgroundEffect(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
+          if (canvasRef) state.plugin.start(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
         },
         props.lazyThreshold ?? 0.1,
         props.lazyRootMargin ?? '200px'
@@ -182,12 +187,12 @@ export default function Banner(props: BannerProps) {
   // stable derived string), not on every unrelated re-render — e.g. toggling
   // isLoading or hotspot state shouldn't tear down and restart the animation.
   onUpdate(() => {
-    if (state.isVisible && canvasRef) startBackgroundEffect(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
+    if (state.isVisible && canvasRef) state.plugin.start(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
   }, [state.backgroundEffectClass, canvasRef]);
 
   onUnMount(() => {
     if (observerBox.disconnect) observerBox.disconnect();
-    stopBackgroundEffect(animContext);
+    state.plugin.stop(animContext);
   });
 
   return (

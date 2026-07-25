@@ -1238,3 +1238,17 @@ export function stopBackgroundEffect(ctxBox: BackgroundEffectContext): void {
     ctxBox.resizeHandler = null;
   }
 }
+
+// Shape components accept to swap in their own animation implementation instead
+// of the built-in canvas renderers above. Consumers (e.g. the CMS page editor)
+// can pass a custom plugin per-instance; when omitted, `defaultBackgroundEffectPlugin`
+// below is used.
+export interface BackgroundEffectPlugin {
+  start: typeof startBackgroundEffect;
+  stop: typeof stopBackgroundEffect;
+}
+
+export const defaultBackgroundEffectPlugin: BackgroundEffectPlugin = {
+  start: startBackgroundEffect,
+  stop: stopBackgroundEffect
+};

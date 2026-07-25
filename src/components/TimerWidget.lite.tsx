@@ -1,6 +1,7 @@
 import { useStore, useRef, onMount, onUnMount, onUpdate, Show } from '@builder.io/mitosis';
 import { observeLazyMount } from '../utils/lazyObserver';
-import { startBackgroundEffect, stopBackgroundEffect, BackgroundEffectContext, BackgroundEffectName } from '../utils/backgroundEffects';
+import { defaultBackgroundEffectPlugin } from '../utils/backgroundEffects';
+import type { BackgroundEffectContext, BackgroundEffectName, BackgroundEffectPlugin } from '../utils/backgroundEffects';
 
 export interface TimerWidgetProps {
   targetDate: string;
@@ -11,6 +12,7 @@ export interface TimerWidgetProps {
   backgroundPosition?: string;
   overlay?: string;
   backgroundEffect?: BackgroundEffectName;
+  backgroundEffectPlugin?: BackgroundEffectPlugin;
   expiredText?: string;
   width?: string;
   height?: string;
@@ -70,6 +72,9 @@ export default function TimerWidget(props: TimerWidgetProps) {
     },
     get backgroundEffectClass() {
       return props.backgroundEffect || 'none';
+    },
+    get plugin() {
+      return props.backgroundEffectPlugin || defaultBackgroundEffectPlugin;
     }
   });
 
@@ -78,7 +83,7 @@ export default function TimerWidget(props: TimerWidgetProps) {
   onMount(() => {
     if (props.lazyLoad === false) {
       state.startTicking();
-      if (canvasRef) startBackgroundEffect(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
+      if (canvasRef) state.plugin.start(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
       return;
     }
     if (rootRef) {
@@ -86,7 +91,7 @@ export default function TimerWidget(props: TimerWidgetProps) {
         rootRef,
         () => {
           state.startTicking();
-          if (canvasRef) startBackgroundEffect(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
+          if (canvasRef) state.plugin.start(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
         },
         props.lazyThreshold ?? 0.1,
         props.lazyRootMargin ?? '200px'
@@ -100,13 +105,13 @@ export default function TimerWidget(props: TimerWidgetProps) {
   // otherwise it was tearing down and restarting every second, which made
   // the animation look like it was stuttering/never settling.
   onUpdate(() => {
-    if (canvasRef) startBackgroundEffect(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
+    if (canvasRef) state.plugin.start(canvasRef, state.backgroundEffectClass as BackgroundEffectName, animContext);
   }, [state.backgroundEffectClass, canvasRef]);
 
   onUnMount(() => {
     if (state.timerId) clearInterval(state.timerId);
     if (observerBox.disconnect) observerBox.disconnect();
-    stopBackgroundEffect(animContext);
+    state.plugin.stop(animContext);
   });
   return (
     <div
