@@ -1,3 +1,9 @@
+## [1.3.0](https://github.com/nilkoushik/chronos-ui/compare/v1.2.2...v1.3.0) (2026-07-25)
+
+### Features
+
+* **effects:** allow injecting a custom background-effect plugin ([a22984c](https://github.com/nilkoushik/chronos-ui/commit/a22984c67325e2d6556c6538b889400400c1dafa))
+
 ## [1.2.2](https://github.com/nilkoushik/chronos-ui/compare/v1.2.1...v1.2.2) (2026-07-25)
 
 ### Bug Fixes
