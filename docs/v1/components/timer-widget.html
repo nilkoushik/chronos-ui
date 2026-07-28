@@ -18,7 +18,7 @@
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.2.0</span>
+        <span class="sidebar-version">v1.4.1</span>
       </a>
       <div class="sidebar-version-picker" style="padding: 0.5rem 1.25rem; border-bottom: 1px solid var(--border);">
         <select class="control-select version-select" style="width: 100%; font-size: 0.8rem; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-secondary); padding: 6px 10px; border-radius: var(--radius-sm); outline: none; cursor: pointer;" onchange="window.location.href = this.value">
@@ -43,6 +43,7 @@
         <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
         <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
         <a href="../dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
+        <a href="../allure-report/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">✅</span> Test Report</a>
       </nav>
     </aside>
 
@@ -262,6 +263,9 @@
       <button class="copy-btn">Copy</button>
       <pre><code><span class="kw">import</span> TimerWidget <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/TimerWidget'</span>;
 <span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+<span class="cm">// <span class="kw">import</span> { defaultBackgroundEffectPlugin } <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/utils/backgroundEffects'</span>;</span>
+<span class="cm">// Optionally override the canvas animation engine per-instance:</span>
+<span class="cm">// backgroundEffectPlugin={{ start: myStart, stop: myStop }}</span>
 
 &lt;<span class="tag">TimerWidget</span>
   title=<span class="str">"Sale ends in:"</span>
@@ -282,6 +286,9 @@
       <button class="copy-btn">Copy</button>
       <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
   <span class="kw">import</span> TimerWidget <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/TimerWidget.svelte'</span>;
+  <span class="cm">// <span class="kw">import</span> { defaultBackgroundEffectPlugin } <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/utils/backgroundEffects'</span>;</span>
+  <span class="cm">// Optionally override the canvas animation engine per-instance:</span>
+  <span class="cm">// backgroundEffectPlugin={{ start: myStart, stop: myStop }}</span>
 &lt;/<span class="tag">script</span>&gt;
 
 &lt;<span class="tag">TimerWidget</span>
@@ -302,6 +309,9 @@
       <pre><code>&lt;<span class="tag">script</span> type=<span class="str">"module"</span>
   src=<span class="str">"node_modules/@chronos-ui/core/webcomponents/TimerWidget.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
 
+&lt;!-- backgroundEffectPlugin ({ start, stop } functions) can<span class="str">'t be passed as an
+     HTML attribute string — set it as a JS property instead:
+     document.querySelector('</span>timer-widget').backgroundEffectPlugin = { start: myStart, stop: myStop }; --&gt;
 &lt;<span class="tag">timer-widget</span>
   title=<span class="str">"Sale ends in:"</span>
   target-date=<span class="str">"2026-12-31T23:59:59Z"</span>
@@ -367,6 +377,12 @@
         <td>Animated canvas layer rendered behind the timer blocks, from the same shared plugin engine (<code>src/utils/backgroundEffects.ts</code>) also used by Banner and SlidingBanner. Default: 'none'</td>
       </tr>
       <tr>
+        <td><span class="prop-name">backgroundEffectPlugin</span> </td>
+        <td><span class="prop-type">BackgroundEffectPlugin</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Optional <code>{ start, stop }</code> override for the canvas animation engine, letting a consumer (e.g. the CMS page editor) inject its own effect renderer per-instance instead of the built-in one. Falls back to <code>defaultBackgroundEffectPlugin</code> exported from <code>src/utils/backgroundEffects.ts</code> when omitted.</td>
+      </tr>
+      <tr>
         <td><span class="prop-name">expiredText</span> </td>
         <td><span class="prop-type">string</span></td>
         <td><span class="prop-default">undefined</span></td>
@@ -414,6 +430,7 @@
       <!-- Notes -->
       <div class="alert alert-warn"><strong>Past dates:</strong> When <code>targetDate</code> is in the past all values show <code>0</code>, or <code>expiredText</code> if set. Update or remove the component via your CMS when the countdown expires.</div>
 <div class="alert alert-tip"><strong>SSR:</strong> The timer renders <code>0</code> on the server then hydrates on the client, avoiding any hydration mismatch.</div>
+<div class="alert alert-tip"><strong>Custom animation engine:</strong> Pass <code>backgroundEffectPlugin={{ start, stop }}</code> to swap the built-in canvas renderers for your own — useful for a CMS page editor that wants to inject a different animation implementation per-instance. Omit it to use the built-in <code>defaultBackgroundEffectPlugin</code>.</div>
 <div class="alert alert-tip"><strong>Background image:</strong> Set <code>backgroundImageUrl</code> to render a photo behind the countdown, with a legibility scrim controlled by <code>overlay</code> (any CSS <code>background</code> value — solid, rgba, or gradient). Leave <code>height</code> at its default <code>'auto'</code> to let the widget follow the image's natural aspect ratio, or pin an explicit height (e.g. <code>'320px'</code>) to avoid layout shift.</div>
 <div class="alert alert-tip"><strong>Background effects:</strong> Set <code>backgroundEffect</code> to <code>'particles'</code>, <code>'waves'</code>, <code>'rain'</code>, <code>'thunderstorm'</code>, <code>'sunrise'</code>, <code>'sunset'</code>, <code>'fog'</code>, <code>'autumn'</code>, <code>'festival'</code>, <code>'santa'</code>, or <code>'sea'</code> to render an animated canvas layer behind the countdown — the same shared plugin engine (<code>src/utils/backgroundEffects.ts</code>) used by Banner and SlidingBanner. Combine with <code>backgroundImageUrl</code> and <code>overlay</code> for a photo backdrop with motion, or use it alone over the solid <code>variant</code> background.</div>
     </div>

@@ -1,7 +1,7 @@
-# Chronos UI
+# ContentVidya UI
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@chronos-ui/core"><img src="https://img.shields.io/npm/v/@chronos-ui/core?style=flat-square&color=7c3aed&label=npm" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/@contentvidya/ui"><img src="https://img.shields.io/npm/v/@contentvidya/ui?style=flat-square&color=7c3aed&label=npm" alt="npm version" /></a>
   <a href="https://github.com/nilkoushik/chronos-ui/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT License" /></a>
   <a href="https://github.com/nilkoushik/chronos-ui/actions/workflows/publish.yml"><img src="https://img.shields.io/github/actions/workflow/status/nilkoushik/chronos-ui/publish.yml?style=flat-square&label=publish" alt="Build status" /></a>
   <a href="https://nilkoushik.github.io/chronos-ui"><img src="https://img.shields.io/badge/docs-GitHub%20Pages-ec4899?style=flat-square" alt="Docs" /></a>
@@ -14,9 +14,11 @@
 
 <p align="center">
   <a href="https://nilkoushik.github.io/chronos-ui">📖 Documentation</a> ·
-  <a href="https://www.npmjs.com/package/@chronos-ui/core">📦 npm Package</a> ·
+  <a href="https://www.npmjs.com/package/@contentvidya/ui">📦 npm Package</a> ·
   <a href="https://github.com/nilkoushik/chronos-ui/issues">🐛 Bug Reports</a>
 </p>
+
+> **Formerly Chronos UI.** This package was renamed from `@chronos-ui/core` to `@contentvidya/ui`. Existing `@chronos-ui/core` imports keep working via a compatibility package — see the [announcement](./docs/ANNOUNCEMENT-CONTENTVIDYA.md) and [migration guide](./docs/MIGRATION-CONTENTVIDYA.md).
 
 ---
 
@@ -40,8 +42,19 @@
 ## 🚀 Installation
 
 ```bash
-npm install @chronos-ui/core
+npm install @contentvidya/ui
 ```
+
+<details>
+<summary>Migrating from <code>@chronos-ui/core</code>?</summary>
+
+```bash
+npm uninstall @chronos-ui/core
+npm install @contentvidya/ui
+```
+
+`@chronos-ui/core` still works — it now re-exports `@contentvidya/ui` — but new features and fixes only ship under the new name. See the [migration guide](./docs/MIGRATION-CONTENTVIDYA.md) for the full timeline and a codemod for bulk import updates.
+</details>
 
 ---
 
@@ -52,7 +65,7 @@ npm install @chronos-ui/core
 In your app's global stylesheet or entry file:
 
 ```css
-@import '@chronos-ui/core/theme.css';
+@import '@contentvidya/ui/theme.css';
 ```
 
 Override any CSS variable to customise the design system:
@@ -69,8 +82,8 @@ Override any CSS variable to customise the design system:
 #### ⚛️ React / Next.js
 
 ```tsx
-import Banner from '@chronos-ui/core/react/Banner';
-import TimerWidget from '@chronos-ui/core/react/TimerWidget';
+import Banner from '@contentvidya/ui/react/Banner';
+import TimerWidget from '@contentvidya/ui/react/TimerWidget';
 
 export default function Page() {
   return (
@@ -92,8 +105,8 @@ export default function Page() {
 
 ```svelte
 <script lang="ts">
-  import Banner from '@chronos-ui/core/svelte/Banner.svelte';
-  import TimerWidget from '@chronos-ui/core/svelte/TimerWidget.svelte';
+  import Banner from '@contentvidya/ui/svelte/Banner.svelte';
+  import TimerWidget from '@contentvidya/ui/svelte/TimerWidget.svelte';
 </script>
 
 <Banner title="Summer Sale" ctaText="Shop Now" />
@@ -103,8 +116,8 @@ export default function Page() {
 #### 🌐 Web Components (Vanilla HTML / CMS Renderer)
 
 ```html
-<link rel="stylesheet" href="node_modules/@chronos-ui/core/theme.css" />
-<script type="module" src="node_modules/@chronos-ui/core/webcomponents/Banner.js"></script>
+<link rel="stylesheet" href="node_modules/@contentvidya/ui/theme.css" />
+<script type="module" src="node_modules/@contentvidya/ui/webcomponents/Banner.js"></script>
 
 <banner-element
   title="Summer Sale"
@@ -162,4 +175,4 @@ docs/               GitHub Pages documentation site
 
 ## 📄 License
 
-[MIT](./LICENSE) © Chronos UI Contributors
+[MIT](./LICENSE) © ContentVidya UI Contributors (formerly Chronos UI Contributors)

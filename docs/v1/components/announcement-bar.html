@@ -18,7 +18,7 @@
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.2.0</span>
+        <span class="sidebar-version">v1.4.1</span>
       </a>
       <div class="sidebar-version-picker" style="padding: 0.5rem 1.25rem; border-bottom: 1px solid var(--border);">
         <select class="control-select version-select" style="width: 100%; font-size: 0.8rem; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-secondary); padding: 6px 10px; border-radius: var(--radius-sm); outline: none; cursor: pointer;" onchange="window.location.href = this.value">
@@ -43,6 +43,7 @@
         <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
         <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
         <a href="../dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
+        <a href="../allure-report/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">✅</span> Test Report</a>
       </nav>
     </aside>
 
@@ -104,7 +105,7 @@
       <div class="control-group">
         <label class="control-label">message <span class="control-type-badge">string</span></label>
         
-        <input type="text" name="message" value="" class="control-input">
+        <input type="text" name="message" value="required" class="control-input">
       
         <div class="control-desc">The announcement message.</div>
       </div>
@@ -117,18 +118,18 @@
           <input type="text" value="#7c3aed" class="control-input color-text-sync" style="width:120px;flex-shrink:0;">
         </div>
       
-        <div class="control-desc">Background color hex code (e.g. "#7c3aed").</div>
+        <div class="control-desc">Background color, any CSS color value (hex, rgb, CSS variable, etc.).</div>
       </div>
     
       <div class="control-group">
         <label class="control-label">textColor <span class="control-type-badge">string</span></label>
         
         <div class="control-color-wrap">
-          <input type="color" name="text-color" value="#7c3aed" class="control-color-picker">
-          <input type="text" value="#7c3aed" class="control-input color-text-sync" style="width:120px;flex-shrink:0;">
+          <input type="color" name="text-color" value="#ffffff" class="control-color-picker">
+          <input type="text" value="#ffffff" class="control-input color-text-sync" style="width:120px;flex-shrink:0;">
         </div>
       
-        <div class="control-desc">Text color hex code.</div>
+        <div class="control-desc">Text color, any CSS color value.</div>
       </div>
     
       <div class="control-group">
@@ -137,7 +138,7 @@
         <textarea name="mapLinks" class="control-input json-textarea">[{"url":"#"}]</textarea>
         <span class="json-error-msg">❌ Invalid JSON Formatting</span>
       
-        <div class="control-desc">Array containing link for the bar. { url: string }</div>
+        <div class="control-desc">Array containing link for the bar. { url: string }. When set, the message renders as a link to the first entry's url; otherwise it renders as plain text.</div>
       </div>
     
               </form>

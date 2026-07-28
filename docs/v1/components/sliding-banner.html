@@ -18,7 +18,7 @@
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.2.0</span>
+        <span class="sidebar-version">v1.4.1</span>
       </a>
       <div class="sidebar-version-picker" style="padding: 0.5rem 1.25rem; border-bottom: 1px solid var(--border);">
         <select class="control-select version-select" style="width: 100%; font-size: 0.8rem; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-secondary); padding: 6px 10px; border-radius: var(--radius-sm); outline: none; cursor: pointer;" onchange="window.location.href = this.value">
@@ -43,6 +43,7 @@
         <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
         <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
         <a href="../dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
+        <a href="../allure-report/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">✅</span> Test Report</a>
       </nav>
     </aside>
 
@@ -287,6 +288,9 @@
       <button class="copy-btn">Copy</button>
       <pre><code><span class="kw">import</span> SlidingBanner <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/SlidingBanner'</span>;
 <span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+<span class="cm">// <span class="kw">import</span> { defaultBackgroundEffectPlugin } <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/utils/backgroundEffects'</span>;</span>
+<span class="cm">// Optionally override the canvas animation engine per-instance:</span>
+<span class="cm">// config={{ ..., backgroundEffectPlugin: { start: myStart, stop: myStop } }}</span>
 
 <span class="kw">const</span> items = [
   { id: <span class="str">'1'</span>, title: <span class="str">'Summer Sale'</span>,   subtitle: <span class="str">'Up to 50% off'</span>, ctaText: <span class="str">'Shop Now'</span>, media: { type: <span class="str">'image'</span>, url: <span class="str">'/s1.jpg'</span> }, mapLinks: [{ url: <span class="str">'/sale'</span> }] },
@@ -313,6 +317,9 @@
       <button class="copy-btn">Copy</button>
       <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
   <span class="kw">import</span> SlidingBanner <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/SlidingBanner.svelte'</span>;
+  <span class="cm">// <span class="kw">import</span> { defaultBackgroundEffectPlugin } <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/utils/backgroundEffects'</span>;</span>
+  <span class="cm">// Optionally override the canvas animation engine per-instance:</span>
+  <span class="cm">// config={{ ..., backgroundEffectPlugin: { start: myStart, stop: myStop } }}</span>
 
   <span class="kw">const</span> items = [
     { id: <span class="str">'1'</span>, title: <span class="str">'Summer Sale'</span>,   subtitle: <span class="str">'Up to 50% off'</span>, media: { type: <span class="str">'image'</span>, url: <span class="str">'/s1.jpg'</span> } },
@@ -333,9 +340,12 @@
       <pre><code>&lt;<span class="tag">script</span> type=<span class="str">"module"</span>
   src=<span class="str">"node_modules/@chronos-ui/core/webcomponents/SlidingBanner.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
 
+&lt;!-- backgroundEffectPlugin ({ start, stop } functions) can<span class="str">'t be passed as an
+     HTML attribute string — set it as a JS property instead:
+     document.querySelector('</span>sliding-banner<span class="str">').config = { ...existingConfig, backgroundEffectPlugin: { start: myStart, stop: myStop } }; --&gt;
 &lt;<span class="tag">sliding-banner</span>
-  items=<span class="str">'[{"id":"1","title":"Sale"}]'</span>
-  config=<span class="str">'{"autoStart":<span class="kw">true</span>,"showDots":<span class="kw">true</span>,"animationEffect":"fade","backgroundEffect":"waves"}'</span>
+  items='</span>[{<span class="str">"id"</span>:<span class="str">"1"</span>,<span class="str">"title"</span>:<span class="str">"Sale"</span>}]<span class="str">'
+  config='</span>{<span class="str">"autoStart"</span>:<span class="kw">true</span>,<span class="str">"showDots"</span>:<span class="kw">true</span>,<span class="str">"animationEffect"</span>:<span class="str">"fade"</span>,<span class="str">"backgroundEffect"</span>:<span class="str">"waves"</span>}'
 &gt;&lt;/<span class="tag">sliding-banner</span>&gt;</code></pre>
     </div>
         </div>
@@ -411,6 +421,12 @@
         <td>Canvas background animation, from the shared plugin engine (<code>src/utils/backgroundEffects.ts</code>) also used by Banner. Default: 'none'</td>
       </tr>
       <tr>
+        <td><span class="prop-name">config.backgroundEffectPlugin</span> </td>
+        <td><span class="prop-type">BackgroundEffectPlugin</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Optional <code>{ start, stop }</code> override for the canvas animation engine, letting a consumer (e.g. the CMS page editor) inject its own effect renderer per-instance instead of the built-in one. Falls back to <code>defaultBackgroundEffectPlugin</code> exported from <code>src/utils/backgroundEffects.ts</code> when omitted.</td>
+      </tr>
+      <tr>
         <td><span class="prop-name">config.hideArrowsIfNoScroll</span> </td>
         <td><span class="prop-type">boolean</span></td>
         <td><span class="prop-default">undefined</span></td>
@@ -450,7 +466,7 @@
     </div>
 
       <!-- Notes -->
-      
+      <div class="alert alert-info"><strong>Custom animation engine:</strong> Pass <code>config.backgroundEffectPlugin={{ start, stop }}</code> to inject your own animation implementation per-instance instead of the built-in canvas renderers — useful when a consumer (e.g. the CMS page editor) wants to control the effect engine itself. Omit it and the component falls back to <code>defaultBackgroundEffectPlugin</code>, exported from <code>src/utils/backgroundEffects.ts</code>.</div>
     </div>
   </main>
 </div>

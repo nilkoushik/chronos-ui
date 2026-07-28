@@ -15,6 +15,13 @@ module.exports = {
     // Bump package.json's version and `npm publish` (build runs first via
     // this repo's own "prepublishOnly" script).
     '@semantic-release/npm',
+    // Publish @chronos-ui/core, the deprecated compat wrapper that forwards
+    // to @contentvidya/ui, pinned to the exact version just published above.
+    // Kept as its own step (not folded into @semantic-release/npm) because
+    // it's a second, separate package living in compat/chronos-ui-core.
+    ['@semantic-release/exec', {
+      publishCmd: 'NEXT_RELEASE_VERSION=${nextRelease.version} node scripts/publish-compat-wrapper.js'
+    }],
     // Create the GitHub Release for the new tag, with the generated notes
     // attached, at the same time the tag itself is created.
     '@semantic-release/github',

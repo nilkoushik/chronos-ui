@@ -18,7 +18,7 @@
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
         <span class="sidebar-brand-name">Chronos<span>UI</span></span>
-        <span class="sidebar-version">v1.2.0</span>
+        <span class="sidebar-version">v1.4.1</span>
       </a>
       <div class="sidebar-version-picker" style="padding: 0.5rem 1.25rem; border-bottom: 1px solid var(--border);">
         <select class="control-select version-select" style="width: 100%; font-size: 0.8rem; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-secondary); padding: 6px 10px; border-radius: var(--radius-sm); outline: none; cursor: pointer;" onchange="window.location.href = this.value">
@@ -43,6 +43,7 @@
         <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
         <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
         <a href="../dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
+        <a href="../allure-report/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">✅</span> Test Report</a>
       </nav>
     </aside>
 
@@ -317,6 +318,9 @@
       <button class="copy-btn">Copy</button>
       <pre><code><span class="kw">import</span> Banner <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/Banner'</span>;
 <span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+<span class="cm">// <span class="kw">import</span> { defaultBackgroundEffectPlugin } <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/utils/backgroundEffects'</span>;</span>
+<span class="cm">// Optionally override the canvas animation engine per-instance:</span>
+<span class="cm">// config={{ ..., backgroundEffectPlugin: { start: myStart, stop: myStop } }}</span>
 
 <span class="cm">// Every hotspot shape renders as a real SVG rect/ellipse/polygon (not</span>
 <span class="cm">// clip-path), each with its own keyboard-focusable &lt;<span class="tag">a</span>&gt; sized to at least</span>
@@ -353,6 +357,9 @@
       <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
   <span class="kw">import</span> Banner <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/Banner.svelte'</span>;
   <span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+  <span class="cm">// <span class="kw">import</span> { defaultBackgroundEffectPlugin } <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/utils/backgroundEffects'</span>;</span>
+  <span class="cm">// Optionally override the canvas animation engine per-instance:</span>
+  <span class="cm">// config={{ ..., backgroundEffectPlugin: { start: myStart, stop: myStop } }}</span>
 &lt;/<span class="tag">script</span>&gt;
 
 &lt;!-- Rect, oval and polygon hotspots all render as native SVG shapes with a
@@ -389,15 +396,18 @@
 &lt;<span class="tag">script</span> type=<span class="str">"module"</span>
   src=<span class="str">"node_modules/@chronos-ui/core/webcomponents/Banner.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
 
+&lt;!-- backgroundEffectPlugin ({ start, stop } functions) can<span class="str">'t be passed as an
+     HTML attribute string — set it as a JS property on the element instead:
+     document.querySelector('</span>banner<span class="str">').config = { ...existingConfig, backgroundEffectPlugin: { start: myStart, stop: myStop } }; --&gt;
 &lt;<span class="tag">banner</span>
-  title=<span class="str">"Summer Collection 2026"</span>
-  subtitle=<span class="str">"Discover the new season"</span>
-  cta-text=<span class="str">"Shop Now"</span>
-  media=<span class="str">'{"type":"image","url":"/hero.jpg"}'</span>
-  hotspots=<span class="str">'[{"id":"h1","altText":"Jacket","shape":"rect","coords":{"x":8,"y":18,"width":14,"height":24},"action":{"type":"link","url":"/products/jacket"},"pulse":<span class="kw">true</span>,"showTooltip":<span class="kw">true</span>,"label":"Jacket"},{"id":"h2","altText":"Sunglasses","shape":"oval","coords":{"x":34,"y":12,"width":10,"height":8},"action":{"type":"link","url":"/products/sunglasses"},"pulse":<span class="kw">true</span>,"showTooltip":<span class="kw">true</span>,"label":"Sunglasses"},{"id":"h3","altText":"Sneakers","shape":"polygon","coords":{"x":55,"y":60,"width":20,"height":15},"points":[{"x":55,"y":68},{"x":62,"y":60},{"x":75,"y":62},{"x":70,"y":75}],"action":{"type":"link","url":"/products/sneakers"},"pulse":<span class="kw">true</span>,"showTooltip":<span class="kw">true</span>,"label":"Sneakers"}]'</span>
-  cta-link=<span class="str">"/shop"</span>
-  lazy-load=<span class="str">"<span class="kw">true</span>"</span>
-  config=<span class="str">'{"align":"center","padding":"lg","height":"auto","bgPosition":"center","hotspotMinTargetSize":24,"backgroundEffect":"rain"}'</span>
+  title="Summer Collection 2026"
+  subtitle="Discover the new season"
+  cta-text="Shop Now"
+  media='</span>{<span class="str">"type"</span>:<span class="str">"image"</span>,<span class="str">"url"</span>:<span class="str">"/hero.jpg"</span>}<span class="str">'
+  hotspots='</span>[{<span class="str">"id"</span>:<span class="str">"h1"</span>,<span class="str">"altText"</span>:<span class="str">"Jacket"</span>,<span class="str">"shape"</span>:<span class="str">"rect"</span>,<span class="str">"coords"</span>:{<span class="str">"x"</span>:8,<span class="str">"y"</span>:18,<span class="str">"width"</span>:14,<span class="str">"height"</span>:24},<span class="str">"action"</span>:{<span class="str">"type"</span>:<span class="str">"link"</span>,<span class="str">"url"</span>:<span class="str">"/products/jacket"</span>},<span class="str">"pulse"</span>:<span class="kw">true</span>,<span class="str">"showTooltip"</span>:<span class="kw">true</span>,<span class="str">"label"</span>:<span class="str">"Jacket"</span>},{<span class="str">"id"</span>:<span class="str">"h2"</span>,<span class="str">"altText"</span>:<span class="str">"Sunglasses"</span>,<span class="str">"shape"</span>:<span class="str">"oval"</span>,<span class="str">"coords"</span>:{<span class="str">"x"</span>:34,<span class="str">"y"</span>:12,<span class="str">"width"</span>:10,<span class="str">"height"</span>:8},<span class="str">"action"</span>:{<span class="str">"type"</span>:<span class="str">"link"</span>,<span class="str">"url"</span>:<span class="str">"/products/sunglasses"</span>},<span class="str">"pulse"</span>:<span class="kw">true</span>,<span class="str">"showTooltip"</span>:<span class="kw">true</span>,<span class="str">"label"</span>:<span class="str">"Sunglasses"</span>},{<span class="str">"id"</span>:<span class="str">"h3"</span>,<span class="str">"altText"</span>:<span class="str">"Sneakers"</span>,<span class="str">"shape"</span>:<span class="str">"polygon"</span>,<span class="str">"coords"</span>:{<span class="str">"x"</span>:55,<span class="str">"y"</span>:60,<span class="str">"width"</span>:20,<span class="str">"height"</span>:15},<span class="str">"points"</span>:[{<span class="str">"x"</span>:55,<span class="str">"y"</span>:68},{<span class="str">"x"</span>:62,<span class="str">"y"</span>:60},{<span class="str">"x"</span>:75,<span class="str">"y"</span>:62},{<span class="str">"x"</span>:70,<span class="str">"y"</span>:75}],<span class="str">"action"</span>:{<span class="str">"type"</span>:<span class="str">"link"</span>,<span class="str">"url"</span>:<span class="str">"/products/sneakers"</span>},<span class="str">"pulse"</span>:<span class="kw">true</span>,<span class="str">"showTooltip"</span>:<span class="kw">true</span>,<span class="str">"label"</span>:<span class="str">"Sneakers"</span>}]<span class="str">'
+  cta-link="/shop"
+  lazy-load="<span class="kw">true</span>"
+  config='</span>{<span class="str">"align"</span>:<span class="str">"center"</span>,<span class="str">"padding"</span>:<span class="str">"lg"</span>,<span class="str">"height"</span>:<span class="str">"auto"</span>,<span class="str">"bgPosition"</span>:<span class="str">"center"</span>,<span class="str">"hotspotMinTargetSize"</span>:24,<span class="str">"backgroundEffect"</span>:<span class="str">"rain"</span>}'
 &gt;&lt;/<span class="tag">banner</span>&gt;</code></pre>
     </div>
         </div>
@@ -485,6 +495,12 @@
         <td>Animated canvas layer rendered behind the media/overlay. Shared plugin engine (<code>src/utils/backgroundEffects.ts</code>) also used by SlidingBanner — new effects can be added there without touching this component. 'rain'/'thunderstorm' include a water band along the bottom edge with landing ripples; 'thunderstorm' additionally adds periodic lightning flashes/bolts. 'fog' is winter fog drifting with wind, light snow, plus cinematic frost shards. 'autumn' is falling, swaying autumn leaves. 'festival' is an Indian-festival (Diwali-style) look with ambient diya sparkle and periodic firework bursts. 'santa' has twinkling string lights, snowfall mixed with tumbling candy canes and peppermints, a galloping-reindeer sleigh flyby (with a glowing Rudolph nose leading) that drops a trail of tumbling candy canes and mints as it flies, loops back right-to-left through the bottom half of the frame after its first pass instead of just vanishing, and a playful Santa cap that randomly peeks in and out from one of the four frame edges like hide-and-seek. 'sea' is an aerial-view waterline wash — the effect stays transparent everywhere except a thin translucent, sea-tinted band (~10% of the banner height) along the bottom edge, so the banner's own background image reads as the seashore/beach itself. The band breathes in and out on a natural (non-mechanical) surge rhythm, with drifting aerial-style foam blobs and lacy filament streaks, like a top-down drone shot of waves lapping the sand. Default: 'none'</td>
       </tr>
       <tr>
+        <td><span class="prop-name">config.backgroundEffectPlugin</span> </td>
+        <td><span class="prop-type">BackgroundEffectPlugin</span></td>
+        <td><span class="prop-default">undefined</span></td>
+        <td>Optional <code>{ start, stop }</code> override for the canvas animation engine, letting a consumer (e.g. the CMS page editor) inject its own effect renderer per-instance instead of the built-in one. Falls back to <code>defaultBackgroundEffectPlugin</code> exported from <code>src/utils/backgroundEffects.ts</code> when omitted.</td>
+      </tr>
+      <tr>
         <td><span class="prop-name">lazyLoad</span> </td>
         <td><span class="prop-type">boolean</span></td>
         <td><span class="prop-default">undefined</span></td>
@@ -511,6 +527,7 @@
 <div class="alert alert-info"><strong>Hotspots:</strong> Pass <code>hotspots</code> (rect/oval/polygon regions with <code>coords</code> as percentages) to overlay clickable image-map regions on the media, each linking to a URL or app deeplink. Shapes render as real, anti-aliased SVG (not CSS <code>clip-path</code>), so polygon edges and the pulse ring look correct for every shape — matching what you see in the Hotspot Designer. <code>backgroundImageUrl</code> remains supported as a legacy alternative to <code>media</code>.</div>
 <div class="alert alert-tip"><strong>Accessibility:</strong> Each hotspot is a real, keyboard-focusable <code>&lt;a&gt;</code> with an <code>aria-label</code> from <code>altText</code>/<code>label</code>, a visible <code>:focus-visible</code> outline, and a hit target that's always at least <code>config.hotspotMinTargetSize</code> CSS px (default 24, per WCAG 2.5.8) regardless of the drawn shape's size. Set <code>showTooltip</code> for a hover/focus tooltip that meets WCAG 1.4.13. The pulse animation automatically pauses under <code>prefers-reduced-motion: reduce</code>.</div>
 <div class="alert alert-info"><strong>Background effects:</strong> Set <code>config.backgroundEffect</code> to <code>'particles'</code>, <code>'waves'</code>, <code>'rain'</code>, <code>'thunderstorm'</code>, <code>'sunrise'</code>, <code>'sunset'</code>, <code>'fog'</code>, <code>'autumn'</code>, <code>'festival'</code>, <code>'santa'</code>, or <code>'sea'</code> to render an animated canvas layer behind the banner's media/overlay. This is powered by a standalone plugin engine at <code>src/utils/backgroundEffects.ts</code> (also used by SlidingBanner) — it's a plain registry of canvas renderers, so new effects can be added there once and become available to every component that uses it, without any per-component changes.</div>
+<div class="alert alert-info"><strong>Custom animation engine:</strong> Pass <code>config.backgroundEffectPlugin={{ start, stop }}</code> to inject your own animation implementation per-instance instead of the built-in canvas renderers — useful when a consumer (e.g. the CMS page editor) wants to control the effect engine itself. Omit it and the component falls back to <code>defaultBackgroundEffectPlugin</code>, exported alongside the built-in effects.</div>
 <div class="alert alert-tip"><strong>Lazy loading:</strong> By default the banner defers mounting its media/hotspots until it scrolls near the viewport (shared <code>IntersectionObserver</code> per threshold across all widgets on the page). Pass <code>lazyLoad={false}</code> to disable, or tune <code>lazyThreshold</code> / <code>lazyRootMargin</code>.</div>
     </div>
   </main>

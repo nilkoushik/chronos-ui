@@ -1,0 +1,58 @@
+{
+  "name": "@chronos-ui/core",
+  "version": "1.4.2",
+  "description": "DEPRECATED: Chronos UI has been renamed to @contentvidya/ui. This package is a zero-logic compatibility forwarder kept for existing consumers.",
+  "author": "your-name",
+  "license": "MIT",
+  "deprecated": "Renamed to @contentvidya/ui. This package now only forwards to @contentvidya/ui for backward compatibility and will not receive new features. See https://github.com/nilkoushik/chronos-ui/blob/main/docs/MIGRATION-CONTENTVIDYA.md",
+  "homepage": "https://github.com/nilkoushik/chronos-ui/blob/main/docs/MIGRATION-CONTENTVIDYA.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nilkoushik/chronos-ui.git",
+    "directory": "compat/chronos-ui-core"
+  },
+  "bugs": {
+    "url": "https://github.com/nilkoushik/chronos-ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "deprecated",
+    "chronos-ui",
+    "contentvidya"
+  ],
+  "files": [
+    "index.js",
+    "scripts/",
+    "README.md"
+  ],
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./theme.css": "./node_modules/@contentvidya/ui/dist/styles/theme.css",
+    "./styles/*": "./node_modules/@contentvidya/ui/dist/styles/*",
+    "./react/*": "./node_modules/@contentvidya/ui/dist/react/src/components/*.js",
+    "./react/utils/*": "./node_modules/@contentvidya/ui/dist/react/src/utils/*.js",
+    "./svelte/*": "./node_modules/@contentvidya/ui/dist/svelte/src/components/*",
+    "./svelte/utils/*": "./node_modules/@contentvidya/ui/dist/svelte/src/utils/*",
+    "./webcomponent/*": "./node_modules/@contentvidya/ui/dist/webcomponent/dist/*",
+    "./webcomponent/utils/*": "./node_modules/@contentvidya/ui/dist/webcomponent/dist/utils/*.js"
+  },
+  "main": "./index.js",
+  "scripts": {
+    "postinstall": "node ./scripts/deprecation-notice.js"
+  },
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
+  },
+  "peerDependenciesMeta": {
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@contentvidya/ui": "1.4.2"
+  }
+}

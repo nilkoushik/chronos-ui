@@ -16,6 +16,12 @@ jobs:
     # Trusted Publisher configured on npmjs.com for this package — npm checks
     # that claim, so the environment name must match exactly (and the
     # environment itself must exist under repo Settings -> Environments).
+    # NOTE: this job now also publishes the separate @chronos-ui/core compat
+    # wrapper (scripts/publish-compat-wrapper.js, wired in via
+    # release.config.js's @semantic-release/exec step). @chronos-ui/core is a
+    # distinct npm package name and needs its OWN Trusted Publisher entry
+    # configured on npmjs.com (same repo + workflow + "release" environment),
+    # or its publish step will fail even though @contentvidya/ui succeeds.
     environment: release
     permissions:
       contents: write      # semantic-release commits CHANGELOG/package.json bump + creates the git tag
