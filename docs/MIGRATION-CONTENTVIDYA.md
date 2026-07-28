@@ -1,6 +1,8 @@
 # Migration Plan: `@chronos-ui/core` → `@contentvidya/ui`
 
-## Current state (verified in repo)
+> **Status:** Release 1 shipped (`@contentvidya/ui@1.4.2` + `@chronos-ui/core@1.4.2` compat wrapper both live on npm) and the GitHub repo has been renamed to `nilkoushik/contentvidya-ui`. The "Current state" section below describes the repo as it was *before* this plan started executing — kept as-is for history; see the Release 1/2/3 status markers further down for what's actually done.
+
+## Current state (verified in repo, at time this plan was written)
 
 - Single npm package, not a multi-package scope: `@chronos-ui/core`, currently `v1.4.1`.
 - Repo: `github.com/nilkoushik/chronos-ui`, published from this repo's `dist/`.
@@ -40,38 +42,35 @@ GitHub repo renames are low-risk (GitHub auto-redirects the old URL, including `
 
 ## Release plan (3 releases)
 
-### Release 1 — `v2.0.0` of `@chronos-ui/core`: dual-publish, deprecation warning
+Versions kept on the existing `1.4.x`/`1.5.x` line rather than jumping to `2.0.0` for Releases 1–2, since neither is an API-breaking change for consumers — only Release 3 is allowed to bump major.
+
+### Release 1 — `v1.4.2`: dual-publish, deprecation warning — ✅ done
 
 Goal: publish the new name, keep the old name fully functional, start warning.
 
-- Publish **`@contentvidya/ui@2.0.0`** as the real package (source of truth going forward).
-- Publish **`@chronos-ui/core@2.0.0`** as a thin **compatibility wrapper** that:
-  - Re-exports 100% of `@contentvidya/ui`'s public API (ESM + CJS + types — see wrapper package plan below).
-  - Emits a one-time console deprecation warning on import (Node) / logs to console in browser dev builds only (avoid spamming production).
-- `package.json` `repository`/`homepage` in `@contentvidya/ui` point at the (still `chronos-ui`-named) repo for now.
-- Update `chronos-cms-admin`:
-  - `package.json`: switch dependency to `"@contentvidya/ui": "^2.0.0"`.
-  - `svelte.config.js`: update aliases from `@chronos/ui/...` to `@contentvidya/ui/...`, pointing at the same local `../chronos-ui` path (repo folder name unchanged in this release).
-  - Do a codemod pass (see Update Source Code Import task) on all `.svelte`/`.ts` import specifiers.
-- CHANGELOG + npm deprecation message on `@chronos-ui/core` (see below) — **not `npm deprecate` yet**, since it's still a maintained wrapper, just warn in-console.
+- ✅ Published **`@contentvidya/ui@1.4.2`** as the real package (source of truth going forward).
+- ✅ Published **`@chronos-ui/core@1.4.2`** as a thin **compatibility wrapper**: every subpath forwards directly into `@contentvidya/ui`'s files (no duplicated component code — see `compat/chronos-ui-core/`).
+  - ✅ Root-entry import emits a one-time console deprecation warning; `postinstall` prints an install-time notice too.
+  - Full ESM + CJS + typed re-exports were the original ambition, but `@contentvidya/ui` itself doesn't ship CJS or `.d.ts` yet — the wrapper only forwards what actually exists (see `compat/chronos-ui-core/README.md`).
+- ⬜ `chronos-cms-admin`: switch dependency to `@contentvidya/ui`, update `svelte.config.js` aliases, codemod all import specifiers — not yet done.
 
-### Release 2 — `v3.0.0`: repo rename, hard npm deprecation
+### Release 2 — `v1.5.0`: repo rename, hard npm deprecation — repo rename ✅ done, rest pending
 
 Goal: finish the rename cleanup, mark the old name deprecated in the registry.
 
-- Rename GitHub repo `nilkoushik/chronos-ui` → `nilkoushik/contentvidya-ui`. GitHub redirects old clone/remote URLs automatically.
-- Update `package.json` `repository`/`homepage`/`bugs` in `@contentvidya/ui` to the new repo URL.
-- Run `npm deprecate @chronos-ui/core@">=0.0.0" "Renamed to @contentvidya/ui. See MIGRATION-CONTENTVIDYA.md"` — this makes `npm install` show a registry-level deprecation notice, on top of the runtime console warning.
-- `@chronos-ui/core` wrapper bumps to `v3.0.0`, still fully functional, still forwards to `@contentvidya/ui@3.0.0`.
-- Update all internal repos (chronos-cms-admin, any others) to reference the new repo URL in docs/READMEs.
-- No breaking API changes yet in either package — this release is entirely about naming/URLs.
+- ✅ Renamed GitHub repo `nilkoushik/chronos-ui` → `nilkoushik/contentvidya-ui`. GitHub redirects old clone/remote URLs automatically.
+- ✅ Updated `package.json` `repository`/`homepage`/`bugs` in both `@contentvidya/ui` and `@chronos-ui/core` to the new repo URL; updated local `git remote`, README, CONTRIBUTING.md.
+- ⬜ Run `npm deprecate @chronos-ui/core@">=0.0.0" "Renamed to @contentvidya/ui. See MIGRATION-CONTENTVIDYA.md"` — registry-level deprecation notice, on top of the runtime/install-time warnings already live. Not yet run (currently relying on the `"deprecated"` field set at publish time, which already surfaces in `npm install` output — `npm deprecate` is for retroactively marking *other* already-published versions too).
+- ⬜ `@chronos-ui/core` wrapper bump to `v1.5.0` alongside `@contentvidya/ui@1.5.0` — not yet released.
+- ⬜ Update internal repos (chronos-cms-admin, any others) to reference the new repo URL in docs/READMEs.
+- No breaking API changes in either package — this release is entirely about naming/URLs.
 
-### Release 3 — `v4.0.0`: sunset window opens
+### Release 3 — `v2.0.0`: sunset window opens
 
 Goal: give consumers a hard signal that the old name's shelf life is ending, without pulling it yet.
 
-- `@contentvidya/ui@4.0.0` may now carry real API changes (first release where `@chronos-ui/core` compat wrapper is allowed to lag behind or be capped).
-- `@chronos-ui/core` wrapper is **capped at the last compatible version** (e.g. stays on `v3.x`, gets one final patch adding a stronger deprecation message with a removal date), and is not updated further.
+- `@contentvidya/ui@2.0.0` may now carry real API changes (first release where `@chronos-ui/core` compat wrapper is allowed to lag behind or be capped).
+- `@chronos-ui/core` wrapper is **capped at the last compatible version** (e.g. stays on `v1.5.x`, gets one final patch adding a stronger deprecation message with a removal date), and is not updated further.
 - README of `@chronos-ui/core` on npm updated to state end-of-support date (recommend: 6 months from Release 2's `npm deprecate`).
 - Internal repos (chronos-cms-admin) must be fully migrated to `@contentvidya/ui` by this point — no internal consumer should still resolve through the compat wrapper.
 
@@ -101,39 +100,44 @@ Console runtime warning (dev-mode only, printed once per process):
 
 ## package.json examples
 
-**New primary package** (`@contentvidya/ui/package.json`, abridged):
+**New primary package** (`@contentvidya/ui/package.json`, actual, as published):
 ```json
 {
   "name": "@contentvidya/ui",
-  "version": "2.0.0",
+  "version": "1.4.2",
   "description": "A universal, framework-agnostic UI component library. Write once, compile to React, Svelte, and Web Components.",
-  "repository": { "type": "git", "url": "git+https://github.com/nilkoushik/chronos-ui.git" },
+  "homepage": "https://nilkoushik.github.io/contentvidya-ui",
+  "repository": { "type": "git", "url": "git+https://github.com/nilkoushik/contentvidya-ui.git" },
+  "bugs": { "url": "https://github.com/nilkoushik/contentvidya-ui/issues" },
   "publishConfig": { "access": "public" }
 }
 ```
-(`repository.url` updates to `contentvidya-ui` in Release 2.)
 
-**Compat wrapper** (`@chronos-ui/core/package.json`, abridged):
+**Compat wrapper** (`@chronos-ui/core/package.json`, actual, as published — see `compat/chronos-ui-core/package.json`):
 ```json
 {
   "name": "@chronos-ui/core",
-  "version": "2.0.0",
+  "version": "1.4.2",
   "description": "DEPRECATED: renamed to @contentvidya/ui. This package re-exports @contentvidya/ui for backward compatibility.",
-  "dependencies": { "@contentvidya/ui": "2.0.0" },
+  "homepage": "https://github.com/nilkoushik/contentvidya-ui/blob/main/docs/MIGRATION-CONTENTVIDYA.md",
+  "repository": { "type": "git", "url": "git+https://github.com/nilkoushik/contentvidya-ui.git", "directory": "compat/chronos-ui-core" },
+  "dependencies": { "@contentvidya/ui": "1.4.2" },
   "deprecated": "Renamed to @contentvidya/ui — see README"
 }
 ```
 
-**Consumer** (`chronos-cms-admin/package.json`, relevant line):
+**Consumer** (`chronos-cms-admin/package.json`, target — not yet applied):
 ```json
 "dependencies": {
-  "@contentvidya/ui": "^2.0.0"
+  "@contentvidya/ui": "^1.4.2"
 }
 ```
 
 ---
 
-## Open items to confirm before executing Release 1
+## Open items
 
-- Confirm target npm scope ownership: is `@contentvidya` an org you already control on npm, or does it need to be created/verified first?
-- Confirm whether `chronos-cms-admin`'s local dev alias (`../chronos-ui` folder path) should be renamed to `../contentvidya-ui` in Release 1 or deferred to Release 2 alongside the GitHub repo rename — recommend deferring to keep Release 1 npm-only.
+- ✅ npm scope: `@contentvidya` org exists and both packages are published under it.
+- ⬜ `chronos-cms-admin`'s local dev alias (`../chronos-ui` folder path in `svelte.config.js`/`vite.config.ts`) — the local folder on disk is still named `chronos-ui`; decide whether to rename that folder to `contentvidya-ui` to match the GitHub repo, or leave the local path as-is since it's just a dev-time alias, unrelated to the published package name.
+- ⬜ `chronos-cms-admin` hasn't been switched over to `@contentvidya/ui` yet (dependency, aliases, import specifiers) — next task.
+- ⬜ Release 2's `npm deprecate` command and the `v1.5.0` wrapper bump haven't run yet.

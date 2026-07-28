@@ -4,13 +4,13 @@
   "description": "A universal, framework-agnostic UI component library built with Mitosis. Write once, compile to React, Svelte, and Web Components.",
   "author": "Koushik Manna",
   "license": "MIT",
-  "homepage": "https://nilkoushik.github.io/chronos-ui",
+  "homepage": "https://nilkoushik.github.io/contentvidya-ui",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nilkoushik/chronos-ui.git"
+    "url": "git+https://github.com/nilkoushik/contentvidya-ui.git"
   },
   "bugs": {
-    "url": "https://github.com/nilkoushik/chronos-ui/issues"
+    "url": "https://github.com/nilkoushik/contentvidya-ui/issues"
   },
   "publishConfig": {
     "access": "public"

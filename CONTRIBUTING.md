@@ -5,7 +5,7 @@ Thank you for your interest in contributing! This document outlines the process 
 ## Development Setup
 
 ```bash
-git clone https://github.com/nilkoushik/chronos-ui.git
+git clone https://github.com/nilkoushik/contentvidya-ui.git
 cd chronos-ui
 npm install
 ```

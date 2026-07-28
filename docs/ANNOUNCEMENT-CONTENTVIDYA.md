@@ -1,6 +1,6 @@
 # Chronos UI is becoming ContentVidya UI
 
-*Announcement — Release 1 (`v2.0.0`)*
+*Announcement — Release 1 (`v1.4.2`), updated: GitHub repo also now renamed to `nilkoushik/contentvidya-ui`*
 
 ## TL;DR
 
@@ -35,7 +35,7 @@ We know renames are disruptive when they're forced. So they won't be forced here
 
 1. **`@chronos-ui/core` keeps working** — it becomes a re-export wrapper around `@contentvidya/ui`, published in lockstep, fully typed (ESM + CJS + `.d.ts`).
 2. **No silent breakage.** You'll see a one-time, dev-only console notice pointing at the migration guide — nothing that fails your build or lints.
-3. **A real sunset timeline, not an abrupt cutoff.** The old package is supported through Release 2 (`v3.0.0`, includes an `npm deprecate` registry notice) and stays functional — capped at its last compatible version — through Release 3 (`v4.0.0`), with an announced end-of-support date at that point. Full detail in the [migration plan](./MIGRATION-CONTENTVIDYA.md).
+3. **A real sunset timeline, not an abrupt cutoff.** The old package is supported through Release 2 (`v1.5.0`, includes an `npm deprecate` registry notice) and stays functional — capped at its last compatible version — through Release 3 (`v2.0.0`), with an announced end-of-support date at that point. Full detail in the [migration plan](./MIGRATION-CONTENTVIDYA.md).
 
 ## How to migrate
 
@@ -58,7 +58,7 @@ Full step-by-step detail, package.json examples, and the 3-release timeline live
 
 ## What's next
 
-- **Repo rename** (`chronos-ui` → `contentvidya-ui` on GitHub) lands in Release 2, alongside the registry-level `npm deprecate` notice — GitHub redirects old clone/remote URLs automatically, so this shouldn't require action on your end.
+- **Repo rename** (`chronos-ui` → `contentvidya-ui` on GitHub) is done. GitHub redirects old clone/remote URLs automatically, so this shouldn't require action on your end. The registry-level `npm deprecate` notice for `@chronos-ui/core` is still pending, tracked as the rest of Release 2.
 - **Documentation site** moves to the ContentVidya-branded domain/theme in step with the repo rename.
 - **New components and API surface** going forward ship under the ContentVidya UI name and design language.
 

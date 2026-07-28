@@ -9,7 +9,7 @@ npm uninstall @chronos-ui/core
 npm install @contentvidya/ui
 ```
 
-Then update import specifiers from `@chronos-ui/core/...` to `@contentvidya/ui/...`. See the [migration guide](https://github.com/nilkoushik/chronos-ui/blob/main/docs/MIGRATION-CONTENTVIDYA.md) for the full timeline, a codemod, and package.json examples.
+Then update import specifiers from `@chronos-ui/core/...` to `@contentvidya/ui/...`. See the [migration guide](https://github.com/nilkoushik/contentvidya-ui/blob/main/docs/MIGRATION-CONTENTVIDYA.md) for the full timeline, a codemod, and package.json examples.
 
 ## What this package does and doesn't do
 
@@ -21,4 +21,4 @@ Then update import specifiers from `@chronos-ui/core/...` to `@contentvidya/ui/.
 
 ## Support timeline
 
-See [`MIGRATION-CONTENTVIDYA.md`](https://github.com/nilkoushik/chronos-ui/blob/main/docs/MIGRATION-CONTENTVIDYA.md) — in short: fully functional now (`v1.4.2`), registry-marked deprecated at `v1.5.0`, capped/frozen at `v2.0.0` with an announced end-of-support date.
+See [`MIGRATION-CONTENTVIDYA.md`](https://github.com/nilkoushik/contentvidya-ui/blob/main/docs/MIGRATION-CONTENTVIDYA.md) — in short: fully functional now (`v1.4.2`), registry-marked deprecated at `v1.5.0`, capped/frozen at `v2.0.0` with an announced end-of-support date.
