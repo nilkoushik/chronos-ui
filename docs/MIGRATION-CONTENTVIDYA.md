@@ -89,7 +89,7 @@ Goal: give consumers a hard signal that the old name's shelf life is ending, wit
 ## npm deprecation message text (Release 2)
 
 ```
-npm deprecate @chronos-ui/core@">=0.0.0" "Chronos UI has been rebranded to ContentVidya UI. This package now only re-exports @contentvidya/ui for backward compatibility and will not receive new features. Please migrate: npm install @contentvidya/ui. See https://github.com/nilkoushik/contentvidya-ui/blob/master/docs/MIGRATION-CONTENTVIDYA.md"
+npm deprecate @chronos-ui/core@">=0.0.0" "Chronos UI has been rebranded to ContentVidya UI. This package now only re-exports @contentvidya/ui for backward compatibility and will not receive new features. Please migrate: npm install @contentvidya/ui. See https://github.com/nilkoushik/contentvidya-ui/blob/main/docs/MIGRATION-CONTENTVIDYA.md"
 ```
 
 Console runtime warning (dev-mode only, printed once per process):
@@ -119,7 +119,7 @@ Console runtime warning (dev-mode only, printed once per process):
   "name": "@chronos-ui/core",
   "version": "1.4.2",
   "description": "DEPRECATED: renamed to @contentvidya/ui. This package re-exports @contentvidya/ui for backward compatibility.",
-  "homepage": "https://github.com/nilkoushik/contentvidya-ui/blob/master/docs/MIGRATION-CONTENTVIDYA.md",
+  "homepage": "https://github.com/nilkoushik/contentvidya-ui/blob/main/docs/MIGRATION-CONTENTVIDYA.md",
   "repository": { "type": "git", "url": "git+https://github.com/nilkoushik/contentvidya-ui.git", "directory": "compat/chronos-ui-core" },
   "dependencies": { "@contentvidya/ui": "1.4.2" },
   "deprecated": "Renamed to @contentvidya/ui — see README"

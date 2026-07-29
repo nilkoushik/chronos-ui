@@ -4,8 +4,8 @@
   "description": "DEPRECATED: Chronos UI has been renamed to @contentvidya/ui. This package is a zero-logic compatibility forwarder kept for existing consumers.",
   "author": "your-name",
   "license": "MIT",
-  "deprecated": "Renamed to @contentvidya/ui. This package now only forwards to @contentvidya/ui for backward compatibility and will not receive new features. See https://github.com/nilkoushik/contentvidya-ui/blob/master/docs/MIGRATION-CONTENTVIDYA.md",
-  "homepage": "https://github.com/nilkoushik/contentvidya-ui/blob/master/docs/MIGRATION-CONTENTVIDYA.md",
+  "deprecated": "Renamed to @contentvidya/ui. This package now only forwards to @contentvidya/ui for backward compatibility and will not receive new features. See https://github.com/nilkoushik/contentvidya-ui/blob/main/docs/MIGRATION-CONTENTVIDYA.md",
+  "homepage": "https://github.com/nilkoushik/contentvidya-ui/blob/main/docs/MIGRATION-CONTENTVIDYA.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nilkoushik/contentvidya-ui.git",

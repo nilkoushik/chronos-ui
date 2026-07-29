@@ -1,5 +1,5 @@
 module.exports = {
-  branches: ['master'],
+  branches: ['main'],
   plugins: [
     // Determine the version bump (major/minor/patch) from Conventional Commit
     // messages since the last release tag.

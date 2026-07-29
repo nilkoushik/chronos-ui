@@ -398,7 +398,7 @@ function buildPage(component) {
         <span class="current">${name}</span>
       </div>
       <div class="topbar-actions">
-        <a href="${GITHUB_URL}/blob/master/src/components/${pascalName.replace(/\s/g,'')}.lite.tsx"
+        <a href="${GITHUB_URL}/blob/main/src/components/${pascalName.replace(/\s/g,'')}.lite.tsx"
            target="_blank" rel="noopener" class="btn-github">View Source</a>
       </div>
     </div>

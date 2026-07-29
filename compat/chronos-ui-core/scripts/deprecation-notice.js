@@ -8,7 +8,7 @@ console.log('│  will not receive new features. Please migrate when convenient:
 console.log('│                                                                               │');
 console.log('│    npm uninstall @chronos-ui/core && npm install @contentvidya/ui             │');
 console.log('│                                                                               │');
-console.log('│  Guide: https://github.com/nilkoushik/contentvidya-ui/blob/master/docs/         │');
+console.log('│  Guide: https://github.com/nilkoushik/contentvidya-ui/blob/main/docs/         │');
 console.log('│         MIGRATION-CONTENTVIDYA.md                                              │');
 console.log('└───────────────────────────────────────────────────────────────────────────┘');
 console.log('');
