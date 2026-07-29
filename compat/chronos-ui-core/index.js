@@ -7,7 +7,7 @@ if (!g.__CHRONOS_UI_CORE_DEPRECATION_WARNED__) {
     '[@chronos-ui/core] This package has been renamed to @contentvidya/ui. ' +
     '@chronos-ui/core is now a compatibility forwarder and will not receive new features. ' +
     'Migrate at your convenience: npm install @contentvidya/ui — see ' +
-    'https://github.com/nilkoushik/contentvidya-ui/blob/main/docs/MIGRATION-CONTENTVIDYA.md'
+    'https://github.com/nilkoushik/contentvidya-ui/blob/master/docs/MIGRATION-CONTENTVIDYA.md'
   );
 }
 
