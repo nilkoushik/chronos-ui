@@ -1,61 +1,61 @@
-          background: var(--chronos-color-border);
+          background: var(--contentvidya-color-border);
           border-radius: 4px;
         }
-        .chronos-scrollable-card {
+        .contentvidya-scrollable-card {
           flex: 0 0 280px;
-          background: var(--chronos-color-surface);
-          border: var(--chronos-border-width) solid var(--chronos-color-border);
-          border-radius: var(--chronos-border-radius-md);
+          background: var(--contentvidya-color-surface);
+          border: var(--contentvidya-border-width) solid var(--contentvidya-color-border);
+          border-radius: var(--contentvidya-border-radius-md);
           overflow: hidden;
           scroll-snap-align: start;
         }
-        .chronos-scrollable-img-wrap {
+        .contentvidya-scrollable-img-wrap {
           height: 160px;
         }
-        .chronos-scrollable-img {
+        .contentvidya-scrollable-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
         }
-        .chronos-scrollable-body {
-          padding: var(--chronos-spacing-sm);
+        .contentvidya-scrollable-body {
+          padding: var(--contentvidya-spacing-sm);
         }
-        .chronos-scrollable-card-title {
+        .contentvidya-scrollable-card-title {
           font-weight: 600;
-          color: var(--chronos-color-text-main);
+          color: var(--contentvidya-color-text-main);
           margin-bottom: 0.25rem;
         }
-        .chronos-scrollable-card-sub {
+        .contentvidya-scrollable-card-sub {
           font-size: 0.875rem;
-          color: var(--chronos-color-text-muted);
+          color: var(--contentvidya-color-text-muted);
         }
       
 /* TimerWidget.lite.tsx */
 
-        .chronos-timer-widget {
-          background-color: var(--chronos-color-surface);
-          border: var(--chronos-border-width) solid var(--chronos-color-border);
-          border-radius: var(--chronos-border-radius-md);
-          padding: var(--chronos-spacing-lg);
-          font-family: var(--chronos-font-family);
+        .contentvidya-timer-widget {
+          background-color: var(--contentvidya-color-surface);
+          border: var(--contentvidya-border-width) solid var(--contentvidya-color-border);
+          border-radius: var(--contentvidya-border-radius-md);
+          padding: var(--contentvidya-spacing-lg);
+          font-family: var(--contentvidya-font-family);
      
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.chronos-scroll-btn:hover {
-  background: var(--chronos-color-primary, #7c3aed);
-  border-color: var(--chronos-color-primary, #7c3aed);
+.contentvidya-scroll-btn:hover {
+  background: var(--contentvidya-color-primary, #7c3aed);
+  border-color: var(--contentvidya-color-primary, #7c3aed);
   color: #ffffff;
   transform: scale(1.05);
 }
 
-.chronos-scroll-btn svg {
+.contentvidya-scroll-btn svg {
   width: 16px;
   height: 16px;
 }
 
-.chronos-scroll-container {
+.contentvidya-scroll-container {
   display: flex;
   gap: 1.5rem;
   overflow-x: auto;
@@ -65,36 +65,36 @@
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-.chronos-scroll-container::-webkit-scrollbar {
+.contentvidya-scroll-container::-webkit-scrollbar {
   display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-.chronos-scroll-container {
+.contentvidya-scroll-container {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
 
-.chronos-scroll-item {
+.contentvidya-scroll-item {
   flex: 0 0 280px;
   display: flex;
   flex-direction: column;
   text-decoration: none;
-  background: var(--chronos-color-surface, #f8fafc);
-  border: 1px solid var(--chronos-color-border, #e2e8f0);
-  border-radius: var(--chronos-border-radius-md, 0.75rem);
+  background: var(--contentvidya-color-surface, #f8fafc);
+  border: 1px solid var(--contentvidya-color-border, #e2e8f0);
+  border-radius: var(--contentvidya-border-radius-md, 0.75rem);
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--chronos-shadow-sm, 0 1px 2px 0 rgba(0,0,0,0.05));
+  box-shadow: var(--contentvidya-shadow-sm, 0 1px 2px 0 rgba(0,0,0,0.05));
 }
 
-.chronos-scroll-item:hover {
+.contentvidya-scroll-item:hover {
   transform: translateY(-4px);
-  box-shadow: var(--chronos-shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1));
-  border-color: var(--chronos-color-primary, #7c3aed);
+  box-shadow: var(--contentvidya-shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1));
+  border-color: var(--contentvidya-color-primary, #7c3aed);
 }
 
-.chronos-scroll-img-wrap {
+.contentvidya-scroll-img-wrap {
   width: 100%;
   height: 160px;
   overflow: hidden;
@@ -102,6 +102,6 @@
   background: #000;
 }
 
-.chronos-scroll-img {
+.contentvidya-scroll-img {
   width: 100%;
   height: 100%;

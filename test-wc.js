@@ -7,8 +7,8 @@ global.customElements = dom.window.customElements;
 global.requestAnimationFrame = (cb) => setTimeout(cb, 16);
 global.cancelAnimationFrame = clearTimeout;
 
-require('./examples/wc-demo/node_modules/@chronos-ui/core/dist/webcomponent/dist/GridBanner.js');
-require('./examples/wc-demo/node_modules/@chronos-ui/core/dist/webcomponent/dist/SlidingBanner.js');
+require('./examples/wc-demo/node_modules/@contentvidya/ui/dist/webcomponent/dist/GridBanner.js');
+require('./examples/wc-demo/node_modules/@contentvidya/ui/dist/webcomponent/dist/SlidingBanner.js');
 
 try {
   const el = document.createElement('grid-banner');

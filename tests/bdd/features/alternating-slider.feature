@@ -1,5 +1,5 @@
 Feature: AlternatingSlider
-  As a consumer of @chronos-ui/core
+  As a consumer of @contentvidya/ui
   I want the AlternatingSlider web component to render multi-column alternating scroll
   So that its layout renders correctly at any column count
 
@@ -8,7 +8,7 @@ Feature: AlternatingSlider
       | items  | [{"id":"1","title":"Ocean Breeze"},{"id":"2","title":"Forest Trail"},{"id":"3","title":"Desert Sun"},{"id":"4","title":"Mountain Peak"}] |
       | config | {"columns":<columns>,"autoStart":false} |
     Then it should render without any page errors
-    And it should contain <columns> elements matching ".chronos-alt-col"
+    And it should contain <columns> elements matching ".contentvidya-alt-col"
 
     Examples:
       | columns |

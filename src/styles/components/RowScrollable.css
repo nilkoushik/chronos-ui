@@ -1,69 +1,69 @@
 /* Styles for RowScrollable */
 /* Styles for RowScrollable */
 /* RowScrollable Styles */
-.chronos-scrollable-container {
-          font-family: var(--chronos-font-family);
+.contentvidya-scrollable-container {
+          font-family: var(--contentvidya-font-family);
         }
-        .chronos-scrollable-title {
+        .contentvidya-scrollable-title {
           margin-top: 0;
-          margin-bottom: var(--chronos-spacing-md);
-          color: var(--chronos-color-text-main);
-          font-size: var(--chronos-font-size-subtitle);
+          margin-bottom: var(--contentvidya-spacing-md);
+          color: var(--contentvidya-color-text-main);
+          font-size: var(--contentvidya-font-size-subtitle);
         }
-        .chronos-scrollable-row {
+        .contentvidya-scrollable-row {
           display: flex;
-          gap: var(--chronos-spacing-md);
+          gap: var(--contentvidya-spacing-md);
           overflow-x: auto;
-          padding-bottom: var(--chronos-spacing-sm);
+          padding-bottom: var(--contentvidya-spacing-sm);
           scroll-snap-type: x mandatory;
         }
         /* Custom scrollbar */
-        .chronos-scrollable-row::-webkit-scrollbar {
+        .contentvidya-scrollable-row::-webkit-scrollbar {
           height: 6px;
         }
-        .chronos-scrollable-row::-webkit-scrollbar-track {
-          background: var(--chronos-color-surface);
+        .contentvidya-scrollable-row::-webkit-scrollbar-track {
+          background: var(--contentvidya-color-surface);
           border-radius: 4px;
         }
-        .chronos-scrollable-row::-webkit-scrollbar-thumb {
-          background: var(--chronos-color-border);
+        .contentvidya-scrollable-row::-webkit-scrollbar-thumb {
+          background: var(--contentvidya-color-border);
           border-radius: 4px;
         }
-        .chronos-scrollable-card {
+        .contentvidya-scrollable-card {
           flex: 0 0 280px;
-          background: var(--chronos-color-surface);
-          border: var(--chronos-border-width) solid var(--chronos-color-border);
-          border-radius: var(--chronos-border-radius-md);
+          background: var(--contentvidya-color-surface);
+          border: var(--contentvidya-border-width) solid var(--contentvidya-color-border);
+          border-radius: var(--contentvidya-border-radius-md);
           overflow: hidden;
           scroll-snap-align: start;
         }
-        .chronos-scrollable-img-wrap {
+        .contentvidya-scrollable-img-wrap {
           height: 160px;
         }
-        .chronos-scrollable-img {
+        .contentvidya-scrollable-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
         }
-        .chronos-scrollable-body {
-          padding: var(--chronos-spacing-sm);
+        .contentvidya-scrollable-body {
+          padding: var(--contentvidya-spacing-sm);
         }
-        .chronos-scrollable-card-title {
+        .contentvidya-scrollable-card-title {
           font-weight: 600;
-          color: var(--chronos-color-text-main);
+          color: var(--contentvidya-color-text-main);
           margin-bottom: 0.25rem;
         }
-        .chronos-scrollable-card-sub {
+        .contentvidya-scrollable-card-sub {
           font-size: 0.875rem;
-          color: var(--chronos-color-text-muted);
+          color: var(--contentvidya-color-text-muted);
         }
         
         /* Scroll Navigation Arrows styling */
-        .chronos-scrollable-wrapper {
+        .contentvidya-scrollable-wrapper {
           position: relative;
           width: 100%;
         }
-        .chronos-scrollable-arrow {
+        .contentvidya-scrollable-arrow {
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
@@ -85,47 +85,47 @@
           padding: 0;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
-        .chronos-scrollable-arrow:hover {
-          background: var(--chronos-color-primary, #8b5cf6);
+        .contentvidya-scrollable-arrow:hover {
+          background: var(--contentvidya-color-primary, #8b5cf6);
           border-color: transparent;
           color: #ffffff;
           transform: translateY(-50%) scale(1.1);
           box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3);
         }
-        .chronos-scrollable-arrow.prev {
+        .contentvidya-scrollable-arrow.prev {
           left: -20px;
         }
-        .chronos-scrollable-arrow.next {
+        .contentvidya-scrollable-arrow.next {
           right: -20px;
         }
-        .chronos-scrollable-arrow svg {
+        .contentvidya-scrollable-arrow svg {
           width: 22px;
           height: 22px;
         }
         
         @media (max-width: 768px) {
-          .chronos-scrollable-arrow {
+          .contentvidya-scrollable-arrow {
             width: 36px;
             height: 36px;
           }
-          .chronos-scrollable-arrow.prev {
+          .contentvidya-scrollable-arrow.prev {
             left: -10px;
           }
-          .chronos-scrollable-arrow.next {
+          .contentvidya-scrollable-arrow.next {
             right: -10px;
           }
         }
 
         /* Scrollbar Hiding & Card Shimmer Heights */
-        .chronos-scrollable-row.chronos-scrollable-hide-scrollbar {
+        .contentvidya-scrollable-row.contentvidya-scrollable-hide-scrollbar {
           scrollbar-width: none !important;
           -ms-overflow-style: none !important;
         }
-        .chronos-scrollable-row.chronos-scrollable-hide-scrollbar::-webkit-scrollbar {
+        .contentvidya-scrollable-row.contentvidya-scrollable-hide-scrollbar::-webkit-scrollbar {
           display: none !important;
         }
         
-        .chronos-scrollable-card.chronos-image-shimmer {
+        .contentvidya-scrollable-card.contentvidya-image-shimmer {
           min-height: 236px;
         }
 

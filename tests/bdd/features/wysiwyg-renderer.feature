@@ -1,5 +1,5 @@
 Feature: WysiwygRenderer
-  As a consumer of @chronos-ui/core
+  As a consumer of @contentvidya/ui
   I want the WysiwygRenderer web component to safely render rich HTML content
   So that CMS-authored content displays with scoped typography
 
@@ -15,5 +15,5 @@ Feature: WysiwygRenderer
 
   Scenario: Renders a social embed placeholder without throwing
     Given I mount the "wysiwyg-renderer" component as "WysiwygRenderer" with:
-      | html-content | <div class="chronos-social-embed" data-platform="youtube" data-url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"></div> |
+      | html-content | <div class="contentvidya-social-embed" data-platform="youtube" data-url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"></div> |
     Then it should render without any page errors

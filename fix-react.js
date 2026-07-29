@@ -33,7 +33,7 @@ if (fs.existsSync(srcDir)) {
   // demo both need a real, already-compiled file: esm.sh serves published npm
   // packages as-is and does not transpile TypeScript/JSX itself, so shipping
   // only raw .tsx meant "could not resolve build entry" for any deep import
-  // like '@chronos-ui/core/react/SlidingBanner'. Classic JSX mode is used
+  // like '@contentvidya/ui/react/SlidingBanner'. Classic JSX mode is used
   // (React.createElement calls) to match the existing `import * as React from
   // "react"` in every component instead of the automatic jsx-runtime.
   // Mitosis only builds src/components/**, so shared utils (e.g. lazyObserver,

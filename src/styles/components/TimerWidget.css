@@ -1,83 +1,83 @@
 /* Styles for TimerWidget */
 /* Styles for TimerWidget */
 /* TimerWidget Styles */
-.chronos-timer-widget {
+.contentvidya-timer-widget {
           position: relative;
-          background-color: var(--chronos-color-surface);
-          border: var(--chronos-border-width) solid var(--chronos-color-border);
-          border-radius: var(--chronos-border-radius-md);
-          font-family: var(--chronos-font-family);
-          color: var(--chronos-color-text-main);
+          background-color: var(--contentvidya-color-surface);
+          border: var(--contentvidya-border-width) solid var(--contentvidya-color-border);
+          border-radius: var(--contentvidya-border-radius-md);
+          font-family: var(--contentvidya-font-family);
+          color: var(--contentvidya-color-text-main);
           text-align: center;
-          box-shadow: var(--chronos-shadow-sm);
+          box-shadow: var(--contentvidya-shadow-sm);
           background-size: cover;
           overflow: hidden;
         }
-        .chronos-timer-widget.chronos-timer-has-bg {
+        .contentvidya-timer-widget.contentvidya-timer-has-bg {
           color: #fff;
         }
-        .chronos-timer-overlay {
+        .contentvidya-timer-overlay {
           position: absolute;
           inset: 0;
           z-index: 0;
         }
-        .chronos-timer-bg-effect {
+        .contentvidya-timer-bg-effect {
           z-index: 0;
         }
-        .chronos-timer-content {
+        .contentvidya-timer-content {
           position: relative;
           z-index: 1;
-          padding: var(--chronos-spacing-lg);
+          padding: var(--contentvidya-spacing-lg);
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
         }
-        .chronos-timer-expired {
+        .contentvidya-timer-expired {
           margin: 0;
-          font-size: var(--chronos-font-size-subtitle);
+          font-size: var(--contentvidya-font-size-subtitle);
           font-weight: 600;
         }
-        .chronos-timer-title {
+        .contentvidya-timer-title {
           margin-top: 0;
-          margin-bottom: var(--chronos-spacing-md);
-          font-size: var(--chronos-font-size-subtitle);
+          margin-bottom: var(--contentvidya-spacing-md);
+          font-size: var(--contentvidya-font-size-subtitle);
         }
-        .chronos-timer-blocks {
+        .contentvidya-timer-blocks {
           display: flex;
           justify-content: center;
-          gap: var(--chronos-spacing-md);
+          gap: var(--contentvidya-spacing-md);
         }
-        .chronos-timer-block {
+        .contentvidya-timer-block {
           display: flex;
           flex-direction: column;
           align-items: center;
-          background: var(--chronos-color-background);
-          padding: var(--chronos-spacing-sm);
-          border-radius: var(--chronos-border-radius-sm);
+          background: var(--contentvidya-color-background);
+          padding: var(--contentvidya-spacing-sm);
+          border-radius: var(--contentvidya-border-radius-sm);
           min-width: 60px;
-          border: var(--chronos-border-width) solid var(--chronos-color-border);
+          border: var(--contentvidya-border-width) solid var(--contentvidya-color-border);
         }
-        .chronos-timer-value {
+        .contentvidya-timer-value {
           font-size: 1.5rem;
           font-weight: 700;
-          color: var(--chronos-color-primary);
+          color: var(--contentvidya-color-primary);
         }
-        .chronos-timer-label {
+        .contentvidya-timer-label {
           font-size: 0.75rem;
           text-transform: uppercase;
-          color: var(--chronos-color-text-muted);
+          color: var(--contentvidya-color-text-muted);
           margin-top: 0.25rem;
         }
-        .chronos-timer-has-bg .chronos-timer-block {
+        .contentvidya-timer-has-bg .contentvidya-timer-block {
           background: rgba(15, 17, 21, 0.55);
           border-color: rgba(255, 255, 255, 0.25);
           backdrop-filter: blur(2px);
         }
-        .chronos-timer-has-bg .chronos-timer-value {
+        .contentvidya-timer-has-bg .contentvidya-timer-value {
           color: #fff;
         }
-        .chronos-timer-has-bg .chronos-timer-label {
+        .contentvidya-timer-has-bg .contentvidya-timer-label {
           color: rgba(255, 255, 255, 0.75);
         }
 
@@ -85,57 +85,57 @@
            photo background (backgroundImageUrl already forces the "has-bg"
            look above); the block/value/label accent styling always applies,
            even over a photo, so e.g. neon's glow still reads on top of one. */
-        .chronos-timer-variant-dark:not(.chronos-timer-has-bg) {
+        .contentvidya-timer-variant-dark:not(.contentvidya-timer-has-bg) {
           background-color: #0f172a;
           color: #fff;
           border-color: rgba(255, 255, 255, 0.12);
         }
-        .chronos-timer-variant-dark:not(.chronos-timer-has-bg) .chronos-timer-block {
+        .contentvidya-timer-variant-dark:not(.contentvidya-timer-has-bg) .contentvidya-timer-block {
           background: rgba(255, 255, 255, 0.06);
           border-color: rgba(255, 255, 255, 0.14);
         }
-        .chronos-timer-variant-dark:not(.chronos-timer-has-bg) .chronos-timer-value {
+        .contentvidya-timer-variant-dark:not(.contentvidya-timer-has-bg) .contentvidya-timer-value {
           color: #fff;
         }
-        .chronos-timer-variant-dark:not(.chronos-timer-has-bg) .chronos-timer-label {
+        .contentvidya-timer-variant-dark:not(.contentvidya-timer-has-bg) .contentvidya-timer-label {
           color: rgba(255, 255, 255, 0.6);
         }
 
-        .chronos-timer-variant-gray:not(.chronos-timer-has-bg) {
+        .contentvidya-timer-variant-gray:not(.contentvidya-timer-has-bg) {
           background-color: #64748b;
           color: #fff;
           border-color: rgba(255, 255, 255, 0.15);
         }
-        .chronos-timer-variant-gray:not(.chronos-timer-has-bg) .chronos-timer-block {
+        .contentvidya-timer-variant-gray:not(.contentvidya-timer-has-bg) .contentvidya-timer-block {
           background: rgba(255, 255, 255, 0.12);
           border-color: rgba(255, 255, 255, 0.2);
         }
-        .chronos-timer-variant-gray:not(.chronos-timer-has-bg) .chronos-timer-value {
+        .contentvidya-timer-variant-gray:not(.contentvidya-timer-has-bg) .contentvidya-timer-value {
           color: #fff;
         }
-        .chronos-timer-variant-gray:not(.chronos-timer-has-bg) .chronos-timer-label {
+        .contentvidya-timer-variant-gray:not(.contentvidya-timer-has-bg) .contentvidya-timer-label {
           color: rgba(255, 255, 255, 0.75);
         }
 
-        .chronos-timer-variant-neon:not(.chronos-timer-has-bg) {
+        .contentvidya-timer-variant-neon:not(.contentvidya-timer-has-bg) {
           background-color: #0a0a12;
           color: #fff;
           border-color: rgba(6, 240, 240, 0.4);
         }
-        .chronos-timer-variant-neon .chronos-timer-block {
+        .contentvidya-timer-variant-neon .contentvidya-timer-block {
           background: rgba(10, 10, 20, 0.55);
           border: 1px solid rgba(6, 240, 240, 0.6);
           box-shadow: 0 0 12px rgba(6, 240, 240, 0.5), inset 0 0 8px rgba(255, 0, 200, 0.15);
         }
-        .chronos-timer-variant-neon .chronos-timer-value {
+        .contentvidya-timer-variant-neon .contentvidya-timer-value {
           color: #0ff0f0;
           text-shadow: 0 0 8px rgba(6, 240, 240, 0.9), 0 0 16px rgba(6, 240, 240, 0.5);
         }
-        .chronos-timer-variant-neon .chronos-timer-label {
+        .contentvidya-timer-variant-neon .contentvidya-timer-label {
           color: rgba(255, 0, 200, 0.85);
           text-shadow: 0 0 6px rgba(255, 0, 200, 0.6);
         }
-        .chronos-timer-variant-neon .chronos-timer-title {
+        .contentvidya-timer-variant-neon .contentvidya-timer-title {
           color: #0ff0f0;
           text-shadow: 0 0 10px rgba(6, 240, 240, 0.7);
         }

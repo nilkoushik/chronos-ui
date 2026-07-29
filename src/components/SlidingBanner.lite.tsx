@@ -228,7 +228,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
   return (
     <div
       ref={rootRef}
-      class={`chronos-sliding-banner ${state.showSkeleton ? 'chronos-image-shimmer' : ''} ${props.className || ''} effect-${state.animationClass} bg-effect-${state.backgroundClass} quality-${state.qualityClass}`}
+      class={`contentvidya-sliding-banner ${state.showSkeleton ? 'contentvidya-image-shimmer' : ''} ${props.className || ''} effect-${state.animationClass} bg-effect-${state.backgroundClass} quality-${state.qualityClass}`}
       onMouseEnter={() => state.stopAutoPlay()}
       onMouseLeave={() => state.startAutoPlay()}
       role="region"
@@ -240,7 +240,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       {state.backgroundClass !== 'none' && (
         <canvas
           ref={canvasRef}
-          class="chronos-sliding-banner-canvas"
+          class="contentvidya-sliding-banner-canvas"
         ></canvas>
       )}
       
@@ -253,7 +253,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       </Show>
 
       <div
-        class={`chronos-sliding-banner-track dir-${state.direction} ${state.wrapping ? 'no-transition' : ''}`}
+        class={`contentvidya-sliding-banner-track dir-${state.direction} ${state.wrapping ? 'no-transition' : ''}`}
         style={{ 
           transform: `translateX(-${state.currentIndex * 100}%)`,
           position: props.config?.height === 'auto' ? 'absolute' : 'relative',
@@ -265,7 +265,7 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       >
         {props.items?.map((item, index) => (
           <div 
-            class={`chronos-sliding-slide ${index === state.currentIndex ? 'active' : ''} ${index === state.previousIndex && index !== state.currentIndex ? 'previous' : ''}`} 
+            class={`contentvidya-sliding-slide ${index === state.currentIndex ? 'active' : ''} ${index === state.previousIndex && index !== state.currentIndex ? 'previous' : ''}`} 
             key={item.id || index}
           >
             <Show when={state.shouldMount && item.media?.type === 'video'}>
@@ -275,13 +275,13 @@ export default function SlidingBanner(props: SlidingBannerProps) {
                 loop 
                 muted 
                 playsInline 
-                class={`chronos-sliding-bg-video ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
+                class={`contentvidya-sliding-bg-video ${state.showSkeleton ? 'contentvidya-image-shimmer' : ''}`}
                 style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </Show>
             <Show when={state.shouldMount && item.media?.type !== 'video'}>
               <div 
-                class={`chronos-sliding-bg ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
+                class={`contentvidya-sliding-bg ${state.showSkeleton ? 'contentvidya-image-shimmer' : ''}`}
                 style={{ 
                   backgroundImage: item.media?.url ? `url(${item.media.url})` : 'none',
                   backgroundPosition: props.config?.bgPosition || 'center'
@@ -290,14 +290,14 @@ export default function SlidingBanner(props: SlidingBannerProps) {
             </Show>
             <Show when={state.animationClass === 'curtain' && item.media?.type !== 'video'}>
               <div
-                class="chronos-curtain-panel chronos-curtain-panel-left"
+                class="contentvidya-curtain-panel contentvidya-curtain-panel-left"
                 style={{
                   backgroundImage: item.media?.url ? `url(${item.media.url})` : 'none',
                   backgroundPosition: props.config?.bgPosition || 'center'
                 }}
               ></div>
               <div
-                class="chronos-curtain-panel chronos-curtain-panel-right"
+                class="contentvidya-curtain-panel contentvidya-curtain-panel-right"
                 style={{
                   backgroundImage: item.media?.url ? `url(${item.media.url})` : 'none',
                   backgroundPosition: props.config?.bgPosition || 'center'
@@ -305,11 +305,11 @@ export default function SlidingBanner(props: SlidingBannerProps) {
               ></div>
             </Show>
             <Show when={state.animationClass === 'cube'}>
-              <div class="chronos-cube-side"></div>
+              <div class="contentvidya-cube-side"></div>
             </Show>
-            <div class="chronos-sliding-overlay"></div>
+            <div class="contentvidya-sliding-overlay"></div>
             <div
-              class="chronos-sliding-content"
+              class="contentvidya-sliding-content"
               style={{
                 textAlign: item.textAlignment || props.config?.align || 'center',
                 display: 'flex',
@@ -318,16 +318,16 @@ export default function SlidingBanner(props: SlidingBannerProps) {
               }}
             >
               <Show when={state.showSkeleton}>
-                <div class="chronos-skeleton-title chronos-image-shimmer" style={{ width: '50%', height: '32px', marginBottom: '16px' }} />
-                <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '70%', height: '16px', marginBottom: '10px' }} />
-                <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '40%', height: '16px', marginBottom: '24px' }} />
-                <div class="chronos-skeleton-button chronos-image-shimmer" style={{ width: '130px', height: '40px' }} />
+                <div class="contentvidya-skeleton-title contentvidya-image-shimmer" style={{ width: '50%', height: '32px', marginBottom: '16px' }} />
+                <div class="contentvidya-skeleton-text contentvidya-image-shimmer" style={{ width: '70%', height: '16px', marginBottom: '10px' }} />
+                <div class="contentvidya-skeleton-text contentvidya-image-shimmer" style={{ width: '40%', height: '16px', marginBottom: '24px' }} />
+                <div class="contentvidya-skeleton-button contentvidya-image-shimmer" style={{ width: '130px', height: '40px' }} />
               </Show>
               <Show when={!state.showSkeleton}>
-                <h2 class="chronos-sliding-title">{item.title}</h2>
-                {item.subtitle && <p class="chronos-sliding-subtitle">{item.subtitle}</p>}
+                <h2 class="contentvidya-sliding-title">{item.title}</h2>
+                {item.subtitle && <p class="contentvidya-sliding-subtitle">{item.subtitle}</p>}
                 {item.ctaText && (
-                  <a href={item.mapLinks?.[0]?.url || '#'} class="chronos-sliding-cta">
+                  <a href={item.mapLinks?.[0]?.url || '#'} class="contentvidya-sliding-cta">
                     {item.ctaText}
                   </a>
                 )}
@@ -340,22 +340,22 @@ export default function SlidingBanner(props: SlidingBannerProps) {
       {((props.config?.showArrows || props.config?.showNextPrev) && 
         (!props.config?.hideArrowsIfNoScroll || (props.items && props.items.length > 1))) && (
         <>
-          <button type="button" class="chronos-sliding-arrow prev" aria-label="Previous" onClick={() => state.prev()}>
+          <button type="button" class="contentvidya-sliding-arrow prev" aria-label="Previous" onClick={() => state.prev()}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
           </button>
-          <button type="button" class="chronos-sliding-arrow next" aria-label="Next" onClick={() => state.next()}>
+          <button type="button" class="contentvidya-sliding-arrow next" aria-label="Next" onClick={() => state.next()}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
           </button>
         </>
       )}
 
       {props.config?.showDots && (
-        <div class="chronos-sliding-dots">
+        <div class="contentvidya-sliding-dots">
           {props.items?.map((_, index) => (
             <button
               type="button"
               key={index}
-              class={`chronos-sliding-dot ${index === state.currentIndex ? 'active' : ''}`}
+              class={`contentvidya-sliding-dot ${index === state.currentIndex ? 'active' : ''}`}
               aria-label={`Go to slide ${index + 1}`}
               onClick={() => state.goTo(index)}
             ></button>

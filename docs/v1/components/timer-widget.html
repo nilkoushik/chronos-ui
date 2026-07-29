@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Timer Widget — Chronos UI</title>
+  <title>Timer Widget — ContentVidya UI</title>
   <meta name="description" content="Live countdown timer updating every second, with days/hours/minutes/seconds to any target date. Style it with neon/dark/gray variants, or drop in a background image with an adjustable overlay scrim for a photo-backed hero look." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="../css/docs.css" />
@@ -17,7 +17,7 @@
     <aside class="docs-sidebar">
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
-        <span class="sidebar-brand-name">Chronos<span>UI</span></span>
+        <span class="sidebar-brand-name">ContentVidya<span>UI</span></span>
         <span class="sidebar-version">v1.4.2</span>
       </a>
       <div class="sidebar-version-picker" style="padding: 0.5rem 1.25rem; border-bottom: 1px solid var(--border);">
@@ -40,8 +40,8 @@
       <a href="wysiwyg-renderer.html" class="sidebar-link"><span class="sidebar-link-icon">✍</span> WYSIWYG Renderer</a>
       <a href="rich-text-editor.html" class="sidebar-link"><span class="sidebar-link-icon">📝</span> Rich Text Editor</a>
         <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
-        <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
-        <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+        <a href="https://github.com/nilkoushik/contentvidya-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
+        <a href="https://www.npmjs.com/package/@contentvidya/ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
         <a href="../dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
         <a href="../allure-report/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">✅</span> Test Report</a>
       </nav>
@@ -51,11 +51,11 @@
     <div class="docs-topbar">
       <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
       <div class="topbar-breadcrumb">
-        <a href="../index.html">Chronos UI</a><span class="sep">/</span>
+        <a href="../index.html">ContentVidya UI</a><span class="sep">/</span>
         <span class="current">Timer Widget</span>
       </div>
       <div class="topbar-actions">
-        <a href="https://github.com/nilkoushik/chronos-ui/blob/main/src/components/TimerWidget.lite.tsx"
+        <a href="https://github.com/nilkoushik/contentvidya-ui/blob/main/src/components/TimerWidget.lite.tsx"
            target="_blank" rel="noopener" class="btn-github">View Source</a>
       </div>
     </div>
@@ -70,7 +70,7 @@
 
       <!-- Install -->
       <div class="install-banner">
-        <code>npm install @chronos-ui/core</code>
+        <code>npm install @contentvidya/ui</code>
         <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
       </div>
 
@@ -261,9 +261,9 @@
           
     <div class="code-block">
       <button class="copy-btn">Copy</button>
-      <pre><code><span class="kw">import</span> TimerWidget <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/TimerWidget'</span>;
-<span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
-<span class="cm">// <span class="kw">import</span> { defaultBackgroundEffectPlugin } <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/utils/backgroundEffects'</span>;</span>
+      <pre><code><span class="kw">import</span> TimerWidget <span class="kw">from</span> <span class="str">'@contentvidya/ui/react/TimerWidget'</span>;
+<span class="kw">import</span> <span class="str">'@contentvidya/ui/theme.css'</span>;
+<span class="cm">// <span class="kw">import</span> { defaultBackgroundEffectPlugin } <span class="kw">from</span> <span class="str">'@contentvidya/ui/react/utils/backgroundEffects'</span>;</span>
 <span class="cm">// Optionally override the canvas animation engine per-instance:</span>
 <span class="cm">// backgroundEffectPlugin={{ start: myStart, stop: myStop }}</span>
 
@@ -285,8 +285,8 @@
     <div class="code-block">
       <button class="copy-btn">Copy</button>
       <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
-  <span class="kw">import</span> TimerWidget <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/TimerWidget.svelte'</span>;
-  <span class="cm">// <span class="kw">import</span> { defaultBackgroundEffectPlugin } <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/utils/backgroundEffects'</span>;</span>
+  <span class="kw">import</span> TimerWidget <span class="kw">from</span> <span class="str">'@contentvidya/ui/svelte/TimerWidget.svelte'</span>;
+  <span class="cm">// <span class="kw">import</span> { defaultBackgroundEffectPlugin } <span class="kw">from</span> <span class="str">'@contentvidya/ui/svelte/utils/backgroundEffects'</span>;</span>
   <span class="cm">// Optionally override the canvas animation engine per-instance:</span>
   <span class="cm">// backgroundEffectPlugin={{ start: myStart, stop: myStop }}</span>
 &lt;/<span class="tag">script</span>&gt;
@@ -307,7 +307,7 @@
     <div class="code-block">
       <button class="copy-btn">Copy</button>
       <pre><code>&lt;<span class="tag">script</span> type=<span class="str">"module"</span>
-  src=<span class="str">"node_modules/@chronos-ui/core/webcomponents/TimerWidget.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+  src=<span class="str">"node_modules/@contentvidya/ui/webcomponents/TimerWidget.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
 
 &lt;!-- backgroundEffectPlugin ({ start, stop } functions) can<span class="str">'t be passed as an
      HTML attribute string — set it as a JS property instead:
@@ -595,8 +595,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const pascalName = "TimerWidget";
     const wcTagName = "timer-widget";
 
-    const reactCode = `import ${pascalName} from '@chronos-ui/core/react/${pascalName}';
-import '@chronos-ui/core/theme.css';
+    const reactCode = `import ${pascalName} from '@contentvidya/ui/react/${pascalName}';
+import '@contentvidya/ui/theme.css';
 
 <${pascalName}
   ${reactProps.join('\n  ')}
@@ -612,7 +612,7 @@ import '@chronos-ui/core/theme.css';
     });
 
     const svelteCode = `<script lang="ts">
-  import ${pascalName} from '@chronos-ui/core/svelte/${pascalName}.svelte';
+  import ${pascalName} from '@contentvidya/ui/svelte/${pascalName}.svelte';
 <\/script>
 
 <${pascalName}
@@ -627,7 +627,7 @@ import '@chronos-ui/core/theme.css';
       return `${a.name}="${a.value.replace(/"/g, '\\"')}"`;
     });
 
-    const wcCode = `<` + `script type="module" src="node_modules/@chronos-ui/core/webcomponents/${pascalName}.js"></` + `script>
+    const wcCode = `<` + `script type="module" src="node_modules/@contentvidya/ui/webcomponents/${pascalName}.js"></` + `script>
 
 <${wcTagName}
   ${wcAttrs.join('\n  ')}

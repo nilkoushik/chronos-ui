@@ -1,5 +1,5 @@
 /* ============================================================
-   Chronos UI Docs — JavaScript
+   ContentVidya UI Docs — JavaScript
    Tab switching, copy-to-clipboard, sidebar, live demos
    ============================================================ */
 
@@ -226,7 +226,7 @@ function generateLiveDemoCode() {
   // for its own placeholder images. Those don't resolve on a different origin
   // (jsfiddle.net, codesandbox.io), so rewrite them to absolute URLs against
   // the published docs site.
-  const rawCode = codeEl.innerText.replace(/(["'])(\.\.\/)?assets\//g, '$1https://nilkoushik.github.io/chronos-ui/assets/');
+  const rawCode = codeEl.innerText.replace(/(["'])(\.\.\/)?assets\//g, '$1https://nilkoushik.github.io/contentvidya-ui/assets/');
 
   // `theme.css` only carries shared CSS variables/resets — each component's
   // actual layout/visual styles live in their own `src/styles/components/*.css`
@@ -235,10 +235,10 @@ function generateLiveDemoCode() {
   // rendered structurally correct but completely unstyled. Pull the PascalCase
   // component name straight out of its import path so we can link its
   // matching stylesheet too, for whichever framework tab is active.
-  const componentNameMatch = rawCode.match(/@chronos-ui\/core\/(?:react|webcomponents?)\/([A-Za-z0-9]+)/);
+  const componentNameMatch = rawCode.match(/@contentvidya/ui\/core\/(?:react|webcomponents?)\/([A-Za-z0-9]+)/);
   const componentName = componentNameMatch ? componentNameMatch[1] : null;
   const componentCssLink = componentName
-    ? `<link rel="stylesheet" href="https://unpkg.com/@chronos-ui/core@latest/src/styles/components/${componentName}.css">\n`
+    ? `<link rel="stylesheet" href="https://unpkg.com/@contentvidya/ui@latest/src/styles/components/${componentName}.css">\n`
     : '';
 
   if (framework === 'react') {
@@ -247,7 +247,7 @@ function generateLiveDemoCode() {
     // whose package.json#exports has no './react/*' wildcard, so esm.sh rejects
     // deep subpath imports like '/react/AlternatingSlider'. 'latest' has the
     // correct wildcard exports and matches this repo's current published version.
-    // A plain `import '@chronos-ui/core/theme.css'` is a *value-less* side-effect
+    // A plain `import '@contentvidya/ui/theme.css'` is a *value-less* side-effect
     // import, which the browser fetches expecting a JS/Wasm module. esm.sh (and
     // any static host) serves that file with Content-Type: text/css, and browsers
     // enforce strict MIME checking for module scripts — that single line throws
@@ -268,9 +268,9 @@ function generateLiveDemoCode() {
     // only ever one React instance in the whole page.
     const REACT_VERSION = '18.3.1';
     jsCode = rawCode
-      .replace(/import\s+['"]@chronos-ui\/core\/theme\.css['"];?\n?/g, '')
-      .replace(/from\s+['"]@chronos-ui\/core\/(.*?)['"]/g, `from 'https://esm.sh/@chronos-ui/core@latest/$1?deps=react@${REACT_VERSION},react-dom@${REACT_VERSION}'`)
-      .replace(/import\s+['"]@chronos-ui\/core\/(.*?)['"]/g, `import 'https://esm.sh/@chronos-ui/core@latest/$1?deps=react@${REACT_VERSION},react-dom@${REACT_VERSION}'`);
+      .replace(/import\s+['"]@contentvidya/ui\/core\/theme\.css['"];?\n?/g, '')
+      .replace(/from\s+['"]@contentvidya/ui\/core\/(.*?)['"]/g, `from 'https://esm.sh/@contentvidya/ui@latest/$1?deps=react@${REACT_VERSION},react-dom@${REACT_VERSION}'`)
+      .replace(/import\s+['"]@contentvidya/ui\/core\/(.*?)['"]/g, `import 'https://esm.sh/@contentvidya/ui@latest/$1?deps=react@${REACT_VERSION},react-dom@${REACT_VERSION}'`);
 
     const jsxMatch = jsCode.match(/<([A-Z][a-zA-Z0-9]*)\b[^>]*(\/>|<\/[A-Z][a-zA-Z0-9]*>)/);
     const jsxComponent = jsxMatch ? jsxMatch[0] : '';
@@ -278,7 +278,7 @@ function generateLiveDemoCode() {
     htmlCode = `<div id="root"></div>
 
 <!-- Load Theme (loaded as a stylesheet, not a JS import — see comment in docs.js) -->
-<link rel="stylesheet" href="https://unpkg.com/@chronos-ui/core@latest/src/styles/theme.css">
+<link rel="stylesheet" href="https://unpkg.com/@contentvidya/ui@latest/src/styles/theme.css">
 ${componentCssLink}
 <!-- Use Babel Standalone to compile JSX natively while preserving ES Modules -->
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -298,10 +298,10 @@ root.render(${jsxComponent || '<div />'});
   } else {
     // Web Component
     htmlCode = `<!-- Load Theme -->
-<link rel="stylesheet" href="https://unpkg.com/@chronos-ui/core@latest/src/styles/theme.css">
+<link rel="stylesheet" href="https://unpkg.com/@contentvidya/ui@latest/src/styles/theme.css">
 ${componentCssLink}
 <!-- Load Web Component -->
-<script type="module" src="https://unpkg.com/@chronos-ui/core@latest/dist/webcomponent/dist/index.js"></script>
+<script type="module" src="https://unpkg.com/@contentvidya/ui@latest/dist/webcomponent/dist/index.js"></script>
 
 ${rawCode.replace(/<link rel="stylesheet" href="node_modules[^>]*>\n?/, '').replace(/<script type="module"[\s\S]*?<\/script>\n*/, '')}`; // strip local script and css tags
   }
@@ -390,7 +390,7 @@ function initCodesandbox() {
               content: { template: 'static' }
             },
             'package.json': {
-              content: { name: 'chronos-ui-demo', version: '1.0.0', main: 'index.html' }
+              content: { name: 'contentvidya-ui-demo', version: '1.0.0', main: 'index.html' }
             },
             'index.html': { content: htmlCode }
           }

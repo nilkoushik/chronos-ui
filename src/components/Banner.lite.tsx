@@ -101,10 +101,10 @@ export default function Banner(props: BannerProps) {
     },
     get paddingValue() {
       const p = props.config?.padding || props.padding;
-      if (p === 'sm') return 'var(--chronos-spacing-sm)';
-      if (p === 'md') return 'var(--chronos-spacing-md)';
-      if (p === 'lg') return 'var(--chronos-spacing-lg)';
-      if (p === 'xl') return 'var(--chronos-spacing-xl)';
+      if (p === 'sm') return 'var(--contentvidya-spacing-sm)';
+      if (p === 'md') return 'var(--contentvidya-spacing-md)';
+      if (p === 'lg') return 'var(--contentvidya-spacing-lg)';
+      if (p === 'xl') return 'var(--contentvidya-spacing-xl)';
       return p || '';
     },
     get backgroundPosition() {
@@ -198,7 +198,7 @@ export default function Banner(props: BannerProps) {
   return (
     <div
       ref={rootRef}
-      class={`chronos-banner ${state.showSkeleton ? 'chronos-image-shimmer' : ''} ${props.className || ''}`}
+      class={`contentvidya-banner ${state.showSkeleton ? 'contentvidya-image-shimmer' : ''} ${props.className || ''}`}
       style={{
         backgroundImage: state.shouldMount && !props.isLoading && !state.hasVideo && state.imageUrl && props.config?.height !== 'auto' ? `url(${state.imageUrl})` : 'none',
         textAlign: state.alignment,
@@ -228,17 +228,17 @@ export default function Banner(props: BannerProps) {
       <Show when={!!props.config?.backgroundEffect && props.config.backgroundEffect !== 'none'}>
         <canvas
           ref={canvasRef}
-          class="chronos-banner-bg-effect"
+          class="contentvidya-banner-bg-effect"
           aria-hidden="true"
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }}
         />
       </Show>
 
       <Show when={state.shouldMount && !!props.hotspots?.length}>
-        <div class="chronos-banner-hotspots" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2 }}>
+        <div class="contentvidya-banner-hotspots" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2 }}>
           {/* Visual layer: a true SVG image map with native anti-aliasing (no jagged clip-path edges); the pulse ring uses the same geometry for every shape, including polygons. */}
           <svg
-            class="chronos-banner-hotspots-svg"
+            class="contentvidya-banner-hotspots-svg"
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
             aria-hidden="true"
@@ -246,7 +246,7 @@ export default function Banner(props: BannerProps) {
           >
             {props.hotspots?.map((h) => (
               <g key={`${h.id}-visual`}>
-              <g class={`chronos-hotspot-visual chronos-hotspot-visual-${h.shape}`}>
+              <g class={`contentvidya-hotspot-visual contentvidya-hotspot-visual-${h.shape}`}>
                 <Show when={h.shape === 'rect'}>
                   <rect x={h.coords.x} y={h.coords.y} width={h.coords.width} height={h.coords.height} vector-effect="non-scaling-stroke" />
                 </Show>
@@ -264,13 +264,13 @@ export default function Banner(props: BannerProps) {
                 </Show>
                 {h.pulse && (
                   <Show when={h.shape === 'rect'}>
-                    <rect class="chronos-hotspot-pulse-ring" x={h.coords.x} y={h.coords.y} width={h.coords.width} height={h.coords.height} vector-effect="non-scaling-stroke" />
+                    <rect class="contentvidya-hotspot-pulse-ring" x={h.coords.x} y={h.coords.y} width={h.coords.width} height={h.coords.height} vector-effect="non-scaling-stroke" />
                   </Show>
                 )}
                 {h.pulse && (
                   <Show when={h.shape === 'oval'}>
                     <ellipse
-                      class="chronos-hotspot-pulse-ring"
+                      class="contentvidya-hotspot-pulse-ring"
                       cx={h.coords.x + h.coords.width / 2}
                       cy={h.coords.y + h.coords.height / 2}
                       rx={h.coords.width / 2}
@@ -281,7 +281,7 @@ export default function Banner(props: BannerProps) {
                 )}
                 {h.pulse && (
                   <Show when={h.shape === 'polygon'}>
-                    <polygon class="chronos-hotspot-pulse-ring" points={state.hotspotPolygonPoints(h)} vector-effect="non-scaling-stroke" />
+                    <polygon class="contentvidya-hotspot-pulse-ring" points={state.hotspotPolygonPoints(h)} vector-effect="non-scaling-stroke" />
                   </Show>
                 )}
               </g>
@@ -292,15 +292,15 @@ export default function Banner(props: BannerProps) {
           {/* Interactive layer: real HTML <a> elements, kept separate from the SVG visuals so each link can have a guaranteed minimum touch target (2.5.8), a visible focus outline (2.4.7), and a hoverable/focusable tooltip (1.4.13). */}
           {props.hotspots?.map((h) => (
             <div key={h.id}>
-              <div class="chronos-hotspot-hit" style={state.hotspotHitStyle(h)}>
+              <div class="contentvidya-hotspot-hit" style={state.hotspotHitStyle(h)}>
                 <a
                   href={state.hotspotHref(h)}
                   aria-label={state.hotspotLabel(h)}
-                  aria-describedby={h.showTooltip ? `chronos-hotspot-tip-${h.id}` : undefined}
-                  class={`chronos-hotspot chronos-hotspot-${h.shape}`}
+                  aria-describedby={h.showTooltip ? `contentvidya-hotspot-tip-${h.id}` : undefined}
+                  class={`contentvidya-hotspot contentvidya-hotspot-${h.shape}`}
                 >
                   <Show when={!!h.showTooltip}>
-                    <span id={`chronos-hotspot-tip-${h.id}`} role="tooltip" class="chronos-hotspot-tooltip">
+                    <span id={`contentvidya-hotspot-tip-${h.id}`} role="tooltip" class="contentvidya-hotspot-tooltip">
                       {h.label || h.altText}
                     </span>
                   </Show>
@@ -312,7 +312,7 @@ export default function Banner(props: BannerProps) {
       </Show>
 
       <div
-        class="chronos-banner-overlay"
+        class="contentvidya-banner-overlay"
         style={{
           zIndex: 1,
           position: props.config?.height === 'auto' ? 'absolute' : 'relative',
@@ -321,11 +321,11 @@ export default function Banner(props: BannerProps) {
           width: '100%',
           height: '100%',
           background: state.gradientOverlay || 'rgba(0, 0, 0, 0.4)',
-          padding: state.paddingValue || 'var(--chronos-spacing-xl)'
+          padding: state.paddingValue || 'var(--contentvidya-spacing-xl)'
         }}
       >
         <div
-          class="chronos-banner-content"
+          class="contentvidya-banner-content"
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -333,16 +333,16 @@ export default function Banner(props: BannerProps) {
           }}
         >
           <Show when={state.showSkeleton}>
-            <div class="chronos-skeleton-title chronos-image-shimmer" style={{ width: '60%', height: '36px', marginBottom: '16px' }} />
-            <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '80%', height: '18px', marginBottom: '10px' }} />
-            <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '50%', height: '18px', marginBottom: '24px' }} />
-            <div class="chronos-skeleton-button chronos-image-shimmer" style={{ width: '140px', height: '42px' }} />
+            <div class="contentvidya-skeleton-title contentvidya-image-shimmer" style={{ width: '60%', height: '36px', marginBottom: '16px' }} />
+            <div class="contentvidya-skeleton-text contentvidya-image-shimmer" style={{ width: '80%', height: '18px', marginBottom: '10px' }} />
+            <div class="contentvidya-skeleton-text contentvidya-image-shimmer" style={{ width: '50%', height: '18px', marginBottom: '24px' }} />
+            <div class="contentvidya-skeleton-button contentvidya-image-shimmer" style={{ width: '140px', height: '42px' }} />
           </Show>
           <Show when={!state.showSkeleton}>
-            {props.title && <h2 class="chronos-banner-title">{props.title}</h2>}
-            {props.subtitle && <p class="chronos-banner-subtitle">{props.subtitle}</p>}
+            {props.title && <h2 class="contentvidya-banner-title">{props.title}</h2>}
+            {props.subtitle && <p class="contentvidya-banner-subtitle">{props.subtitle}</p>}
             {props.ctaText && (
-              <a href={state.linkUrl} class="chronos-banner-cta">
+              <a href={state.linkUrl} class="contentvidya-banner-cta">
                 {props.ctaText}
               </a>
             )}

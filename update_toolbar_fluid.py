@@ -176,7 +176,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     confirmWidget() {
       state.showWidgetModal = false;
       state.restoreSelection();
-      let html = `<div class="chronos-widget" data-widget="${state.selectedWidget}" style="padding: 20px; border: 2px dashed #8b5cf6; background: rgba(139,92,246,0.1); text-align: center; border-radius: 8px; margin: 10px 0;">[Widget: ${state.selectedWidget}]</div><p><br></p>`;
+      let html = `<div class="contentvidya-widget" data-widget="${state.selectedWidget}" style="padding: 20px; border: 2px dashed #8b5cf6; background: rgba(139,92,246,0.1); text-align: center; border-radius: 8px; margin: 10px 0;">[Widget: ${state.selectedWidget}]</div><p><br></p>`;
       document.execCommand('insertHTML', false, html);
       state.syncContent();
     },
@@ -235,7 +235,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 
   return (
     <div 
-      class={`chronos-rich-text-editor flex flex-col rounded-xl overflow-hidden relative shadow-lg ${state.isFullscreen ? 'fixed inset-0 z-[9999]' : 'border border-[var(--border)]'}`}
+      class={`contentvidya-rich-text-editor flex flex-col rounded-xl overflow-hidden relative shadow-lg ${state.isFullscreen ? 'fixed inset-0 z-[9999]' : 'border border-[var(--border)]'}`}
       style={{
         boxSizing: 'border-box'
       }}
@@ -454,5 +454,5 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 }
 """
 
-with codecs.open(r"c:\projects\cms\chronos-ui\src\components\RichTextEditor.lite.tsx", "w", "utf-8") as f:
+with codecs.open(r"c:\projects\cms\contentvidya-ui\src\components\RichTextEditor.lite.tsx", "w", "utf-8") as f:
     f.write(content)

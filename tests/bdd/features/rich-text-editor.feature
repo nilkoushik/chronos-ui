@@ -1,5 +1,5 @@
 Feature: RichTextEditor
-  As a consumer of @chronos-ui/core
+  As a consumer of @contentvidya/ui
   I want the RichTextEditor web component to render its toolbar and editable content
   So that content authors can format text, insert media, and see it reflected immediately
 

@@ -54,36 +54,36 @@ export default function MediaGrid(props: MediaGridProps) {
   });
 
   return (
-    <div ref={rootRef} class={`chronos-media-grid ${props.className || ''}`}>
+    <div ref={rootRef} class={`contentvidya-media-grid ${props.className || ''}`}>
       <Show when={state.showSkeleton}>
-        <div class="chronos-media-primary chronos-image-shimmer" />
-        <div class="chronos-media-secondary-col">
-          <div class="chronos-media-secondary-item chronos-image-shimmer" />
-          <div class="chronos-media-secondary-item chronos-image-shimmer" />
+        <div class="contentvidya-media-primary contentvidya-image-shimmer" />
+        <div class="contentvidya-media-secondary-col">
+          <div class="contentvidya-media-secondary-item contentvidya-image-shimmer" />
+          <div class="contentvidya-media-secondary-item contentvidya-image-shimmer" />
         </div>
       </Show>
 
       <Show when={!state.showSkeleton}>
         {props.primaryMedia && (
-          <a href={props.primaryMedia.mapLinks?.[0]?.url || '#'} class="chronos-media-primary">
+          <a href={props.primaryMedia.mapLinks?.[0]?.url || '#'} class="contentvidya-media-primary">
             <Show when={props.primaryMedia.media?.type === 'video'}>
-              <video src={props.primaryMedia.media?.url} autoPlay loop muted playsInline class="chronos-media-asset" />
+              <video src={props.primaryMedia.media?.url} autoPlay loop muted playsInline class="contentvidya-media-asset" />
             </Show>
             <Show when={props.primaryMedia.media?.type !== 'video'}>
-              <img src={props.primaryMedia.media?.url} alt={props.primaryMedia.altText || props.primaryMedia.title || ''} class="chronos-media-asset" />
+              <img src={props.primaryMedia.media?.url} alt={props.primaryMedia.altText || props.primaryMedia.title || ''} class="contentvidya-media-asset" />
             </Show>
           </a>
         )}
 
         {props.secondaryMedia && props.secondaryMedia.length > 0 && (
-          <div class="chronos-media-secondary-col">
+          <div class="contentvidya-media-secondary-col">
             {props.secondaryMedia.map((item) => (
-              <a href={item.mapLinks?.[0]?.url || '#'} class="chronos-media-secondary-item" key={item.id}>
+              <a href={item.mapLinks?.[0]?.url || '#'} class="contentvidya-media-secondary-item" key={item.id}>
                 <Show when={item.media?.type === 'video'}>
-                  <video src={item.media?.url} autoPlay loop muted playsInline class="chronos-media-asset" />
+                  <video src={item.media?.url} autoPlay loop muted playsInline class="contentvidya-media-asset" />
                 </Show>
                 <Show when={item.media?.type !== 'video'}>
-                  <img src={item.media?.url} alt={item.altText || item.title || ''} class="chronos-media-asset" />
+                  <img src={item.media?.url} alt={item.altText || item.title || ''} class="contentvidya-media-asset" />
                 </Show>
               </a>
             ))}

@@ -28,7 +28,7 @@ export default function WysiwygRenderer(props: WysiwygRendererProps) {
         if (!containerRef) return;
         
         // Process Social Embeds
-        const socialEmbeds = containerRef.querySelectorAll('.chronos-social-embed');
+        const socialEmbeds = containerRef.querySelectorAll('.contentvidya-social-embed');
         socialEmbeds.forEach((el) => {
           const platform = el.getAttribute('data-platform');
           const url = el.getAttribute('data-url');
@@ -89,7 +89,7 @@ export default function WysiwygRenderer(props: WysiwygRendererProps) {
         });
 
         // Process Widgets
-        const widgetPlaceholders = containerRef.querySelectorAll('.chronos-widget-placeholder');
+        const widgetPlaceholders = containerRef.querySelectorAll('.contentvidya-widget-placeholder');
         widgetPlaceholders.forEach((el) => {
           const widgetType = el.getAttribute('data-widget');
           if (!widgetType) return;
@@ -99,7 +99,7 @@ export default function WysiwygRenderer(props: WysiwygRendererProps) {
           el.setAttribute('style', 'margin: 24px 0;');
           
           // Render Web Component
-          const tagName = `chronos-${widgetType}`;
+          const tagName = `contentvidya-${widgetType}`;
           const wc = document.createElement(tagName);
           
           // Apply provided widgetData if available
@@ -149,7 +149,7 @@ export default function WysiwygRenderer(props: WysiwygRendererProps) {
   return (
     <div
       ref={containerRef}
-      class={`chronos-wysiwyg-content ${!state.shouldMount ? 'chronos-image-shimmer' : ''} ${props.className || ''}`}
+      class={`contentvidya-wysiwyg-content ${!state.shouldMount ? 'contentvidya-image-shimmer' : ''} ${props.className || ''}`}
       style={{ minHeight: !state.shouldMount ? '120px' : '' }}
       innerHTML={state.renderedHtml}
     >

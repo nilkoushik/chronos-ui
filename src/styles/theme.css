@@ -1,54 +1,54 @@
 /* src/styles/theme.css */
 :root {
   /* Colors */
-  --chronos-color-primary: #7c3aed;
-  --chronos-color-secondary: #ec4899;
-  --chronos-color-background: #ffffff;
-  --chronos-color-surface: #f8fafc;
-  --chronos-color-text-main: #0f172a;
-  --chronos-color-text-muted: #64748b;
-  --chronos-color-border: #e2e8f0;
+  --contentvidya-color-primary: #7c3aed;
+  --contentvidya-color-secondary: #ec4899;
+  --contentvidya-color-background: #ffffff;
+  --contentvidya-color-surface: #f8fafc;
+  --contentvidya-color-text-main: #0f172a;
+  --contentvidya-color-text-muted: #64748b;
+  --contentvidya-color-border: #e2e8f0;
 
   /* Typography */
-  --chronos-font-family: 'Inter', system-ui, sans-serif;
-  --chronos-font-size-base: 16px;
-  --chronos-font-size-title: 2rem;
-  --chronos-font-size-subtitle: 1.25rem;
+  --contentvidya-font-family: 'Inter', system-ui, sans-serif;
+  --contentvidya-font-size-base: 16px;
+  --contentvidya-font-size-title: 2rem;
+  --contentvidya-font-size-subtitle: 1.25rem;
 
   /* Spacing */
-  --chronos-spacing-xs: 0.5rem;
-  --chronos-spacing-sm: 1rem;
-  --chronos-spacing-md: 1.5rem;
-  --chronos-spacing-lg: 2rem;
-  --chronos-spacing-xl: 3rem;
+  --contentvidya-spacing-xs: 0.5rem;
+  --contentvidya-spacing-sm: 1rem;
+  --contentvidya-spacing-md: 1.5rem;
+  --contentvidya-spacing-lg: 2rem;
+  --contentvidya-spacing-xl: 3rem;
 
   /* Borders & Corners */
-  --chronos-border-width: 1px;
-  --chronos-border-radius-sm: 0.375rem;
-  --chronos-border-radius-md: 0.75rem;
-  --chronos-border-radius-lg: 1.5rem;
+  --contentvidya-border-width: 1px;
+  --contentvidya-border-radius-sm: 0.375rem;
+  --contentvidya-border-radius-md: 0.75rem;
+  --contentvidya-border-radius-lg: 1.5rem;
 
   /* Shadows */
-  --chronos-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --chronos-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --contentvidya-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --contentvidya-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 [data-theme="dark"] {
-  --chronos-color-background: #0f172a;
-  --chronos-color-surface: #1e293b;
-  --chronos-color-text-main: #f8fafc;
-  --chronos-color-text-muted: #94a3b8;
-  --chronos-color-border: #334155;
+  --contentvidya-color-background: #0f172a;
+  --contentvidya-color-surface: #1e293b;
+  --contentvidya-color-text-main: #f8fafc;
+  --contentvidya-color-text-muted: #94a3b8;
+  --contentvidya-color-border: #334155;
 }
 
 /* Skeleton shimmer loading effect */
-.chronos-image-shimmer {
+.contentvidya-image-shimmer {
   position: relative;
   overflow: hidden;
-  background-color: var(--chronos-color-surface) !important;
+  background-color: var(--contentvidya-color-surface) !important;
   background-image: none !important;
 }
-.chronos-image-shimmer::after {
+.contentvidya-image-shimmer::after {
   content: "";
   position: absolute;
   top: 0;
@@ -63,9 +63,9 @@
     rgba(255, 255, 255, 0.2) 60%,
     rgba(255, 255, 255, 0) 100%
   );
-  animation: chronos-shimmer-sweep 1.6s infinite;
+  animation: contentvidya-shimmer-sweep 1.6s infinite;
 }
-[data-theme="dark"] .chronos-image-shimmer::after {
+[data-theme="dark"] .contentvidya-image-shimmer::after {
   background-image: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0%,
@@ -74,49 +74,49 @@
     rgba(255, 255, 255, 0) 100%
   );
 }
-@keyframes chronos-shimmer-sweep {
+@keyframes contentvidya-shimmer-sweep {
   100% {
     transform: translateX(100%);
   }
 }
 
 /* Skeleton items structure */
-.chronos-skeleton-title {
+.contentvidya-skeleton-title {
   height: 24px;
-  border-radius: var(--chronos-border-radius-sm, 4px);
+  border-radius: var(--contentvidya-border-radius-sm, 4px);
   margin-bottom: 12px;
   display: block;
 }
-.chronos-skeleton-text {
+.contentvidya-skeleton-text {
   height: 14px;
-  border-radius: var(--chronos-border-radius-sm, 4px);
+  border-radius: var(--contentvidya-border-radius-sm, 4px);
   margin-bottom: 8px;
   display: block;
 }
-.chronos-skeleton-button {
+.contentvidya-skeleton-button {
   height: 38px;
-  border-radius: var(--chronos-border-radius-sm, 6px);
+  border-radius: var(--contentvidya-border-radius-sm, 6px);
   display: inline-block;
 }
 
 /* Light mode transparent backgrounds */
-.chronos-skeleton-title {
+.contentvidya-skeleton-title {
   background-color: rgba(0, 0, 0, 0.08) !important;
 }
-.chronos-skeleton-text {
+.contentvidya-skeleton-text {
   background-color: rgba(0, 0, 0, 0.05) !important;
 }
-.chronos-skeleton-button {
+.contentvidya-skeleton-button {
   background-color: rgba(0, 0, 0, 0.12) !important;
 }
 
 /* Dark mode transparent backgrounds */
-[data-theme="dark"] .chronos-skeleton-title {
+[data-theme="dark"] .contentvidya-skeleton-title {
   background-color: rgba(255, 255, 255, 0.08) !important;
 }
-[data-theme="dark"] .chronos-skeleton-text {
+[data-theme="dark"] .contentvidya-skeleton-text {
   background-color: rgba(255, 255, 255, 0.05) !important;
 }
-[data-theme="dark"] .chronos-skeleton-button {
+[data-theme="dark"] .contentvidya-skeleton-button {
   background-color: rgba(255, 255, 255, 0.12) !important;
 }

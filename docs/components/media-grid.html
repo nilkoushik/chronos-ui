@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Media Grid — Chronos UI</title>
+  <title>Media Grid — ContentVidya UI</title>
   <meta name="description" content="Editorial 2-column layout with one large primary asset and stacked secondary items at a 21:9 aspect ratio." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="../css/docs.css" />
@@ -15,7 +15,7 @@
     <aside class="docs-sidebar">
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
-        <span class="sidebar-brand-name">Chronos<span>UI</span></span>
+        <span class="sidebar-brand-name">ContentVidya<span>UI</span></span>
         <span class="sidebar-version">v1.1.4</span>
       </a>
       <nav class="sidebar-nav">
@@ -33,8 +33,8 @@
       <a href="wysiwyg-renderer.html" class="sidebar-link"><span class="sidebar-link-icon">✍</span> WYSIWYG Renderer</a>
       <a href="rich-text-editor.html" class="sidebar-link"><span class="sidebar-link-icon">📝</span> Rich Text Editor</a>
         <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
-        <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
-        <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+        <a href="https://github.com/nilkoushik/contentvidya-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
+        <a href="https://www.npmjs.com/package/@contentvidya/ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
         <a href="../dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
       </nav>
     </aside>
@@ -43,11 +43,11 @@
     <div class="docs-topbar">
       <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
       <div class="topbar-breadcrumb">
-        <a href="../index.html">Chronos UI</a><span class="sep">/</span>
+        <a href="../index.html">ContentVidya UI</a><span class="sep">/</span>
         <span class="current">Media Grid</span>
       </div>
       <div class="topbar-actions">
-        <a href="https://github.com/nilkoushik/chronos-ui/blob/main/src/components/MediaGrid.lite.tsx"
+        <a href="https://github.com/nilkoushik/contentvidya-ui/blob/main/src/components/MediaGrid.lite.tsx"
            target="_blank" rel="noopener" class="btn-github">View Source</a>
       </div>
     </div>
@@ -62,7 +62,7 @@
 
       <!-- Install -->
       <div class="install-banner">
-        <code>npm install @chronos-ui/core</code>
+        <code>npm install @contentvidya/ui</code>
         <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
       </div>
 
@@ -86,7 +86,7 @@
       <h2 class="section-heading" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
         Usage
         <span style="display:flex; gap:8px;">
-          <button class="jsfiddle-btn" id="jsfiddle-btn" style="background:var(--chronos-color-primary); color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:600; display:flex; align-items:center; gap:6px;">
+          <button class="jsfiddle-btn" id="jsfiddle-btn" style="background:var(--contentvidya-color-primary); color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:600; display:flex; align-items:center; gap:6px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
           Play in JSFiddle
         </button>
@@ -106,8 +106,8 @@
           
     <div class="code-block">
       <button class="copy-btn">Copy</button>
-      <pre><code><span class="kw">import</span> MediaGrid <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/MediaGrid'</span>;
-<span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+      <pre><code><span class="kw">import</span> MediaGrid <span class="kw">from</span> <span class="str">'@contentvidya/ui/react/MediaGrid'</span>;
+<span class="kw">import</span> <span class="str">'@contentvidya/ui/theme.css'</span>;
 
 &lt;<span class="tag">MediaGrid</span>
   primaryMedia={{
@@ -128,7 +128,7 @@
     <div class="code-block">
       <button class="copy-btn">Copy</button>
       <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
-  <span class="kw">import</span> MediaGrid <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/MediaGrid.svelte'</span>;
+  <span class="kw">import</span> MediaGrid <span class="kw">from</span> <span class="str">'@contentvidya/ui/svelte/MediaGrid.svelte'</span>;
 &lt;/<span class="tag">script</span>&gt;
 
 &lt;<span class="tag">MediaGrid</span>
@@ -142,7 +142,7 @@
     <div class="code-block">
       <button class="copy-btn">Copy</button>
       <pre><code>&lt;<span class="tag">script</span> type=<span class="str">"module"</span>
-  src=<span class="str">"node_modules/@chronos-ui/core/webcomponents/MediaGrid.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+  src=<span class="str">"node_modules/@contentvidya/ui/webcomponents/MediaGrid.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
 
 &lt;<span class="tag">media-grid</span>
   primary-media=<span class="str">'{"id":"p1","media":{"type":"image","url":"/primary.jpg"}}'</span>

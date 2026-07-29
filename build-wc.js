@@ -84,7 +84,7 @@ for (const file of allFiles) {
   });
 
   // Fix invalid custom element names that don't have a hyphen (e.g. "banner")
-  finalCode = finalCode.replace(/customElements\.define\("([^"-]+)",/g, 'customElements.define("chronos-$1",');
+  finalCode = finalCode.replace(/customElements\.define\("([^"-]+)",/g, 'customElements.define("contentvidya-$1",');
   
   // Fix strict mode TypeError: Cannot set property which has only a getter by adding a companion setter.
   // Mitosis generates both `get _fooRef()` and `this._fooRef = el` in updateBindings.

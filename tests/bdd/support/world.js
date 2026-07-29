@@ -26,7 +26,7 @@ function attrsToProps(attrs) {
   return props;
 }
 
-class ChronosWorld extends World {
+class ContentVidyaWorld extends World {
   constructor(options) {
     super(options);
     this.page = null;
@@ -142,4 +142,4 @@ class ChronosWorld extends World {
   }
 }
 
-setWorldConstructor(ChronosWorld);
+setWorldConstructor(ContentVidyaWorld);

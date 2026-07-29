@@ -269,7 +269,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
           styleStr += ' background: transparent; color: #8b5cf6; border: 2px solid #8b5cf6;';
         }
         const url = state.btnUrl || '#';
-        const html = `<a href="${url}" class="chronos-btn" style="${styleStr}">${state.btnText}</a>&nbsp;`;
+        const html = `<a href="${url}" class="contentvidya-btn" style="${styleStr}">${state.btnText}</a>&nbsp;`;
         const success = document.execCommand('insertHTML', false, html);
         if (!success) {
            if (savedRangeRef && savedRangeRef.insertNode) {
@@ -431,7 +431,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     confirmWidget() {
       state.showWidgetModal = false;
       state.restoreSelection();
-      let html = `<div class="chronos-widget" data-widget="${state.selectedWidget}" style="padding: 24px; border: 2px dashed rgba(139,92,246,0.5); background: rgba(139,92,246,0.05); text-align: center; border-radius: 12px; margin: 16px 0; color: #a78bfa; font-weight: 600;">[Chronos Widget: ${state.selectedWidget.toUpperCase()}]</div><p><br></p>`;
+      let html = `<div class="contentvidya-widget" data-widget="${state.selectedWidget}" style="padding: 24px; border: 2px dashed rgba(139,92,246,0.5); background: rgba(139,92,246,0.05); text-align: center; border-radius: 12px; margin: 16px 0; color: #a78bfa; font-weight: 600;">[ContentVidya Widget: ${state.selectedWidget.toUpperCase()}]</div><p><br></p>`;
       document.execCommand('insertHTML', false, html);
       state.syncContent();
     },
@@ -550,11 +550,11 @@ export default function RichTextEditor(props: RichTextEditorProps) {
       editorRef.innerHTML = state.internalContent;
     }
     if (typeof document !== 'undefined') {
-      const styleId = 'chronos-editor-styles';
+      const styleId = 'contentvidya-editor-styles';
       if (!document.getElementById(styleId)) {
         const style = document.createElement('style');
         style.id = styleId;
-        style.innerHTML = ".wysiwyg-content blockquote { border-left: 4px solid #8b5cf6 !important; background: linear-gradient(90deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.02) 100%) !important; padding: 20px 24px !important; margin: 24px 0 !important; border-radius: 0 16px 16px 0 !important; font-style: italic !important; color: #e2e8f0 !important; font-size: 1.1em !important; line-height: 1.8 !important; position: relative; box-shadow: inset 2px 0 0px rgba(255,255,255,0.1); } .wysiwyg-content pre { background: #0f172a !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 12px !important; padding: 20px !important; color: #38bdf8 !important; font-family: 'Fira Code', monospace !important; overflow-x: auto !important; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5) !important; } .wysiwyg-content ul { list-style-type: disc !important; padding-left: 2rem !important; margin-bottom: 1em !important; } .wysiwyg-content ol { list-style-type: decimal !important; padding-left: 2rem !important; margin-bottom: 1em !important; } .wysiwyg-content li { margin-bottom: 0.5em !important; display: list-item !important; } .wysiwyg-content a:not(.chronos-btn) { color: #8b5cf6 !important; text-decoration: underline !important; text-underline-offset: 3px !important; }";
+        style.innerHTML = ".wysiwyg-content blockquote { border-left: 4px solid #8b5cf6 !important; background: linear-gradient(90deg, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0.02) 100%) !important; padding: 20px 24px !important; margin: 24px 0 !important; border-radius: 0 16px 16px 0 !important; font-style: italic !important; color: #e2e8f0 !important; font-size: 1.1em !important; line-height: 1.8 !important; position: relative; box-shadow: inset 2px 0 0px rgba(255,255,255,0.1); } .wysiwyg-content pre { background: #0f172a !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 12px !important; padding: 20px !important; color: #38bdf8 !important; font-family: 'Fira Code', monospace !important; overflow-x: auto !important; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5) !important; } .wysiwyg-content ul { list-style-type: disc !important; padding-left: 2rem !important; margin-bottom: 1em !important; } .wysiwyg-content ol { list-style-type: decimal !important; padding-left: 2rem !important; margin-bottom: 1em !important; } .wysiwyg-content li { margin-bottom: 0.5em !important; display: list-item !important; } .wysiwyg-content a:not(.contentvidya-btn) { color: #8b5cf6 !important; text-decoration: underline !important; text-underline-offset: 3px !important; }";
         document.head.appendChild(style);
       }
       
@@ -571,7 +571,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
   return (
     <div 
       ref={rootRef}
-      class={`chronos-rich-text-editor flex flex-col rounded-xl overflow-hidden relative ${state.isFullscreen ? 'fixed inset-0 z-[9999] w-screen h-screen rounded-none' : 'w-full'} ${props.className || ''}`}
+      class={`contentvidya-rich-text-editor flex flex-col rounded-xl overflow-hidden relative ${state.isFullscreen ? 'fixed inset-0 z-[9999] w-screen h-screen rounded-none' : 'w-full'} ${props.className || ''}`}
       style={{
         boxSizing: 'border-box',
         background: '#0f172a',
@@ -936,7 +936,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
                   Insert Component
                 </h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px' }}>
-                  <label style={{ fontSize: '12px', fontWeight: '600', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Select Chronos Widget</label>
+                  <label style={{ fontSize: '12px', fontWeight: '600', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Select ContentVidya Widget</label>
                   <select style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '12px 16px', width: '100%', fontSize: '14px', color: 'white', outline: 'none', boxSizing: 'border-box' }} value={state.selectedWidget} onChange={(e) => state.selectedWidget = e.target.value}>
                     <option value="banner" style={{ background: '#1e293b' }}>Banner Component</option>
                     <option value="grid-banner" style={{ background: '#1e293b' }}>Grid Banner Component</option>

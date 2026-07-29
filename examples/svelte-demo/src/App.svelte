@@ -1,32 +1,32 @@
 <script lang="ts">
-  import '@chronos-ui/core/theme.css';
-  import '@chronos-ui/core/styles/components/Banner.css';
-  import '@chronos-ui/core/styles/components/AnnouncementBar.css';
-  import '@chronos-ui/core/styles/components/GridBanner.css';
-  import '@chronos-ui/core/styles/components/MediaGrid.css';
-  import '@chronos-ui/core/styles/components/RowScrollable.css';
-  import '@chronos-ui/core/styles/components/TimerWidget.css';
-  import '@chronos-ui/core/styles/components/WysiwygRenderer.css';
-  import '@chronos-ui/core/styles/components/RichTextEditor.css';
-  import '@chronos-ui/core/styles/components/SlidingBanner.css';
-  import '@chronos-ui/core/styles/components/AlternatingSlider.css';
+  import '@contentvidya/ui/theme.css';
+  import '@contentvidya/ui/styles/components/Banner.css';
+  import '@contentvidya/ui/styles/components/AnnouncementBar.css';
+  import '@contentvidya/ui/styles/components/GridBanner.css';
+  import '@contentvidya/ui/styles/components/MediaGrid.css';
+  import '@contentvidya/ui/styles/components/RowScrollable.css';
+  import '@contentvidya/ui/styles/components/TimerWidget.css';
+  import '@contentvidya/ui/styles/components/WysiwygRenderer.css';
+  import '@contentvidya/ui/styles/components/RichTextEditor.css';
+  import '@contentvidya/ui/styles/components/SlidingBanner.css';
+  import '@contentvidya/ui/styles/components/AlternatingSlider.css';
   
-  import Banner from '@chronos-ui/core/svelte/Banner.svelte';
-  import AnnouncementBar from '@chronos-ui/core/svelte/AnnouncementBar.svelte';
-  import GridBanner from '@chronos-ui/core/svelte/GridBanner.svelte';
-  import MediaGrid from '@chronos-ui/core/svelte/MediaGrid.svelte';
-  import RowScrollable from '@chronos-ui/core/svelte/RowScrollable.svelte';
-  import SlidingBanner from '@chronos-ui/core/svelte/SlidingBanner.svelte';
-  import AlternatingSlider from '@chronos-ui/core/svelte/AlternatingSlider.svelte';
-  import TimerWidget from '@chronos-ui/core/svelte/TimerWidget.svelte';
-  import WysiwygRenderer from '@chronos-ui/core/svelte/WysiwygRenderer.svelte';
-  import RichTextEditor from '@chronos-ui/core/svelte/RichTextEditor.svelte';
+  import Banner from '@contentvidya/ui/svelte/Banner.svelte';
+  import AnnouncementBar from '@contentvidya/ui/svelte/AnnouncementBar.svelte';
+  import GridBanner from '@contentvidya/ui/svelte/GridBanner.svelte';
+  import MediaGrid from '@contentvidya/ui/svelte/MediaGrid.svelte';
+  import RowScrollable from '@contentvidya/ui/svelte/RowScrollable.svelte';
+  import SlidingBanner from '@contentvidya/ui/svelte/SlidingBanner.svelte';
+  import AlternatingSlider from '@contentvidya/ui/svelte/AlternatingSlider.svelte';
+  import TimerWidget from '@contentvidya/ui/svelte/TimerWidget.svelte';
+  import WysiwygRenderer from '@contentvidya/ui/svelte/WysiwygRenderer.svelte';
+  import RichTextEditor from '@contentvidya/ui/svelte/RichTextEditor.svelte';
   
   let rteContent = "<p>Hello World from Rich Text Editor</p>";
 </script>
 
 <main class="demo-container">
-  <h1>Chronos UI Svelte Examples</h1>
+  <h1>ContentVidya UI Svelte Examples</h1>
 
   <section>
     <h2>Announcement Bar</h2>

@@ -1,5 +1,5 @@
 Feature: GridBanner
-  As a consumer of @chronos-ui/core
+  As a consumer of @contentvidya/ui
   I want the GridBanner web component to render a responsive grid of cards
   So that catalog/category layouts work at any column count
 

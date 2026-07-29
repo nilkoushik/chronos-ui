@@ -128,7 +128,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
   return (
     <div
       ref={rootRef}
-      class={`chronos-alt-slider ${state.showSkeleton ? 'chronos-image-shimmer' : ''} ${props.className || ''}`}
+      class={`contentvidya-alt-slider ${state.showSkeleton ? 'contentvidya-image-shimmer' : ''} ${props.className || ''}`}
       onMouseEnter={() => state.stopAutoPlay()}
       onMouseLeave={() => state.startAutoPlay()}
       role="region"
@@ -146,7 +146,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
       </Show>
 
       <div
-        class="chronos-alt-cols-container"
+        class="contentvidya-alt-cols-container"
         style={{
           gridTemplateColumns: `repeat(${state.columns}, 1fr)`,
           position: props.config?.height === 'auto' ? 'absolute' : 'relative',
@@ -157,20 +157,20 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
         }}
       >
         {Array.from({ length: state.columns }).map((_, colIndex) => (
-          <div class="chronos-alt-col" key={`col-${colIndex}`}>
+          <div class="contentvidya-alt-col" key={`col-${colIndex}`}>
             <div
-              class="chronos-alt-track"
+              class="contentvidya-alt-track"
               style={{ transform: `translateY(${colIndex % 2 === 0 ? -state.currentIndex * 100 : state.currentIndex * 100}%)` }}
             >
               {state.slideSets.map((slideRow, slideIndex) => (
                 <div
-                  class="chronos-alt-cell"
+                  class="contentvidya-alt-cell"
                   key={`cell-${slideIndex}-${colIndex}`}
                   style={{ top: `${colIndex % 2 === 0 ? slideIndex * 100 : -slideIndex * 100}%` }}
                 >
                   <Show when={slideRow[colIndex]}>
                     <Show when={slideRow[colIndex].mapLinks?.[0]?.url}>
-                      <a class="chronos-alt-content-wrap" href={slideRow[colIndex].mapLinks[0].url} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
+                      <a class="contentvidya-alt-content-wrap" href={slideRow[colIndex].mapLinks[0].url} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
                         <Show when={state.shouldMount && slideRow[colIndex].media?.type === 'video'}>
                           <video
                             src={slideRow[colIndex].media?.url}
@@ -178,7 +178,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                             loop
                             muted
                             playsInline
-                            class={`chronos-alt-bg-video ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
+                            class={`contentvidya-alt-bg-video ${state.showSkeleton ? 'contentvidya-image-shimmer' : ''}`}
                             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                           />
                         </Show>
@@ -188,12 +188,12 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                               backgroundImage: slideRow[colIndex].media?.url ? `url(${slideRow[colIndex].media.url})` : 'none',
                               backgroundPosition: props.config?.bgPosition || 'center'
                             }}
-                            class={`chronos-alt-bg ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
+                            class={`contentvidya-alt-bg ${state.showSkeleton ? 'contentvidya-image-shimmer' : ''}`}
                           />
                         </Show>
-                        <div class="chronos-alt-overlay" />
+                        <div class="contentvidya-alt-overlay" />
                         <div
-                          class="chronos-alt-content"
+                          class="contentvidya-alt-content"
                           style={{
                             textAlign: slideRow[colIndex].textAlignment || 'left',
                             display: 'flex',
@@ -202,25 +202,25 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                           }}
                         >
                           <Show when={state.showSkeleton}>
-                            <div class="chronos-skeleton-title chronos-image-shimmer" style={{ width: '60%', height: '24px', marginBottom: '12px' }} />
-                            <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '80%', height: '14px', marginBottom: '8px' }} />
-                            <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '50%', height: '14px', marginBottom: '16px' }} />
-                            <div class="chronos-skeleton-button chronos-image-shimmer" style={{ width: '110px', height: '36px' }} />
+                            <div class="contentvidya-skeleton-title contentvidya-image-shimmer" style={{ width: '60%', height: '24px', marginBottom: '12px' }} />
+                            <div class="contentvidya-skeleton-text contentvidya-image-shimmer" style={{ width: '80%', height: '14px', marginBottom: '8px' }} />
+                            <div class="contentvidya-skeleton-text contentvidya-image-shimmer" style={{ width: '50%', height: '14px', marginBottom: '16px' }} />
+                            <div class="contentvidya-skeleton-button contentvidya-image-shimmer" style={{ width: '110px', height: '36px' }} />
                           </Show>
                           <Show when={!state.showSkeleton}>
-                            <h2 class="chronos-alt-title">{slideRow[colIndex].title}</h2>
+                            <h2 class="contentvidya-alt-title">{slideRow[colIndex].title}</h2>
                             <Show when={slideRow[colIndex].subtitle}>
-                              <p class="chronos-alt-subtitle">{slideRow[colIndex].subtitle}</p>
+                              <p class="contentvidya-alt-subtitle">{slideRow[colIndex].subtitle}</p>
                             </Show>
                             <Show when={slideRow[colIndex].ctaText}>
-                              <span class="chronos-alt-cta">{slideRow[colIndex].ctaText}</span>
+                              <span class="contentvidya-alt-cta">{slideRow[colIndex].ctaText}</span>
                             </Show>
                           </Show>
                         </div>
                       </a>
                     </Show>
                     <Show when={!slideRow[colIndex].mapLinks?.[0]?.url}>
-                      <div class="chronos-alt-content-wrap">
+                      <div class="contentvidya-alt-content-wrap">
                         <Show when={state.shouldMount && slideRow[colIndex].media?.type === 'video'}>
                           <video
                             src={slideRow[colIndex].media?.url}
@@ -228,7 +228,7 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                             loop
                             muted
                             playsInline
-                            class={`chronos-alt-bg-video ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
+                            class={`contentvidya-alt-bg-video ${state.showSkeleton ? 'contentvidya-image-shimmer' : ''}`}
                             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                           />
                         </Show>
@@ -238,12 +238,12 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                               backgroundImage: slideRow[colIndex].media?.url ? `url(${slideRow[colIndex].media.url})` : 'none',
                               backgroundPosition: props.config?.bgPosition || 'center'
                             }}
-                            class={`chronos-alt-bg ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
+                            class={`contentvidya-alt-bg ${state.showSkeleton ? 'contentvidya-image-shimmer' : ''}`}
                           />
                         </Show>
-                        <div class="chronos-alt-overlay" />
+                        <div class="contentvidya-alt-overlay" />
                         <div
-                          class="chronos-alt-content"
+                          class="contentvidya-alt-content"
                           style={{
                             textAlign: slideRow[colIndex].textAlignment || 'left',
                             display: 'flex',
@@ -252,18 +252,18 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
                           }}
                         >
                           <Show when={state.showSkeleton}>
-                            <div class="chronos-skeleton-title chronos-image-shimmer" style={{ width: '60%', height: '24px', marginBottom: '12px' }} />
-                            <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '80%', height: '14px', marginBottom: '8px' }} />
-                            <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '50%', height: '14px', marginBottom: '16px' }} />
-                            <div class="chronos-skeleton-button chronos-image-shimmer" style={{ width: '110px', height: '36px' }} />
+                            <div class="contentvidya-skeleton-title contentvidya-image-shimmer" style={{ width: '60%', height: '24px', marginBottom: '12px' }} />
+                            <div class="contentvidya-skeleton-text contentvidya-image-shimmer" style={{ width: '80%', height: '14px', marginBottom: '8px' }} />
+                            <div class="contentvidya-skeleton-text contentvidya-image-shimmer" style={{ width: '50%', height: '14px', marginBottom: '16px' }} />
+                            <div class="contentvidya-skeleton-button contentvidya-image-shimmer" style={{ width: '110px', height: '36px' }} />
                           </Show>
                           <Show when={!state.showSkeleton}>
-                            <h2 class="chronos-alt-title">{slideRow[colIndex].title}</h2>
+                            <h2 class="contentvidya-alt-title">{slideRow[colIndex].title}</h2>
                             <Show when={slideRow[colIndex].subtitle}>
-                              <p class="chronos-alt-subtitle">{slideRow[colIndex].subtitle}</p>
+                              <p class="contentvidya-alt-subtitle">{slideRow[colIndex].subtitle}</p>
                             </Show>
                             <Show when={slideRow[colIndex].ctaText}>
-                              <span class="chronos-alt-cta">{slideRow[colIndex].ctaText}</span>
+                              <span class="contentvidya-alt-cta">{slideRow[colIndex].ctaText}</span>
                             </Show>
                           </Show>
                         </div>
@@ -280,21 +280,21 @@ export default function AlternatingSlider(props: AlternatingSliderProps) {
       {(props.config?.showArrows &&
         (!props.config?.hideArrowsIfNoScroll || state.slideSets.length > 1)) && (
         <>
-          <button class="chronos-alt-arrow prev" aria-label="Previous" onClick={() => state.prev()}>
+          <button class="contentvidya-alt-arrow prev" aria-label="Previous" onClick={() => state.prev()}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
           </button>
-          <button class="chronos-alt-arrow next" aria-label="Next" onClick={() => state.next()}>
+          <button class="contentvidya-alt-arrow next" aria-label="Next" onClick={() => state.next()}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
           </button>
         </>
       )}
 
       {props.config?.showDots && (
-        <div class="chronos-alt-dots">
+        <div class="contentvidya-alt-dots">
           {state.slideSets.map((_, index) => (
             <button
               key={`dot-${index}`}
-              class={`chronos-alt-dot ${index === state.currentIndex ? 'active' : ''}`}
+              class={`contentvidya-alt-dot ${index === state.currentIndex ? 'active' : ''}`}
               aria-label={`Go to slide ${index + 1}`}
               onClick={() => state.goTo(index)}
             ></button>

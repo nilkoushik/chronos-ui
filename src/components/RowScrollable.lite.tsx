@@ -99,34 +99,34 @@ export default function RowScrollable(props: RowScrollableProps) {
   });
 
   return (
-    <div ref={containerRef} class={`chronos-scrollable-container ${props.className || ''}`}>
-      {props.title && <h3 class="chronos-scrollable-title">{props.title}</h3>}
+    <div ref={containerRef} class={`contentvidya-scrollable-container ${props.className || ''}`}>
+      {props.title && <h3 class="contentvidya-scrollable-title">{props.title}</h3>}
 
-      <div class="chronos-scrollable-wrapper" style={{ position: 'relative' }}>
+      <div class="contentvidya-scrollable-wrapper" style={{ position: 'relative' }}>
         <div
           ref={rowRef}
-          class={`chronos-scrollable-row ${props.config?.hideScrollbar ? 'chronos-scrollable-hide-scrollbar' : ''}`}
+          class={`contentvidya-scrollable-row ${props.config?.hideScrollbar ? 'contentvidya-scrollable-hide-scrollbar' : ''}`}
         >
           {props.items?.map((item) => (
             <a
               href={item.mapLinks?.[0]?.url || '#'}
-              class={`chronos-scrollable-card ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
+              class={`contentvidya-scrollable-card ${state.showSkeleton ? 'contentvidya-image-shimmer' : ''}`}
               key={item.id}
             >
               <Show when={!state.showSkeleton}>
                 {item.media?.url && (
-                  <div class="chronos-scrollable-img-wrap">
+                  <div class="contentvidya-scrollable-img-wrap">
                     <Show when={item.media?.type === 'video'}>
-                      <video src={item.media?.url} autoPlay loop muted playsInline class="chronos-scrollable-img" />
+                      <video src={item.media?.url} autoPlay loop muted playsInline class="contentvidya-scrollable-img" />
                     </Show>
                     <Show when={item.media?.type !== 'video'}>
-                      <img src={item.media?.url} alt={item.title || ''} class="chronos-scrollable-img" />
+                      <img src={item.media?.url} alt={item.title || ''} class="contentvidya-scrollable-img" />
                     </Show>
                   </div>
                 )}
-                <div class="chronos-scrollable-body">
-                  {item.title && <div class="chronos-scrollable-card-title">{item.title}</div>}
-                  {item.subtitle && <div class="chronos-scrollable-card-sub">{item.subtitle}</div>}
+                <div class="contentvidya-scrollable-body">
+                  {item.title && <div class="contentvidya-scrollable-card-title">{item.title}</div>}
+                  {item.subtitle && <div class="contentvidya-scrollable-card-sub">{item.subtitle}</div>}
                 </div>
               </Show>
             </a>
@@ -137,7 +137,7 @@ export default function RowScrollable(props: RowScrollableProps) {
           <>
             <Show when={!props.config?.hideArrowsIfNoScroll || state.canScrollLeft}>
               <button
-                class="chronos-scrollable-arrow prev"
+                class="contentvidya-scrollable-arrow prev"
                 aria-label="Previous"
                 onClick={() => state.scroll('left')}
                 style={{
@@ -150,7 +150,7 @@ export default function RowScrollable(props: RowScrollableProps) {
             </Show>
             <Show when={!props.config?.hideArrowsIfNoScroll || state.canScrollRight}>
               <button
-                class="chronos-scrollable-arrow next"
+                class="contentvidya-scrollable-arrow next"
                 aria-label="Next"
                 onClick={() => state.scroll('right')}
                 style={{

@@ -1,4 +1,4 @@
-// Shared canvas background-effect engine used by chronos-ui widgets (Banner, SlidingBanner,
+// Shared canvas background-effect engine used by contentvidya-ui widgets (Banner, SlidingBanner,
 // and anything else that renders a full-bleed <canvas> layer behind its content). This is
 // deliberately a plain, framework-agnostic module — not a .lite.tsx component — so it compiles
 // once and can be dropped into any component's onMount/onUpdate lifecycle without going through
