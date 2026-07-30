@@ -1,3 +1,14 @@
+## [1.5.0](https://github.com/nilkoushik/contentvidya-ui/compare/v1.4.2...v1.5.0) (2026-07-30)
+
+### Features
+
+* **release:** stop publishing the @chronos-ui/core compat wrapper ([4f04965](https://github.com/nilkoushik/contentvidya-ui/commit/4f04965d1a08cd0968a9b2090ce14e7bd3d015e7))
+
+### Bug Fixes
+
+* correct GitHub links from blob/main to blob/master ([27ea70d](https://github.com/nilkoushik/contentvidya-ui/commit/27ea70d804109e512e188382ba5f72fa26b220ac))
+* **deps:** correct unsatisfiable @semantic-release/exec range ([3e9cba4](https://github.com/nilkoushik/contentvidya-ui/commit/3e9cba4d94071fc2813bc8ddacdb7db3ecb98693))
+
 ## [1.4.1](https://github.com/nilkoushik/chronos-ui/compare/v1.4.0...v1.4.1) (2026-07-25)
 
 ### Bug Fixes

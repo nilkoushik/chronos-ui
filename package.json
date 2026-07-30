@@ -1,6 +1,6 @@
 {
   "name": "@contentvidya/ui",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "A universal, framework-agnostic UI component library built with Mitosis. Write once, compile to React, Svelte, and Web Components.",
   "author": "Koushik Manna",
   "license": "MIT",
