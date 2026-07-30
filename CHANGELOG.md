@@ -1,3 +1,9 @@
+## [1.5.1](https://github.com/nilkoushik/contentvidya-ui/compare/v1.5.0...v1.5.1) (2026-07-30)
+
+### Bug Fixes
+
+* **a11y:** enforce WCAG 2.1 AAA and repair the docs playground ([4ba73e9](https://github.com/nilkoushik/contentvidya-ui/commit/4ba73e93ab9ce66647d0c4d0983e7f2de97d4e6b)), closes [#000000](https://github.com/nilkoushik/contentvidya-ui/issues/000000) [#0000ee](https://github.com/nilkoushik/contentvidya-ui/issues/0000ee) [#0a0a0f](https://github.com/nilkoushik/contentvidya-ui/issues/0a0a0f) [#0f172a](https://github.com/nilkoushik/contentvidya-ui/issues/0f172a) [#7c3aed](https://github.com/nilkoushik/contentvidya-ui/issues/7c3aed) [#6d28d9](https://github.com/nilkoushik/contentvidya-ui/issues/6d28d9) [#8b5cf6](https://github.com/nilkoushik/contentvidya-ui/issues/8b5cf6) [#8b5cf6](https://github.com/nilkoushik/contentvidya-ui/issues/8b5cf6) [#7c3aed](https://github.com/nilkoushik/contentvidya-ui/issues/7c3aed)
+
 ## [1.5.0](https://github.com/nilkoushik/contentvidya-ui/compare/v1.4.2...v1.5.0) (2026-07-30)
 
 ### Features
