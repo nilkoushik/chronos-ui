@@ -116,7 +116,7 @@ export default function TimerWidget(props: TimerWidgetProps) {
   return (
     <div
       ref={rootRef}
-      class={`chronos-timer-widget chronos-timer-variant-${props.variant || 'dark'} ${state.hasBackgroundImage ? 'chronos-timer-has-bg' : ''} ${props.className || ''}`}
+      class={`contentvidya-timer-widget contentvidya-timer-variant-${props.variant || 'dark'} ${state.hasBackgroundImage ? 'contentvidya-timer-has-bg' : ''} ${props.className || ''}`}
       style={{
         width: state.widthValue,
         height: state.fixedHeightValue || undefined,
@@ -132,40 +132,40 @@ export default function TimerWidget(props: TimerWidgetProps) {
         />
       </Show>
       <Show when={state.hasBackgroundImage}>
-        <div class="chronos-timer-overlay" style={{ background: props.overlay || 'rgba(0, 0, 0, 0.45)' }} />
+        <div class="contentvidya-timer-overlay" style={{ background: props.overlay || 'rgba(0, 0, 0, 0.45)' }} />
       </Show>
       <Show when={state.backgroundEffectClass !== 'none'}>
         <canvas
           ref={canvasRef}
-          class="chronos-timer-bg-effect"
+          class="contentvidya-timer-bg-effect"
           aria-hidden="true"
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }}
         />
       </Show>
-      <div class="chronos-timer-content" style={{ position: state.contentOverlaysBox ? 'absolute' : 'relative', top: state.contentOverlaysBox ? 0 : undefined, left: state.contentOverlaysBox ? 0 : undefined, width: state.contentOverlaysBox ? '100%' : undefined, height: state.contentOverlaysBox ? '100%' : undefined }}>
-        {props.title && <h3 class="chronos-timer-title">{props.title}</h3>}
+      <div class="contentvidya-timer-content" style={{ position: state.contentOverlaysBox ? 'absolute' : 'relative', top: state.contentOverlaysBox ? 0 : undefined, left: state.contentOverlaysBox ? 0 : undefined, width: state.contentOverlaysBox ? '100%' : undefined, height: state.contentOverlaysBox ? '100%' : undefined }}>
+        {props.title && <h3 class="contentvidya-timer-title">{props.title}</h3>}
         <Show when={!state.isExpired}>
-          <div class="chronos-timer-blocks" role="timer" aria-live="off" aria-label={`Time remaining: ${state.timeLeft.days} days, ${state.timeLeft.hours} hours, ${state.timeLeft.minutes} minutes, ${state.timeLeft.seconds} seconds`}>
-            <div class="chronos-timer-block">
-              <span class="chronos-timer-value" aria-hidden="true">{state.timeLeft.days}</span>
-              <span class="chronos-timer-label" aria-hidden="true">Days</span>
+          <div class="contentvidya-timer-blocks" role="timer" aria-live="off" aria-label={`Time remaining: ${state.timeLeft.days} days, ${state.timeLeft.hours} hours, ${state.timeLeft.minutes} minutes, ${state.timeLeft.seconds} seconds`}>
+            <div class="contentvidya-timer-block">
+              <span class="contentvidya-timer-value" aria-hidden="true">{state.timeLeft.days}</span>
+              <span class="contentvidya-timer-label" aria-hidden="true">Days</span>
             </div>
-            <div class="chronos-timer-block">
-              <span class="chronos-timer-value" aria-hidden="true">{state.timeLeft.hours}</span>
-              <span class="chronos-timer-label" aria-hidden="true">Hours</span>
+            <div class="contentvidya-timer-block">
+              <span class="contentvidya-timer-value" aria-hidden="true">{state.timeLeft.hours}</span>
+              <span class="contentvidya-timer-label" aria-hidden="true">Hours</span>
             </div>
-            <div class="chronos-timer-block">
-              <span class="chronos-timer-value" aria-hidden="true">{state.timeLeft.minutes}</span>
-              <span class="chronos-timer-label" aria-hidden="true">Minutes</span>
+            <div class="contentvidya-timer-block">
+              <span class="contentvidya-timer-value" aria-hidden="true">{state.timeLeft.minutes}</span>
+              <span class="contentvidya-timer-label" aria-hidden="true">Minutes</span>
             </div>
-            <div class="chronos-timer-block">
-              <span class="chronos-timer-value" aria-hidden="true">{state.timeLeft.seconds}</span>
-              <span class="chronos-timer-label" aria-hidden="true">Seconds</span>
+            <div class="contentvidya-timer-block">
+              <span class="contentvidya-timer-value" aria-hidden="true">{state.timeLeft.seconds}</span>
+              <span class="contentvidya-timer-label" aria-hidden="true">Seconds</span>
             </div>
           </div>
         </Show>
         <Show when={!!state.isExpired && !!props.expiredText}>
-          <p class="chronos-timer-expired">{props.expiredText}</p>
+          <p class="contentvidya-timer-expired">{props.expiredText}</p>
         </Show>
       </div>
     </div>

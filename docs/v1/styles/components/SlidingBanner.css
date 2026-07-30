@@ -1,16 +1,16 @@
 /* Styles for SlidingBanner */
 /* Styles for SlidingBanner */
-.chronos-sliding-banner {
+.contentvidya-sliding-banner {
   position: relative;
   width: 100%;
   height: 500px;
   overflow: hidden;
   background: #000;
-  border-radius: var(--chronos-border-radius-md);
-  box-shadow: var(--chronos-shadow-md);
+  border-radius: var(--contentvidya-border-radius-md);
+  box-shadow: var(--contentvidya-shadow-md);
 }
 
-.chronos-sliding-banner-canvas {
+.contentvidya-sliding-banner-canvas {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -18,7 +18,7 @@
   z-index: 1;
 }
 
-.chronos-sliding-banner-track {
+.contentvidya-sliding-banner-track {
   display: flex;
   width: 100%;
   height: 100%;
@@ -33,17 +33,17 @@
    on the default `slide` effect, which has no infinite-loop clone. Without
    this, wrapping would animate across the entire track distance instead of
    cutting straight to the wrapped slide. */
-.chronos-sliding-banner-track.no-transition {
+.contentvidya-sliding-banner-track.no-transition {
   transition: none !important;
 }
 
-.chronos-sliding-slide {
+.contentvidya-sliding-slide {
   flex: 0 0 100%;
   position: relative;
   height: 100%;
 }
 
-.chronos-sliding-bg {
+.contentvidya-sliding-bg {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -51,14 +51,14 @@
   background-position: center;
 }
 
-.chronos-sliding-overlay {
+.contentvidya-sliding-overlay {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
   background: rgba(0,0,0,0.4);
 }
 
-.chronos-sliding-content {
+.contentvidya-sliding-content {
   position: relative;
   z-index: 2;
   display: flex;
@@ -72,21 +72,21 @@
   margin: 0 auto;
 }
 
-.chronos-sliding-title {
+.contentvidya-sliding-title {
   font-size: 3rem;
   margin-bottom: 1rem;
   font-weight: 700;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-.chronos-sliding-subtitle {
+.contentvidya-sliding-subtitle {
   font-size: 1.5rem;
   margin-bottom: 2rem;
   text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 
-.chronos-sliding-cta {
-  background: var(--chronos-color-primary);
+.contentvidya-sliding-cta {
+  background: var(--contentvidya-color-primary);
   color: white;
   padding: 1rem 2rem;
   text-decoration: none;
@@ -95,12 +95,12 @@
   transition: all 0.3s ease;
 }
 
-.chronos-sliding-cta:hover {
+.contentvidya-sliding-cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
 }
 
-.chronos-sliding-arrow {
+.contentvidya-sliding-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -118,14 +118,14 @@
   transition: background 0.3s;
 }
 
-.chronos-sliding-arrow:hover {
+.contentvidya-sliding-arrow:hover {
   background: rgba(255,255,255,0.4);
 }
 
-.chronos-sliding-arrow.prev { left: 20px; }
-.chronos-sliding-arrow.next { right: 20px; }
+.contentvidya-sliding-arrow.prev { left: 20px; }
+.contentvidya-sliding-arrow.next { right: 20px; }
 
-.chronos-sliding-dots {
+.contentvidya-sliding-dots {
   position: absolute;
   bottom: 20px;
   left: 50%;
@@ -135,7 +135,7 @@
   z-index: 10;
 }
 
-.chronos-sliding-dot {
+.contentvidya-sliding-dot {
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -145,14 +145,14 @@
   transition: all 0.3s;
 }
 
-.chronos-sliding-dot.active {
+.contentvidya-sliding-dot.active {
   background: white;
   transform: scale(1.2);
 }
 
 /* ==========================================================================
    Transition effects
-   All effects below animate `.chronos-sliding-slide` directly (the track's
+   All effects below animate `.contentvidya-sliding-slide` directly (the track's
    own translateX loop is disabled) using three states:
      - resting:  never been shown, waiting to become active
      - .active:  the currently visible slide
@@ -166,45 +166,45 @@
    something with mass and lighting rather than a flat CSS crossfade.
    ========================================================================== */
 
-@keyframes chronos-slide-blur-enter {
+@keyframes contentvidya-slide-blur-enter {
   0%   { filter: blur(10px) brightness(0.85); }
   55%  { filter: blur(4px) brightness(0.92); }
   100% { filter: blur(0) brightness(1); }
 }
 
-@keyframes chronos-slide-blur-exit {
+@keyframes contentvidya-slide-blur-exit {
   0%   { filter: blur(0) brightness(1); }
   45%  { filter: blur(4px) brightness(0.9); }
   100% { filter: blur(10px) brightness(0.8); }
 }
 
-.effect-fade .chronos-sliding-banner-track,
-.effect-zoom .chronos-sliding-banner-track,
-.effect-flip .chronos-sliding-banner-track,
-.effect-push-horizontal .chronos-sliding-banner-track,
-.effect-push-vertical .chronos-sliding-banner-track,
-.effect-wipe .chronos-sliding-banner-track,
-.effect-cube .chronos-sliding-banner-track,
-.effect-door .chronos-sliding-banner-track,
-.effect-fall .chronos-sliding-banner-track,
-.effect-crush .chronos-sliding-banner-track,
-.effect-peel-off .chronos-sliding-banner-track,
-.effect-curtain .chronos-sliding-banner-track {
+.effect-fade .contentvidya-sliding-banner-track,
+.effect-zoom .contentvidya-sliding-banner-track,
+.effect-flip .contentvidya-sliding-banner-track,
+.effect-push-horizontal .contentvidya-sliding-banner-track,
+.effect-push-vertical .contentvidya-sliding-banner-track,
+.effect-wipe .contentvidya-sliding-banner-track,
+.effect-cube .contentvidya-sliding-banner-track,
+.effect-door .contentvidya-sliding-banner-track,
+.effect-fall .contentvidya-sliding-banner-track,
+.effect-crush .contentvidya-sliding-banner-track,
+.effect-peel-off .contentvidya-sliding-banner-track,
+.effect-curtain .contentvidya-sliding-banner-track {
   transform: none !important;
 }
 
-.effect-fade .chronos-sliding-slide,
-.effect-zoom .chronos-sliding-slide,
-.effect-flip .chronos-sliding-slide,
-.effect-push-horizontal .chronos-sliding-slide,
-.effect-push-vertical .chronos-sliding-slide,
-.effect-wipe .chronos-sliding-slide,
-.effect-cube .chronos-sliding-slide,
-.effect-door .chronos-sliding-slide,
-.effect-fall .chronos-sliding-slide,
-.effect-crush .chronos-sliding-slide,
-.effect-peel-off .chronos-sliding-slide,
-.effect-curtain .chronos-sliding-slide {
+.effect-fade .contentvidya-sliding-slide,
+.effect-zoom .contentvidya-sliding-slide,
+.effect-flip .contentvidya-sliding-slide,
+.effect-push-horizontal .contentvidya-sliding-slide,
+.effect-push-vertical .contentvidya-sliding-slide,
+.effect-wipe .contentvidya-sliding-slide,
+.effect-cube .contentvidya-sliding-slide,
+.effect-door .contentvidya-sliding-slide,
+.effect-fall .contentvidya-sliding-slide,
+.effect-crush .contentvidya-sliding-slide,
+.effect-peel-off .contentvidya-sliding-slide,
+.effect-curtain .contentvidya-sliding-slide {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
   opacity: 0; pointer-events: none;
@@ -217,33 +217,33 @@
    transition when it does — otherwise, since that flip moves it from one
    off-screen edge to the other, it would visibly sweep all the way across
    the visible banner even though it's never the slide being shown. */
-.effect-fade .chronos-sliding-slide.active, .effect-fade .chronos-sliding-slide.previous,
-.effect-zoom .chronos-sliding-slide.active, .effect-zoom .chronos-sliding-slide.previous,
-.effect-flip .chronos-sliding-slide.active, .effect-flip .chronos-sliding-slide.previous,
-.effect-push-horizontal .chronos-sliding-slide.active, .effect-push-horizontal .chronos-sliding-slide.previous,
-.effect-push-vertical .chronos-sliding-slide.active, .effect-push-vertical .chronos-sliding-slide.previous,
-.effect-wipe .chronos-sliding-slide.active, .effect-wipe .chronos-sliding-slide.previous,
-.effect-cube .chronos-sliding-slide.active, .effect-cube .chronos-sliding-slide.previous,
-.effect-door .chronos-sliding-slide.active, .effect-door .chronos-sliding-slide.previous,
-.effect-fall .chronos-sliding-slide.active, .effect-fall .chronos-sliding-slide.previous,
-.effect-crush .chronos-sliding-slide.active, .effect-crush .chronos-sliding-slide.previous,
-.effect-peel-off .chronos-sliding-slide.active, .effect-peel-off .chronos-sliding-slide.previous,
-.effect-curtain .chronos-sliding-slide.active, .effect-curtain .chronos-sliding-slide.previous {
+.effect-fade .contentvidya-sliding-slide.active, .effect-fade .contentvidya-sliding-slide.previous,
+.effect-zoom .contentvidya-sliding-slide.active, .effect-zoom .contentvidya-sliding-slide.previous,
+.effect-flip .contentvidya-sliding-slide.active, .effect-flip .contentvidya-sliding-slide.previous,
+.effect-push-horizontal .contentvidya-sliding-slide.active, .effect-push-horizontal .contentvidya-sliding-slide.previous,
+.effect-push-vertical .contentvidya-sliding-slide.active, .effect-push-vertical .contentvidya-sliding-slide.previous,
+.effect-wipe .contentvidya-sliding-slide.active, .effect-wipe .contentvidya-sliding-slide.previous,
+.effect-cube .contentvidya-sliding-slide.active, .effect-cube .contentvidya-sliding-slide.previous,
+.effect-door .contentvidya-sliding-slide.active, .effect-door .contentvidya-sliding-slide.previous,
+.effect-fall .contentvidya-sliding-slide.active, .effect-fall .contentvidya-sliding-slide.previous,
+.effect-crush .contentvidya-sliding-slide.active, .effect-crush .contentvidya-sliding-slide.previous,
+.effect-peel-off .contentvidya-sliding-slide.active, .effect-peel-off .contentvidya-sliding-slide.previous,
+.effect-curtain .contentvidya-sliding-slide.active, .effect-curtain .contentvidya-sliding-slide.previous {
   transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), clip-path 0.8s ease, filter 0.5s ease, box-shadow 0.6s ease;
 }
 
-.effect-fade .chronos-sliding-slide.active,
-.effect-zoom .chronos-sliding-slide.active,
-.effect-flip .chronos-sliding-slide.active,
-.effect-push-horizontal .chronos-sliding-slide.active,
-.effect-push-vertical .chronos-sliding-slide.active,
-.effect-wipe .chronos-sliding-slide.active,
-.effect-cube .chronos-sliding-slide.active,
-.effect-door .chronos-sliding-slide.active,
-.effect-fall .chronos-sliding-slide.active,
-.effect-crush .chronos-sliding-slide.active,
-.effect-peel-off .chronos-sliding-slide.active,
-.effect-curtain .chronos-sliding-slide.active {
+.effect-fade .contentvidya-sliding-slide.active,
+.effect-zoom .contentvidya-sliding-slide.active,
+.effect-flip .contentvidya-sliding-slide.active,
+.effect-push-horizontal .contentvidya-sliding-slide.active,
+.effect-push-vertical .contentvidya-sliding-slide.active,
+.effect-wipe .contentvidya-sliding-slide.active,
+.effect-cube .contentvidya-sliding-slide.active,
+.effect-door .contentvidya-sliding-slide.active,
+.effect-fall .contentvidya-sliding-slide.active,
+.effect-crush .contentvidya-sliding-slide.active,
+.effect-peel-off .contentvidya-sliding-slide.active,
+.effect-curtain .contentvidya-sliding-slide.active {
   opacity: 1; pointer-events: auto; z-index: 2;
 }
 
@@ -251,26 +251,26 @@
    in (a "zoom in" approach), outgoing slide continues growing past normal
    size while fading out, so it reads as passing by/toward the viewer
    instead of shrinking away. */
-.effect-zoom .chronos-sliding-slide { transform: scale(0.85); z-index: 1; }
-.effect-zoom .chronos-sliding-slide.active { transform: scale(1); z-index: 2; }
-.effect-zoom .chronos-sliding-slide.previous { transform: scale(1.18); z-index: 1; }
-.quality-detailed.effect-zoom .chronos-sliding-slide.active { animation: chronos-slide-blur-enter 0.6s ease-out; }
-.quality-detailed.effect-zoom .chronos-sliding-slide.previous { animation: chronos-slide-blur-exit 0.6s ease-in; }
+.effect-zoom .contentvidya-sliding-slide { transform: scale(0.85); z-index: 1; }
+.effect-zoom .contentvidya-sliding-slide.active { transform: scale(1); z-index: 2; }
+.effect-zoom .contentvidya-sliding-slide.previous { transform: scale(1.18); z-index: 1; }
+.quality-detailed.effect-zoom .contentvidya-sliding-slide.active { animation: contentvidya-slide-blur-enter 0.6s ease-out; }
+.quality-detailed.effect-zoom .contentvidya-sliding-slide.previous { animation: contentvidya-slide-blur-exit 0.6s ease-in; }
 
 /* flip — incoming slide rotates in face-on from behind; outgoing slide
    keeps rotating away on the same axis instead of resetting. "detailed"
    adds perspective depth and a raking shadow like the other 3D effects. */
-.effect-flip .chronos-sliding-banner-track { perspective: 1500px; }
-.effect-flip .chronos-sliding-slide { transform: rotateY(-180deg); transform-origin: center; backface-visibility: hidden; z-index: 1; }
-.effect-flip .chronos-sliding-slide.active { transform: rotateY(0deg); transform-origin: center; backface-visibility: hidden; z-index: 2; }
-.effect-flip .chronos-sliding-slide.previous { transform: rotateY(180deg); transform-origin: center; backface-visibility: hidden; z-index: 1; }
+.effect-flip .contentvidya-sliding-banner-track { perspective: 1500px; }
+.effect-flip .contentvidya-sliding-slide { transform: rotateY(-180deg); transform-origin: center; backface-visibility: hidden; z-index: 1; }
+.effect-flip .contentvidya-sliding-slide.active { transform: rotateY(0deg); transform-origin: center; backface-visibility: hidden; z-index: 2; }
+.effect-flip .contentvidya-sliding-slide.previous { transform: rotateY(180deg); transform-origin: center; backface-visibility: hidden; z-index: 1; }
 /* reverse rotation direction when navigating backward */
-.effect-flip .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: rotateY(180deg); }
-.effect-flip .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: rotateY(0deg); }
-.effect-flip .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: rotateY(-180deg); }
-.quality-detailed.effect-flip .chronos-sliding-banner-track { perspective: 2000px; }
-.quality-detailed.effect-flip .chronos-sliding-slide { transform-style: preserve-3d; }
-.quality-detailed.effect-flip .chronos-sliding-slide.active { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); }
+.effect-flip .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide { transform: rotateY(180deg); }
+.effect-flip .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.active { transform: rotateY(0deg); }
+.effect-flip .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.previous { transform: rotateY(-180deg); }
+.quality-detailed.effect-flip .contentvidya-sliding-banner-track { perspective: 2000px; }
+.quality-detailed.effect-flip .contentvidya-sliding-slide { transform-style: preserve-3d; }
+.quality-detailed.effect-flip .contentvidya-sliding-slide.active { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); }
 
 /* ==========================================================================
    Push Effects (Direction-Aware based on click/arrow direction)
@@ -280,28 +280,28 @@
    ========================================================================== */
 
 /* push-horizontal — Next pushes LEFT (incoming from right), Prev pushes RIGHT (incoming from left) */
-.effect-push-horizontal .chronos-sliding-slide { transform: translateX(100%); opacity: 1 !important; z-index: 1; }
-.effect-push-horizontal .chronos-sliding-slide.active { transform: translateX(0); opacity: 1 !important; z-index: 2; }
-.effect-push-horizontal .chronos-sliding-slide.previous { transform: translateX(-100%); opacity: 1 !important; z-index: 1; }
+.effect-push-horizontal .contentvidya-sliding-slide { transform: translateX(100%); opacity: 1 !important; z-index: 1; }
+.effect-push-horizontal .contentvidya-sliding-slide.active { transform: translateX(0); opacity: 1 !important; z-index: 2; }
+.effect-push-horizontal .contentvidya-sliding-slide.previous { transform: translateX(-100%); opacity: 1 !important; z-index: 1; }
 
-.effect-push-horizontal .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: translateX(-100%); }
-.effect-push-horizontal .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: translateX(0); }
-.effect-push-horizontal .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: translateX(100%); }
+.effect-push-horizontal .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide { transform: translateX(-100%); }
+.effect-push-horizontal .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.active { transform: translateX(0); }
+.effect-push-horizontal .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.previous { transform: translateX(100%); }
 
-.quality-detailed.effect-push-horizontal .chronos-sliding-slide.active { box-shadow: -16px 0 32px rgba(0, 0, 0, 0.3); }
-.quality-detailed.effect-push-horizontal .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { box-shadow: 16px 0 32px rgba(0, 0, 0, 0.3); }
+.quality-detailed.effect-push-horizontal .contentvidya-sliding-slide.active { box-shadow: -16px 0 32px rgba(0, 0, 0, 0.3); }
+.quality-detailed.effect-push-horizontal .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.active { box-shadow: 16px 0 32px rgba(0, 0, 0, 0.3); }
 
 /* push-vertical — Next pushes UP (incoming from bottom), Prev pushes DOWN (incoming from top) */
-.effect-push-vertical .chronos-sliding-slide { transform: translateY(100%); opacity: 1 !important; z-index: 1; }
-.effect-push-vertical .chronos-sliding-slide.active { transform: translateY(0); opacity: 1 !important; z-index: 2; }
-.effect-push-vertical .chronos-sliding-slide.previous { transform: translateY(-100%); opacity: 1 !important; z-index: 1; }
+.effect-push-vertical .contentvidya-sliding-slide { transform: translateY(100%); opacity: 1 !important; z-index: 1; }
+.effect-push-vertical .contentvidya-sliding-slide.active { transform: translateY(0); opacity: 1 !important; z-index: 2; }
+.effect-push-vertical .contentvidya-sliding-slide.previous { transform: translateY(-100%); opacity: 1 !important; z-index: 1; }
 
-.effect-push-vertical .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: translateY(-100%); }
-.effect-push-vertical .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: translateY(0); }
-.effect-push-vertical .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: translateY(100%); }
+.effect-push-vertical .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide { transform: translateY(-100%); }
+.effect-push-vertical .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.active { transform: translateY(0); }
+.effect-push-vertical .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.previous { transform: translateY(100%); }
 
-.quality-detailed.effect-push-vertical .chronos-sliding-slide.active { box-shadow: 0 -16px 32px rgba(0, 0, 0, 0.3); }
-.quality-detailed.effect-push-vertical .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3); }
+.quality-detailed.effect-push-vertical .contentvidya-sliding-slide.active { box-shadow: 0 -16px 32px rgba(0, 0, 0, 0.3); }
+.quality-detailed.effect-push-vertical .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.active { box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3); }
 
 /* wipe — the incoming slide sits fully visible and static underneath from
    the very start (no self-reveal animation of its own); the outgoing slide
@@ -312,14 +312,14 @@
    adds a light blur plus a shadow trailing the receding wipe edge, so the
    departing panel reads as physically sliding off rather than a mask
    animating. */
-.effect-wipe .chronos-sliding-slide { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); opacity: 1; z-index: 0; }
-.effect-wipe .chronos-sliding-slide.active { z-index: 1; }
-.effect-wipe .chronos-sliding-slide.previous { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); z-index: 2; transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+.effect-wipe .contentvidya-sliding-slide { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); opacity: 1; z-index: 0; }
+.effect-wipe .contentvidya-sliding-slide.active { z-index: 1; }
+.effect-wipe .contentvidya-sliding-slide.previous { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); z-index: 2; transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
 
-.effect-wipe .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+.effect-wipe .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.previous { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
 
-.quality-detailed.effect-wipe .chronos-sliding-slide.previous { box-shadow: -12px 0 24px rgba(0, 0, 0, 0.35); animation: chronos-slide-blur-exit 0.7s ease-in; }
-.quality-detailed.effect-wipe .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { box-shadow: 12px 0 24px rgba(0, 0, 0, 0.35); }
+.quality-detailed.effect-wipe .contentvidya-sliding-slide.previous { box-shadow: -12px 0 24px rgba(0, 0, 0, 0.35); animation: contentvidya-slide-blur-exit 0.7s ease-in; }
+.quality-detailed.effect-wipe .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.previous { box-shadow: 12px 0 24px rgba(0, 0, 0, 0.35); }
 
 /* cube — each slide is a face of the same physical cube: the incoming and
    outgoing faces are rotated 90deg around their shared vertical edge and
@@ -330,32 +330,32 @@
    hardcoded depth is what makes a "cube" look like it isn't one. "detailed"
    adds deeper perspective plus a raking shadow along the rotating edge so
    the box reads as solid; "light" keeps a flatter but still-real rotation. */
-.effect-cube .chronos-sliding-banner-track { perspective: 1500px; }
-.effect-cube .chronos-sliding-slide {
+.effect-cube .contentvidya-sliding-banner-track { perspective: 1500px; }
+.effect-cube .contentvidya-sliding-slide {
   transform: rotateY(-90deg) translateZ(var(--slider-half-width, 200px));
   transform-origin: left; opacity: 1; z-index: 1; transform-style: preserve-3d;
 }
 /* The shared cross-effect transition rule (.active, .previous — 3 class
-   selectors) is MORE specific than a plain ".effect-cube .chronos-sliding-slide"
+   selectors) is MORE specific than a plain ".effect-cube .contentvidya-sliding-slide"
    override (2 class selectors), so it wins regardless of source order. Its
    0.6s heavily front-loaded ease-out finishes ~95% of a 90deg turn in the
    first ~150ms — fine for a flat crossfade, but it makes a 3D rotation read
    as an instant cut instead of a visible flip. Override at matching
    specificity (.active/.previous again) with a slower, symmetric curve so
    the turn is actually perceivable throughout the transition. */
-.effect-cube .chronos-sliding-slide.active,
-.effect-cube .chronos-sliding-slide.previous {
+.effect-cube .contentvidya-sliding-slide.active,
+.effect-cube .contentvidya-sliding-slide.previous {
   transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1);
 }
-.effect-cube .chronos-sliding-slide.active { transform: rotateY(0deg) translateZ(0); transform-origin: left; z-index: 2; }
-.effect-cube .chronos-sliding-slide.previous { transform: rotateY(90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: right; z-index: 1; }
+.effect-cube .contentvidya-sliding-slide.active { transform: rotateY(0deg) translateZ(0); transform-origin: left; z-index: 2; }
+.effect-cube .contentvidya-sliding-slide.previous { transform: rotateY(90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: right; z-index: 1; }
 /* reverse which edge the cube hinges on when navigating backward */
-.effect-cube .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: rotateY(90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: right; }
-.effect-cube .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: rotateY(0deg) translateZ(0); transform-origin: right; }
-.effect-cube .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: rotateY(-90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: left; }
-.quality-detailed.effect-cube .chronos-sliding-banner-track { perspective: 2000px; }
-.quality-detailed.effect-cube .chronos-sliding-slide.active { animation: chronos-slide-blur-enter 0.8s ease-out; box-shadow: -30px 0 60px rgba(0, 0, 0, 0.4); }
-.quality-detailed.effect-cube .chronos-sliding-slide.previous { animation: chronos-slide-blur-exit 0.8s ease-in; }
+.effect-cube .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide { transform: rotateY(90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: right; }
+.effect-cube .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.active { transform: rotateY(0deg) translateZ(0); transform-origin: right; }
+.effect-cube .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.previous { transform: rotateY(-90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: left; }
+.quality-detailed.effect-cube .contentvidya-sliding-banner-track { perspective: 2000px; }
+.quality-detailed.effect-cube .contentvidya-sliding-slide.active { animation: contentvidya-slide-blur-enter 0.8s ease-out; box-shadow: -30px 0 60px rgba(0, 0, 0, 0.4); }
+.quality-detailed.effect-cube .contentvidya-sliding-slide.previous { animation: contentvidya-slide-blur-exit 0.8s ease-in; }
 
 /* cube's connecting side wall: a real 6-sided cube would show one of its
    other faces during the turn instead of the front face just fading to a
@@ -365,82 +365,82 @@
    rotates away from flush, this child rotates smoothly INTO flush,
    handing off the "what's facing the viewer" role exactly as the parent
    goes edge-on, instead of both going dark at once. */
-.chronos-cube-side {
+.contentvidya-cube-side {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
   background: linear-gradient(to right, rgba(15, 15, 25, 0.92), rgba(70, 70, 95, 0.55));
   opacity: 0;
   backface-visibility: hidden;
   transition: opacity 0.15s linear;
 }
-.effect-cube .chronos-sliding-slide .chronos-cube-side { transform: rotateY(90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: left; }
-.effect-cube .chronos-sliding-slide.previous .chronos-cube-side { transform: rotateY(-90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: right; }
-.effect-cube .chronos-sliding-slide.active .chronos-cube-side,
-.effect-cube .chronos-sliding-slide.previous .chronos-cube-side { opacity: 1; }
+.effect-cube .contentvidya-sliding-slide .contentvidya-cube-side { transform: rotateY(90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: left; }
+.effect-cube .contentvidya-sliding-slide.previous .contentvidya-cube-side { transform: rotateY(-90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: right; }
+.effect-cube .contentvidya-sliding-slide.active .contentvidya-cube-side,
+.effect-cube .contentvidya-sliding-slide.previous .contentvidya-cube-side { opacity: 1; }
 
-.effect-cube .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide .chronos-cube-side { transform: rotateY(-90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: right; }
-.effect-cube .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous .chronos-cube-side { transform: rotateY(90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: left; }
+.effect-cube .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide .contentvidya-cube-side { transform: rotateY(-90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: right; }
+.effect-cube .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.previous .contentvidya-cube-side { transform: rotateY(90deg) translateZ(var(--slider-half-width, 200px)); transform-origin: left; }
 
 /* door — two "doors" swing open from the center-right; the outgoing slide
    swings away in the opposite rotation so both halves feel symmetric.
    "detailed" adds a shadow that darkens as each door approaches edge-on. */
-.effect-door .chronos-sliding-banner-track { perspective: 1500px; }
-.effect-door .chronos-sliding-slide { transform: rotateY(-90deg); transform-origin: right; opacity: 0; }
-.effect-door .chronos-sliding-slide.active { transform: rotateY(0deg); transform-origin: right; opacity: 1; }
-.effect-door .chronos-sliding-slide.previous { transform: rotateY(90deg); transform-origin: right; opacity: 0; z-index: 1; }
+.effect-door .contentvidya-sliding-banner-track { perspective: 1500px; }
+.effect-door .contentvidya-sliding-slide { transform: rotateY(-90deg); transform-origin: right; opacity: 0; }
+.effect-door .contentvidya-sliding-slide.active { transform: rotateY(0deg); transform-origin: right; opacity: 1; }
+.effect-door .contentvidya-sliding-slide.previous { transform: rotateY(90deg); transform-origin: right; opacity: 0; z-index: 1; }
 /* hinge on the left edge instead when navigating backward */
-.effect-door .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: rotateY(90deg); transform-origin: left; opacity: 0; }
-.effect-door .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: rotateY(0deg); transform-origin: left; opacity: 1; }
-.effect-door .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: rotateY(-90deg); transform-origin: left; opacity: 0; }
-.quality-detailed.effect-door .chronos-sliding-banner-track { perspective: 2000px; }
-.quality-detailed.effect-door .chronos-sliding-slide { transform-style: preserve-3d; }
-.quality-detailed.effect-door .chronos-sliding-slide.active { animation: chronos-slide-blur-enter 0.8s ease-out; box-shadow: -30px 0 60px rgba(0, 0, 0, 0.4); }
-.quality-detailed.effect-door .chronos-sliding-slide.previous { animation: chronos-slide-blur-exit 0.8s ease-in; }
+.effect-door .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide { transform: rotateY(90deg); transform-origin: left; opacity: 0; }
+.effect-door .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.active { transform: rotateY(0deg); transform-origin: left; opacity: 1; }
+.effect-door .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.previous { transform: rotateY(-90deg); transform-origin: left; opacity: 0; }
+.quality-detailed.effect-door .contentvidya-sliding-banner-track { perspective: 2000px; }
+.quality-detailed.effect-door .contentvidya-sliding-slide { transform-style: preserve-3d; }
+.quality-detailed.effect-door .contentvidya-sliding-slide.active { animation: contentvidya-slide-blur-enter 0.8s ease-out; box-shadow: -30px 0 60px rgba(0, 0, 0, 0.4); }
+.quality-detailed.effect-door .contentvidya-sliding-slide.previous { animation: contentvidya-slide-blur-exit 0.8s ease-in; }
 
 /* fall — incoming slide tips down into place; outgoing slide continues
    falling away backward instead of resetting to the same starting tilt.
    "detailed" adds a ground shadow that grounds the tipping motion. */
-.effect-fall .chronos-sliding-banner-track { perspective: 1200px; }
-.effect-fall .chronos-sliding-slide { transform: rotateX(90deg); transform-origin: bottom; opacity: 0; }
-.effect-fall .chronos-sliding-slide.active { transform: rotateX(0deg); opacity: 1; }
-.effect-fall .chronos-sliding-slide.previous { transform: rotateX(-90deg); transform-origin: top; opacity: 0; z-index: 1; }
+.effect-fall .contentvidya-sliding-banner-track { perspective: 1200px; }
+.effect-fall .contentvidya-sliding-slide { transform: rotateX(90deg); transform-origin: bottom; opacity: 0; }
+.effect-fall .contentvidya-sliding-slide.active { transform: rotateX(0deg); opacity: 1; }
+.effect-fall .contentvidya-sliding-slide.previous { transform: rotateX(-90deg); transform-origin: top; opacity: 0; z-index: 1; }
 /* tip in from the top instead when navigating backward */
-.effect-fall .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide { transform: rotateX(-90deg); transform-origin: top; opacity: 0; }
-.effect-fall .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.active { transform: rotateX(0deg); transform-origin: top; opacity: 1; }
-.effect-fall .chronos-sliding-banner-track.dir-prev .chronos-sliding-slide.previous { transform: rotateX(90deg); transform-origin: bottom; opacity: 0; }
-.quality-detailed.effect-fall .chronos-sliding-banner-track { perspective: 1800px; }
-.quality-detailed.effect-fall .chronos-sliding-slide { transform-style: preserve-3d; }
-.quality-detailed.effect-fall .chronos-sliding-slide.active { animation: chronos-slide-blur-enter 0.75s ease-out; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4); }
-.quality-detailed.effect-fall .chronos-sliding-slide.previous { animation: chronos-slide-blur-exit 0.75s ease-in; }
+.effect-fall .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide { transform: rotateX(-90deg); transform-origin: top; opacity: 0; }
+.effect-fall .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.active { transform: rotateX(0deg); transform-origin: top; opacity: 1; }
+.effect-fall .contentvidya-sliding-banner-track.dir-prev .contentvidya-sliding-slide.previous { transform: rotateX(90deg); transform-origin: bottom; opacity: 0; }
+.quality-detailed.effect-fall .contentvidya-sliding-banner-track { perspective: 1800px; }
+.quality-detailed.effect-fall .contentvidya-sliding-slide { transform-style: preserve-3d; }
+.quality-detailed.effect-fall .contentvidya-sliding-slide.active { animation: contentvidya-slide-blur-enter 0.75s ease-out; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4); }
+.quality-detailed.effect-fall .contentvidya-sliding-slide.previous { animation: contentvidya-slide-blur-exit 0.75s ease-in; }
 
 /* crush — outgoing slide is squashed flat and blurred like an impact, while
    the incoming slide expands back up to full size. "light" mode uses a
    much subtler blur so it's cheap to composite; "detailed" leans into it. */
-.effect-crush .chronos-sliding-slide {
+.effect-crush .contentvidya-sliding-slide {
   transform: scaleY(0.3) scaleX(1.15);
   filter: blur(1px);
   z-index: 0;
   transition-duration: 0.6s;
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
-.effect-crush .chronos-sliding-slide.active {
+.effect-crush .contentvidya-sliding-slide.active {
   transform: scaleY(1) scaleX(1);
   filter: blur(0);
   z-index: 2;
 }
-.effect-crush .chronos-sliding-slide.previous {
+.effect-crush .contentvidya-sliding-slide.previous {
   opacity: 0;
   transform: scaleY(0.05) scaleX(1.3);
   filter: blur(2px);
   z-index: 1;
 }
-.quality-detailed.effect-crush .chronos-sliding-slide { filter: blur(2px); }
-.quality-detailed.effect-crush .chronos-sliding-slide.previous { filter: blur(4px); }
+.quality-detailed.effect-crush .contentvidya-sliding-slide { filter: blur(2px); }
+.quality-detailed.effect-crush .contentvidya-sliding-slide.previous { filter: blur(4px); }
 
 /* peel-off — the outgoing slide sits on top like a sticker and peels away
    from its top-right corner, casting a shadow, to reveal the incoming slide
    sitting fully visible underneath. "light" mode uses a flatter, smaller
    shadow; "detailed" casts a deeper one for more separation. */
-.effect-peel-off .chronos-sliding-slide {
+.effect-peel-off .contentvidya-sliding-slide {
   opacity: 0;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   z-index: 0;
@@ -448,12 +448,12 @@
   transition-duration: 0.85s;
   transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
 }
-.effect-peel-off .chronos-sliding-slide.active {
+.effect-peel-off .contentvidya-sliding-slide.active {
   opacity: 1;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   z-index: 1;
 }
-.effect-peel-off .chronos-sliding-slide.previous {
+.effect-peel-off .contentvidya-sliding-slide.previous {
   opacity: 1;
   clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
   transform: rotate(-8deg) translate(-10%, 3%);
@@ -461,50 +461,50 @@
   box-shadow: -10px 10px 20px rgba(0, 0, 0, 0.3);
   z-index: 3;
 }
-.quality-detailed.effect-peel-off .chronos-sliding-slide.previous { box-shadow: -24px 24px 48px rgba(0, 0, 0, 0.45); }
+.quality-detailed.effect-peel-off .contentvidya-sliding-slide.previous { box-shadow: -24px 24px 48px rgba(0, 0, 0, 0.45); }
 
 /* curtain — a real two-panel curtain, not a mask animating over a flat
    image. The incoming slide sits fully visible and static underneath, like
    wipe/push. The outgoing slide's own flat background/overlay/content fade
    out almost instantly (its content lives in the panels now); two separate
-   .chronos-curtain-panel divs (each showing its own half of the same
+   .contentvidya-curtain-panel divs (each showing its own half of the same
    image, via background-size:200%) sit on top and physically part down
    the middle — sliding out to their edge and folding back slightly in 3D
    (rotateY), like real fabric swinging open, rather than a flat clip
    revealing what's already sitting still underneath. "detailed" adds a
    deeper shadow along the trailing fold. */
-.effect-curtain .chronos-sliding-slide { opacity: 1; z-index: 0; }
-.effect-curtain .chronos-sliding-slide.active { z-index: 1; }
-.effect-curtain .chronos-sliding-slide.previous { z-index: 2; }
-.effect-curtain .chronos-sliding-slide.previous .chronos-sliding-bg,
-.effect-curtain .chronos-sliding-slide.previous .chronos-sliding-overlay,
-.effect-curtain .chronos-sliding-slide.previous .chronos-sliding-content {
+.effect-curtain .contentvidya-sliding-slide { opacity: 1; z-index: 0; }
+.effect-curtain .contentvidya-sliding-slide.active { z-index: 1; }
+.effect-curtain .contentvidya-sliding-slide.previous { z-index: 2; }
+.effect-curtain .contentvidya-sliding-slide.previous .contentvidya-sliding-bg,
+.effect-curtain .contentvidya-sliding-slide.previous .contentvidya-sliding-overlay,
+.effect-curtain .contentvidya-sliding-slide.previous .contentvidya-sliding-content {
   opacity: 0;
   transition: opacity 0.1s linear;
 }
 
-.effect-curtain .chronos-sliding-banner-track { perspective: 1600px; }
-.chronos-curtain-panel {
+.effect-curtain .contentvidya-sliding-banner-track { perspective: 1600px; }
+.contentvidya-curtain-panel {
   position: absolute; top: 0; width: 50%; height: 100%;
   background-size: 200% 100%;
   opacity: 0; pointer-events: none;
   transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
 }
-.chronos-curtain-panel-left { left: 0; background-position: left center; transform-origin: left center; transform: translateX(0) rotateY(0deg); }
-.chronos-curtain-panel-right { right: 0; background-position: right center; transform-origin: right center; transform: translateX(0) rotateY(0deg); }
+.contentvidya-curtain-panel-left { left: 0; background-position: left center; transform-origin: left center; transform: translateX(0) rotateY(0deg); }
+.contentvidya-curtain-panel-right { right: 0; background-position: right center; transform-origin: right center; transform: translateX(0) rotateY(0deg); }
 
-.effect-curtain .chronos-sliding-slide.previous .chronos-curtain-panel { opacity: 1; }
-.effect-curtain .chronos-sliding-slide.previous .chronos-curtain-panel-left {
+.effect-curtain .contentvidya-sliding-slide.previous .contentvidya-curtain-panel { opacity: 1; }
+.effect-curtain .contentvidya-sliding-slide.previous .contentvidya-curtain-panel-left {
   transform: translateX(-100%) rotateY(-25deg);
   box-shadow: 16px 0 32px rgba(0, 0, 0, 0.4);
 }
-.effect-curtain .chronos-sliding-slide.previous .chronos-curtain-panel-right {
+.effect-curtain .contentvidya-sliding-slide.previous .contentvidya-curtain-panel-right {
   transform: translateX(100%) rotateY(25deg);
   box-shadow: -16px 0 32px rgba(0, 0, 0, 0.4);
 }
-.quality-detailed.effect-curtain .chronos-sliding-banner-track { perspective: 2000px; }
-.quality-detailed.effect-curtain .chronos-sliding-slide.previous .chronos-curtain-panel-left { box-shadow: 30px 0 60px rgba(0, 0, 0, 0.5); }
-.quality-detailed.effect-curtain .chronos-sliding-slide.previous .chronos-curtain-panel-right { box-shadow: -30px 0 60px rgba(0, 0, 0, 0.5); }
+.quality-detailed.effect-curtain .contentvidya-sliding-banner-track { perspective: 2000px; }
+.quality-detailed.effect-curtain .contentvidya-sliding-slide.previous .contentvidya-curtain-panel-left { box-shadow: 30px 0 60px rgba(0, 0, 0, 0.5); }
+.quality-detailed.effect-curtain .contentvidya-sliding-slide.previous .contentvidya-curtain-panel-right { box-shadow: -30px 0 60px rgba(0, 0, 0, 0.5); }
 
 
 

@@ -72,8 +72,8 @@ Override any CSS variable to customise the design system:
 
 ```css
 :root {
-  --chronos-color-primary: #e11d48;   /* your brand colour */
-  --chronos-font-family: 'Poppins', sans-serif;
+  --contentvidya-color-primary: #e11d48;   /* your brand colour */
+  --contentvidya-font-family: 'Poppins', sans-serif;
 }
 ```
 

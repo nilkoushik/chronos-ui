@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WYSIWYG Renderer — Chronos UI</title>
+  <title>WYSIWYG Renderer — ContentVidya UI</title>
   <meta name="description" content="Safely renders rich-text HTML from a CMS with scoped typography styles and dark-mode support." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="../css/docs.css" />
@@ -17,7 +17,7 @@
     <aside class="docs-sidebar">
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
-        <span class="sidebar-brand-name">Chronos<span>UI</span></span>
+        <span class="sidebar-brand-name">ContentVidya<span>UI</span></span>
         <span class="sidebar-version">v1.4.2</span>
       </a>
       <div class="sidebar-version-picker" style="padding: 0.5rem 1.25rem; border-bottom: 1px solid var(--border);">
@@ -40,8 +40,8 @@
       <a href="wysiwyg-renderer.html" class="sidebar-link active"><span class="sidebar-link-icon">✍</span> WYSIWYG Renderer</a>
       <a href="rich-text-editor.html" class="sidebar-link"><span class="sidebar-link-icon">📝</span> Rich Text Editor</a>
         <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
-        <a href="https://github.com/nilkoushik/chronos-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
-        <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+        <a href="https://github.com/nilkoushik/contentvidya-ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
+        <a href="https://www.npmjs.com/package/@contentvidya/ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
         <a href="../dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
         <a href="../allure-report/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">✅</span> Test Report</a>
       </nav>
@@ -51,11 +51,11 @@
     <div class="docs-topbar">
       <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
       <div class="topbar-breadcrumb">
-        <a href="../index.html">Chronos UI</a><span class="sep">/</span>
+        <a href="../index.html">ContentVidya UI</a><span class="sep">/</span>
         <span class="current">WYSIWYG Renderer</span>
       </div>
       <div class="topbar-actions">
-        <a href="https://github.com/nilkoushik/chronos-ui/blob/main/src/components/WYSIWYGRenderer.lite.tsx"
+        <a href="https://github.com/nilkoushik/contentvidya-ui/blob/main/src/components/WYSIWYGRenderer.lite.tsx"
            target="_blank" rel="noopener" class="btn-github">View Source</a>
       </div>
     </div>
@@ -70,7 +70,7 @@
 
       <!-- Install -->
       <div class="install-banner">
-        <code>npm install @chronos-ui/core</code>
+        <code>npm install @contentvidya/ui</code>
         <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
       </div>
 
@@ -88,7 +88,7 @@
               <span class="preview-url">&lt;wysiwyg-renderer&gt; Playground</span>
             </div>
             <div class="preview-body" id="preview-container">
-              <wysiwyg-renderer id="interactive-preview" html-content="<h2>Premium Editorial Layout</h2><p>This component safely renders HTML content and processes external media embeds in real-time:</p><h3>YouTube Media Integration</h3><div class='chronos-social-embed' data-platform='youtube' data-url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'></div><h3>Social X / Twitter Post</h3><div class='chronos-social-embed' data-platform='x' data-url='https://x.com/NASA/status/1684947936109961216'></div><p>All scripts and scoped layouts load dynamically and securely.</p>"></wysiwyg-renderer>
+              <wysiwyg-renderer id="interactive-preview" html-content="<h2>Premium Editorial Layout</h2><p>This component safely renders HTML content and processes external media embeds in real-time:</p><h3>YouTube Media Integration</h3><div class='contentvidya-social-embed' data-platform='youtube' data-url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'></div><h3>Social X / Twitter Post</h3><div class='contentvidya-social-embed' data-platform='x' data-url='https://x.com/NASA/status/1684947936109961216'></div><p>All scripts and scoped layouts load dynamically and securely.</p>"></wysiwyg-renderer>
             </div>
           </div>
         </div>
@@ -141,8 +141,8 @@
           
     <div class="code-block">
       <button class="copy-btn">Copy</button>
-      <pre><code><span class="kw">import</span> WysiwygRenderer <span class="kw">from</span> <span class="str">'@chronos-ui/core/react/WysiwygRenderer'</span>;
-<span class="kw">import</span> <span class="str">'@chronos-ui/core/theme.css'</span>;
+      <pre><code><span class="kw">import</span> WysiwygRenderer <span class="kw">from</span> <span class="str">'@contentvidya/ui/react/WysiwygRenderer'</span>;
+<span class="kw">import</span> <span class="str">'@contentvidya/ui/theme.css'</span>;
 
 <span class="cm">// html comes <span class="kw">from</span> your CMS API response</span>
 <span class="kw">const</span> html = <span class="str">`&lt;<span class="tag">h2</span>&gt;Autumn Collection&lt;/<span class="tag">h2</span>&gt;&lt;<span class="tag">p</span>&gt;...&lt;/<span class="tag">p</span>&gt;`</span>;
@@ -155,7 +155,7 @@
     <div class="code-block">
       <button class="copy-btn">Copy</button>
       <pre><code>&lt;<span class="tag">script</span> lang=<span class="str">"ts"</span>&gt;
-  <span class="kw">import</span> WysiwygRenderer <span class="kw">from</span> <span class="str">'@chronos-ui/core/svelte/WysiwygRenderer.svelte'</span>;
+  <span class="kw">import</span> WysiwygRenderer <span class="kw">from</span> <span class="str">'@contentvidya/ui/svelte/WysiwygRenderer.svelte'</span>;
   <span class="kw">const</span> html = <span class="str">'&lt;<span class="tag">h2</span>&gt;Hello&lt;/<span class="tag">h2</span>&gt;&lt;<span class="tag">p</span>&gt;World&lt;/<span class="tag">p</span>&gt;'</span>;
 &lt;/<span class="tag">script</span>&gt;
 
@@ -167,7 +167,7 @@
     <div class="code-block">
       <button class="copy-btn">Copy</button>
       <pre><code>&lt;<span class="tag">script</span> type=<span class="str">"module"</span>
-  src=<span class="str">"node_modules/@chronos-ui/core/webcomponents/WysiwygRenderer.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+  src=<span class="str">"node_modules/@contentvidya/ui/webcomponents/WysiwygRenderer.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
 
 &lt;<span class="tag">wysiwyg-renderer</span>
   content=<span class="str">"&lt;<span class="tag">h2</span>&gt;Hello&lt;/<span class="tag">h2</span>&gt;&lt;<span class="tag">p</span>&gt;World&lt;/<span class="tag">p</span>&gt;"</span>
@@ -344,8 +344,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const pascalName = "WYSIWYGRenderer";
     const wcTagName = "wysiwyg-renderer";
 
-    const reactCode = `import ${pascalName} from '@chronos-ui/core/react/${pascalName}';
-import '@chronos-ui/core/theme.css';
+    const reactCode = `import ${pascalName} from '@contentvidya/ui/react/${pascalName}';
+import '@contentvidya/ui/theme.css';
 
 <${pascalName}
   ${reactProps.join('\n  ')}
@@ -361,7 +361,7 @@ import '@chronos-ui/core/theme.css';
     });
 
     const svelteCode = `<script lang="ts">
-  import ${pascalName} from '@chronos-ui/core/svelte/${pascalName}.svelte';
+  import ${pascalName} from '@contentvidya/ui/svelte/${pascalName}.svelte';
 <\/script>
 
 <${pascalName}
@@ -376,7 +376,7 @@ import '@chronos-ui/core/theme.css';
       return `${a.name}="${a.value.replace(/"/g, '\\"')}"`;
     });
 
-    const wcCode = `<` + `script type="module" src="node_modules/@chronos-ui/core/webcomponents/${pascalName}.js"></` + `script>
+    const wcCode = `<` + `script type="module" src="node_modules/@contentvidya/ui/webcomponents/${pascalName}.js"></` + `script>
 
 <${wcTagName}
   ${wcAttrs.join('\n  ')}

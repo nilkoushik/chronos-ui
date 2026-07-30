@@ -5,7 +5,7 @@ const browser = await chromium.launch({
 });
 const page = await browser.newPage();
 
-const runsResp = await page.goto('https://api.github.com/repos/nilkoushik/chronos-ui/actions/runs?per_page=10');
+const runsResp = await page.goto('https://api.github.com/repos/nilkoushik/contentvidya-ui/actions/runs?per_page=10');
 const runsData = await runsResp.json();
 const run = runsData.workflow_runs.find(r => r.name === 'Release' && r.head_sha.startsWith('06c4eeb'));
 if (!run) {
@@ -18,7 +18,7 @@ if (!run) {
 
   if (run.status === 'completed') {
     if (run.conclusion !== 'success') {
-      const crResp = await page.goto('https://api.github.com/repos/nilkoushik/chronos-ui/commits/06c4eeb/check-runs');
+      const crResp = await page.goto('https://api.github.com/repos/nilkoushik/contentvidya-ui/commits/06c4eeb/check-runs');
       const crData = await crResp.json();
       for (const cr of crData.check_runs || []) {
         if (cr.name !== 'release') continue;
@@ -32,7 +32,7 @@ if (!run) {
       const npmData = await npmResp.json();
       console.log('npm dist-tags:', JSON.stringify(npmData['dist-tags']));
 
-      const relResp = await page.goto('https://api.github.com/repos/nilkoushik/chronos-ui/releases?per_page=2');
+      const relResp = await page.goto('https://api.github.com/repos/nilkoushik/contentvidya-ui/releases?per_page=2');
       const relData = await relResp.json();
       for (const r of relData) {
         console.log('=== release', r.tag_name, '===');

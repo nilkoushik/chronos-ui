@@ -81,7 +81,7 @@ export default function GridBanner(props: GridBannerProps) {
   return (
     <div
       ref={rootRef}
-      class={`chronos-grid-banner ${props.className || ''}`}
+      class={`contentvidya-grid-banner ${props.className || ''}`}
       style={{
         gridTemplateColumns: state.gridTemplateColumns,
         height: props.config?.height || '',
@@ -89,9 +89,9 @@ export default function GridBanner(props: GridBannerProps) {
       }}
     >
       {props.items?.map((item, index) => (
-        <a href={item.mapLinks?.[0]?.url || '#'} class="chronos-grid-item" key={item.id || index}>
+        <a href={item.mapLinks?.[0]?.url || '#'} class="contentvidya-grid-item" key={item.id || index}>
           <div
-            class={`chronos-grid-img-wrap ${state.showSkeleton ? 'chronos-image-shimmer' : ''}`}
+            class={`contentvidya-grid-img-wrap ${state.showSkeleton ? 'contentvidya-image-shimmer' : ''}`}
             style={{
               height: props.config?.height || '',
               minHeight: props.config?.minHeight || '',
@@ -106,7 +106,7 @@ export default function GridBanner(props: GridBannerProps) {
                   loop
                   muted
                   playsInline
-                  class="chronos-grid-img"
+                  class="contentvidya-grid-img"
                   style={{
                     objectFit: 'cover',
                     width: '100%',
@@ -119,7 +119,7 @@ export default function GridBanner(props: GridBannerProps) {
                 <img
                   src={item.media?.url}
                   alt={item.title}
-                  class="chronos-grid-img"
+                  class="contentvidya-grid-img"
                   style={{
                     objectFit: 'cover',
                     width: '100%',
@@ -132,12 +132,12 @@ export default function GridBanner(props: GridBannerProps) {
           </div>
           <Show when={state.showSkeleton}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: item.textAlignment || 'center', width: '100%', marginTop: '12px' }}>
-              <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '70%', height: '14px', margin: '0 0 6px 0' }} />
-              <div class="chronos-skeleton-text chronos-image-shimmer" style={{ width: '40%', height: '10px', margin: 0 }} />
+              <div class="contentvidya-skeleton-text contentvidya-image-shimmer" style={{ width: '70%', height: '14px', margin: '0 0 6px 0' }} />
+              <div class="contentvidya-skeleton-text contentvidya-image-shimmer" style={{ width: '40%', height: '10px', margin: 0 }} />
             </div>
           </Show>
           <Show when={!state.showSkeleton}>
-            <div class="chronos-grid-title" style={{ textAlign: item.textAlignment || 'center' }}>{item.title}</div>
+            <div class="contentvidya-grid-title" style={{ textAlign: item.textAlignment || 'center' }}>{item.title}</div>
           </Show>
         </a>
       ))}

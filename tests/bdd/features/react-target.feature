@@ -1,5 +1,5 @@
 Feature: React target
-  As a consumer of @chronos-ui/core
+  As a consumer of @contentvidya/ui
   I want every component's compiled React output to render correctly
   So that React apps get the same behavior as the Svelte and Web Component targets
 
@@ -31,7 +31,7 @@ Feature: React target
       | primaryMedia   | {"id":"p1","title":"Premium Sound","media":{"type":"image","url":"/assets/img/placeholder-05.svg"}} |
       | secondaryMedia | [{"id":"s1","title":"Wireless Comfort","media":{"type":"image","url":"/assets/img/placeholder-06.svg"}}] |
     Then it should render without any page errors
-    And it should contain an element matching ".chronos-media-primary img" with alt text "Premium Sound"
+    And it should contain an element matching ".contentvidya-media-primary img" with alt text "Premium Sound"
 
   Scenario: RowScrollable renders its title and items
     Given I mount the "RowScrollable" React component with:
@@ -45,7 +45,7 @@ Feature: React target
       | items  | [{"id":"1","title":"Slide 1"},{"id":"2","title":"Slide 2"}]         |
       | config | {"backgroundEffect":"waves","autoStart":false,"showDots":true} |
     Then it should render without any page errors
-    And it should contain 2 elements matching "button.chronos-sliding-dot"
+    And it should contain 2 elements matching "button.contentvidya-sliding-dot"
     And the canvas should be actively animating
 
   Scenario: AlternatingSlider renders the configured columns
@@ -53,7 +53,7 @@ Feature: React target
       | items  | [{"id":"1","title":"Ocean Breeze"},{"id":"2","title":"Forest Trail"}] |
       | config | {"columns":2,"autoStart":false}                                        |
     Then it should render without any page errors
-    And it should contain 2 elements matching ".chronos-alt-col"
+    And it should contain 2 elements matching ".contentvidya-alt-col"
 
   Scenario: TimerWidget renders a countdown and animates its background effect
     Given I mount the "TimerWidget" React component with:
@@ -61,7 +61,7 @@ Feature: React target
       | targetDate       | 2099-12-31T23:59:59Z  |
       | backgroundEffect | rain                  |
     Then it should render without any page errors
-    And it should contain 4 elements matching ".chronos-timer-block"
+    And it should contain 4 elements matching ".contentvidya-timer-block"
     And the canvas should be actively animating
 
   Scenario: WysiwygRenderer renders semantic HTML

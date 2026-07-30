@@ -1,5 +1,5 @@
 Feature: SlidingBanner
-  As a consumer of @chronos-ui/core
+  As a consumer of @contentvidya/ui
   I want the SlidingBanner web component to render slides, transitions, and background effects
   So that hero sliders work reliably across every configuration
 
@@ -8,9 +8,9 @@ Feature: SlidingBanner
       | items  | [{"id":"1","title":"Slide 1"},{"id":"2","title":"Slide 2"},{"id":"3","title":"Slide 3"}] |
       | config | {"showDots":true,"showNextPrev":true} |
     Then it should render without any page errors
-    And it should contain 3 elements matching "button.chronos-sliding-dot"
-    And it should contain 1 elements matching "button.chronos-sliding-arrow.prev"
-    And it should contain 1 elements matching "button.chronos-sliding-arrow.next"
+    And it should contain 3 elements matching "button.contentvidya-sliding-dot"
+    And it should contain 1 elements matching "button.contentvidya-sliding-arrow.prev"
+    And it should contain 1 elements matching "button.contentvidya-sliding-arrow.next"
     And the component should have no serious accessibility violations
 
   Scenario Outline: Renders every transition effect without error

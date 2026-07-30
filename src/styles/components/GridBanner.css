@@ -1,52 +1,52 @@
 /* Styles for GridBanner */
 /* Styles for GridBanner */
 /* GridBanner Styles */
-.chronos-grid-banner {
+.contentvidya-grid-banner {
           display: grid;
-          gap: var(--chronos-spacing-md);
-          font-family: var(--chronos-font-family);
+          gap: var(--contentvidya-spacing-md);
+          font-family: var(--contentvidya-font-family);
         }
         @media (max-width: 768px) {
-          .chronos-grid-banner {
+          .contentvidya-grid-banner {
             grid-template-columns: repeat(2, 1fr) !important;
           }
         }
         @media (max-width: 480px) {
-          .chronos-grid-banner {
+          .contentvidya-grid-banner {
             grid-template-columns: 1fr !important;
           }
         }
-        .chronos-grid-item {
+        .contentvidya-grid-item {
           display: flex;
           flex-direction: column;
           text-decoration: none;
-          background: var(--chronos-color-surface);
-          border-radius: var(--chronos-border-radius-sm);
+          background: var(--contentvidya-color-surface);
+          border-radius: var(--contentvidya-border-radius-sm);
           overflow: hidden;
-          border: var(--chronos-border-width) solid var(--chronos-color-border);
+          border: var(--contentvidya-border-width) solid var(--contentvidya-color-border);
           transition: transform 0.2s, box-shadow 0.2s;
         }
-        .chronos-grid-item:hover {
+        .contentvidya-grid-item:hover {
           transform: translateY(-4px);
-          box-shadow: var(--chronos-shadow-md);
+          box-shadow: var(--contentvidya-shadow-md);
         }
-        .chronos-grid-img-wrap {
+        .contentvidya-grid-img-wrap {
           aspect-ratio: 16/9;
           overflow: hidden;
         }
-        .chronos-grid-img {
+        .contentvidya-grid-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
           transition: transform 0.3s;
         }
-        .chronos-grid-item:hover .chronos-grid-img {
+        .contentvidya-grid-item:hover .contentvidya-grid-img {
           transform: scale(1.05);
         }
-        .chronos-grid-title {
-          padding: var(--chronos-spacing-sm);
+        .contentvidya-grid-title {
+          padding: var(--contentvidya-spacing-sm);
           font-weight: 600;
-          color: var(--chronos-color-text-main);
+          color: var(--contentvidya-color-text-main);
           text-align: center;
         }
 

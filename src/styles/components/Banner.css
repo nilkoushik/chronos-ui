@@ -1,57 +1,57 @@
 /* Styles for Banner */
 /* Styles for Banner */
 /* Banner Styles */
-.chronos-banner {
+.contentvidya-banner {
           position: relative;
           background-size: cover;
           background-position: center;
-          border-radius: var(--chronos-border-radius-md);
+          border-radius: var(--contentvidya-border-radius-md);
           overflow: hidden;
           min-height: 400px;
           display: flex;
           flex-direction: column;
-          font-family: var(--chronos-font-family);
-          color: var(--chronos-color-text-main);
-          background-color: var(--chronos-color-surface);
-          border: var(--chronos-border-width) solid var(--chronos-color-border);
+          font-family: var(--contentvidya-font-family);
+          color: var(--contentvidya-color-text-main);
+          background-color: var(--contentvidya-color-surface);
+          border: var(--contentvidya-border-width) solid var(--contentvidya-color-border);
         }
-        .chronos-banner-overlay {
+        .contentvidya-banner-overlay {
           flex: 1;
           display: flex;
           flex-direction: column;
           justify-content: center;
-          padding: var(--chronos-spacing-xl);
+          padding: var(--contentvidya-spacing-xl);
           background: rgba(0, 0, 0, 0.4);
         }
-        .chronos-banner-content {
+        .contentvidya-banner-content {
           max-width: 800px;
           margin: 0 auto;
         }
-        .chronos-banner-title {
-          font-size: var(--chronos-font-size-title);
-          margin-bottom: var(--chronos-spacing-sm);
+        .contentvidya-banner-title {
+          font-size: var(--contentvidya-font-size-title);
+          margin-bottom: var(--contentvidya-spacing-sm);
           color: #fff;
           margin-top: 0;
         }
-        .chronos-banner-subtitle {
-          font-size: var(--chronos-font-size-subtitle);
-          margin-bottom: var(--chronos-spacing-lg);
+        .contentvidya-banner-subtitle {
+          font-size: var(--contentvidya-font-size-subtitle);
+          margin-bottom: var(--contentvidya-spacing-lg);
           color: #f1f5f9;
         }
-        .chronos-banner-cta {
+        .contentvidya-banner-cta {
           display: inline-block;
-          background-color: var(--chronos-color-primary);
+          background-color: var(--contentvidya-color-primary);
           color: #fff;
-          padding: var(--chronos-spacing-sm) var(--chronos-spacing-lg);
-          border-radius: var(--chronos-border-radius-sm);
+          padding: var(--contentvidya-spacing-sm) var(--contentvidya-spacing-lg);
+          border-radius: var(--contentvidya-border-radius-sm);
           text-decoration: none;
           font-weight: 600;
           transition: filter 0.2s;
         }
-        .chronos-banner-cta:hover {
+        .contentvidya-banner-cta:hover {
           filter: brightness(1.1);
         }
-        .chronos-banner-bg-effect {
+        .contentvidya-banner-bg-effect {
           display: block;
         }
 
@@ -61,28 +61,28 @@
            default (fill/stroke transparent) — only the pulse ring, if any, is
            ever drawn — matching the original hotspot behavior while fixing
            polygon anti-aliasing and giving polygons a working pulse effect. */
-        .chronos-banner-hotspots-svg {
+        .contentvidya-banner-hotspots-svg {
           position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
           pointer-events: none;
         }
-        .chronos-hotspot-visual rect,
-        .chronos-hotspot-visual ellipse,
-        .chronos-hotspot-visual polygon {
+        .contentvidya-hotspot-visual rect,
+        .contentvidya-hotspot-visual ellipse,
+        .contentvidya-hotspot-visual polygon {
           fill: transparent;
           stroke: none;
         }
-        .chronos-hotspot-pulse-ring {
+        .contentvidya-hotspot-pulse-ring {
           fill: transparent;
           stroke: #f472b6;
           stroke-width: 2;
           transform-box: fill-box;
           transform-origin: center;
-          animation: chronosHotspotPulse 1.6s ease-out infinite;
+          animation: contentvidyaHotspotPulse 1.6s ease-out infinite;
         }
-        @keyframes chronosHotspotPulse {
+        @keyframes contentvidyaHotspotPulse {
           0% { transform: scale(0.92); opacity: 0.9; }
           100% { transform: scale(1.35); opacity: 0; }
         }
@@ -90,7 +90,7 @@
            user's OS-level reduced-motion preference by freezing the ring in
            a single, still, low-opacity state instead of animating it. */
         @media (prefers-reduced-motion: reduce) {
-          .chronos-hotspot-pulse-ring {
+          .contentvidya-hotspot-pulse-ring {
             animation: none;
             opacity: 0.6;
           }
@@ -101,10 +101,10 @@
            min-width/min-height floor applied here via inline style so every
            hotspot's click/tap target meets WCAG 2.5.8 (24x24 CSS px minimum)
            regardless of how small the authored shape is. */
-        .chronos-hotspot-hit {
+        .contentvidya-hotspot-hit {
           display: block;
         }
-        .chronos-hotspot {
+        .contentvidya-hotspot {
           position: absolute;
           inset: 0;
           display: block;
@@ -114,8 +114,8 @@
         /* Visible, high-contrast focus indicator (WCAG 2.4.7 / 2.4.11).
            Uses outline (not box-shadow) so it still renders in Windows
            High Contrast / forced-colors mode. */
-        .chronos-hotspot:focus-visible {
-          outline: 3px solid var(--chronos-color-primary, #7c3aed);
+        .contentvidya-hotspot:focus-visible {
+          outline: 3px solid var(--contentvidya-color-primary, #7c3aed);
           outline-offset: 2px;
           border-radius: 2px;
         }
@@ -124,7 +124,7 @@
            visible while either the link or the tooltip itself is hovered or
            focused, doesn't obscure other content, and disappears on
            mouse-out/blur without requiring a pointer gesture to dismiss. */
-        .chronos-hotspot-tooltip {
+        .contentvidya-hotspot-tooltip {
           position: absolute;
           bottom: calc(100% + 8px);
           left: 50%;
@@ -143,14 +143,14 @@
           transition: opacity 0.15s ease, transform 0.15s ease;
           z-index: 3;
         }
-        .chronos-hotspot:hover .chronos-hotspot-tooltip,
-        .chronos-hotspot:focus-visible .chronos-hotspot-tooltip {
+        .contentvidya-hotspot:hover .contentvidya-hotspot-tooltip,
+        .contentvidya-hotspot:focus-visible .contentvidya-hotspot-tooltip {
           opacity: 1;
           visibility: visible;
           transform: translateX(-50%) translateY(0);
         }
         @media (prefers-reduced-motion: reduce) {
-          .chronos-hotspot-tooltip {
+          .contentvidya-hotspot-tooltip {
             transition: none;
           }
         }

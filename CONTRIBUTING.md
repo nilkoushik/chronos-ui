@@ -1,4 +1,4 @@
-# Contributing to Chronos UI
+# Contributing to ContentVidya UI
 
 Thank you for your interest in contributing! This document outlines the process for submitting changes.
 
@@ -6,7 +6,7 @@ Thank you for your interest in contributing! This document outlines the process 
 
 ```bash
 git clone https://github.com/nilkoushik/contentvidya-ui.git
-cd chronos-ui
+cd contentvidya-ui
 npm install
 ```
 
@@ -25,7 +25,7 @@ docs/           # GitHub Pages documentation site
 ### Adding or Modifying a Component
 
 1. Edit or create a file in `src/components/` using Mitosis JSX syntax (`.lite.tsx`).
-2. Add or update corresponding styles in `src/styles/theme.css` using the `--chronos-*` CSS variable naming convention.
+2. Add or update corresponding styles in `src/styles/theme.css` using the `--contentvidya-*` CSS variable naming convention.
 3. Run `npm run build` to compile to all targets and verify the output.
 4. Update the component's documentation page in `docs/components/`.
 

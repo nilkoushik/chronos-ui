@@ -1,5 +1,5 @@
 Feature: AnnouncementBar
-  As a consumer of @chronos-ui/core
+  As a consumer of @contentvidya/ui
   I want the AnnouncementBar web component to render its message, colors, and optional link
   So that site-wide announcements display correctly
 

@@ -20,7 +20,7 @@ const SRC_DIR       = path.join(ROOT, 'src', 'components');
 const MANIFEST      = require('./docs-manifest.json');
 const PROPS_DB      = require('./docs-props.json');   // prop descriptions live here, NOT in .lite.tsx
 const GITHUB_USER   = 'nilkoushik';
-const REPO          = 'chronos-ui';
+const REPO          = 'contentvidya-ui';
 const GITHUB_URL    = `https://github.com/${GITHUB_USER}/${REPO}`;
 const PACKAGE_JSON  = require('../package.json');
 const VERSION       = PACKAGE_JSON.version;
@@ -48,7 +48,7 @@ function copyDir(src, dest) {
 
 // ── Default Interactive Web Component Elements ─────────────────────────────
 const DEFAULT_WC_ELEMENTS = {
-  'banner': `<chronos-banner id="interactive-preview" title="Experience Vibrant Colors &amp; Premium Innovation" subtitle="Explore our premium collection of responsive components. Zero dependencies, ultra lightweight." cta-text="Explore Collection" media='{"type":"image","url":"../assets/img/placeholder-01.svg"}' config='{"align":"center","padding":"lg","bgPosition":"center","hotspotMinTargetSize":24,"backgroundEffect":"particles"}'></chronos-banner>`,
+  'banner': `<contentvidya-banner id="interactive-preview" title="Experience Vibrant Colors &amp; Premium Innovation" subtitle="Explore our premium collection of responsive components. Zero dependencies, ultra lightweight." cta-text="Explore Collection" media='{"type":"image","url":"../assets/img/placeholder-01.svg"}' config='{"align":"center","padding":"lg","bgPosition":"center","hotspotMinTargetSize":24,"backgroundEffect":"particles"}'></contentvidya-banner>`,
   
   'announcement-bar': `<announcement-bar id="interactive-preview" message="🚀 Free shipping on orders over $75 — Shop the sale →" background-color="#8b5cf6" text-color="#ffffff" map-links='[{"url":"#"}]'></announcement-bar>`,
   
@@ -64,9 +64,9 @@ const DEFAULT_WC_ELEMENTS = {
   
   'timer-widget': `<timer-widget id="interactive-preview" title="Special Sale Ends In:" target-date="2027-12-31T23:59:59Z" variant="dark" background-image-url="../assets/images/summer_sale.png" background-position="center" overlay="rgba(0, 0, 0, 0.45)" background-effect="rain" expired-text="This offer has expired" width="auto" height="auto"></timer-widget>`,
   
-  'wysiwyg-renderer': `<wysiwyg-renderer id="interactive-preview" html-content="<h2>Premium Editorial Layout</h2><p>This component safely renders HTML content and processes external media embeds in real-time:</p><h3>YouTube Media Integration</h3><div class='chronos-social-embed' data-platform='youtube' data-url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'></div><h3>Social X / Twitter Post</h3><div class='chronos-social-embed' data-platform='x' data-url='https://x.com/NASA/status/1684947936109961216'></div><p>All scripts and scoped layouts load dynamically and securely.</p>"></wysiwyg-renderer>`,
+  'wysiwyg-renderer': `<wysiwyg-renderer id="interactive-preview" html-content="<h2>Premium Editorial Layout</h2><p>This component safely renders HTML content and processes external media embeds in real-time:</p><h3>YouTube Media Integration</h3><div class='contentvidya-social-embed' data-platform='youtube' data-url='https://www.youtube.com/watch?v=dQw4w9WgXcQ'></div><h3>Social X / Twitter Post</h3><div class='contentvidya-social-embed' data-platform='x' data-url='https://x.com/NASA/status/1684947936109961216'></div><p>All scripts and scoped layouts load dynamically and securely.</p>"></wysiwyg-renderer>`,
   
-  'rich-text-editor': `<rich-text-editor id="interactive-preview" initial-content="<p>Welcome to <strong>Chronos Editor Playground</strong>! Configure the toolbar options on the right in real-time to customize my controls.</p>" config='{"toolbar":["fullscreen","source","bold","italic","underline","strikeThrough","code","quote","clear","headings","foreColor","backColor","justifyLeft","justifyCenter","justifyRight","image","link","table","unorderedList","orderedList","horizontalRule","video","social","insertButton","addWidget","save","classInput"]}'></rich-text-editor>`
+  'rich-text-editor': `<rich-text-editor id="interactive-preview" initial-content="<p>Welcome to <strong>ContentVidya Editor Playground</strong>! Configure the toolbar options on the right in real-time to customize my controls.</p>" config='{"toolbar":["fullscreen","source","bold","italic","underline","strikeThrough","code","quote","clear","headings","foreColor","backColor","justifyLeft","justifyCenter","justifyRight","image","link","table","unorderedList","orderedList","horizontalRule","video","social","insertButton","addWidget","save","classInput"]}'></rich-text-editor>`
 };
 
 // ── Sidebar HTML (shared across every page) ────────────────────────────────
@@ -83,7 +83,7 @@ function buildSidebar(activeSlug, isLandingPage) {
     <aside class="docs-sidebar">
       <a href="${prefix}index.html" class="sidebar-brand">
         <div class="sidebar-logo">⏱</div>
-        <span class="sidebar-brand-name">Chronos<span>UI</span></span>
+        <span class="sidebar-brand-name">ContentVidya<span>UI</span></span>
         <span class="sidebar-version">v${VERSION}</span>
       </a>
       <div class="sidebar-version-picker" style="padding: 0.5rem 1.25rem; border-bottom: 1px solid var(--border);">
@@ -98,7 +98,7 @@ function buildSidebar(activeSlug, isLandingPage) {
         ${links}
         <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
         <a href="${GITHUB_URL}" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
-        <a href="https://www.npmjs.com/package/@chronos-ui/core" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+        <a href="https://www.npmjs.com/package/@contentvidya/ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
         <a href="${prefix}dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
         <a href="${prefix}allure-report/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">✅</span> Test Report</a>
       </nav>
@@ -188,7 +188,7 @@ function buildControlsForm(component) {
       return `
         <div class="control-group">
           <label class="control-label">Initial HTML Content</label>
-          <textarea name="initialContent" class="control-input" style="height:80px;"><p>Welcome to <strong>Chronos Editor Playground</strong>! Configure the toolbar options on the right in real-time to customize my controls.</p></textarea>
+          <textarea name="initialContent" class="control-input" style="height:80px;"><p>Welcome to <strong>ContentVidya Editor Playground</strong>! Configure the toolbar options on the right in real-time to customize my controls.</p></textarea>
         </div>
         <div class="control-group">
           <label class="control-label">Available Classes (JSON Array)</label>
@@ -206,7 +206,7 @@ function buildControlsForm(component) {
       return `
         <div class="control-group">
           <label class="control-label">content <span class="control-type-badge">string</span></label>
-          <textarea name="content" class="control-input" style="height:140px;"><h2>Premium Editorial Layout</h2><p>This component safely renders HTML content and processes external media embeds in real-time:</p><h3>YouTube Media Integration</h3><div class="chronos-social-embed" data-platform="youtube" data-url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"></div><h3>Social X / Twitter Post</h3><div class="chronos-social-embed" data-platform="x" data-url="https://x.com/NASA/status/1684947936109961216"></div><p>All scripts and scoped layouts load dynamically and securely.</p></textarea>
+          <textarea name="content" class="control-input" style="height:140px;"><h2>Premium Editorial Layout</h2><p>This component safely renders HTML content and processes external media embeds in real-time:</p><h3>YouTube Media Integration</h3><div class="contentvidya-social-embed" data-platform="youtube" data-url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"></div><h3>Social X / Twitter Post</h3><div class="contentvidya-social-embed" data-platform="x" data-url="https://x.com/NASA/status/1684947936109961216"></div><p>All scripts and scoped layouts load dynamically and securely.</p></textarea>
         </div>
       `;
     }
@@ -361,7 +361,7 @@ function buildPage(component) {
   const { name, slug, icon, examples, notes, previewLabel, previewCss, extra } = component;
 
   const pascalName = name.replace(/\s+(\w)/g, (_, c) => c.toUpperCase()).replace(/^\w/, c => c.toUpperCase());
-  const tagName = slug === 'banner' ? 'chronos-banner' : slug;
+  const tagName = slug === 'banner' ? 'contentvidya-banner' : slug;
   
   const props = getProps(name);
   const sidebar = buildSidebar(slug, false);
@@ -378,7 +378,7 @@ function buildPage(component) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${name} — Chronos UI</title>
+  <title>${name} — ContentVidya UI</title>
   <meta name="description" content="${component.cardDesc}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="../css/docs.css" />
@@ -394,7 +394,7 @@ function buildPage(component) {
     <div class="docs-topbar">
       <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
       <div class="topbar-breadcrumb">
-        <a href="../index.html">Chronos UI</a><span class="sep">/</span>
+        <a href="../index.html">ContentVidya UI</a><span class="sep">/</span>
         <span class="current">${name}</span>
       </div>
       <div class="topbar-actions">
@@ -413,7 +413,7 @@ function buildPage(component) {
 
       <!-- Install -->
       <div class="install-banner">
-        <code>npm install @chronos-ui/core</code>
+        <code>npm install @contentvidya/ui</code>
         <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
       </div>
 
@@ -651,8 +651,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const pascalName = "${pascalName}";
     const wcTagName = "${tagName}";
 
-    const reactCode = \`import \${pascalName} from '@chronos-ui/core/react/\${pascalName}';
-import '@chronos-ui/core/theme.css';
+    const reactCode = \`import \${pascalName} from '@contentvidya/ui/react/\${pascalName}';
+import '@contentvidya/ui/theme.css';
 
 <\${pascalName}
   \${reactProps.join('\\n  ')}
@@ -668,7 +668,7 @@ import '@chronos-ui/core/theme.css';
     });
 
     const svelteCode = \`<script lang="ts">
-  import \${pascalName} from '@chronos-ui/core/svelte/\${pascalName}.svelte';
+  import \${pascalName} from '@contentvidya/ui/svelte/\${pascalName}.svelte';
 <\\/script>
 
 <\${pascalName}
@@ -683,7 +683,7 @@ import '@chronos-ui/core/theme.css';
       return \`\${a.name}="\${a.value.replace(/"/g, '\\\\"')}"\`;
     });
 
-    const wcCode = \`<\` + \`script type="module" src="node_modules/@chronos-ui/core/webcomponents/\${pascalName}.js"></\` + \`script>
+    const wcCode = \`<\` + \`script type="module" src="node_modules/@contentvidya/ui/webcomponents/\${pascalName}.js"></\` + \`script>
 
 <\${wcTagName}
   \${wcAttrs.join('\\n  ')}
@@ -737,7 +737,7 @@ function buildLandingPage() {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chronos UI — Universal Component Library</title>
+  <title>ContentVidya UI — Universal Component Library</title>
   <script>
     if (window.location.pathname.endsWith('/' + '${MAJOR_VERSION}')) {
       window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
@@ -820,7 +820,7 @@ function buildLandingPage() {
 
         <!-- Install -->
         <div class="install-banner" style="text-align:left;max-width:480px;margin:0 auto 3rem;">
-          <code>npm install @chronos-ui/core</code>
+          <code>npm install @contentvidya/ui</code>
           <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
         </div>
       </section>
@@ -870,7 +870,7 @@ function main() {
     fs.mkdirSync(COMPONENTS_DIR, { recursive: true });
   }
 
-  console.log(`\n📖  Generating Chronos UI docs for ${MAJOR_VERSION}...\n`);
+  console.log(`\n📖  Generating ContentVidya UI docs for ${MAJOR_VERSION}...\n`);
 
   // 1. Copy static assets, css, and js to versioned folder
   copyDir(path.join(DOCS_DIR, 'css'), path.join(VERSION_DIR, 'css'));
@@ -906,7 +906,7 @@ function main() {
 </head>
 <body style="background:#0a0a0f; color:#f0f0ff; font-family:sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; margin:0;">
   <div style="text-align:center;">
-    <p style="margin-bottom:1rem; font-size:1.2rem;">Redirecting to Chronos UI documentation (${MAJOR_VERSION})...</p>
+    <p style="margin-bottom:1rem; font-size:1.2rem;">Redirecting to ContentVidya UI documentation (${MAJOR_VERSION})...</p>
     <p><a href="${MAJOR_VERSION}/index.html" style="color:#a78bfa; text-decoration:underline;">Click here if you are not redirected automatically</a></p>
   </div>
 </body>

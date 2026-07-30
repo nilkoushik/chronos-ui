@@ -13,19 +13,19 @@ export default function AnnouncementBar(props: AnnouncementBarProps) {
 
   return (
     <div
-      class={`chronos-announcement-bar ${props.className || ''}`}
+      class={`contentvidya-announcement-bar ${props.className || ''}`}
       style={{
         backgroundColor: props.backgroundColor || 'var(--violet, #8b5cf6)',
         color: props.textColor || '#ffffff'
       }}
     >
       <Show when={props.mapLinks && props.mapLinks.length > 0}>
-        <a href={props.mapLinks?.[0]?.url} class="chronos-announcement-link">
+        <a href={props.mapLinks?.[0]?.url} class="contentvidya-announcement-link">
           {props.message}
         </a>
       </Show>
       <Show when={!(props.mapLinks && props.mapLinks.length > 0)}>
-        <span class="chronos-announcement-text">{props.message}</span>
+        <span class="contentvidya-announcement-text">{props.message}</span>
       </Show>
     </div>
   );

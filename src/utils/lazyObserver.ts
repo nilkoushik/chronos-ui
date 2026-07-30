@@ -1,4 +1,4 @@
-// Shared IntersectionObserver registry used by chronos-ui widgets for lazy/deferred
+// Shared IntersectionObserver registry used by contentvidya-ui widgets for lazy/deferred
 // mounting. Widgets on the same page that request the same threshold+rootMargin share
 // a single IntersectionObserver instance instead of each creating their own.
 

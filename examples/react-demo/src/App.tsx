@@ -1,36 +1,36 @@
 import { useState, useEffect } from 'react'
-import '@chronos-ui/core/theme.css'
-import '@chronos-ui/core/styles/components/Banner.css'
-import '@chronos-ui/core/styles/components/AnnouncementBar.css'
-import '@chronos-ui/core/styles/components/GridBanner.css'
-import '@chronos-ui/core/styles/components/MediaGrid.css'
-import '@chronos-ui/core/styles/components/RowScrollable.css'
-import '@chronos-ui/core/styles/components/TimerWidget.css'
-import '@chronos-ui/core/styles/components/WysiwygRenderer.css'
-import '@chronos-ui/core/styles/components/RichTextEditor.css'
-import '@chronos-ui/core/styles/components/SlidingBanner.css'
-import '@chronos-ui/core/styles/components/AlternatingSlider.css'
+import '@contentvidya/ui/theme.css'
+import '@contentvidya/ui/styles/components/Banner.css'
+import '@contentvidya/ui/styles/components/AnnouncementBar.css'
+import '@contentvidya/ui/styles/components/GridBanner.css'
+import '@contentvidya/ui/styles/components/MediaGrid.css'
+import '@contentvidya/ui/styles/components/RowScrollable.css'
+import '@contentvidya/ui/styles/components/TimerWidget.css'
+import '@contentvidya/ui/styles/components/WysiwygRenderer.css'
+import '@contentvidya/ui/styles/components/RichTextEditor.css'
+import '@contentvidya/ui/styles/components/SlidingBanner.css'
+import '@contentvidya/ui/styles/components/AlternatingSlider.css'
 
 // @ts-ignore
-import Banner from '@chronos-ui/core/react/Banner'
+import Banner from '@contentvidya/ui/react/Banner'
 // @ts-ignore
-import AnnouncementBar from '@chronos-ui/core/react/AnnouncementBar'
+import AnnouncementBar from '@contentvidya/ui/react/AnnouncementBar'
 // @ts-ignore
-import GridBanner from '@chronos-ui/core/react/GridBanner'
+import GridBanner from '@contentvidya/ui/react/GridBanner'
 // @ts-ignore
-import MediaGrid from '@chronos-ui/core/react/MediaGrid'
+import MediaGrid from '@contentvidya/ui/react/MediaGrid'
 // @ts-ignore
-import RowScrollable from '@chronos-ui/core/react/RowScrollable'
+import RowScrollable from '@contentvidya/ui/react/RowScrollable'
 // @ts-ignore
-import TimerWidget from '@chronos-ui/core/react/TimerWidget'
+import TimerWidget from '@contentvidya/ui/react/TimerWidget'
 // @ts-ignore
-import WysiwygRenderer from '@chronos-ui/core/react/WysiwygRenderer'
+import WysiwygRenderer from '@contentvidya/ui/react/WysiwygRenderer'
 // @ts-ignore
-import RichTextEditor from '@chronos-ui/core/react/RichTextEditor'
+import RichTextEditor from '@contentvidya/ui/react/RichTextEditor'
 // @ts-ignore
-import SlidingBanner from '@chronos-ui/core/react/SlidingBanner'
+import SlidingBanner from '@contentvidya/ui/react/SlidingBanner'
 // @ts-ignore
-import AlternatingSlider from '@chronos-ui/core/react/AlternatingSlider'
+import AlternatingSlider from '@contentvidya/ui/react/AlternatingSlider'
 
 // Default template states
 const DEFAULTS = {
@@ -59,7 +59,7 @@ const DEFAULTS = {
     }
   },
   AnnouncementBar: {
-    message: "⚡ FLASH SALE: Save 25% off all accessories today only! Code: CHRONOS25",
+    message: "⚡ FLASH SALE: Save 25% off all accessories today only! Code: CONTENTVIDYA25",
     backgroundColor: "#8b5cf6",
     textColor: "#ffffff",
     mapLinks: [{ url: "/sale" }]
@@ -150,7 +150,7 @@ const DEFAULTS = {
   <ul style="margin-left: 20px; list-style-type: disc; margin-bottom: 12px;">
     <li><strong>Bold</strong> and <em>italic</em> styled text</li>
     <li>Inline code blocks like <code>const score = 100;</code></li>
-    <li>Custom hyperlinks like <a href="#" style="color:#3b82f6; text-decoration:underline;">Chronos Homepage</a></li>
+    <li>Custom hyperlinks like <a href="#" style="color:#3b82f6; text-decoration:underline;">ContentVidya Homepage</a></li>
   </ul>
   <blockquote style="border-left: 4px solid #8b5cf6; padding-left: 12px; font-style: italic; color: #94a3b8; margin: 15px 0;">
     "This is a blockquote rendered using the core CSS styles. Beautiful, semantic, and simple."
@@ -274,7 +274,7 @@ export default function App() {
     }
 
     const pluginImport = BG_EFFECT_PLUGIN_COMPONENTS.includes(activeTab)
-      ? `\n// Optional: swap in your own canvas animation engine per-instance\n// (falls back to the built-in effects above when omitted).\n// import { defaultBackgroundEffectPlugin } from '@chronos-ui/core/react/utils/backgroundEffects';\n// const myPlugin = { start: (canvas, effect, ctxBox) => { /* ... */ }, stop: (ctxBox) => { /* ... */ } };`
+      ? `\n// Optional: swap in your own canvas animation engine per-instance\n// (falls back to the built-in effects above when omitted).\n// import { defaultBackgroundEffectPlugin } from '@contentvidya/ui/react/utils/backgroundEffects';\n// const myPlugin = { start: (canvas, effect, ctxBox) => { /* ... */ }, stop: (ctxBox) => { /* ... */ } };`
       : '';
     const pluginProp = activeTab === 'TimerWidget'
       ? '\n      backgroundEffectPlugin={myPlugin} // <- pass above the closing tag'
@@ -282,9 +282,9 @@ export default function App() {
         ? '\n      // add backgroundEffectPlugin: myPlugin inside the config={{ ... }} object above'
         : '';
 
-    return `import ${activeTab} from '@chronos-ui/core/react/${activeTab}';
-import '@chronos-ui/core/theme.css';
-import '@chronos-ui/core/styles/components/${activeTab}.css';
+    return `import ${activeTab} from '@contentvidya/ui/react/${activeTab}';
+import '@contentvidya/ui/theme.css';
+import '@contentvidya/ui/styles/components/${activeTab}.css';
 ${pluginImport}
 
 function App() {
@@ -312,7 +312,7 @@ ${propLines.join('\n')}${pluginProp}
     }
 
     const pluginScript = BG_EFFECT_PLUGIN_COMPONENTS.includes(activeTab)
-      ? `\n  // Optional: swap in your own canvas animation engine per-instance\n  // (falls back to the built-in effects above when omitted).\n  // import { defaultBackgroundEffectPlugin } from '@chronos-ui/core/svelte/utils/backgroundEffects';\n  // const myPlugin = { start: (canvas, effect, ctxBox) => { /* ... */ }, stop: (ctxBox) => { /* ... */ } };`
+      ? `\n  // Optional: swap in your own canvas animation engine per-instance\n  // (falls back to the built-in effects above when omitted).\n  // import { defaultBackgroundEffectPlugin } from '@contentvidya/ui/svelte/utils/backgroundEffects';\n  // const myPlugin = { start: (canvas, effect, ctxBox) => { /* ... */ }, stop: (ctxBox) => { /* ... */ } };`
       : '';
     const pluginProp = activeTab === 'TimerWidget'
       ? '\n  backgroundEffectPlugin={myPlugin}'
@@ -322,9 +322,9 @@ ${propLines.join('\n')}${pluginProp}
       : '';
 
     return `<script>
-  import ${activeTab} from '@chronos-ui/core/svelte/${activeTab}.svelte';
-  import '@chronos-ui/core/theme.css';
-  import '@chronos-ui/core/styles/components/${activeTab}.css';
+  import ${activeTab} from '@contentvidya/ui/svelte/${activeTab}.svelte';
+  import '@contentvidya/ui/theme.css';
+  import '@contentvidya/ui/styles/components/${activeTab}.css';
 ${pluginScript}
 </script>
 ${pluginConfigHint}
@@ -357,9 +357,9 @@ ${propLines.join('\n')}${pluginProp}
       : '';
 
     return `<!-- Include global variables and module script -->
-<link rel="stylesheet" href="node_modules/@chronos-ui/core/theme.css" />
-<link rel="stylesheet" href="node_modules/@chronos-ui/core/styles/components/${activeTab}.css" />
-<script type="module" src="node_modules/@chronos-ui/core/webcomponents/${activeTab}.js"></script>
+<link rel="stylesheet" href="node_modules/@contentvidya/ui/theme.css" />
+<link rel="stylesheet" href="node_modules/@contentvidya/ui/styles/components/${activeTab}.css" />
+<script type="module" src="node_modules/@contentvidya/ui/webcomponents/${activeTab}.js"></script>
 
 <${kebabCase}
 ${attrLines.join('\n')}
@@ -405,14 +405,14 @@ ${pluginScript}`;
           </span>
           <div>
             <h1 className="text-xl font-bold bg-gradient-to-r from-white via-slate-200 to-indigo-400 bg-clip-text text-transparent">
-              Chronos UI Playground
+              ContentVidya UI Playground
             </h1>
             <p className="text-xs text-slate-400">Interactive Framework-Agnostic Component Lab</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <a
-            href="https://github.com/nilkoushik/chronos-ui"
+            href="https://github.com/nilkoushik/contentvidya-ui"
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800/40 px-3 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:bg-slate-800 hover:text-white"

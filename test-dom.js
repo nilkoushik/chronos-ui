@@ -1,6 +1,6 @@
 const { JSDOM } = require('jsdom');
 const dom = new JSDOM(`<!DOCTYPE html><html><body>
-  <h2 class="chronos-banner-title">
+  <h2 class="contentvidya-banner-title">
     <template data-el="div-banner-3"><!-- props.title --></template>
   </h2>
 </body></html>`);

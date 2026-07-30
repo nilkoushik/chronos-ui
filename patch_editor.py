@@ -1,6 +1,6 @@
 import re
 
-file_path = r'c:\projects\cms\chronos-ui\src\components\RichTextEditor.lite.tsx'
+file_path = r'c:\projects\cms\contentvidya-ui\src\components\RichTextEditor.lite.tsx'
 with open(file_path, 'r', encoding='utf-8') as f:
     text = f.read()
 

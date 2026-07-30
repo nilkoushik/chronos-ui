@@ -1,5 +1,5 @@
 Feature: RowScrollable
-  As a consumer of @chronos-ui/core
+  As a consumer of @contentvidya/ui
   I want the RowScrollable web component to render a horizontally scrollable card row
   So that trending/product rows display and its arrow controls behave correctly
 

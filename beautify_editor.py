@@ -175,7 +175,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     confirmWidget() {
       state.showWidgetModal = false;
       state.restoreSelection();
-      let html = `<div class="chronos-widget" data-widget="${state.selectedWidget}" style="padding: 24px; border: 2px dashed rgba(139,92,246,0.5); background: rgba(139,92,246,0.05); text-align: center; border-radius: 12px; margin: 16px 0; color: #a78bfa; font-weight: 600;">[Chronos Widget: ${state.selectedWidget.toUpperCase()}]</div><p><br></p>`;
+      let html = `<div class="contentvidya-widget" data-widget="${state.selectedWidget}" style="padding: 24px; border: 2px dashed rgba(139,92,246,0.5); background: rgba(139,92,246,0.05); text-align: center; border-radius: 12px; margin: 16px 0; color: #a78bfa; font-weight: 600;">[ContentVidya Widget: ${state.selectedWidget.toUpperCase()}]</div><p><br></p>`;
       document.execCommand('insertHTML', false, html);
       state.syncContent();
     },
@@ -234,7 +234,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 
   return (
     <div 
-      class={`chronos-rich-text-editor flex flex-col rounded-xl overflow-hidden relative ${state.isFullscreen ? 'fixed inset-0 z-[9999]' : ''}`}
+      class={`contentvidya-rich-text-editor flex flex-col rounded-xl overflow-hidden relative ${state.isFullscreen ? 'fixed inset-0 z-[9999]' : ''}`}
       style={{
         boxSizing: 'border-box',
         background: '#0f172a',
@@ -433,7 +433,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
                   Insert Component
                 </h3>
                 <div class="flex flex-col gap-2 mb-6">
-                  <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Select Chronos Widget</label>
+                  <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Select ContentVidya Widget</label>
                   <select class="bg-black/30 border border-white/10 rounded-lg px-4 py-3 w-full text-sm outline-none text-white focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-all appearance-none" value={state.selectedWidget} onChange={(e) => state.selectedWidget = e.target.value}>
                     <option value="banner" class="bg-slate-800">Banner Component</option>
                     <option value="grid-banner" class="bg-slate-800">Grid Banner Component</option>
@@ -468,5 +468,5 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 }
 """
 
-with codecs.open(r"c:\projects\cms\chronos-ui\src\components\RichTextEditor.lite.tsx", "w", "utf-8") as f:
+with codecs.open(r"c:\projects\cms\contentvidya-ui\src\components\RichTextEditor.lite.tsx", "w", "utf-8") as f:
     f.write(content)
