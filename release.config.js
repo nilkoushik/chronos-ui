@@ -15,13 +15,14 @@ module.exports = {
     // Bump package.json's version and `npm publish` (build runs first via
     // this repo's own "prepublishOnly" script).
     '@semantic-release/npm',
-    // Publish @contentvidya/ui, the deprecated compat wrapper that forwards
-    // to @contentvidya/ui, pinned to the exact version just published above.
-    // Kept as its own step (not folded into @semantic-release/npm) because
-    // it's a second, separate package living in compat/contentvidya-ui-core.
-    ['@semantic-release/exec', {
-      publishCmd: 'NEXT_RELEASE_VERSION=${nextRelease.version} node scripts/publish-compat-wrapper.js'
-    }],
+    // NOTE: releases used to also publish @chronos-ui/core, a compat wrapper
+    // forwarding to this package, via an @semantic-release/exec step. The
+    // rename has landed and consumers have had a forwarding version to migrate
+    // from, so 1.4.2 is the last version published under the old name — every
+    // release after it ships under the new brand only. @chronos-ui/core stays
+    // on npm frozen at 1.4.2 (already marked deprecated) and simply receives
+    // no further versions.
+    //
     // Create the GitHub Release for the new tag, with the generated notes
     // attached, at the same time the tag itself is created.
     '@semantic-release/github',
