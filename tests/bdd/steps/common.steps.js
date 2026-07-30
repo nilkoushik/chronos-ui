@@ -90,6 +90,35 @@ Then('the component should have no serious accessibility violations', async func
   const results = await builder.analyze();
 
   const serious = results.violations.filter((v) => v.impact === 'critical' || v.impact === 'serious');
+
+  // Attach the audit to the Cucumber report. Without this the Allure report
+  // shows accessibility only as a step that passed -- no record of which
+  // conformance level was targeted, how many rules actually ran, or what the
+  // measured contrast ratios were. A passing a11y check that carries no
+  // evidence is indistinguishable from one that never ran.
+  const level = process.env.A11Y_LEVEL === 'aa' ? 'WCAG 2.1 AA' : 'WCAG 2.1 AAA';
+  const audit = {
+    target: level,
+    ruleTags: A11Y_TAGS,
+    disabledRules: A11Y_DISABLED,
+    mountTarget: this.mountTarget,
+    rulesPassed: results.passes.length,
+    rulesViolated: results.violations.length,
+    seriousOrCritical: serious.length,
+    incomplete: results.incomplete.length,
+    violations: results.violations.map((v) => ({
+      id: v.id,
+      impact: v.impact,
+      help: v.help,
+      nodes: v.nodes.map((n) => {
+        const d = (n.any || []).map((c) => c.data).find((x) => x && x.contrastRatio);
+        return d
+          ? { target: n.target.join(' '), fg: d.fgColor, bg: d.bgColor, ratio: d.contrastRatio, required: d.expectedContrastRatio }
+          : { target: n.target.join(' ') };
+      })
+    }))
+  };
+  await this.attach(JSON.stringify(audit, null, 2), 'application/json');
   if (serious.length) {
     const details = serious
       .map((v) => {
