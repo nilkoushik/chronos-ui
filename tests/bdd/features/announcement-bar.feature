@@ -6,7 +6,7 @@ Feature: AnnouncementBar
   Scenario: Renders a plain message with custom colors
     Given I mount the "announcement-bar" component as "AnnouncementBar" with:
       | message          | Free shipping on orders over $75 |
-      | background-color | #8b5cf6                          |
+      | background-color | #1e40af                          |
       | text-color       | #ffffff                          |
     Then it should render without any page errors
     And the component text should include "Free shipping on orders over $75"

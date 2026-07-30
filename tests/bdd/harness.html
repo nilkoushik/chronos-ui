@@ -1,11 +1,18 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <title>ContentVidya UI BDD harness</title>
   <link rel="stylesheet" href="/dist/styles/theme.css" />
   <style>
-    html, body { margin: 0; background: #0a0a0f; }
+    /* The harness renders on a dark ground so canvas background effects are
+       visible. It must therefore also activate the dark theme (data-theme on
+       <html> above) and take its background from the theme's own token --
+       hardcoding a dark colour while leaving the light theme active pairs the
+       light text colour (#0f172a) with a near-black page, which is not a
+       combination any real consumer would ship, but which axe correctly
+       reports as a contrast failure. */
+    html, body { margin: 0; background: var(--contentvidya-color-background); }
     #mount { min-height: 10px; }
   </style>
 </head>

@@ -1,7 +1,11 @@
 /* src/styles/theme.css */
 :root {
   /* Colors */
-  --contentvidya-color-primary: #7c3aed;
+  /* violet-700. Chosen over violet-600 (#7c3aed) because white text on it
+     measures 7.10:1, clearing the WCAG 2.1 AAA 7:1 threshold that this
+     library targets; #7c3aed only reached 5.70:1 (AA, not AAA). It also
+     clears AAA as *text* on the white background token. */
+  --contentvidya-color-primary: #6d28d9;
   --contentvidya-color-secondary: #ec4899;
   --contentvidya-color-background: #ffffff;
   --contentvidya-color-surface: #f8fafc;

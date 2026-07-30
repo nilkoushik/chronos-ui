@@ -66,28 +66,48 @@ Then('attribute {string} on the component should equal {string}', async function
   assert.equal(value, expected);
 });
 
-// WCAG 2.0/2.1 A+AA via axe-core, scoped to the mounted component only (not
-// the bare harness page around it). "moderate"/"minor" impact rules are
-// excluded here to keep the pre-commit gate focused on real blockers
-// (missing labels, contrast, focus order) rather than best-practice noise.
+// Target conformance level. The project targets WCAG 2.1 AAA, so AAA rule tags
+// are included alongside A and AA. Override with A11Y_LEVEL=aa to fall back to
+// the A+AA gate (useful when triaging AAA-only failures separately).
+const A11Y_TAGS = process.env.A11Y_LEVEL === 'aa'
+  ? ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']
+  : ['wcag2a', 'wcag2aa', 'wcag2aaa', 'wcag21a', 'wcag21aa', 'wcag21aaa'];
+
+// Contrast rules are the two that separate AA from AAA: `color-contrast` is the
+// 4.5:1 AA threshold, `color-contrast-enhanced` the 7:1 AAA one. Both are on by
+// default now that AAA is the target. Set A11Y_SKIP_CONTRAST=1 to silence them
+// while working on non-palette fixes -- do not commit that as the default, or
+// AAA conformance stops being measured at all.
+const A11Y_DISABLED = process.env.A11Y_SKIP_CONTRAST === '1'
+  ? ['color-contrast', 'color-contrast-enhanced']
+  : [];
+
 Then('the component should have no serious accessibility violations', async function () {
-  const results = await new AxeBuilder({ page: this.page })
+  let builder = new AxeBuilder({ page: this.page })
     .include(this.mountTarget === 'webcomponent' ? '#subject' : '#mount')
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-    // color-contrast is excluded from this automated gate: it surfaced real
-    // pre-existing violations in Banner/AnnouncementBar/RowScrollable/
-    // WysiwygRenderer's default theme colors, which is a design decision
-    // (brand palette) outside what adding this test suite should silently
-    // change. Tracked as a known follow-up rather than hidden -- every other
-    // WCAG 2.0/2.1 A+AA rule (labels, focus order, ARIA, structure, etc.)
-    // still fully gates commits.
-    .disableRules(['color-contrast'])
-    .analyze();
+    .withTags(A11Y_TAGS);
+  if (A11Y_DISABLED.length) builder = builder.disableRules(A11Y_DISABLED);
+  const results = await builder.analyze();
 
   const serious = results.violations.filter((v) => v.impact === 'critical' || v.impact === 'serious');
   if (serious.length) {
     const details = serious
-      .map((v) => `- [${v.impact}] ${v.id}: ${v.help} (${v.nodes.length} node(s))\n  ${v.helpUrl}`)
+      .map((v) => {
+        // Include the per-node diagnostic data axe already computed. For the
+        // contrast rules that means the actual fg/bg pair and the measured vs
+        // required ratio, which is what you need to pick a replacement colour --
+        // without it a failure only tells you *that* something is too light.
+        const nodes = v.nodes.slice(0, 4).map((n) => {
+          const d = (n.any || []).map((c) => c.data).find((x) => x && x.contrastRatio) || {};
+          const bits = d.contrastRatio
+            ? ` fg=${d.fgColor} bg=${d.bgColor} ratio=${d.contrastRatio} needs=${d.expectedContrastRatio}` +
+              (d.fontSize ? ` (${d.fontSize}, weight ${d.fontWeight})` : '')
+            : '';
+          return `    · ${n.target.join(' ')}${bits}`;
+        }).join('\n');
+        const more = v.nodes.length > 4 ? `\n    … and ${v.nodes.length - 4} more node(s)` : '';
+        return `- [${v.impact}] ${v.id}: ${v.help} (${v.nodes.length} node(s))\n  ${v.helpUrl}\n${nodes}${more}`;
+      })
       .join('\n');
     assert.fail(`Found ${serious.length} serious/critical accessibility violation(s):\n${details}`);
   }

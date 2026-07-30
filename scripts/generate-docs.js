@@ -99,6 +99,7 @@ function buildSidebar(activeSlug, isLandingPage) {
         <div class="sidebar-section-label" style="margin-top:1rem">Resources</div>
         <a href="${GITHUB_URL}" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">⭐</span> GitHub</a>
         <a href="https://www.npmjs.com/package/@contentvidya/ui" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">📦</span> npm</a>
+        <a href="${GITHUB_URL}/tree/main/examples" target="_blank" rel="noopener" class="sidebar-link"><span class="sidebar-link-icon">🧩</span> Example Apps</a>
         <a href="${prefix}dist/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">📁</span> Compiled Dist</a>
         <a href="${prefix}allure-report/" target="_blank" class="sidebar-link"><span class="sidebar-link-icon">✅</span> Test Report</a>
       </nav>
@@ -819,9 +820,30 @@ function buildLandingPage() {
         </div>
 
         <!-- Install -->
-        <div class="install-banner" style="text-align:left;max-width:480px;margin:0 auto 3rem;">
+        <div class="install-banner" style="text-align:left;max-width:480px;margin:0 auto 1.5rem;">
           <code>npm install @contentvidya/ui</code>
           <button class="copy-btn install-copy" style="position:static;flex-shrink:0">⎘ Copy</button>
+        </div>
+
+        <!-- Runnable example apps, one per compiled target -->
+        <div class="example-apps" style="max-width:640px;margin:0 auto 3rem;">
+          <p style="font-size:0.8rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-secondary);margin:0 0 0.75rem;">
+            Runnable example apps
+          </p>
+          <div style="display:flex;gap:0.6rem;flex-wrap:wrap;justify-content:center;">
+            <a href="${GITHUB_URL}/tree/main/examples/react-demo" target="_blank" rel="noopener" class="feature-pill" style="text-decoration:none">
+              <span class="dot dot-react"></span> React demo
+            </a>
+            <a href="${GITHUB_URL}/tree/main/examples/svelte-demo" target="_blank" rel="noopener" class="feature-pill" style="text-decoration:none">
+              <span class="dot dot-svelte"></span> Svelte demo
+            </a>
+            <a href="${GITHUB_URL}/tree/main/examples/wc-demo" target="_blank" rel="noopener" class="feature-pill" style="text-decoration:none">
+              <span class="dot dot-wc"></span> Web Component demo
+            </a>
+            <a href="${GITHUB_URL}/tree/main/examples" target="_blank" rel="noopener" class="feature-pill" style="text-decoration:none">
+              📁 All examples
+            </a>
+          </div>
         </div>
       </section>
 

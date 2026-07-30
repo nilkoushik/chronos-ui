@@ -235,7 +235,7 @@ function generateLiveDemoCode() {
   // rendered structurally correct but completely unstyled. Pull the PascalCase
   // component name straight out of its import path so we can link its
   // matching stylesheet too, for whichever framework tab is active.
-  const componentNameMatch = rawCode.match(/@contentvidya/ui\/core\/(?:react|webcomponents?)\/([A-Za-z0-9]+)/);
+  const componentNameMatch = rawCode.match(/@contentvidya\/ui\/(?:react|webcomponents?)\/([A-Za-z0-9]+)/);
   const componentName = componentNameMatch ? componentNameMatch[1] : null;
   const componentCssLink = componentName
     ? `<link rel="stylesheet" href="https://unpkg.com/@contentvidya/ui@latest/src/styles/components/${componentName}.css">\n`
@@ -268,9 +268,9 @@ function generateLiveDemoCode() {
     // only ever one React instance in the whole page.
     const REACT_VERSION = '18.3.1';
     jsCode = rawCode
-      .replace(/import\s+['"]@contentvidya/ui\/core\/theme\.css['"];?\n?/g, '')
-      .replace(/from\s+['"]@contentvidya/ui\/core\/(.*?)['"]/g, `from 'https://esm.sh/@contentvidya/ui@latest/$1?deps=react@${REACT_VERSION},react-dom@${REACT_VERSION}'`)
-      .replace(/import\s+['"]@contentvidya/ui\/core\/(.*?)['"]/g, `import 'https://esm.sh/@contentvidya/ui@latest/$1?deps=react@${REACT_VERSION},react-dom@${REACT_VERSION}'`);
+      .replace(/import\s+['"]@contentvidya\/ui\/theme\.css['"];?\n?/g, '')
+      .replace(/from\s+['"]@contentvidya\/ui\/(.*?)['"]/g, `from 'https://esm.sh/@contentvidya/ui@latest/$1?deps=react@${REACT_VERSION},react-dom@${REACT_VERSION}'`)
+      .replace(/import\s+['"]@contentvidya\/ui\/(.*?)['"]/g, `import 'https://esm.sh/@contentvidya/ui@latest/$1?deps=react@${REACT_VERSION},react-dom@${REACT_VERSION}'`);
 
     const jsxMatch = jsCode.match(/<([A-Z][a-zA-Z0-9]*)\b[^>]*(\/>|<\/[A-Z][a-zA-Z0-9]*>)/);
     const jsxComponent = jsxMatch ? jsxMatch[0] : '';
