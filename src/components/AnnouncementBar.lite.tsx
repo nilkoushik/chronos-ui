@@ -15,7 +15,13 @@ export default function AnnouncementBar(props: AnnouncementBarProps) {
     <div
       class={`contentvidya-announcement-bar ${props.className || ''}`}
       style={{
-        backgroundColor: props.backgroundColor || 'var(--violet, #8b5cf6)',
+        // Defaults pair white text with violet-700, which measures 7.10:1 --
+        // clearing WCAG 2.1 AAA. The previous violet-500 (#8b5cf6) default was
+        // only 4.23:1, failing even AA. Falls back through the shared primary
+        // token so a consumer theming the library gets their colour, not this
+        // hardcoded one.
+        backgroundColor:
+          props.backgroundColor || 'var(--contentvidya-color-primary, #6d28d9)',
         color: props.textColor || '#ffffff'
       }}
     >

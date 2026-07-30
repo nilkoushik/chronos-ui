@@ -115,7 +115,7 @@
            Uses outline (not box-shadow) so it still renders in Windows
            High Contrast / forced-colors mode. */
         .contentvidya-hotspot:focus-visible {
-          outline: 3px solid var(--contentvidya-color-primary, #7c3aed);
+          outline: 3px solid var(--contentvidya-color-primary, #6d28d9);
           outline-offset: 2px;
           border-radius: 2px;
         }

@@ -76,7 +76,7 @@
   text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 .contentvidya-alt-cta {
-  background: var(--contentvidya-color-primary, #7c3aed);
+  background: var(--contentvidya-color-primary, #6d28d9);
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;

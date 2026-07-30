@@ -92,17 +92,28 @@ class ContentVidyaWorld extends World {
     const bundlePath = await bundleReactHarness(pascalName, props);
 
     await this.page.evaluate(
-      ({ bundlePath, baseUrl }) => {
+      ({ bundlePath, baseUrl, pascalName }) => {
+        // The component's visual styles live in its own stylesheet, exposed via
+        // the package's "./styles/*" export — theme.css alone only provides the
+        // custom properties. Without this the component renders structurally
+        // correct but entirely unstyled, so colour-dependent assertions (and
+        // axe's contrast rules) would measure browser defaults, not the design.
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = `${baseUrl}/dist/styles/components/${pascalName}.css`;
+        document.head.appendChild(link);
+
         const script = document.createElement('script');
         script.type = 'module';
         script.src = `${baseUrl}${bundlePath}`;
         document.head.appendChild(script);
         return new Promise((resolve, reject) => {
+          link.onload = () => {};
           script.onload = resolve;
           script.onerror = () => reject(new Error('Failed to load React bundle'));
         });
       },
-      { bundlePath, baseUrl }
+      { bundlePath, baseUrl, pascalName }
     );
 
     await this.page.waitForTimeout(300);
@@ -121,7 +132,14 @@ class ContentVidyaWorld extends World {
     const bundlePath = await bundleSvelteHarness(pascalName, props);
 
     await this.page.evaluate(
-      ({ bundlePath, baseUrl }) => {
+      ({ bundlePath, baseUrl, pascalName }) => {
+        // Same as the React mount: pull in the component-scoped stylesheet, or
+        // every colour assertion is made against unstyled browser defaults.
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = `${baseUrl}/dist/styles/components/${pascalName}.css`;
+        document.head.appendChild(link);
+
         const script = document.createElement('script');
         script.type = 'module';
         script.src = `${baseUrl}${bundlePath}`;
@@ -131,7 +149,7 @@ class ContentVidyaWorld extends World {
           script.onerror = () => reject(new Error('Failed to load Svelte bundle'));
         });
       },
-      { bundlePath, baseUrl }
+      { bundlePath, baseUrl, pascalName }
     );
 
     await this.page.waitForTimeout(300);
