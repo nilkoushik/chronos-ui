@@ -1,6 +1,16 @@
-# @chronos-ui/core (deprecated)
+# @chronos-ui/core (deprecated — frozen at 1.4.2)
 
 This package has been renamed to **[`@contentvidya/ui`](https://www.npmjs.com/package/@contentvidya/ui)**.
+
+> **No longer published.** Releases stopped mirroring this wrapper after
+> `1.4.2`. The rename has landed and consumers have had a forwarding version to
+> migrate from, so `1.4.3` onward ships under the new name only. `1.4.2` stays
+> on npm and keeps forwarding to `@contentvidya/ui@1.4.2`, so existing installs
+> continue to resolve — they just will not receive new versions. Migrate to
+> `@contentvidya/ui` to get anything newer.
+>
+> This directory is kept as the record of what `@chronos-ui/core@1.4.2`
+> contains. It is no longer part of the release pipeline.
 
 `@chronos-ui/core` is now a zero-logic compatibility forwarder: every import you already have keeps working unchanged, because every subpath resolves straight through to the equivalent file in `@contentvidya/ui` (its only dependency). No components were copied or duplicated here.
 
